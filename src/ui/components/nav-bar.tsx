@@ -20,9 +20,9 @@ export default function NavBar() {
                         <img src="/sherpa.png" alt="Sherpa Food Tours Logo" loading="eager" width={40} height={40} className="w-full h-full object-cover" />
                     </a>
                 </div>
-                <ul className="flex gap-0 sm:gap-8 p-0 sm:p-8 justify-center items-center" role="menubar">
+                <ul className="flex gap-0 md:gap-6 lg:gap-8 p-0 md:py-4 lg:py-6 justify-center items-center" role="menubar">
                     {items.map((item) => (
-                        <li key={item.href} className="hover:underline hidden md:block" role="none">
+                        <li key={item.href} className="hover:underline hidden md:block text-sm lg:text-base" role="none">
                             <a
                                 href={item.href}
                                 className="block px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
