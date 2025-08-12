@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-excelsior: "Excelsior", serif;
+  --font-dk-otago: "DK Otago", serif;
 }
 
 @theme inline {
@@ -23,4 +25,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-excelsior {
+  font-family: var(--font-excelsior);
+}
+
+.font-dk-otago {
+  font-family: var(--font-dk-otago);
 }

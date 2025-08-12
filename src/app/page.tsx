@@ -1,5 +1,5 @@
 import { getPageInfo } from "@/lib/wp";
-import Image from "next/image";
+// import Image from "next/image";
 
 // async function getStaticProps() {
   
