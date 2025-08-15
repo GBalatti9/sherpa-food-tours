@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 
 
 import type { Metadata } from "next";
@@ -41,7 +42,7 @@ export default function TravelGuideCityPage() {
                     </Heading>
                     <div className="w-full text-base leading-relaxed">
                         <Paragraph>
-                            If you're searching for the best coffee in Mexico, you're in for an exceptional experience. Mexican coffee is celebrated worldwide for its rich, complex flavors and premium quality, making it a favorite among coffee enthusiasts. Mexican coffees are crafted using 100% Arabica beans grown at high altitudes in regions like Chiapas, Oaxaca, and Veracruz. These beans deliver distinctive flavors with notes of chocolate, nuts, and spices, earning them global recognition.
+                            If you&apos;re searching for the best coffee in Mexico, you&apos;re in for an exceptional experience. Mexican coffee is celebrated worldwide for its rich, complex flavors and premium quality, making it a favorite among coffee enthusiasts. Mexican coffees are crafted using 100% Arabica beans grown at high altitudes in regions like Chiapas, Oaxaca, and Veracruz. These beans deliver distinctive flavors with notes of chocolate, nuts, and spices, earning them global recognition.
                         </Paragraph>
                         <Paragraph>
                             Renowned brands such as{' '}
@@ -60,13 +61,13 @@ export default function TravelGuideCityPage() {
                         </Heading>
                         <div className="w-full text-base leading-relaxed">
                             <Paragraph>
-                                Mexico's coffee landscape is richly diverse, and two of its most renowned coffee-growing regions are Chiapas and Oaxaca. Located in the southern part of the country, these regions boast high altitudes, fertile volcanic soils, and a climate that is ideal for coffee production.
+                                Mexico&apos;s coffee landscape is richly diverse, and two of its most renowned coffee-growing regions are Chiapas and Oaxaca. Located in the southern part of the country, these regions boast high altitudes, fertile volcanic soils, and a climate that is ideal for coffee production.
                             </Paragraph>
                             <Paragraph>
                                 Chiapas, for instance, is known for its rich, nutty flavor profiles, often described as having a medium body and balanced acidity with notes of chocolate and nuts.
                             </Paragraph>
                             <Paragraph>
-                                In Oaxaca, the coffee is characterized by a more complex taste, featuring notes of fruit and chocolate. The region's unique microclimates and high altitudes contribute to the distinct flavor profiles, making Oaxacan coffee a favorite among those who appreciate a lighter to medium body with bright acidity and citrus and floral undertones.
+                                In Oaxaca, the coffee is characterized by a more complex taste, featuring notes of fruit and chocolate. The region&apos;s unique microclimates and high altitudes contribute to the distinct flavor profiles, making Oaxacan coffee a favorite among those who appreciate a lighter to medium body with bright acidity and citrus and floral undertones.
                             </Paragraph>
                         </div>
                     </div>
@@ -84,13 +85,13 @@ export default function TravelGuideCityPage() {
                     </Heading>
                     <div className="w-full text-base leading-relaxed">
                         <Paragraph>
-                            Mexico's coffee landscape is richly diverse, and two of its most renowned coffee-growing regions are Chiapas and Oaxaca. Located in the southern part of the country, these regions boast high altitudes, fertile volcanic soils, and a climate that is ideal for coffee production.
+                            Mexico&apos;s coffee landscape is richly diverse, and two of its most renowned coffee-growing regions are Chiapas and Oaxaca. Located in the southern part of the country, these regions boast high altitudes, fertile volcanic soils, and a climate that is ideal for coffee production.
                         </Paragraph>
                         <Paragraph>
                             Chiapas, for instance, is known for its rich, nutty flavor profiles, often described as having a medium body and balanced acidity with notes of chocolate and nuts.
                         </Paragraph>
                         <Paragraph>
-                            In Oaxaca, the coffee is characterized by a more complex taste, featuring notes of fruit and chocolate. The region's unique microclimates and high altitudes contribute to the distinct flavor profiles, making Oaxacan coffee a favorite among those who appreciate a lighter to medium body with bright acidity and citrus and floral undertones.
+                            In Oaxaca, the coffee is characterized by a more complex taste, featuring notes of fruit and chocolate. The region&apos;s unique microclimates and high altitudes contribute to the distinct flavor profiles, making Oaxacan coffee a favorite among those who appreciate a lighter to medium body with bright acidity and citrus and floral undertones.
                         </Paragraph>
                     </div>
                 </div>
@@ -197,13 +198,13 @@ export default function TravelGuideCityPage() {
                     <HighlightText>A Lasting Impression</HighlightText>
                     <div className="w-full text-base leading-relaxed">
                         <Paragraph>
-                            Mexico's coffee landscape is richly diverse, and two of its most renowned coffee-growing regions are Chiapas and Oaxaca. Located in the southern part of the country, these regions boast high altitudes, fertile volcanic soils, and a climate that is ideal for coffee production.
+                            Mexico&apos;s coffee landscape is richly diverse, and two of its most renowned coffee-growing regions are Chiapas and Oaxaca. Located in the southern part of the country, these regions boast high altitudes, fertile volcanic soils, and a climate that is ideal for coffee production.
                         </Paragraph>
                         <Paragraph>
                             Chiapas, for instance, is known for its rich, nutty flavor profiles, often described as having a medium body and balanced acidity with notes of chocolate and nuts.
                         </Paragraph>
                         <Paragraph>
-                            In Oaxaca, the coffee is characterized by a more complex taste, featuring notes of fruit and chocolate. The region's unique microclimates and high altitudes contribute to the distinct flavor profiles, making Oaxacan coffee a favorite among those who appreciate a lighter to medium body with bright acidity and citrus and floral undertones.
+                            In Oaxaca, the coffee is characterized by a more complex taste, featuring notes of fruit and chocolate. The region&apos;s unique microclimates and high altitudes contribute to the distinct flavor profiles, making Oaxacan coffee a favorite among those who appreciate a lighter to medium body with bright acidity and citrus and floral undertones.
                         </Paragraph>
                     </div>
                 </div>
