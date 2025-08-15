@@ -11,14 +11,15 @@ export default function NavBar() {
     ];
     return (
         <header className="bg-[#0A4747] text-white fixed w-full font-excelsior" role="banner">
-            <nav className="flex justify-between items-center border-b border-gray-300 px-6 sm:px-8 lg:px-16" aria-label="Main navigation">
-                <div className="flex items-center py-4 md:py-0">
+            <nav className="flex justify-between items-center px-6 sm:px-8 lg:px-16 py-4 lg:py-0" aria-label="Main navigation">
+                <div className="flex items-center">
                     {/* Mobile menu button */}
-                    <div className="md:hidden h-10 mr-2">
+                    <div className="md:hidden h-8 mr-2">
                         <MobileMenu items={items} />
                     </div>
-                    <Link href="/" aria-label="Go to homepage" className="p-0 h-12 w-30 md:h-auto overflow-hidden flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
-                        <img src="/sherpa.png" alt="Sherpa Food Tours Logo" loading="eager" width={40} height={40} className="w-full h-full object-cover" />
+                    <Link href="/" aria-label="Go to homepage" className="p-0 h-10 w-30 md:h-auto overflow-hidden flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                        {/* <img src="/sherpa.png" alt="Sherpa Food Tours Logo" loading="eager" width={40} height={40} className="w-full h-full object-cover" /> */}
+                        <img src="/logo.png" alt="Sherpa Food Tours Logo" loading="eager" className="w-full h-[20px] object-contain ml-[-20px]" />
                     </Link>
                 </div>
                 <ul className="flex gap-0 md:gap-6 lg:gap-8 p-0 md:py-4 justify-center items-center" role="menubar">
