@@ -193,7 +193,7 @@ export default function TravelGuideCityPage() {
                 </div>
             </section>
 
-            <section className="max-w-2xl mx-auto">
+            <section className="max-w-2xl mx-auto px-4 pb-16">
                 <div>
                     <HighlightText>A Lasting Impression</HighlightText>
                     <div className="w-full text-base leading-relaxed">
