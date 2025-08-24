@@ -3,6 +3,15 @@
     font-family: var(--font-excelsior);
     font-weight: 400;
 
+    .article-content {
+        max-width: 500px;
+        margin: 0 auto;
+
+        @media screen and (min-width: 640px) {
+            margin: 3rem auto;
+        }
+    }
+
     .main-img-container {
         aspect-ratio: 5 /4;
         overflow: hidden;
@@ -16,6 +25,10 @@
 
     figure {
         margin: 1.5rem 0;
+
+        @media screen and (min-width: 640px) {
+            margin: 3rem auto;
+        }
     }
 
     h1 {
@@ -33,6 +46,10 @@
         color: black;
         margin-top: 1.3rem;
 
+        @media screen and (min-width: 640px) {
+            margin-top: 2rem;
+        }
+
         a {
             text-decoration: underline;
         }
@@ -44,6 +61,10 @@
         font-family: var(--font-dk-otago);
         font-size: 1.5rem;
         margin: 1.5rem 0;
+
+        @media screen and (min-width: 640px) {
+            margin: 2.2rem 0;
+        }
     }
 
     h3 {
@@ -51,6 +72,11 @@
         line-height: 1.35;
         margin: 1.5rem 0;
         font-size: 1.5rem;
+
+        @media screen and (min-width: 640px) {
+            margin: 2.2rem 0;
+        }
+
     }
 
     h4 {

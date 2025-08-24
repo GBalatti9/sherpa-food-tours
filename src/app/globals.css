@@ -48,7 +48,7 @@ main {
   .faq-items {
     border: 1px solid #333;
     margin: 1rem 0;
-    padding: 0 1rem;
+    padding: 1rem;
 
     .faq-item {
 
@@ -82,6 +82,10 @@ main {
           flex-shrink: 0;
         }
 
+      }
+
+      .faq-answer {
+        padding-bottom: 1rem;
       }
     }
 
