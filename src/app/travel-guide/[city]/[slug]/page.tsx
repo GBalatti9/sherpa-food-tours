@@ -2,12 +2,14 @@
 import { slugify } from "@/app/helpers/slugify";
 import { wp } from "@/lib/wp";
 import { WPPost } from "@/types/post";
+import "./travel-guide.css";
 
 // ----------------------
 // SEO
 // ----------------------
-export async function generateMetadata({ params }: { params: { city: string; slug: string } }) {
-    const post = await wp.getPostInfo(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }) {
+    const { city, slug } = await params;  // <-- await aquí
+    const post = await wp.getPostInfo(slug);
     const { img, alt } = await wp.getPostImage(post.featured_media);
 
     const description = post.excerpt?.replace(/<[^>]+>/g, "") || post.content.replace(/<[^>]+>/g, "").slice(0, 150);
@@ -20,7 +22,7 @@ export async function generateMetadata({ params }: { params: { city: string; slu
         openGraph: {
             title,
             description,
-            url: `https://www.sherpafoodtours.com/travel-guide/${params.city}/${params.slug}`,
+            url: `https://www.sherpafoodtours.com/travel-guide/${city}/${slug}`,
             type: "article",
             images: [
                 {
@@ -38,18 +40,19 @@ export async function generateMetadata({ params }: { params: { city: string; slu
             images: [imageUrl],
         },
         alternates: {
-            canonical: `https://www.sherpafoodtours.com/travel-guide/${params.city}/${params.slug}`,
+            canonical: `https://www.sherpafoodtours.com/travel-guide/${city}/${slug}`,
         },
     };
 }
+
 
 // ----------------------
 // BUILD TIME
 // ----------------------
 export async function generateStaticParams() {
     const posts = await wp.getAllPost();
-    
-    
+
+
     return posts.map((post: WPPost) => ({
         slug: post.slug,
         city: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0].title) : "default-city",
@@ -59,9 +62,9 @@ export async function generateStaticParams() {
 // ----------------------
 // DATA
 // ----------------------
-export default async function BlogPost({ params }: { params: { city: string, slug: string } }) {
+export default async function BlogPost({ params }: { params: Promise<{ city: string, slug: string }> }) {
 
-    const { city, slug } = params;
+    const { city, slug } = await params;
 
     const { title, content, featured_media, excerpt, date, modified } = await wp.getPostInfo(slug);
     const { img } = await wp.getPostImage(featured_media);
@@ -97,7 +100,7 @@ export default async function BlogPost({ params }: { params: { city: string, slu
             />
 
             {/* ARTICLE */}
-            <article>
+            <article className="sherpa-article">
                 <h1>{title}</h1>
                 <div dangerouslySetInnerHTML={{ __html: content }}></div>
             </article>
@@ -105,3 +108,5 @@ export default async function BlogPost({ params }: { params: { city: string, slu
     )
 
 }
+
+export const revalidate = 86400; // 24h en segundos, literal

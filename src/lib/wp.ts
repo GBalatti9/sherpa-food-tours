@@ -19,13 +19,7 @@ export const wp = {
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
 
-        console.log({ data });
-
-
         const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified } = data;
-
-        console.log({date, modified});
-        
 
         return { title, content, excerpt, featured_media, date, modified };
     },
@@ -37,13 +31,31 @@ export const wp = {
 
         return data;
     },
-    getPostImage: async (id: number) => {
-        const response = await fetch(`${apiUrl}/media/${id}`)
-        if (!response.ok) throw new Error("No se obtuvieron datos");
-        const data = await response.json();
-        console.log({data});
-        
+    getPostImage: async (id?: number) => {
+        if (!id || id === 0) {
+            // Si no hay media, devolver imagen por defecto
+            return {
+                img: "https://www.sherpafoodtours.com/default-og.jpg",
+                alt: "",
+            };
+        }
 
-        return {img: data.source_url, alt: data.alt_text};
+        try {
+            const response = await fetch(`${apiUrl}/media/${id}`);
+            if (!response.ok) throw new Error("No se obtuvieron datos");
+
+            const data = await response.json();
+            return {
+                img: data.source_url || "https://www.sherpafoodtours.com/default-og.jpg",
+                alt: data.alt_text || "",
+            };
+        } catch (e) {
+            console.warn("No se pudo obtener la imagen del post:", e);
+            return {
+                img: "https://www.sherpafoodtours.com/default-og.jpg",
+                alt: "",
+            };
+        }
     }
+
 }

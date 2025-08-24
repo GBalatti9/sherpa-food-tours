@@ -19,12 +19,12 @@ const excelsior = localFont({
   variable: "--font-excelsior",
 });
 
-// const dkOtago = localFont({
-//   src: "./public/fonts/DK_Otago.woff2",
-//   variable: "--font-dk-otago",
-//   weight: "400",
-//   style: "normal",
-// });
+const dkOtago = localFont({
+  src: "./fonts/DK_Otago.woff2",
+  variable: "--font-dk-otago",
+  weight: "400",
+  style: "normal",
+});
 
 
 export const metadata: Metadata = {
@@ -39,9 +39,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${excelsior.variable} antialiased`}>
+      <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
         <NavBar />
-        {children}
+        <main>
+          {children}
+        </main>
       </body>
     </html>
   );

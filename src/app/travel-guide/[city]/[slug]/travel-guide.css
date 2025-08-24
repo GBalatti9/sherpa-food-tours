@@ -1,0 +1,40 @@
+
+.sherpa-article {
+    padding-top: 6rem;
+    font-family: var(--font-excelsior);
+    font-weight: 400;
+
+    h1 {
+        color: var(--title-color);
+        font-size: 1.6rem;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+    }
+
+    p {
+        font-size: 1.125rem;
+        line-height: 1.5;
+        letter-spacing: 0;
+        color: black;
+        margin-top: 1.3rem;
+
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    h2 {
+        color: var(--subtitle-color);
+        text-transform: uppercase;
+        font-family: var(--font-dk-otago);
+        font-size: 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    h3 {
+        color: var(--title-color);
+        line-height: 1.35;
+        margin: 1.5rem 0;
+        font-size: 1.5rem;
+    }
+}
