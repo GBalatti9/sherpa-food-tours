@@ -36,4 +36,10 @@
         margin: 1.5rem 0;
         font-size: 1.5rem;
     }
+
+    h4 {
+        color: black;
+        font-size: 1.6rem;
+        font-family: var(--font-dk-otago);
+    }
 }
