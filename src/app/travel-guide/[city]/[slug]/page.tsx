@@ -3,7 +3,6 @@ import { slugify } from "@/app/helpers/slugify";
 import { wp } from "@/lib/wp";
 import { WPPost } from "@/types/post";
 import "./travel-guide.css";
-
 // ----------------------
 // SEO
 // ----------------------
@@ -68,6 +67,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     const { title, content, featured_media, excerpt, date, modified } = await wp.getPostInfo(slug);
     const { img } = await wp.getPostImage(featured_media);
+    
 
     const imageUrl = img || "https://www.sherpafoodtours.com/default-og.jpg";
     const description = excerpt?.replace(/<[^>]+>/g, "") || content.replace(/<[^>]+>/g, "").slice(0, 150);
