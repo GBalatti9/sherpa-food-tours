@@ -66,7 +66,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
     const { city, slug } = await params;
 
     const { title, content, featured_media, excerpt, date, modified } = await wp.getPostInfo(slug);
-    const { img } = await wp.getPostImage(featured_media);
+    const { img, alt } = await wp.getPostImage(featured_media);
     
 
     const imageUrl = img || "https://www.sherpafoodtours.com/default-og.jpg";
@@ -101,6 +101,9 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
             {/* ARTICLE */}
             <article className="sherpa-article">
+                <div className="main-img-container">
+                    <img src={img} alt={alt} loading="eager" />
+                </div>
                 <h1>{title}</h1>
                 <div dangerouslySetInnerHTML={{ __html: content }}></div>
             </article>
@@ -109,4 +112,4 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
 }
 
-export const revalidate = 86400; // 24h en segundos, literal
+// export const revalidate = 86400; 

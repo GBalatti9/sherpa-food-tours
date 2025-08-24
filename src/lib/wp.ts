@@ -19,6 +19,8 @@ export const wp = {
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
 
+        console.log({data});
+        
         const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified } = data;
 
         return { title, content, excerpt, featured_media, date, modified };
