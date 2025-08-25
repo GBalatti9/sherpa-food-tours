@@ -22,14 +22,14 @@ export default async function TravelGuidePage() {
                 <div className="imgs-galleries">
                     <div className="img-gallery">
                         {images.map((src, index) => (
-                            <div className="img-container">
+                            <div className="img-container" key={index}>
                                 <img key={index} src={src} alt={`img-${index}`} />
                             </div>
                         ))}
                     </div>
                     <div className="img-gallery right">
                         {images2.map((src, index) => (
-                            <div className="img-container">
+                            <div className="img-container" key={index}>
                                 <img key={index} src={src} alt={`img-${index}`} />
                             </div>
                         ))}
@@ -115,7 +115,7 @@ export default async function TravelGuidePage() {
                     // Render del primer elemento
                     if (i === 0) {
                         return (
-                            <div className="preview-wrapper" key={post.id}>
+                            <div className={`preview-wrapper element-${i}`} key={post.id}>
                                 <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
                                     <div className="preview-image-container">
                                         <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
@@ -131,18 +131,18 @@ export default async function TravelGuidePage() {
                         );
                     }
 
-                    // Render del grupo de i === 1 y i === 2
+                    // // Render del grupo de i === 1 y i === 2
                     if (i === 1) {
                         return (
                             <div className="preview-wrapper-group" key="group-1-2">
                                 {[posts[1], posts[2]].map((p) => {
-                                    let s = p.relaciones?.ciudades?.[0]?.title || null;
-                                    let u = s
+                                    const s = p.relaciones?.ciudades?.[0]?.title || null;
+                                    const u = s
                                         ? `https://www.sherpafoodtours.com/travel-guide/${slugify(s)}/${p.slug}`
                                         : "https://www.sherpafoodtours.com/travel-guide";
 
                                     return (
-                                        <div className="preview-wrapper">
+                                        <div className="preview-wrapper" key={p.id}>
                                             <a className="preview-item" href={u} target="_blank" rel="noopener noreferrer" key={p.id}>
                                                 <div className="preview-image-container">
                                                     <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={p.title.rendered} />
@@ -160,7 +160,7 @@ export default async function TravelGuidePage() {
                         );
                     }
 
-                    // Elementos con i > 2
+                    // // Elementos con i > 2
                     if (i > 2) {
                         return (
                             <div className="preview-wrapper list" key={post.id}>
@@ -217,7 +217,7 @@ export default async function TravelGuidePage() {
                     //     </React.Fragment>
                     // )
                 })}
-                <a href="/" className="show-more">Show more</a>
+                {/* <Link href="/" className="show-more">Show more</Link> */}
             </section>
         </>
     )

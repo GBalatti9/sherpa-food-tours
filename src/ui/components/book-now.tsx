@@ -1,6 +1,6 @@
 "use client";
 
-export default function BookNowButton({ className }: { className?: string }) {
+export default function BookNowButton() {
 
     function handleClick(){
         console.log("Click");
