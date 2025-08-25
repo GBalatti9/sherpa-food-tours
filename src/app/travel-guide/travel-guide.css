@@ -1,15 +1,11 @@
-.travel-guide-page {
-    min-height: 100svh;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-
     .travel-guide-first-section {
-        flex: 1;
+        height: 100svh;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         gap: 2rem;
+        overflow: hidden;
+        width: 100%;
     }
 
     .titles-container {
@@ -39,6 +35,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+
             svg {
                 padding-top: 1px;
             }
@@ -53,6 +50,7 @@
         position: absolute;
         width: 100%;
         z-index: -1;
+        overflow-x: hidden;
 
         .img-container {
             aspect-ratio: 3 / 4;
@@ -87,4 +85,103 @@
         }
     }
 
-}
+
+    .second-section-main-container {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--second-green);
+
+        .main-searcher {
+            display: flex;
+            gap: 0.3rem;
+
+            .searcher {
+                color: var(--second-green);
+                font-family: var(--font-excelsior);
+                font-size: 1rem;
+                line-height: 1.28;
+                text-decoration: underline;
+            }
+        }
+
+        .icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+    }
+
+
+    .travel-guide-third-section {
+        padding: 0 1.3rem;
+    }
+
+    .preview-wrapper-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+
+        .preview-wrapper {
+            width: 50%;
+
+            .preview-item {
+                .preview-image-container {
+                    .preview-city {
+                        display: none;
+                    }
+                }
+
+                .preview-data {
+                    h3 {
+                        font-size: 1.2rem;
+                    }
+
+                    .preview-author {
+                        font-size: 0.75rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .preview-wrapper.list {
+        .preview-item {
+            display: flex;
+            gap: 1rem;
+
+            .preview-image-container {
+                aspect-ratio: 4 / 3;
+                width: 30%;
+
+                .preview-city {
+                    display: none;
+                }
+            }
+
+            .preview-data {
+                width: 70%;
+                margin-top: 0;
+                gap: 5px;
+
+                h3 {
+                    font-size: 1rem;
+                    line-height: 1.28;
+                }
+
+                .preview-author {
+                    font-size: 0.75rem;
+                }
+            }
+        }
+    }
+
+    .show-more {
+        font-family: var(--font-excelsior);
+        line-height: 1.28;
+        font-size: 1rem;
+        color: var(--title-color);
+        text-decoration: underline;
+        text-align: center;
+        display: block;
+    }

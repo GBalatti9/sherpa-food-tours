@@ -2,6 +2,9 @@
     padding-top: 6rem;
     font-family: var(--font-excelsior);
     font-weight: 400;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+    margin: auto;
 
     .article-content {
         max-width: 500px;
@@ -11,11 +14,17 @@
             margin: 3rem auto;
         }
     }
-
+    
     .main-img-container {
-        aspect-ratio: 5 /4;
+        aspect-ratio: 5 / 4;
         overflow: hidden;
-
+        max-width: 1200px;
+        margin: auto;
+        
+        @media screen and (min-width: 640px) {
+            aspect-ratio: auto;
+            max-height: 600px;
+        }
         img {
             width: 100%;
             height: 100%;
