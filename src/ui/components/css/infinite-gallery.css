@@ -1,0 +1,42 @@
+/* infinite-gallery.css */
+
+.gallery-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+/* Override de clases de Swiper */
+.gallery-wrapper .swiper-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.gallery-wrapper .swiper-slide {
+    width: auto !important; /* Importante: ancho automático basado en contenido */
+    flex-shrink: 0;
+}
+
+.gallery-item {
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item img {
+    display: block;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+.gallery-item:hover img {
+    filter: brightness(1.05);
+}

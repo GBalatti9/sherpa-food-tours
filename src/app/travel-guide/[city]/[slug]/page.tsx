@@ -2,7 +2,7 @@
 import { slugify } from "@/app/helpers/slugify";
 import { wp } from "@/lib/wp";
 import { WPPost } from "@/types/post";
-import "./travel-guide.css";
+import "./travel-guide-slug.css";
 // ----------------------
 // SEO
 // ----------------------

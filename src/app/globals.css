@@ -25,6 +25,10 @@ body {
   /* font-family: Arial, Helvetica, sans-serif; */
   .sherpa-header {
     border-bottom: 1px solid #B9B9B9;
+    position: fixed;
+    z-index: 9999;
+    background-color: var(--background);
+    width: 100%;
 
     .logo-container {
       width: fit-content;
@@ -42,9 +46,8 @@ body {
 
 }
 
-main {
-  padding: 0 1.1rem;
-}
+/* main { */
+/* } */
 
 .font-excelsior {
   font-family: var(--font-excelsior);
