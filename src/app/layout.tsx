@@ -44,9 +44,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
         <NavBar />
-        <main>
+        {/* <main> */}
           {children}
-        </main>
+        {/* </main> */}
       </body>
     </html>
   );

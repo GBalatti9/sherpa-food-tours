@@ -9,9 +9,9 @@ export const wp = {
 
         const [data] = await response.json();
 
-        const { title: { rendered: title }, content: { rendered: content } } = data;
+        const { title: { rendered: title }, content: { rendered: content }, acf } = data;
 
-        return { title, content };
+        return { title, content, acf };
     },
     getPostInfo: async (slug: string) => {
         const response = await fetch(`${apiUrl}/posts?slug=${slug}`)
