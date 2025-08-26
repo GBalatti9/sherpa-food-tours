@@ -3,14 +3,34 @@ import "./travel-guide.css";
 import Link from "next/link";
 import { slugify } from "../helpers/slugify";
 import { WPPost } from "@/types/post";
+import { Category } from "@/types/category";
 import React from "react";
+
+interface CompletePost {
+    category: string;
+    posts: WPPost[]
+}
 
 export default async function TravelGuidePage() {
 
     // const { title, content } = await wp.getPageInfo("travel-guide")
     const posts = await wp.getAllPost();
+    const categories = await wp.getAllCategories();
 
-    console.log(slugify(posts[0].relaciones.ciudades[0].title));
+    // console.log({categories});
+    // console.log(posts[0]);
+
+    const data: CompletePost[] = categories.map((cat: Category) => {
+        const filteredPosts = posts.filter((post: WPPost) => post.categories.includes(cat.id));
+        return {
+            category: cat.name,
+            posts: filteredPosts
+        };
+    }).filter((group: CompletePost) => group.posts.length > 0);
+
+
+
+    // console.log(slugify(posts[0].relaciones.ciudades[0].title));
 
 
     const images = ["https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg", "https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg"]
@@ -86,138 +106,187 @@ export default async function TravelGuidePage() {
                     </div>
                 </div>
             </section>
-            <section className="travel-guide-third-section">
-                {posts.map((post: WPPost, i: number) => {
-                    let slug;
+            <section className="travel-guide-third-section-main-container">
 
-                    console.log({ post });
+                {/* First Section */}
+                <>
+                    <div className="travel-guide-third-section">
+                        {posts.map((post: WPPost, i: number) => {
+                            let slug;
+
+                            // console.log({ post });
 
 
-                    if (post.relaciones.ciudades && post.relaciones.ciudades.length > 0) {
-                        slug = post.relaciones.ciudades[0]!.title;
+                            if (post.relaciones.ciudades && post.relaciones.ciudades.length > 0) {
+                                slug = post.relaciones.ciudades[0]!.title;
 
-                    } else {
-                        slug = null
-                    }
+                            } else {
+                                slug = null
+                            }
 
-                    let url = null;
+                            let url = null;
 
-                    if (!slug) {
-                        url = "https://www.sherpafoodtours.com/travel-guide"
-                    } else {
-                        url = `${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`
-                    }
+                            if (!slug) {
+                                url = "https://www.sherpafoodtours.com/travel-guide"
+                            } else {
+                                url = `${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`
+                            }
 
-                    // ------------------
-                    // SOLO PARA MOBILE
-                    // ------------------
+                            // ------------------
+                            // SOLO PARA MOBILE
+                            // ------------------
 
-                    // Render del primer elemento
-                    if (i === 0) {
-                        return (
-                            <div className={`preview-wrapper element-${i}`} key={post.id}>
-                                <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
-                                    <div className="preview-image-container">
-                                        <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
-                                        <p className="preview-city">{slug}</p>
+                            // Render del primer elemento
+                            if (i === 0) {
+                                return (
+                                    <div className={`preview-wrapper element-${i}`} key={post.id}>
+                                        <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
+                                            <div className="preview-image-container">
+                                                <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
+                                                <p className="preview-city">{slug}</p>
+                                            </div>
+                                            <div className="preview-data">
+                                                <h3>{post.title.rendered}</h3>
+                                                <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
+                                                <p className="preview-author"><span>Por: </span>{post.author}</p>
+                                            </div>
+                                        </a>
                                     </div>
-                                    <div className="preview-data">
-                                        <h3>{post.title.rendered}</h3>
-                                        <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
-                                        <p className="preview-author"><span>Por: </span>{post.author}</p>
-                                    </div>
-                                </a>
-                            </div>
-                        );
-                    }
+                                );
+                            }
 
-                    // // Render del grupo de i === 1 y i === 2
-                    if (i === 1) {
-                        return (
-                            <div className="preview-wrapper-group" key="group-1-2">
-                                {[posts[1], posts[2]].map((p) => {
-                                    const s = p.relaciones?.ciudades?.[0]?.title || null;
-                                    const u = s
-                                        ? `https://www.sherpafoodtours.com/travel-guide/${slugify(s)}/${p.slug}`
-                                        : "https://www.sherpafoodtours.com/travel-guide";
+                            // // Render del grupo de i === 1 y i === 2
+                            if (i === 1) {
+                                return (
+                                    <div className="preview-wrapper-group" key="group-1-2">
+                                        {[posts[1], posts[2]].map((p) => {
+                                            const s = p.relaciones?.ciudades?.[0]?.title || null;
+                                            const u = s
+                                                ? `https://www.sherpafoodtours.com/travel-guide/${slugify(s)}/${p.slug}`
+                                                : "https://www.sherpafoodtours.com/travel-guide";
 
-                                    return (
-                                        <div className="preview-wrapper" key={p.id}>
-                                            <a className="preview-item" href={u} target="_blank" rel="noopener noreferrer" key={p.id}>
-                                                <div className="preview-image-container">
-                                                    <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={p.title.rendered} />
-                                                    <p className="preview-city">{s}</p>
+                                            return (
+                                                <div className="preview-wrapper" key={p.id}>
+                                                    <a className="preview-item" href={u} target="_blank" rel="noopener noreferrer" key={p.id}>
+                                                        <div className="preview-image-container">
+                                                            <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={p.title.rendered} />
+                                                            <p className="preview-city">{s}</p>
+                                                        </div>
+                                                        <div className="preview-data">
+                                                            <h3>{p.title.rendered}</h3>
+                                                            <p className="preview-author"><span>Por: </span>{p.author}</p>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                                <div className="preview-data">
-                                                    <h3>{p.title.rendered}</h3>
-                                                    <p className="preview-author"><span>Por: </span>{p.author}</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        );
-                    }
-
-                    // // Elementos con i > 2
-                    if (i > 2) {
-                        return (
-                            <div className="preview-wrapper list" key={post.id}>
-                                <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
-                                    <div className="preview-image-container">
-                                        <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
-                                        <p className="preview-city">{slug}</p>
+                                            );
+                                        })}
                                     </div>
-                                    <div className="preview-data">
-                                        <h3>{post.title.rendered}</h3>
-                                        <p className="preview-author"><span>Por: </span>{post.author}</p>
+                                );
+                            }
+
+                            // // Elementos con i > 2
+                            if (i > 2) {
+                                return (
+                                    <div className="preview-wrapper list" key={post.id}>
+                                        <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
+                                            <div className="preview-image-container">
+                                                <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
+                                                <p className="preview-city">{slug}</p>
+                                            </div>
+                                            <div className="preview-data">
+                                                <h3>{post.title.rendered}</h3>
+                                                <p className="preview-author"><span>Por: </span>{post.author}</p>
+                                            </div>
+                                        </a>
                                     </div>
-                                </a>
-                            </div>
-                        );
-                    }
+                                );
+                            }
 
-                    return null;
+                            return null;
 
-                    // return (
+                            // return (
 
-                    //     <React.Fragment key={post.id}>
-                    //         {i === 0 && (
-                    //             <div className="preview-wrapper">
-                    //                 <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
-                    //                     <div className="preview-image-container">
-                    //                         <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
-                    //                         <p className="preview-city">{slug}</p>
-                    //                     </div>
-                    //                     <div className="preview-data">
-                    //                         <h3>{post.title.rendered}</h3>
-                    //                         <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
-                    //                         <p className="preview-author"><span>Por: </span>{post.author}</p>
-                    //                     </div>
-                    //                 </a>
-                    //             </div>
-                    //         )}
+                            //     <React.Fragment key={post.id}>
+                            //         {i === 0 && (
+                            //             <div className="preview-wrapper">
+                            //                 <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
+                            //                     <div className="preview-image-container">
+                            //                         <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
+                            //                         <p className="preview-city">{slug}</p>
+                            //                     </div>
+                            //                     <div className="preview-data">
+                            //                         <h3>{post.title.rendered}</h3>
+                            //                         <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
+                            //                         <p className="preview-author"><span>Por: </span>{post.author}</p>
+                            //                     </div>
+                            //                 </a>
+                            //             </div>
+                            //         )}
 
-                    //         {(i === 1 || i === 2) && (
-                    //             <div className="preview-wrapper-group">
-                    //                 <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
-                    //                     <div className="preview-image-container">
-                    //                         <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
-                    //                         <p className="preview-city">{slug}</p>
-                    //                     </div>
-                    //                     <div className="preview-data">
-                    //                         <h3>{post.title.rendered}</h3>
-                    //                         <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
-                    //                         <p className="preview-author"><span>Por: </span>{post.author}</p>
-                    //                     </div>
-                    //                 </a>
-                    //             </div>
-                    //         )}
-                    //     </React.Fragment>
-                    // )
-                })}
-                {/* <Link href="/" className="show-more">Show more</Link> */}
+                            //         {(i === 1 || i === 2) && (
+                            //             <div className="preview-wrapper-group">
+                            //                 <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
+                            //                     <div className="preview-image-container">
+                            //                         <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
+                            //                         <p className="preview-city">{slug}</p>
+                            //                     </div>
+                            //                     <div className="preview-data">
+                            //                         <h3>{post.title.rendered}</h3>
+                            //                         <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
+                            //                         <p className="preview-author"><span>Por: </span>{post.author}</p>
+                            //                     </div>
+                            //                 </a>
+                            //             </div>
+                            //         )}
+                            //     </React.Fragment>
+                            // )
+                        })}
+                    </div>
+                    <Link href="/" className="show-more">Show more</Link>
+                </>
+
+                {/* Second Section */}
+                {data.map((element, i) => (
+                    <div className="category-container" key={element.category + i}>
+                        <h3 className="category-title">{element.category}</h3>
+                        <div className="travel-guide-third-section">
+                            {element.posts.map((post) => {
+                                let slug;
+
+                                if (post.relaciones.ciudades && post.relaciones.ciudades.length > 0) {
+                                    slug = post.relaciones.ciudades[0]!.title;
+
+                                } else {
+                                    slug = null
+                                }
+
+                                let url = null;
+
+                                if (!slug) {
+                                    url = "https://www.sherpafoodtours.com/travel-guide"
+                                } else {
+                                    url = `${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`
+                                }
+
+                                return (
+                                    <div className={`preview-wrapper`} key={post.id}>
+                                        <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
+                                            <div className="preview-image-container">
+                                                <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
+                                                <p className="preview-city">{slug}</p>
+                                            </div>
+                                            <div className="preview-data">
+                                                <h3>{post.title.rendered}</h3>
+                                                <p className="preview-author"><span>Por: </span>{post.author}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <Link href="/" className="show-more">Show more</Link>
+                    </div>
+                ))}
             </section>
         </>
     )

@@ -188,6 +188,7 @@
             grid-template-columns: repeat(3, 4fr);
             /* grid-template-rows: repeat(4, 1fr); */
             max-width: none;
+            gap: 1rem;
 
             .preview-wrapper.element-0 {
                 grid-column: span 2;
@@ -210,7 +211,7 @@
 
             .preview-wrapper {
                 width: 50%;
-                
+
                 @media screen and (min-width: 768px) {
                     margin: 0;
                     width: 100%;
@@ -220,6 +221,7 @@
                     .preview-image-container {
                         .preview-city {
                             display: none;
+
                             @media screen and (min-width: 768px) {
                                 display: block;
                             }
@@ -247,33 +249,42 @@
                 @media screen and (min-width: 768px) {
                     flex-direction: column;
                 }
-    
+
                 .preview-image-container {
                     aspect-ratio: 4 / 3;
                     width: 30%;
-    
+
+                    @media screen and (min-width: 768px) {
+                        width: 100%;
+                        aspect-ratio: auto;
+                    }
+
                     .preview-city {
                         display: none;
+
+                        @media screen and (min-width: 768px) {
+                            display: block;
+                        }
                     }
                 }
-    
+
                 .preview-data {
                     width: 70%;
                     margin-top: 0;
                     gap: 5px;
-    
+
                     h3 {
                         font-size: 1rem;
                         line-height: 1.28;
                     }
-    
+
                     .preview-author {
                         font-size: 0.75rem;
                     }
                 }
             }
         }
-        
+
     }
 
 
@@ -287,3 +298,19 @@
         text-align: center;
         display: block;
     }
+
+.category-container {
+    padding: 4rem 1.3rem;
+    display: none;
+    @media screen and (min-width: 768px) {
+        display: block;
+    }
+    .category-title {
+        font-family: var(--font-dk-otago);
+        font-size: 2.18rem;
+        line-height: 1;
+    }
+    .travel-guide-third-section {
+        padding: 0;
+    }
+}

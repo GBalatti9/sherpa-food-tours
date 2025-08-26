@@ -19,8 +19,8 @@ export const wp = {
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
 
-        console.log({data});
-        
+        // console.log({ data });
+
         const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified } = data;
 
         return { title, content, excerpt, featured_media, date, modified };
@@ -58,6 +58,14 @@ export const wp = {
                 alt: "",
             };
         }
+    },
+    getAllCategories: async () => {
+        const response = await fetch(`${apiUrl}/categories`)
+
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+        const data = await response.json();
+
+        return data;
     }
 
 }
