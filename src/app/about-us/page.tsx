@@ -1,43 +1,48 @@
 import { wp } from "@/lib/wp";
 import "./about-us.css";
+import { AboutUsInfo, AcfData, LocalGuide, ValueItem } from "./types";
 
 
 
 export default async function AboutUsPage() {
 
-    const { title, content, acf } = await wp.getPageInfo("about");
+    const { title, content, acf }: AboutUsInfo = await wp.getPageInfo("about");
+    // console.log({ title, content, acf });
 
-    console.log({ title, content, acf });
+    // Función para obtener entradas de ACF según un filtro
+    const getACFEntries = (acf: AcfData, keyIncludes: string, validator: (item: ValueItem) => void) =>
+        Object.entries(acf)
+            .filter(([key, value]) => key.includes(keyIncludes) && validator(value))
+            .map(([_, value]) => value);
 
-    const values = Object.entries(acf)
-        .filter(([key, value]) => key.includes("value") && value.title?.trim().length > 0)
-        .map(([_, value]) => value);
+    const hasTitle = (item: ValueItem) => item?.title?.trim().length > 0;
 
-    const local_guides = Object.entries(acf)
-        .filter(([key]) => key.includes("local_guide"))
-        .map(([_, guide]) => guide);
+    const values = getACFEntries(acf, "value", hasTitle);
+    const localGuides = getACFEntries(acf, "local_guide", () => true);
 
-    console.log({ local_guides });
+    console.log({ values });
 
+    // Carga de imágenes
+    const loadValueImages = (items: ValueItem[]) =>
+        Promise.all(
+            items.map(async (item) => ({
+                ...item,
+                background_image: await wp.getPostImage(item.background_image),
+            }))
+        );
 
-    const promises = values.map((item) =>
-        wp.getPostImage(item.background_image).then((image) => ({
-            ...item,
-            background_image: image,
-        }))
-    );
+    const loadGuideImages = (items: LocalGuide[]) =>
+        Promise.all(
+            items.map(async (item) => ({
+                ...item,
+                profile_picture: await wp.getPostImage(item.profile_picture),
+            }))
+        );
 
-    const promisesLocalGuide = local_guides.map((item) =>
-        wp.getPostImage(item.profile_picture).then((image) => ({
-            ...item,
-            profile_picture: image,
-        }))
-    );
-
-    const acfData = await Promise.all(promises);
-    const acfDataLocalGuides = await Promise.all(promisesLocalGuide);
-    console.log(acfDataLocalGuides[0]);
-
+    const [acfData, acfDataLocalGuides] = await Promise.all([
+        loadValueImages(values),
+        loadGuideImages(localGuides),
+    ]);
 
     return (
         <main className="about-us-page">
@@ -55,9 +60,6 @@ export default async function AboutUsPage() {
                             backgroundSize: "cover",
                             backgroundPosition: "center"
                         }}>
-                            {/* <div className="background-img">
-                            <img src={element.background_image.img} alt={element.background_image.alt} />
-                            </div> */}
                             <div className="info-card">
                                 <h4>{element.title}</h4>
                                 <hr />
@@ -77,7 +79,7 @@ export default async function AboutUsPage() {
                                     <img src={element.profile_picture.img} alt={element.profile_picture.alt} />
                                 </div>
                                 <div className="value-card-titles">
-                                    <p>{element.name}</p>
+                                    <p className="value-card-name">{element.name}</p>
                                     <p>{element.city}</p>
                                 </div>
                             </div>
@@ -85,7 +87,14 @@ export default async function AboutUsPage() {
                             <div className="value-card-description">
                                 <p>{element.description}</p>
                                 <div className="value-card-last-section">
-                                    <p>Favorite Dish</p>
+                                    <p className="last-section-title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                                            <path d="M4.83398 2.08374V15.0699" stroke="#017E80" strokeWidth="1.29861" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M2.88672 2.40845V5.65498C2.88672 7.27825 4.83464 7.27825 4.83464 7.27825C4.83464 7.27825 6.78256 7.27825 6.78256 5.65498V2.40845" stroke="#017E80" strokeWidth="1.29861" stroke-linecap="round" strokeLinejoin="round" />
+                                            <path d="M12.6265 7.60285H10.0293V4.68097C10.0293 2.08374 12.6265 2.08374 12.6265 2.08374V7.60285ZM12.6265 7.60285V15.0699" stroke="#017E80" strokeWidth="1.29861" stroke-linecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        Favorite Dish
+                                    </p>
                                     <p>{element.favorite_dish}</p>
                                 </div>
                             </div>

@@ -9,9 +9,9 @@ export const wp = {
 
         const [data] = await response.json();
 
-        const { title: { rendered: title }, content: { rendered: content }, acf } = data;
+        const { title: { rendered: title }, content: { rendered: content }, acf, featured_media } = data;
 
-        return { title, content, acf };
+        return { title, content, acf, featured_media };
     },
     getPostInfo: async (slug: string) => {
         const response = await fetch(`${apiUrl}/posts?slug=${slug}`)
@@ -66,6 +66,30 @@ export const wp = {
         const data = await response.json();
 
         return data;
+    },
+    getAllTours: async () => {
+        const response = await fetch(`${apiUrl}/tours`)
+
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+        const data = await response.json();
+
+        return data;
+    },
+    getCity: async (id: number) => {
+        const response = await fetch(`${apiUrl}/cities/${id}`)
+
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+        const { title: { rendered: title }, acf: { pais: country_id }} = await response.json();
+
+        return {city_name: title, country_id: country_id};
+    },
+    getCountry: async (id: number) => {
+        const response = await fetch(`${apiUrl}/countries/${id}`)
+
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+        const {title: { rendered: title }} = await response.json();
+
+        return {country_name: title};
     }
 
 }
