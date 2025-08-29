@@ -3,6 +3,7 @@
 import { wp } from "@/lib/wp";
 import { ACFHome } from "@/types/acf-home";
 import "./home.css";
+import Link from "next/link";
 
 export default async function Home() {
 
@@ -96,7 +97,7 @@ export default async function Home() {
         </div>
         <div className="tours-section">
           {tours.reverse().map((tour, i) => (
-            <div className="tour-card" key={tour.city + i}>
+            <Link className="tour-card" key={tour.city + i} href={`/city/${tour.slug}`}>
               <div className="img-container">
                 <img src={tour.image.img} alt={tour.image.alt} />
               </div>
@@ -104,7 +105,7 @@ export default async function Home() {
                 <h4>{tour.city}</h4>
                 <p>{tour.country}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
