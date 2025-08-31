@@ -94,10 +94,10 @@ export const wp = {
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
+        
+        const { title: { rendered: title }, content: { rendered: content }, featured_media } = data;
 
-        const { title: { rendered: title }, content: { rendered: content } } = data;
-
-        return { title, content };
+        return { title, content, featured_media };
     },
     getAuthor: async (id: number) => {
         const response = await fetch(`${apiUrl}/users/${id}`)

@@ -109,6 +109,11 @@
             font-family: var(--font-excelsior);
             font-size: 1.125rem;
             line-height: 1.5;
+            width: 80%;
+            margin: auto;
+        }
+        span {
+            font-weight: 700;
         }
     }
     .tours-section {

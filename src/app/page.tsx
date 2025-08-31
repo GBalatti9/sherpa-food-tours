@@ -6,6 +6,7 @@ import "./home.css";
 import Link from "next/link";
 import { getNotReadyToBookSection } from "./utils/getNotReadyToBookSection";
 import { Tour } from "@/types/tour";
+import OurExperiencesSection from "./components/our-experiences";
 
 export default async function Home() {
 
@@ -27,7 +28,7 @@ export default async function Home() {
 
   const toursRaw = await wp.getAllTours();
   console.log(toursRaw[0]);
-  
+
 
   const tours = await Promise.all(
     toursRaw.map(async (data: Tour) => {
@@ -50,7 +51,10 @@ export default async function Home() {
   )
 
   const not_ready_to_book_section = await getNotReadyToBookSection();
-  
+
+  const our_experiences_section = await wp.getEmbedSectionInfo("our-experiences");
+  const our_experiences_section_image = await wp.getPostImage(our_experiences_section.featured_media);
+
 
 
   return (
@@ -90,11 +94,20 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
+      <section className="third-section">
+        <div className="content" dangerouslySetInnerHTML={{ __html: content }}>
+        </div>
+      </section>
+      <OurExperiencesSection
+          title={our_experiences_section.title}
+          content={our_experiences_section.content}
+          src={our_experiences_section_image.img}
+          alt={our_experiences_section_image.alt}
+        />
       <section className="home-fourth-section">
         <div className="title-section">
-          <h2>Just relax, we 've got it cover</h2>
-          <p>Everything's included. We handle the details and most dietary needs. Just show up ready to enjoy</p>
+          <h2>Just relax, <br /> we 've got it cover</h2>
+          <p><span>Everything's included.</span> We handle the details and most dietary needs. Just show up ready to enjoy</p>
         </div>
         <div className="tours-section">
           {tours.reverse().map((tour, i) => (
@@ -110,9 +123,6 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      {/* <h1>{title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
-
       <section className="home-fifth-section not-ready-to-book">
         <div className="title-section">
           <h4>{not_ready_to_book_section.titles.title}</h4>
@@ -123,7 +133,7 @@ export default async function Home() {
             return (
               <Link className="preview-item" key={post.id} href={`${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${post.city_slug}/${post.slug}`}>
                 <div className="preview-image-container">
-                  <img src={post.image.img} alt={post.image.alt} loading="eager"/>
+                  <img src={post.image.img} alt={post.image.alt} loading="eager" />
                   <p className="preview-city">{post.city}</p>
                 </div>
                 <div className="preview-data">

@@ -225,3 +225,96 @@ body {
     margin: 1.5rem auto;
   }
 }
+
+.third-section {
+  padding: 4rem 1.3rem 2rem 1.3rem;
+
+  .content {
+    font-family: var(--font-excelsior);
+    line-height: 1.5;
+
+    h3 {
+      color: var(--main-color);
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 400;
+      max-width: 90%;
+    }
+
+    span {
+      font-style: normal;
+    }
+
+    p {
+      font-size: 1.125rem;
+      letter-spacing: 0;
+      padding-top: .8rem;
+    }
+  }
+}
+
+.our-experiences-section {
+  background-color: var(--main-color);
+
+  .our-experiences-section-first-part {
+    padding: 2rem 1.3rem 2rem 1.3rem;
+    color: white;
+
+    .title-section {
+      h2 {
+        font-family: var(--font-dk-otago);
+        line-height: 1;
+        font-size: 1.5rem;
+        padding: 1rem 0 2rem 0;
+      }
+    }
+
+    .content-section {
+      font-family: var(--font-excelsior);
+      font-size: 1.5rem;
+
+      p {
+        font-style: italic;
+        padding-top: 1rem;
+        line-height: 1.5;
+        letter-spacing: -2%;
+        max-width: 90%;
+      }
+
+      span {
+        font-style: normal;
+
+      }
+    }
+  }
+
+  .img-container {
+    aspect-ratio: 3 / 4;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .our-experiences-section-last-part {
+    padding: 1.3rem;
+    display: flex;
+    flex-direction: column;
+
+    button {
+      width: fit-content;
+      font-family: var(--font-dk-otago);
+      font-size: 1.5rem;
+    }
+
+    .share-btn {
+      padding-bottom: 1.3rem;
+    }
+
+    .explore-btn {
+      padding-top: 1.3rem;
+    }
+
+  }
+}
