@@ -10,6 +10,7 @@ export async function getNotReadyToBookSection() {
         wp.getEmbedSectionInfo("not-ready-to-book"),
         wp.getAllPost()
     ]);
+    
 
     // Formatear posts en paralelo
     const postDataFormatted = await Promise.all(
@@ -19,16 +20,21 @@ export async function getNotReadyToBookSection() {
                 wp.getAuthor(post.author)
             ]);
 
+            // Manejar ciudad opcional
+            const ciudad = post.relaciones.ciudades?.[0];
+            const city = ciudad?.title || "Sin ciudad";
+            const city_slug = ciudad ? slugify(ciudad.title) : "sin-ciudad";
+
             return {
                 ...post,
                 image,
                 author_name,
-                city: post.relaciones.ciudades[0].title,
-                city_slug: slugify(post.relaciones.ciudades[0].title)
+                city: city,
+                city_slug: city_slug,
             };
         })
     );
-    
+
 
     return {
         titles,

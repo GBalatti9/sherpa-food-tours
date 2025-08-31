@@ -49,3 +49,15 @@ export interface WPRelation {
   title: string;
   link: string;
 }
+
+export interface FormattedWpPost extends WPPost {
+  image: {
+    img: string;
+    alt: string;
+  };
+  author_name: {
+    name: string;
+  };
+  city: string;
+  city_slug: string;
+}

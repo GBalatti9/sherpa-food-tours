@@ -7,6 +7,7 @@ import Link from "next/link";
 import { getNotReadyToBookSection } from "./utils/getNotReadyToBookSection";
 import { Tour } from "@/types/tour";
 import OurExperiencesSection from "./components/our-experiences";
+import NotReadyToBook from "./components/not-ready-to-book";
 
 export default async function Home() {
 
@@ -99,11 +100,11 @@ export default async function Home() {
         </div>
       </section>
       <OurExperiencesSection
-          title={our_experiences_section.title}
-          content={our_experiences_section.content}
-          src={our_experiences_section_image.img}
-          alt={our_experiences_section_image.alt}
-        />
+        title={our_experiences_section.title}
+        content={our_experiences_section.content}
+        src={our_experiences_section_image.img}
+        alt={our_experiences_section_image.alt}
+      />
       <section className="home-fourth-section">
         <div className="title-section">
           <h2>Just relax, <br /> we 've got it cover</h2>
@@ -123,7 +124,11 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      <section className="home-fifth-section not-ready-to-book">
+      <NotReadyToBook
+        titles={not_ready_to_book_section.titles}
+        posts={not_ready_to_book_section.posts}
+      />
+      {/* <section className="home-fifth-section not-ready-to-book">
         <div className="title-section">
           <h4>{not_ready_to_book_section.titles.title}</h4>
           <div className="subtitle" dangerouslySetInnerHTML={{ __html: not_ready_to_book_section.titles.content }}></div>
@@ -146,7 +151,7 @@ export default async function Home() {
             )
           })}
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }
