@@ -9,6 +9,7 @@ import { Tour } from "@/types/tour";
 import OurExperiencesSection from "./components/our-experiences";
 import NotReadyToBook from "./components/not-ready-to-book";
 import { fetchImages } from "./utils/fetchImages";
+import Footer from "./components/footer";
 
 export default async function Home() {
 
@@ -167,6 +168,7 @@ export default async function Home() {
           ))}
         </div>
       </section>
+      <Footer />
     </main>
   );
 }

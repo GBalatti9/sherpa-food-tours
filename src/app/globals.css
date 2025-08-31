@@ -185,7 +185,7 @@ body {
       margin-top: 10px;
       font-family: var(--font-excelsior);
 
-      .preview-key{
+      .preview-key {
         font-family: var(--font-dk-otago);
         font-size: 1rem;
       }
@@ -302,6 +302,7 @@ body {
       object-fit: cover;
     }
   }
+
   .our-experiences-section-last-part {
     padding: 1.3rem;
     display: flex;
@@ -322,4 +323,47 @@ body {
     }
 
   }
+}
+
+.footer {
+  color: white;
+
+  .footer-first-section {
+    background-color: var(--second-green);
+    padding: 2rem 1.3rem;
+
+    .first-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.3rem;
+
+      .social-media {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+      }
+    }
+
+    .second-section {
+      padding-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      font-family: var(--font-excelsior);
+
+      a:first-child {
+        text-decoration: underline;
+      }
+    }
+  }
+  .footer-second-section {
+    color: #8D8D8D;
+    padding: 2rem 1.3rem;
+    font-size: 0.85rem;
+    text-align: center;
+    line-height: 1.5;
+    font-family: var(--font-excelsior);
+  }
+
 }

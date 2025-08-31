@@ -162,7 +162,9 @@
 }
 
 .home-last-section {
-    overflow-x: hidden;
+    overflow: hidden;
+    background-color: #CBDCD9;
+    padding: 2rem 0;
     .titles {
         display: grid;
 
@@ -184,7 +186,7 @@
     .memories-container {
         position: relative;
         width: 100%;
-        height: 600px;
+        height: 110svh;
 
         .memory-container {
             position: absolute;
