@@ -33,14 +33,28 @@ export default async function Home() {
     acf.third_img
   ]
 
+  const memoriesImagesIds = [
+    acf.first_memory,
+    acf.second_memory,
+    acf.third_memory,
+    acf.fourth_memory,
+    acf.fifth_memory,
+    acf.sixth_memory,
+    acf.seventh_memory,
+    acf.eighth_memory,
+    acf.ninth_memory,
+    acf.tenth_memory
+  ]
+
   const images = await fetchImages(imagesIds);
   const asFeatureInImages = await fetchImages(asFeatureInImagesId);
+  const memories = await fetchImages(memoriesImagesIds);
+  console.log({memories});
+  
 
   const [background_image, ...imgs] = images;
 
   const toursRaw = await wp.getAllTours();
-  console.log({asFeatureInImages});
-
 
   const tours = await Promise.all(
     toursRaw.map(async (data: Tour) => {
@@ -103,7 +117,7 @@ export default async function Home() {
                 <img src={img.img} alt={img.alt} />
               </div>
             ))}
-            
+
           </div>
         </div>
       </section>
@@ -140,30 +154,19 @@ export default async function Home() {
         titles={not_ready_to_book_section.titles}
         posts={not_ready_to_book_section.posts}
       />
-      {/* <section className="home-fifth-section not-ready-to-book">
-        <div className="title-section">
-          <h4>{not_ready_to_book_section.titles.title}</h4>
-          <div className="subtitle" dangerouslySetInnerHTML={{ __html: not_ready_to_book_section.titles.content }}></div>
+      <section className="home-last-section">
+        <div className="titles">
+          <img src="/sherpa-green.png" alt="Sherpa Food Tour Logo" />
+          <p className="title">memories</p>
         </div>
-        <div className="preview-wrapper">
-          {not_ready_to_book_section.posts.map((post) => {
-            return (
-              <Link className="preview-item" key={post.id} href={`${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${post.city_slug}/${post.slug}`}>
-                <div className="preview-image-container">
-                  <img src={post.image.img} alt={post.image.alt} loading="eager" />
-                  <p className="preview-city">{post.city}</p>
-                </div>
-                <div className="preview-data">
-                  <h3>{post.title.rendered}</h3>
-                  <div className="preview-author">
-                    <span>Por:</span> {post.author_name.name}
-                  </div>
-                </div>
-              </Link>
-            )
-          })}
+        <div className="memories-container">
+          {memories.map((memory, i) => (
+            <div className="memory-container" key={memory.img + i}>
+              <img src={memory.img} alt={memory.alt} />
+            </div>
+          ))}
         </div>
-      </section> */}
+      </section>
     </main>
   );
 }
