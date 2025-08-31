@@ -120,8 +120,32 @@ body {
 
 }
 
+.not-ready-to-book {
+  padding-left: 1.3rem;
+  padding-right: 1.3rem;
+
+  .title-section {
+    h4 {
+      color: #000;
+      font-size: 1.6rem;
+      font-family: var(--font-dk-otago);
+    }
+
+    .subtitle p {
+      letter-spacing: 0;
+      color: #000;
+      margin-top: 1.3rem;
+      font-size: 1.125rem;
+      line-height: 1.5;
+    }
+  }
+}
+
 .preview-wrapper {
   margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
 
   .preview-item {
     .preview-image-container {
@@ -165,6 +189,7 @@ body {
         color: black;
         font-size: 1.5rem;
         margin: 0;
+        line-height: 1.35;
       }
 
       .preview-author {

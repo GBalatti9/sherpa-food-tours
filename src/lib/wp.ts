@@ -19,8 +19,6 @@ export const wp = {
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
 
-        // console.log({ data });
-
         const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified } = data;
 
         return { title, content, excerpt, featured_media, date, modified };
@@ -79,17 +77,36 @@ export const wp = {
         const response = await fetch(`${apiUrl}/cities/${id}`)
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
-        const { title: { rendered: title }, acf: { pais: country_id }} = await response.json();
+        const { title: { rendered: title }, acf: { pais: country_id } } = await response.json();
 
-        return {city_name: title, country_id: country_id};
+        return { city_name: title, country_id: country_id };
     },
     getCountry: async (id: number) => {
         const response = await fetch(`${apiUrl}/countries/${id}`)
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
-        const {title: { rendered: title }} = await response.json();
+        const { title: { rendered: title } } = await response.json();
 
-        return {country_name: title};
+        return { country_name: title };
+    },
+    getEmbedSectionInfo: async (slug: string) => {
+        const response = await fetch(`${apiUrl}/embedsections?slug=${slug}`)
+
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+        const [data] = await response.json();
+
+        const { title: { rendered: title }, content: { rendered: content } } = data;
+
+        return { title, content };
+    },
+    getAuthor: async (id: number) => {
+        const response = await fetch(`${apiUrl}/users/${id}`)
+
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+
+        const { name } = await response.json();
+
+        return { name };
     }
 
 }
