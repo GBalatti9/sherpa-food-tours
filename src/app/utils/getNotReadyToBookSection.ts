@@ -8,7 +8,7 @@ export async function getNotReadyToBookSection() {
     // Traer títulos y posts en paralelo
     const [titles, posts] = await Promise.all([
         wp.getEmbedSectionInfo("not-ready-to-book"),
-        wp.getAllPost()
+        wp.getAllPost(3)
     ]);
     
 

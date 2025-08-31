@@ -23,8 +23,9 @@ export const wp = {
 
         return { title, content, excerpt, featured_media, date, modified };
     },
-    getAllPost: async () => {
-        const response = await fetch(`${apiUrl}/posts`)
+    getAllPost: async (limit?: number) => {
+        const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts`;
+        const response = await fetch(url)
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const data = await response.json();
