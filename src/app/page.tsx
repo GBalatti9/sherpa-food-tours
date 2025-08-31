@@ -8,11 +8,15 @@ import { getNotReadyToBookSection } from "./utils/getNotReadyToBookSection";
 import { Tour } from "@/types/tour";
 import OurExperiencesSection from "./components/our-experiences";
 import NotReadyToBook from "./components/not-ready-to-book";
+import { fetchImages } from "./utils/fetchImages";
 
 export default async function Home() {
 
   const pageInfo = await wp.getPageInfo("home");
   const acf: ACFHome = pageInfo.acf;
+
+  console.log({ acf });
+
 
   const { title, content, featured_media } = pageInfo;
 
@@ -20,15 +24,22 @@ export default async function Home() {
     featured_media,
     acf.google_logo,
     acf.tripadvisor_medal,
-    acf.tripadvisor_logo,
+    acf.tripadvisor_logo
   ]
 
-  const images = await Promise.all(imagesIds.map(id => wp.getPostImage(id)));
+  const asFeatureInImagesId = [
+    acf.first_img,
+    acf.second_img,
+    acf.third_img
+  ]
+
+  const images = await fetchImages(imagesIds);
+  const asFeatureInImages = await fetchImages(asFeatureInImagesId);
 
   const [background_image, ...imgs] = images;
 
   const toursRaw = await wp.getAllTours();
-  console.log(toursRaw[0]);
+  console.log({asFeatureInImages});
 
 
   const tours = await Promise.all(
@@ -87,11 +98,12 @@ export default async function Home() {
           <p>As Featured In:</p>
           <div className="imgs-container">
 
-            {imgs.map((img, i) => (
+            {asFeatureInImages.map((img, i) => (
               <div className="img-container" key={img.img + i}>
                 <img src={img.img} alt={img.alt} />
               </div>
             ))}
+            
           </div>
         </div>
       </section>

@@ -76,7 +76,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 1rem;
+        /* gap: 1rem; */
+        gap: .7rem;
+        padding: 1.5rem 0;
 
         p {
 
@@ -89,21 +91,28 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: .5rem;
+        }
 
+        .imgs-container .img-container:last-child {
+            padding-bottom: 2px;
         }
     }
 }
 
 .home-fourth-section {
     padding: 2rem 0;
+
     .title-section {
         padding: 2rem 0;
         text-align: center;
+
         h2 {
             font-family: var(--font-dk-otago);
             font-size: 1.56rem;
             line-height: 1.45;
         }
+
         p {
             padding-top: 1rem;
             font-family: var(--font-excelsior);
@@ -112,10 +121,12 @@
             width: 80%;
             margin: auto;
         }
+
         span {
             font-weight: 700;
         }
     }
+
     .tours-section {
         background-color: var(--main-color);
         display: grid;
@@ -134,11 +145,13 @@
             .tour-data {
                 text-align: center;
                 padding: .5rem 0 .2rem 0;
+
                 h4 {
                     font-family: var(--font-dk-otago);
                     color: var(--main-color);
                     font-size: 1.125rem;
                 }
+
                 p {
                     font-family: var(--font-excelsior);
                     color: #333;

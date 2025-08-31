@@ -9,10 +9,7 @@ export async function getNotReadyToBookSection() {
     const [titles, posts] = await Promise.all([
         wp.getEmbedSectionInfo("not-ready-to-book"),
         wp.getAllPost(3)
-    ]);
-
-    console.log(posts[0]);
-    
+    ]);    
     
 
     // Formatear posts en paralelo

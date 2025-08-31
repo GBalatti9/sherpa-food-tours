@@ -6,4 +6,7 @@ export interface ACFHome {
     google_logo: number;
     tripadvisor_medal: number;
     tripadvisor_logo: number;
+    first_img: number;
+    second_img: number;
+    third_img: number;
 }

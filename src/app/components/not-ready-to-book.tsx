@@ -9,7 +9,6 @@ interface NotReadyToBookTitles {
 
 
 export default function NotReadyToBook({titles, posts}: {titles: NotReadyToBookTitles, posts: FormattedWpPost[]}) {;
-    console.log("POST", posts[0]);
     return (
         <section className="home-fifth-section not-ready-to-book">
             <div className="title-section">
