@@ -10,6 +10,9 @@ export async function getNotReadyToBookSection() {
         wp.getEmbedSectionInfo("not-ready-to-book"),
         wp.getAllPost(3)
     ]);
+
+    console.log(posts[0]);
+    
     
 
     // Formatear posts en paralelo
@@ -24,6 +27,7 @@ export async function getNotReadyToBookSection() {
             const ciudad = post.relaciones.ciudades?.[0];
             const city = ciudad?.title || "Sin ciudad";
             const city_slug = ciudad ? slugify(ciudad.title) : "sin-ciudad";
+            const key = post.acf.key || null;
 
             return {
                 ...post,
@@ -31,6 +35,7 @@ export async function getNotReadyToBookSection() {
                 author_name,
                 city: city,
                 city_slug: city_slug,
+                key,
             };
         })
     );

@@ -8,7 +8,8 @@ interface NotReadyToBookTitles {
 }
 
 
-export default function NotReadyToBook({titles, posts}: {titles: NotReadyToBookTitles, posts: FormattedWpPost[]}) {
+export default function NotReadyToBook({titles, posts}: {titles: NotReadyToBookTitles, posts: FormattedWpPost[]}) {;
+    console.log("POST", posts[0]);
     return (
         <section className="home-fifth-section not-ready-to-book">
             <div className="title-section">
@@ -24,6 +25,7 @@ export default function NotReadyToBook({titles, posts}: {titles: NotReadyToBookT
                                 <p className="preview-city">{post.city}</p>
                             </div>
                             <div className="preview-data">
+                                <span className="preview-key">{post.key}</span>
                                 <h3>{post.title.rendered}</h3>
                                 <div className="preview-author">
                                     <span>Por:</span> {post.author_name.name}
@@ -32,6 +34,7 @@ export default function NotReadyToBook({titles, posts}: {titles: NotReadyToBookT
                         </Link>
                     )
                 })}
+                <Link href="/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
             </div>
         </section>
     )

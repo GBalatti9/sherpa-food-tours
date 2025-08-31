@@ -36,6 +36,7 @@ export interface WPPost {
     tours: string;
     ciudades: number[];
     paises: number[];
+    key: string | null;
   };
   relaciones: {
     tours: (WPRelation | null)[];
@@ -60,4 +61,5 @@ export interface FormattedWpPost extends WPPost {
   };
   city: string;
   city_slug: string;
+  key: string | null;
 }
