@@ -2,25 +2,29 @@ import { wp } from "@/lib/wp";
 import "./about-us.css";
 import { AboutUsInfo, AcfData, LocalGuide, ValueItem } from "./types";
 
+type YearACF = {
+    year: number,
+    description: string,
+    extra_info: string,
+    image: number,
+};
 
 
 export default async function AboutUsPage() {
 
-    const { title, content, acf }: AboutUsInfo = await wp.getPageInfo("about");
+    const { content, acf }: AboutUsInfo = await wp.getPageInfo("about");
     // console.log({ title, content, acf });
 
     // Función para obtener entradas de ACF según un filtro
     const getACFEntries = (acf: AcfData, keyIncludes: string, validator: (item: ValueItem) => void) =>
         Object.entries(acf)
             .filter(([key, value]) => key.includes(keyIncludes) && validator(value))
-            .map(([_, value]) => value);
+            .map(([, value]) => value);
 
     const hasTitle = (item: ValueItem) => item?.title?.trim().length > 0;
 
     const values = getACFEntries(acf, "value", hasTitle);
     const localGuides = getACFEntries(acf, "local_guide", () => true);
-
-    console.log({ values });
 
     // Carga de imágenes
     const loadValueImages = (items: ValueItem[]) =>
@@ -43,6 +47,17 @@ export default async function AboutUsPage() {
         loadValueImages(values),
         loadGuideImages(localGuides),
     ]);
+
+    const our_story_section = await wp.getEmbedSectionInfo("our-story");
+    const our_story_section_acf = our_story_section.acf as Record<string, YearACF>;
+
+
+    const yearsArray = Object.entries(our_story_section_acf).map(([key, value]) => ({
+        key,
+        ...value
+    })).filter(item => item.year && String(item.year).trim().length > 0);
+
+
 
     return (
         <main className="about-us-page">
@@ -90,8 +105,8 @@ export default async function AboutUsPage() {
                                     <p className="last-section-title">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
                                             <path d="M4.83398 2.08374V15.0699" stroke="#017E80" strokeWidth="1.29861" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M2.88672 2.40845V5.65498C2.88672 7.27825 4.83464 7.27825 4.83464 7.27825C4.83464 7.27825 6.78256 7.27825 6.78256 5.65498V2.40845" stroke="#017E80" strokeWidth="1.29861" stroke-linecap="round" strokeLinejoin="round" />
-                                            <path d="M12.6265 7.60285H10.0293V4.68097C10.0293 2.08374 12.6265 2.08374 12.6265 2.08374V7.60285ZM12.6265 7.60285V15.0699" stroke="#017E80" strokeWidth="1.29861" stroke-linecap="round" strokeLinejoin="round" />
+                                            <path d="M2.88672 2.40845V5.65498C2.88672 7.27825 4.83464 7.27825 4.83464 7.27825C4.83464 7.27825 6.78256 7.27825 6.78256 5.65498V2.40845" stroke="#017E80" strokeWidth="1.29861" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M12.6265 7.60285H10.0293V4.68097C10.0293 2.08374 12.6265 2.08374 12.6265 2.08374V7.60285ZM12.6265 7.60285V15.0699" stroke="#017E80" strokeWidth="1.29861" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                         Favorite Dish
                                     </p>
@@ -102,6 +117,29 @@ export default async function AboutUsPage() {
                     ))}
                 </div>
             </section>
+            <section className="our-story-section">
+                <div className="title-container">
+                    <h3>{our_story_section.title}</h3>
+                </div>
+                <div className="timeline">
+                    {yearsArray.map((year, index) => (
+                        <div
+                            className={`data-container ${index % 2 === 0 ? 'left' : 'right'}`}
+                            key={year.year}
+                            >
+                            <p className="year">
+                                {year.year}
+                            </p>
+                            <div className="circle"></div>
+                        </div>
+                    ))}
+                </div>
+            </section>
         </main>
     )
 }
+
+export const revalidate = false; // Completamente estático
+export const dynamic = 'force-static';
+export const fetchCache = 'force-cache'; // Cachea todos los fetch
+export const dynamicParams = false; // No genera rutas dinámicas

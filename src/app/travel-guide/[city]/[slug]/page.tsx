@@ -161,3 +161,9 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 }
 
 // export const revalidate = 86400; 
+
+
+export const revalidate = false; // Completamente estático
+export const dynamic = 'force-static';
+export const fetchCache = 'force-cache'; // Cachea todos los fetch
+export const dynamicParams = false; // No genera rutas dinámicas

@@ -1,4 +1,3 @@
-// import { getPageInfo, getPostInfo } from "@/lib/wp";
 
 import { wp } from "@/lib/wp";
 import { ACFHome } from "@/types/acf-home";
@@ -9,7 +8,6 @@ import { Tour } from "@/types/tour";
 import OurExperiencesSection from "./components/our-experiences";
 import NotReadyToBook from "./components/not-ready-to-book";
 import { fetchImages } from "./utils/fetchImages";
-import Footer from "./components/footer";
 
 export default async function Home() {
 
@@ -50,8 +48,8 @@ export default async function Home() {
   const images = await fetchImages(imagesIds);
   const asFeatureInImages = await fetchImages(asFeatureInImagesId);
   const memories = await fetchImages(memoriesImagesIds);
-  console.log({memories});
-  
+  console.log({ memories });
+
 
   const [background_image, ...imgs] = images;
 
@@ -134,8 +132,8 @@ export default async function Home() {
       />
       <section className="home-fourth-section">
         <div className="title-section">
-          <h2>Just relax, <br /> we 've got it cover</h2>
-          <p><span>Everything's included.</span> We handle the details and most dietary needs. Just show up ready to enjoy</p>
+          <h2>Just relax, <br /> we &apos;ve got it cover</h2>
+          <p><span>Everything&apos;s included.</span> We handle the details and most dietary needs. Just show up ready to enjoy</p>
         </div>
         <div className="tours-section">
           {tours.reverse().map((tour, i) => (
@@ -168,10 +166,13 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      
+
     </main>
   );
 }
 
 
-
+export const revalidate = false; // Completamente estático
+export const dynamic = 'force-static';
+export const fetchCache = 'force-cache'; // Cachea todos los fetch
+export const dynamicParams = false; // No genera rutas dinámicas

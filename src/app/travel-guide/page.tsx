@@ -291,3 +291,9 @@ export default async function TravelGuidePage() {
         </>
     )
 }
+
+
+export const revalidate = false; // Completamente estático
+export const dynamic = 'force-static';
+export const fetchCache = 'force-cache'; // Cachea todos los fetch
+export const dynamicParams = false; // No genera rutas dinámicas

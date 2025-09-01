@@ -166,6 +166,12 @@
                         gap: 1rem;
                         padding: 1rem 0;
 
+                        .title {
+                            display: flex;
+                            align-items: center;
+                            gap: .3rem;
+                        }
+
 
                         p {
                             margin: 0;
