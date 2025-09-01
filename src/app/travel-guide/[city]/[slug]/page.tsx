@@ -3,6 +3,12 @@ import { slugify } from "@/app/helpers/slugify";
 import { wp } from "@/lib/wp";
 import { WPPost } from "@/types/post";
 import "./travel-guide-slug.css";
+import { getNotReadyToBookSection } from "@/app/utils/getNotReadyToBookSection";
+import NotReadyToBook from "@/app/components/not-ready-to-book";
+import TravelGuideCardsSection from "@/app/components/travel-guide-cards-section";
+import { TourRelationship } from "@/types/tour";
+
+
 // ----------------------
 // SEO
 // ----------------------
@@ -45,13 +51,14 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 }
 
 
+
 // ----------------------
 // BUILD TIME
 // ----------------------
 export async function generateStaticParams() {
     const posts = await wp.getAllPost();
-
-
+    
+    
     return posts.map((post: WPPost) => ({
         slug: post.slug,
         city: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0].title) : "default-city",
@@ -65,12 +72,46 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     const { city, slug } = await params;
 
-    const { title, content, featured_media, excerpt, date, modified } = await wp.getPostInfo(slug);
+    const { title, content, featured_media, excerpt, date, modified, relaciones } = await wp.getPostInfo(slug);
     const { img, alt } = await wp.getPostImage(featured_media);
+
+    const { tours } = relaciones;
+
+    console.log(tours[0]);
+    
 
 
     const imageUrl = img || "https://www.sherpafoodtours.com/default-og.jpg";
     const description = excerpt?.replace(/<[^>]+>/g, "") || content.replace(/<[^>]+>/g, "").slice(0, 150);
+
+    const not_ready_to_book_section = await getNotReadyToBookSection();
+
+    const renderContent = () => {
+        const parts = content.split(/(\[tours-cards-section\])/g);
+        return parts.map(async (part: string, index: number) => {            
+            // Detectamos [custom-cards-section]
+            if (part === '[tours-cards-section]') {
+                const toursData = await Promise.all(tours.map(async (tour: TourRelationship) => {
+                    const {id} = tour;
+                    const tourData = await wp.getTourById(id);
+                    const tourImage = await wp.getPostImage(tourData.featured_media)
+
+                    console.log({tourData, tourImage});
+                    
+                    return {
+                        ...tourData,
+                        image: tourImage
+                    }
+                }))
+                console.log(toursData[0]);
+                
+                return <TravelGuideCardsSection key={index} tours={toursData} />;
+            }
+
+            // Todo lo demás es HTML normal
+            return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />;
+        });
+    }
 
 
     return (
@@ -106,8 +147,13 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 </div>
                 <div className="article-content">
                     <h1>{title}</h1>
-                    <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                    {renderContent()}
+                    {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
                 </div>
+                <NotReadyToBook
+                    titles={not_ready_to_book_section.titles}
+                    posts={not_ready_to_book_section.posts}
+                />
             </article>
         </>
     )

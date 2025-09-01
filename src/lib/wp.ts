@@ -19,9 +19,9 @@ export const wp = {
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
 
-        const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified } = data;
+        const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified, relaciones } = data;
 
-        return { title, content, excerpt, featured_media, date, modified };
+        return { title, content, excerpt, featured_media, date, modified, relaciones };
     },
     getAllPost: async (limit?: number) => {
         const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts`;
@@ -108,6 +108,17 @@ export const wp = {
         const { name } = await response.json();
 
         return { name };
+    },
+    getTourById: async (id: number) => {
+        console.log({id});
+        
+        const response = await fetch(`${apiUrl}/tours/${id}`)
+
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+
+        const { title: { rendered: title }, content: { rendered: content  }, featured_media, acf  } = await response.json();
+
+        return { title, content, featured_media, acf }
     }
 
 }

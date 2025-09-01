@@ -25,3 +25,26 @@ export interface Tour {
     ciudad: number; // id de la ciudad
   };
 }
+
+export interface TourRelationship {
+  link: string;
+  id: number;
+  title: string;
+}
+
+export interface TourFormatted extends TourRelationship {
+  title: string,
+  content: string;
+  featured_media: number;
+  acf: {
+    ciudad: number;
+    duration: string;
+    group_size: string;
+    what_is_included: string;
+    price: string;
+  },
+  image: {
+    img: string;
+    alt: string;
+  }
+}

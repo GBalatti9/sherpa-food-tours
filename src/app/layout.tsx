@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/free-mode';
 import NavBar from "@/ui/components/nav-bar";
+import Footer from "./components/footer";
 
 const excelsior = localFont({
   src: [
@@ -47,6 +48,7 @@ export default function RootLayout({
         {/* <main> */}
           {children}
         {/* </main> */}
+        <Footer />
       </body>
     </html>
   );
