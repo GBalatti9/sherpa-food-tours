@@ -91,14 +91,17 @@ export const wp = {
         return { country_name: title };
     },
     getEmbedSectionInfo: async (slug: string) => {
-        const response = await fetch(`${apiUrl}/embedsections?slug=${slug}`)
+        try {
+            const response = await fetch(`${apiUrl}/embedsections?slug=${slug}`)
+            if (!response.ok) throw new Error(`No se obtuvieron datos de ${apiUrl}/embedsections?slug=${slug}`);
+            const [data] = await response.json();
+            const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = data;
+            return { title, content, featured_media, acf };
+        } catch(err) {
+            console.warn(`No se pudo obtener la sección ${slug}:`, err);
+            return { title: "", content: "", featured_media: null, acf: null };
+        }
 
-        if (!response.ok) throw new Error("No se obtuvieron datos");
-        const [data] = await response.json();
-        
-        const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = data;
-
-        return { title, content, featured_media, acf };
     },
     getAuthor: async (id: number) => {
         const response = await fetch(`${apiUrl}/users/${id}`)
@@ -110,13 +113,13 @@ export const wp = {
         return { name };
     },
     getTourById: async (id: number) => {
-        console.log({id});
-        
+        console.log({ id });
+
         const response = await fetch(`${apiUrl}/tours/${id}`)
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
 
-        const { title: { rendered: title }, content: { rendered: content  }, featured_media, acf  } = await response.json();
+        const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = await response.json();
 
         return { title, content, featured_media, acf }
     }
