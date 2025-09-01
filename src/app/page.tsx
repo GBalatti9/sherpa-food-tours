@@ -87,7 +87,7 @@ export default async function Home() {
       <section className="home-first-section">
         <div className="first-section-container">
           <div className="image-container">
-            <img src={background_image.img} alt={background_image.alt} loading="eager" />
+            <img src={background_image.img} alt={background_image.alt} loading="eager" fetchPriority="high" />
           </div>
           <div className="data-container">
             <div className="logos-container">
