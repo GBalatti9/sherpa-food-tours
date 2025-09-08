@@ -1,5 +1,6 @@
 import { TourFormatted } from "@/types/tour";
 import BookNowButton from "@/ui/components/book-now";
+import "./css/travel-guide-cards-section.css";
 
 
 export default function TravelGuideCardsSection({ tours }: { tours: TourFormatted[] }) {
@@ -24,7 +25,7 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                         </svg>
                                         Duration
                                     </p>
-                                    <p>{tour.acf.duration} hours</p>
+                                    <p>{tour.acf.duration}</p>
                                 </div>
                                 <div className="size-container">
                                     <p className="title">

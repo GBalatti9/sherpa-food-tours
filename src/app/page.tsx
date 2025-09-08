@@ -8,6 +8,8 @@ import { Tour } from "@/types/tour";
 import OurExperiencesSection from "./components/our-experiences";
 import NotReadyToBook from "./components/not-ready-to-book";
 import { fetchImages } from "./utils/fetchImages";
+import MainImage from "@/ui/components/main-image";
+import AsFeaturedIn from "@/ui/components/as-featured-in";
 
 export default async function Home() {
 
@@ -48,7 +50,6 @@ export default async function Home() {
   const images = await fetchImages(imagesIds);
   const asFeatureInImages = await fetchImages(asFeatureInImagesId);
   const memories = await fetchImages(memoriesImagesIds);
-  console.log({ memories });
 
 
   const [background_image, ...imgs] = images;
@@ -80,6 +81,9 @@ export default async function Home() {
   const our_experiences_section = await wp.getEmbedSectionInfo("our-experiences");
   const our_experiences_section_image = await wp.getPostImage(our_experiences_section.featured_media);
 
+  console.log({ our_experiences_section });
+
+
 
 
   return (
@@ -87,7 +91,7 @@ export default async function Home() {
       <section className="home-first-section">
         <div className="first-section-container">
           <div className="image-container">
-            <img src={background_image.img} alt={background_image.alt} loading="eager" fetchPriority="high" />
+            <MainImage src={background_image.img} alt={background_image.alt} />
           </div>
           <div className="data-container">
             <div className="logos-container">
@@ -107,29 +111,20 @@ export default async function Home() {
 
       </section>
       <section className="home-second-section">
-        <div className="second-section-container">
-          <p>As Featured In:</p>
-          <div className="imgs-container">
-
-            {asFeatureInImages.map((img, i) => (
-              <div className="img-container" key={img.img + i}>
-                <img src={img.img} alt={img.alt} />
-              </div>
-            ))}
-
-          </div>
-        </div>
+        <AsFeaturedIn asFeatureInImages={asFeatureInImages} />
       </section>
       <section className="third-section">
         <div className="content" dangerouslySetInnerHTML={{ __html: content }}>
         </div>
       </section>
-      <OurExperiencesSection
-        title={our_experiences_section.title}
-        content={our_experiences_section.content}
-        src={our_experiences_section_image.img}
-        alt={our_experiences_section_image.alt}
-      />
+      {our_experiences_section &&
+        <OurExperiencesSection
+          title={our_experiences_section.title}
+          content={our_experiences_section.content}
+          src={our_experiences_section_image.img}
+          alt={our_experiences_section_image.alt}
+        />
+      }
       <section className="home-fourth-section">
         <div className="title-section">
           <h2>Just relax, <br /> we &apos;ve got it cover</h2>

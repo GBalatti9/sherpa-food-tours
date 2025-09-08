@@ -1,0 +1,57 @@
+.title-section {
+    padding: 2rem 0;
+    text-align: center;
+
+    h2 {
+        font-family: var(--font-dk-otago);
+        font-size: 1.56rem;
+        line-height: 1.45;
+    }
+
+    p {
+        padding-top: 1rem;
+        font-family: var(--font-excelsior);
+        font-size: 1.125rem;
+        line-height: 1.5;
+        width: 80%;
+        margin: auto;
+    }
+
+    span {
+        font-weight: 700;
+    }
+}
+
+/* .tours-section {
+        background-color: var(--main-color);
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 3rem 2rem;
+        gap: 1rem;
+
+        :first-child {
+            grid-column: span 2;
+        }
+
+        .tour-card {
+            background-color: white;
+            padding: .3rem;
+
+            .tour-data {
+                text-align: center;
+                padding: .5rem 0 .2rem 0;
+
+                h4 {
+                    font-family: var(--font-dk-otago);
+                    color: var(--main-color);
+                    font-size: 1.125rem;
+                }
+
+                p {
+                    font-family: var(--font-excelsior);
+                    color: #333;
+                    font-size: .85rem;
+                }
+            }
+        }
+    } */

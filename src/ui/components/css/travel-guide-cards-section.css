@@ -1,0 +1,90 @@
+.tour-cards-section {
+    background-color: var(--main-color) !important;
+
+    .tour-cards {
+        display: flex;
+        flex-direction: column;
+        padding: 2rem 0;
+
+        .tour-card {
+            background-color: var(--background);
+            width: 331px;
+            /* height: 642px; */
+            min-height: 615px;
+            margin: 1rem auto;
+            padding: 1.3rem 1rem;
+
+            .img-container {
+                aspect-ratio: 3 / 2;
+                overflow: hidden;
+
+                img {
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .data-container {
+                h3 {
+                    font-family: var(--font-dk-otago);
+                    font-size: 1.5rem;
+                    color: var(--main-color);
+                    max-width: 250px;
+                    padding: 1rem 0 .5rem 0;
+                }
+                .headline {
+                    font-family: var(--font-excelsior);
+                    font-size: 1rem;
+                    line-height: 1.5;
+                }
+
+                .info-container {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    padding: 1.5rem 0;
+                    gap: 1rem;
+
+                    .duration-container, .size-container, .included-container {
+                        .title {
+                            display: flex;
+                            align-items: center;
+                            gap: .3rem;
+                            font-family: var(--font-excelsior);
+                            font-size: 0.9rem;
+                            text-transform: uppercase;
+                            color: var(--main-color);
+                        }
+                    }
+
+                    .included-container {
+                        grid-column: span 2;
+                    }
+                }
+
+                .footer-container {
+                    .price {
+                        width: fit-content;
+                        margin-left: auto;
+                        font-family: var(--font-excelsior);
+                        font-size: 1.125rem;
+                        span {
+                            font-weight: 700;
+                        }
+                    }
+                    .final {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding-top: 1rem;
+                        font-family: var(--font-excelsior);
+                        p {
+                            color: var(--main-color);
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

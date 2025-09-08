@@ -1,0 +1,27 @@
+.as-featured-in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* gap: 1rem; */
+    gap: .7rem;
+    padding: 1.5rem 0;
+    background-color: var(--local-guides-bg);
+
+    p {
+
+        font-size: 0.8125rem;
+        font-family: var(--font-excelsior);
+        font-style: italic;
+    }
+
+    .imgs-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+    }
+
+    .imgs-container .img-container:last-child {
+        padding-bottom: 2px;
+    }
+}

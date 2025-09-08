@@ -1,4 +1,4 @@
-const domain = process.env.WP_DOMAIN;
+const domain = process.env.NEXT_PUBLIC_WP_URL;
 const apiUrl = `${domain}/wp-json/wp/v2`
 
 export const wp = {
@@ -97,8 +97,21 @@ export const wp = {
             const [data] = await response.json();
             const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = data;
             return { title, content, featured_media, acf };
-        } catch(err) {
+        } catch (err) {
             console.warn(`No se pudo obtener la sección ${slug}:`, err);
+            return { title: "", content: "", featured_media: null, acf: null };
+        }
+
+    },
+    getEmbedSectionInfoById: async (id: number) => {
+        try {
+            const url = `${apiUrl}/embedsections/${id}`;
+            const response = await fetch(url)
+            if (!response.ok) throw new Error(`No se obtuvieron datos de ${apiUrl}/embedsections/${id}`);
+            const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = await response.json();
+            return { title, content, featured_media, acf };
+        } catch (err) {
+            console.warn(`No se pudo obtener la sección ${id}:`, err);
             return { title: "", content: "", featured_media: null, acf: null };
         }
 
@@ -122,6 +135,15 @@ export const wp = {
         const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = await response.json();
 
         return { title, content, featured_media, acf }
-    }
+    },
+    getCityBySlug: async (slug: string) => {
+        const response = await fetch(`${apiUrl}/cities?slug=${slug}`)
+
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+        const [data] = await response.json();
+        const { title: { rendered: title }, content: { rendered: content }, acf: { pais: country_id }, acf, featured_media } = data;
+
+        return { city_name: title, content, country_id: country_id, acf, featured_media };
+    },
 
 }

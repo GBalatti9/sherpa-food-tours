@@ -5,7 +5,7 @@ import { WPPost } from "@/types/post";
 import "./travel-guide-slug.css";
 import { getNotReadyToBookSection } from "@/app/utils/getNotReadyToBookSection";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
-import TravelGuideCardsSection from "@/app/components/travel-guide-cards-section";
+import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section";
 import { TourRelationship } from "@/types/tour";
 
 
@@ -76,8 +76,6 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
     const { img, alt } = await wp.getPostImage(featured_media);
 
     const { tours } = relaciones;
-
-    console.log(tours[0]);
     
 
 
@@ -103,7 +101,6 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                         image: tourImage
                     }
                 }))
-                console.log(toursData[0]);
                 
                 return <TravelGuideCardsSection key={index} tours={toursData} />;
             }

@@ -37,6 +37,7 @@ body {
     }
 
   }
+
   .book-now-button {
     background-color: var(--subtitle-color);
     color: white;
@@ -63,7 +64,7 @@ body {
   border-top: 1px solid #333;
   margin: 4rem 0;
   padding: 0 !important;
-  
+
 
   h2 {
     font-size: 1.3rem;
@@ -359,6 +360,7 @@ body {
       }
     }
   }
+
   .footer-second-section {
     color: #8D8D8D;
     padding: 2rem 1.3rem;
@@ -369,3 +371,6 @@ body {
   }
 
 }
+
+
+
