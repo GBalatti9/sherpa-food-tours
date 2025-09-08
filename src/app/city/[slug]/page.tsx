@@ -91,6 +91,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                             </div>
                             <div className="ctas">
                                 <BookNowButton />
+                                
                                 <button className="view-the-experience">View the experience</button>
                             </div>
                         </div>
