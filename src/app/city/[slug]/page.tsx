@@ -7,6 +7,7 @@ import BookNowButton from "@/ui/components/book-now";
 import MainImage from "@/ui/components/main-image";
 import JustRelax from "@/ui/components/just-relax";
 import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section";
+import NotReadyToBook from "@/app/components/not-ready-to-book";
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -132,6 +133,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                     ))}
                 </div> */}
             </section>
+            {/* <NotReadyToBook /> */}
         </main>
+
     )
 }

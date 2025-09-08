@@ -104,7 +104,7 @@
         font-family: var(--font-dk-otago);
     }
 
-    .tour-cards-section {
+    /* .tour-cards-section {
         background-color: var(--main-color);
         padding: 4rem 1rem;
 
@@ -212,5 +212,5 @@
                 }
             }
         }
-    }
+    } */
 }
