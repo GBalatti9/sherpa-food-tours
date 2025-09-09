@@ -1,3 +1,4 @@
+
 import OurExperiencesSection from "@/app/components/our-experiences";
 import "./city.css";
 import { fetchImages } from "@/app/utils/fetchImages";
@@ -8,6 +9,7 @@ import MainImage from "@/ui/components/main-image";
 import JustRelax from "@/ui/components/just-relax";
 import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
+import CommentElement from "@/ui/components/comment";
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -75,6 +77,12 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     console.log({ acf });
 
+    const comments = [
+        {id: 0, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month"},
+        {id: 1, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month"},
+        {id: 2, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month"},
+    ]
+
 
     return (
         <main>
@@ -91,7 +99,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                             </div>
                             <div className="ctas">
                                 <BookNowButton />
-                                
+
                                 <button className="view-the-experience">View the experience</button>
                             </div>
                         </div>
@@ -135,6 +143,15 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 </div> */}
             </section>
             {/* <NotReadyToBook /> */}
+
+            <section className="city-comments-section">
+                    <div className="city-comments-container">
+                        {comments.map((comment) => (
+                            <CommentElement key={comment.id} comment={comment} />
+                        ))}
+                        <p className="show-more-comments">Show more</p>
+                    </div>
+            </section>
         </main>
 
     )

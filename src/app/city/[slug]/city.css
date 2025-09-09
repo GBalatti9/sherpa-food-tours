@@ -62,4 +62,18 @@
             }
         }
     }
+
+}
+.city-comments-section {
+    .city-comments-container {
+        padding: 0 2rem;
+
+        .show-more-comments {
+            color: var(--main-color);
+            text-decoration: underline;
+            font-family: var(--font-excelsior);
+            text-align: center;
+            padding: 1rem 0 2rem 0;
+        }
+    }
 }
