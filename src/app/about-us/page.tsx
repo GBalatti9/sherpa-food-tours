@@ -1,6 +1,7 @@
 import { wp } from "@/lib/wp";
 import "./about-us.css";
 import { AboutUsInfo, AcfData, LocalGuide, ValueItem } from "./types";
+import MeetLocalGuides from "@/ui/components/meet-local-guides";
 
 type YearACF = {
     year: number,
@@ -58,6 +59,16 @@ export default async function AboutUsPage() {
     })).filter(item => item.year && String(item.year).trim().length > 0);
 
 
+    const acfLocalGuidesCorrect = await Promise.all(acfDataLocalGuides.map(async (element) => {
+
+        const countryFlag = await wp.getPostImage(element.country_flag)
+        return {
+            ...element,
+            country_flag: countryFlag
+        }
+    }))
+
+
 
     return (
         <main className="about-us-page">
@@ -85,7 +96,10 @@ export default async function AboutUsPage() {
                 </div>
             </section>
             <section className="about-us-page-third-section">
-                <h2 className="section-title">Meet your local guides</h2>
+                <div className="local-guide-container">
+                    <MeetLocalGuides localGuides={acfLocalGuidesCorrect} />
+                </div>
+                {/* <h2 className="section-title">Meet your local guides</h2>
                 <div className="value-cards-container">
                     {acfDataLocalGuides.map((element, i) => (
                         <div className="value-card" key={element.name + i}>
@@ -115,7 +129,7 @@ export default async function AboutUsPage() {
                             </div>
                         </div>
                     ))}
-                </div>
+                </div> */}
             </section>
             <section className="our-story-section">
                 <div className="title-container">
@@ -126,7 +140,7 @@ export default async function AboutUsPage() {
                         <div
                             className={`data-container ${index % 2 === 0 ? 'left' : 'right'}`}
                             key={year.year}
-                            >
+                        >
                             <p className="year">
                                 {year.year}
                             </p>

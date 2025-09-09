@@ -10,6 +10,7 @@ import JustRelax from "@/ui/components/just-relax";
 import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import CommentElement from "@/ui/components/comment";
+import MeetLocalGuides from "@/ui/components/meet-local-guides";
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -65,23 +66,24 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     }))
     
-    // const rawTours = await wp.getAllTours();
-    // rawTours.forEach((tour) => {
-    //     console.log({tour});
-        
-    // })
-
-
-    // const tours = await wp.
-
-
-    console.log({ acf });
-
     const comments = [
         {id: 0, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month"},
         {id: 1, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month"},
         {id: 2, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month"},
     ]
+
+    const localGuide = acf.first_local_guide;
+    const localGuideImage = await wp.getPostImage(localGuide.profile_picture);
+    const countryFlag = await wp.getPostImage(localGuide.country_flag)
+
+    const localGuideData = {
+        ...localGuide,
+        profile_picture: localGuideImage,
+        country_flag: countryFlag
+    }
+
+    console.log({localGuide, localGuideData});
+    
 
 
     return (
@@ -151,6 +153,12 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                         ))}
                         <p className="show-more-comments">Show more</p>
                     </div>
+            </section>
+
+            <section>
+                <div className="local-guide-container">
+                    <MeetLocalGuides localGuides={[localGuideData]} />
+                </div>
             </section>
         </main>
 

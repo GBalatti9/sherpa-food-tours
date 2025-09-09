@@ -72,7 +72,11 @@
         }
     }
 
-    .about-us-page-third-section {
+    .local-guide-container {
+        padding: 2rem .5rem;
+    }
+
+    /* .about-us-page-third-section {
         background-color: var(--local-guides-bg);
         padding: 1.5rem 1.5rem 2rem 1.5rem;
 
@@ -97,7 +101,6 @@
                         aspect-ratio: 1 / 1;
                         width: 126px;
                         overflow: hidden;
-                        /* evita que la imagen se desborde */
 
 
                         img {
@@ -141,7 +144,7 @@
                 }
             }
         }
-    }
+    } */
 
     .section-title {
         font-family: var(--font-dk-otago);
