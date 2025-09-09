@@ -11,6 +11,7 @@ import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section"
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import CommentElement from "@/ui/components/comment";
 import MeetLocalGuides from "@/ui/components/meet-local-guides";
+import Link from "next/link";
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -62,14 +63,14 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             ...tour,
             image: tour_image_data
         }
-        
+
 
     }))
-    
+
     const comments = [
-        {id: 0, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month"},
-        {id: 1, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month"},
-        {id: 2, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month"},
+        { id: 0, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month" },
+        { id: 1, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month" },
+        { id: 2, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month" },
     ]
 
     const localGuide = acf.first_local_guide;
@@ -82,8 +83,30 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         country_flag: countryFlag
     }
 
-    console.log({localGuide, localGuideData});
+    const posts = await Promise.all(acf.posts.map(async (id: number) => {
+        const postInfo = await wp.getPostInfoById(id);
+
+        const postImage = await wp.getPostImage(postInfo.featured_media);
+        const author = await wp.getAuthor(postInfo.author);
+
+        const city_name = await wp.getCity(postInfo.acf.ciudades[0])
+
+
+        return {
+            ...postInfo,
+            featured_media: postImage,
+            author: author,
+            city: city_name,
+        }
+
+    }));
+
+    console.log(posts[0]);
     
+
+
+
+
 
 
     return (
@@ -147,12 +170,12 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             {/* <NotReadyToBook /> */}
 
             <section className="city-comments-section">
-                    <div className="city-comments-container">
-                        {comments.map((comment) => (
-                            <CommentElement key={comment.id} comment={comment} />
-                        ))}
-                        <p className="show-more-comments">Show more</p>
-                    </div>
+                <div className="city-comments-container">
+                    {comments.map((comment) => (
+                        <CommentElement key={comment.id} comment={comment} />
+                    ))}
+                    <p className="show-more-comments">Show more</p>
+                </div>
             </section>
 
             <section>
@@ -160,7 +183,73 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                     <MeetLocalGuides localGuides={[localGuideData]} />
                 </div>
             </section>
-        </main>
+
+            <section className="know-the-city">
+                <h2>Get to know the city</h2>
+                <div className="posts-container">
+                    {/* Primer post */}
+                    {posts[0] && (
+                        <Link href={`/travel-guide/${posts[0].city.slug}/${posts[0].slug}`} key={0} className="post">
+                            <div className="img-container">
+                                <img src={posts[0].featured_media.img} alt="" />
+                            </div>
+                            <div className="data">
+                                <p className="key">{posts[0].acf.key}</p>
+                                <p className="title">{posts[0].title}</p>
+                                <div
+                                    className="description"
+                                    dangerouslySetInnerHTML={{ __html: posts[0].excerpt }}
+                                ></div>
+                                <p className="author">
+                                    Por: <span>{posts[0].author.name}</span>
+                                </p>
+                            </div>
+                        </Link>
+                    )}
+
+                    {/* Grupo con post 1 y 2 */}
+                    {posts.length > 2 && (
+                        <div className="group-posts">
+                            {[posts[1], posts[2]].map((post, i) => (
+                                <Link href={`/travel-guide/${post.city.slug}/${post.slug}`} key={i} className="post">
+                                    <div className="img-container">
+                                        <img src={post.featured_media.img} alt="" />
+                                    </div>
+                                    <div className="data">
+                                        <p className="key">{post.acf.key}</p>
+                                        <p className="title">{post.title}</p>
+                                        <p className="author">
+                                            Por: <span>{post.author.name}</span>
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
+
+
+                    {posts.slice(3).length > 0 &&
+                        <div className="remainig-posts">
+                            {posts.slice(3).map((post, i) => (
+                                <Link href={`/travel-guide/${post.city.slug}/${post.slug}`} key={i} className="post">
+                                    <div className="img-container">
+                                        <img src={post.featured_media.img} alt="" />
+                                    </div>
+                                    <div className="data">
+                                        <p className="title">{post.title}</p>
+                                        <p className="author">
+                                            Por: <span>{post.author.name}</span>
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    }
+
+
+                </div>
+            </section>
+        </main >
 
     )
 }

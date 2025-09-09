@@ -23,6 +23,15 @@ export const wp = {
 
         return { title, content, excerpt, featured_media, date, modified, relaciones };
     },
+    getPostInfoById: async (id: number) => {
+        const response = await fetch(`${apiUrl}/posts/${id}`)
+
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+
+        const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified, relaciones, acf, author, slug } = await response.json();
+
+        return { title, content, excerpt, featured_media, date, modified, relaciones, acf, author, slug };
+    },
     getAllPost: async (limit?: number) => {
         const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts`;
         const response = await fetch(url)
@@ -78,9 +87,9 @@ export const wp = {
         const response = await fetch(`${apiUrl}/cities/${id}`)
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
-        const { title: { rendered: title }, acf: { pais: country_id } } = await response.json();
+        const { title: { rendered: title }, acf: { pais: country_id }, slug } = await response.json();
 
-        return { city_name: title, country_id: country_id };
+        return { city_name: title, country_id: country_id, slug };
     },
     getCountry: async (id: number) => {
         const response = await fetch(`${apiUrl}/countries/${id}`)
