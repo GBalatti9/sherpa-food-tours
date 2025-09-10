@@ -14,6 +14,7 @@ import MeetLocalGuides from "@/ui/components/meet-local-guides";
 import Link from "next/link";
 import { formatFaqs } from "@/app/utils/formatFaqs";
 import FaqSection from "@/ui/components/faq-section";
+import NextAdventure from "@/ui/components/redy-next-adventure";
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -256,7 +257,11 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 <FaqSection faqs={faqs} />
             </section>
 
-        </main >
+            <section className="next-adventure-section">
+                <NextAdventure />
+            </section>
+
+        </main>
 
     )
 }

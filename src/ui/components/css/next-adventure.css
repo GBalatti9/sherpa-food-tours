@@ -1,0 +1,17 @@
+
+
+.ready-next-adventure {
+    background-color: var(--title-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0 3rem 0;
+    gap: 1rem;
+    color: white;
+    line-height: 1.55;
+    .title {
+        font-family: var(--font-dk-otago);
+        font-size: 1.5rem;
+    }
+}
