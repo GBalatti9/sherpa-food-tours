@@ -155,4 +155,11 @@ export const wp = {
         return { city_name: title, content, country_id: country_id, acf, featured_media };
     },
 
+    getFaqById: async (id: number) => {
+        const response = await fetch(`${apiUrl}/faq/${id}`);
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+        const { acf } = await response.json();
+        return { acf }
+    }
+
 }

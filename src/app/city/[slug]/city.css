@@ -79,9 +79,9 @@
 }
 
 .know-the-city {
-    padding: 2rem .5rem;
-    max-width: 330px;
-    margin: auto;
+    padding: 2rem 1.3rem;
+    /* max-width: 330px; */
+    /* margin: auto; */
 
     h2 {
         font-family: var(--font-dk-otago);
@@ -179,4 +179,10 @@
             }
         }
     }
+}
+
+.faq-section-city {
+    /* max-width: 330px;
+    margin: auto; */
+    padding: .5rem 1.3rem;
 }

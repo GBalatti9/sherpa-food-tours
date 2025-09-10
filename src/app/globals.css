@@ -66,6 +66,14 @@ body {
   padding: 0 !important;
 
 
+  .faq-title {
+    font-size: 1.5rem;
+    color: black !important;
+    font-family: var(--font-dk-otago);
+    margin: 1.5rem 0;
+    text-transform: uppercase;
+  }
+
   h2 {
     font-size: 1.3rem;
     color: black !important;
@@ -115,9 +123,16 @@ body {
       }
     }
 
+
+
     .faq-separator {
       color: #A3A3A3;
+
+      &:last-child {
+        display: none;
+      }
     }
+
   }
 
 
@@ -371,6 +386,3 @@ body {
   }
 
 }
-
-
-

@@ -12,6 +12,8 @@ import NotReadyToBook from "@/app/components/not-ready-to-book";
 import CommentElement from "@/ui/components/comment";
 import MeetLocalGuides from "@/ui/components/meet-local-guides";
 import Link from "next/link";
+import { formatFaqs } from "@/app/utils/formatFaqs";
+import FaqSection from "@/ui/components/faq-section";
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -101,8 +103,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     }));
 
-    console.log(posts[0]);
-    
+    const { acf: faqRaw } = await wp.getFaqById(76);
+    const faqs = formatFaqs(faqRaw);
+
 
 
 
@@ -249,6 +252,10 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
                 </div>
             </section>
+            <section className="faq-section-city">
+                <FaqSection faqs={faqs} />
+            </section>
+
         </main >
 
     )
