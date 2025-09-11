@@ -27,16 +27,19 @@
         padding-top: 1rem;
         padding-bottom: 2rem;
         border-bottom: 1px solid #B9B9B9;
+
         .title-container {
             .stars-container {
                 display: flex;
                 gap: .2rem;
+
                 svg {
                     width: 1rem;
                     fill: #E7B53F;
                     stroke: none;
                 }
             }
+
             h1 {
                 font-family: var(--font-dk-otago);
                 font-size: 1.6rem;
@@ -44,12 +47,14 @@
                 line-height: 1.4;
             }
         }
+
         .reviews-container {
             display: flex;
             justify-content: space-between;
             padding-top: .5rem;
 
-            .google-container, .tripadvisor-container {
+            .google-container,
+            .tripadvisor-container {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -57,6 +62,7 @@
 
                 .img-container {
                     width: 60px;
+
                     img {
                         width: 100%;
                         height: 100%;
@@ -71,10 +77,12 @@
                 p {
                     font-family: var(--font-excelsior);
                     font-size: 0.875rem;
-                    color: var(--main-color);;
+                    color: var(--main-color);
+                    ;
                 }
             }
         }
+
         .price-container {
             padding-top: 1.5rem;
             display: flex;
@@ -82,6 +90,7 @@
             font-size: 1rem;
             columns: #333;
             gap: .3rem;
+
             h2 {
                 font-weight: 700;
             }
@@ -100,5 +109,57 @@
                 text-decoration: underline;
             }
         }
+    }
+
+}
+
+.tour-features {
+    padding: 0 1.3rem 0 1.3rem;
+    .features-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        border-bottom: 1px solid #B9B9B9;
+        padding-bottom: 2em;
+
+        .feature-item:last-child {
+            grid-column: span 2;
+        }
+
+        .feature-item {
+            font-family: var(--font-excelsior);
+            color: #333;
+            .feature-header {
+                display: flex;
+                gap: .3rem;
+                color: var(--main-color);
+                text-transform: uppercase;
+                font-size: .875rem;
+            }
+        }
+
+        
+    }
+}
+
+.tour-description-section {
+    padding: 2rem 1.3rem;
+    font-family: var(--font-excelsior);
+    font-size: 1.125rem;
+    color: #333;
+
+    .description-text {
+        border-bottom: 1px solid #B9B9B9;
+    }
+}
+
+.tour-conditions {
+    padding: 0 1.3rem 2rem 1.3rem;
+
+    .condition-item {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        color: var(--main-color);
+        font-family: var(--font-excelsior);
     }
 }
