@@ -61,7 +61,8 @@ export const wp = {
         }
 
         try {
-            const response = await fetch(`${apiUrl}/media/${id}`);
+            const url = `${apiUrl}/media/${id}`;
+            const response = await fetch(url);
             if (!response.ok) throw new Error("No se obtuvieron datos");
 
             const data = await response.json();
@@ -70,7 +71,7 @@ export const wp = {
                 alt: data.alt_text || "",
             };
         } catch (e) {
-            console.warn("No se pudo obtener la imagen del post:", e);
+            console.warn("No se pudo obtener la imagen del post:");
             return {
                 img: "https://www.sherpafoodtours.com/default-og.jpg",
                 alt: "",

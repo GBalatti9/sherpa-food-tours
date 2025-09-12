@@ -195,7 +195,7 @@ export default async function Home() {
 }
 
 
-export const revalidate = false; // Completamente estático
-export const dynamic = 'force-static';
-export const fetchCache = 'force-cache'; // Cachea todos los fetch
+export const revalidate = 10; // segundos
+export const dynamic = 'auto';
+export const fetchCache = 'default'; // Cachea todos los fetch
 export const dynamicParams = false; // No genera rutas dinámicas
