@@ -79,28 +79,6 @@ export default async function Home() {
   )
 
 
-
-
-  // const tours = await Promise.all(
-  //   citiesRaw.map(async (data: Tour) => {
-  //     const city_id = data.acf.ciudad;
-  //     const cityData = await wp.getCity(city_id);
-
-  //     const country_id = cityData.country_id;
-  //     const countryData = await wp.getCountry(country_id);
-
-  //     const image_id = data.featured_media;
-  //     const image = await wp.getPostImage(image_id);
-
-  //     return {
-  //       ...data,
-  //       city: cityData.city_name,
-  //       country: countryData.country_name,
-  //       image: image,
-  //     }
-  //   })
-  // )
-
   const not_ready_to_book_section = await getNotReadyToBookSection();
 
   const our_experiences_section = await wp.getEmbedSectionInfo("our-experiences");
