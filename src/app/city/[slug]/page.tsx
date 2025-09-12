@@ -8,7 +8,7 @@ import BookNowButton from "@/ui/components/book-now";
 import MainImage from "@/ui/components/main-image";
 import JustRelax from "@/ui/components/just-relax";
 import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section";
-import NotReadyToBook from "@/app/components/not-ready-to-book";
+// import NotReadyToBook from "@/app/components/not-ready-to-book";
 import CommentElement from "@/ui/components/comment";
 import MeetLocalGuides from "@/ui/components/meet-local-guides";
 import Link from "next/link";
@@ -24,7 +24,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     console.log({ slug });
 
 
-    const { city_name, country_id, acf, featured_media, content } = await wp.getCityBySlug(slug);
+    const { acf, featured_media, content } = await wp.getCityBySlug(slug);
 
     const asFeatureInImagesId = [
         acf.first_img,
@@ -121,6 +121,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     }
 
     const { acf: faqRaw } = await wp.getFaqById(76);
+    console.log({faqRaw}, "listo");
+    
     const faqs = formatFaqs(faqRaw);
 
 

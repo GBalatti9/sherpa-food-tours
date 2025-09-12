@@ -4,6 +4,7 @@ export interface LocalGuide {
   city: string;
   description: string;
   favorite_dish: string;
+  country_flag: number; // Puede ser ID o URL
 }
 
 export interface ValueItem {

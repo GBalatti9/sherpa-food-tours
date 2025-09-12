@@ -6,7 +6,16 @@ import BookNowButton from "@/ui/components/book-now";
 import { Star } from "lucide-react";
 import React from "react";
 
-export async function generateStaticParas() {
+interface TourCondition {
+    icon: number;
+    title: string;
+}
+interface HighlightItem {
+    highlight_image: number | string;
+    highlight_description: string;
+}
+
+export async function generateStaticParams() {
     const tours = await wp.getAllTours();
     return tours.map((tour: { slug: string }) => ({
         slug: tour.slug
@@ -20,8 +29,14 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     const { acf } = await wp.getTourBySlug(slug);
 
     const { stars, title, reviews, price, check_availability } = acf.heading_section;
+    console.log({ acf });
 
-    const imagesId = Object.entries(acf.heading_section).filter(([key]) => key.includes("image")).map(([_, value]) => value).filter((element) => element !== "");
+    const imagesId = Object.entries(acf.heading_section)
+        .filter(([key]) => key.includes("image"))
+        .map(([, value]) => value)
+        .filter((element) => element !== "");
+
+
     const images = await fetchImages(imagesId as number[]);
 
     const reviewsFormatted = {
@@ -35,29 +50,39 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         }
     }
 
-    const tourData = Object.entries(acf.tour_data).filter(([key]) => key.includes("item")).map(([_, value]) => value).filter((element) => element !== "")
+    const tourData = Object.entries(acf.tour_data).filter(([key]) => key.includes("item")).map(([, value]) => value).filter((element) => element !== "") as {title: string; description: string}[]
 
-    const tourConditions = await Promise.all(Object.entries(acf.tour_conditions).filter(([key]) => key.includes("item")).map(([_, value]) => value).filter((element) => element.title !== "").map(async (element) => {
-        const image = await wp.getPostImage(element.icon);
-        return {
-            ...element,
-            icon: image
-        }
-    }))
+    console.log({tourData});
+
+
+    const tourConditions = await Promise.all(
+        Object.entries(acf.tour_conditions)
+            .filter(([key]) => key.includes("item"))
+            .map(([, value]) => value as TourCondition)
+            .filter((element) => element.title !== "")
+            .map(async (element) => {
+                const image = await wp.getPostImage(element.icon);
+                return {
+                    ...element,
+                    icon: image
+                }
+            }))
+    console.log({ tourConditions });
+
 
     const { title: title_highlight, ...rest } = acf.tour_hihglights;
 
     console.log({ title_highlight, rest });
 
-    const highlightItems = await Promise.all(Object.entries(rest).filter(([key]) => key.includes("item")).map(([_, value]) => value).filter((element) => element.highlight_image !== "").map(async (element) => {
-        const image = await wp.getPostImage(element.highlight_image);
+    const highlightItems = await Promise.all(Object.entries(rest).filter(([key]) => key.includes("item")).map(([, value]) => value as HighlightItem).filter((element) => element.highlight_image !== "").map(async (element) => {
+        const image = await wp.getPostImage(element.highlight_image as number);
         return {
             ...element,
             highlight_image: image
         }
-    }));
+    })) as { highlight_image: { img: string; alt: string }; highlight_description: string }[]
 
-    console.log({ highlightItems });
+
 
 
 
@@ -113,7 +138,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                 <section className="tour-features">
                     <div className="features-container">
                         {tourData.map((item, i) => (
-                            <div key={item + i} className="feature-item">
+                            <div key={item.title + i} className="feature-item">
                                 <div className="feature-header">
                                     {/* <div className="icon-container">
                                 <img src={item.icon.img} alt={item.icon.alt || 'Icon'} />
@@ -168,7 +193,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                 <div className="description-text">
                     {acf.tour_description
                         .split(/\r\n/)
-                        .map((line, i) => (
+                        .map((line: string, i: number) => (
                             <React.Fragment key={i}>
                                 <p key={i}>{line}</p>
                                 <br />
@@ -195,7 +220,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                     <h2 className="highlight-title">{title_highlight}</h2>
                     <div className="highlights-container">
                         {highlightItems.length > 0 && highlightItems.map((item, i) => (
-                            <div key={item.title + i} className="highlight-item">
+                            <div key={item.highlight_description + i} className="highlight-item">
                                 <div className="highlight-image-container">
                                     <img src={item.highlight_image.img} alt={item.highlight_image.alt || 'Highlight Image'} />
                                 </div>

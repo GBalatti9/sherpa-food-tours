@@ -11,6 +11,7 @@ type YearACF = {
 };
 
 
+
 export default async function AboutUsPage() {
 
     const { content, acf }: AboutUsInfo = await wp.getPageInfo("about");
@@ -53,14 +54,14 @@ export default async function AboutUsPage() {
     const our_story_section_acf = our_story_section.acf as Record<string, YearACF>;
 
 
-    const yearsArray = Object.entries(our_story_section_acf).map(([key, value]) => ({
-        key,
-        ...value
-    })).filter(item => item.year && String(item.year).trim().length > 0);
+    // const yearsArray = Object.entries(our_story_section_acf).map(([key, value]) => ({
+    //     key,
+    //     ...value
+    // })).filter(item => item.year && String(item.year).trim().length > 0);
 
 
     const acfLocalGuidesCorrect = await Promise.all(acfDataLocalGuides.map(async (element) => {
-
+        
         const countryFlag = await wp.getPostImage(element.country_flag)
         return {
             ...element,

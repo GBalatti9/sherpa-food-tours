@@ -9,18 +9,25 @@ export type FaqsResponse = {
   faqs: FaqItem[];
 };
 
+export interface Faq {
+  display_title: string;
+  faq: FaqItem[]
+}
+
 /**
+ * 
  * Recibe un objeto 'acf' desde WordPress y devuelve
  * { display_title, faqs: [] } en formato array.
  */
-export function formatFaqs(acf: any): FaqsResponse {
+export function formatFaqs(acf: Faq): FaqsResponse {
+  
   const faqsArray: FaqItem[] = [];
 
 //   console.log(acf.faq);
   
 
   if (acf?.faq) {
-    Object.values(acf.faq).forEach((item: any) => {
+    Object.values(acf.faq).forEach((item) => {
       if (item?.question && item?.answer) {
         faqsArray.push({
           question: item.question,

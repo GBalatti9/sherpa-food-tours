@@ -4,13 +4,14 @@ import { ACFHome } from "@/types/acf-home";
 import "./home.css";
 import Link from "next/link";
 import { getNotReadyToBookSection } from "./utils/getNotReadyToBookSection";
-import { Tour } from "@/types/tour";
+// import { Tour } from "@/types/tour";
 import OurExperiencesSection from "./components/our-experiences";
 import NotReadyToBook from "./components/not-ready-to-book";
 import { fetchImages } from "./utils/fetchImages";
 import MainImage from "@/ui/components/main-image";
 import AsFeaturedIn from "@/ui/components/as-featured-in";
 import { Star } from "lucide-react";
+import { City } from "@/types/city";
 
 export default async function Home() {
 
@@ -54,11 +55,14 @@ export default async function Home() {
 
 
   const [background_image, ...imgs] = images;
+  console.log(imgs);
+  
 
   const citiesRaw = await wp.getAllCities();
 
   const cities = await Promise.all(
-    citiesRaw.map(async (data) => {
+    citiesRaw.map(async (data: City) => {
+      
       const country_id = data.acf.pais;
       const countryData = await wp.getCountry(country_id);
 
@@ -73,6 +77,8 @@ export default async function Home() {
       }
     })
   )
+
+
 
 
   // const tours = await Promise.all(
