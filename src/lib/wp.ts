@@ -22,7 +22,11 @@ export const wp = {
         return { title, content, acf, featured_media };
     },
     getPostInfo: async (slug: string) => {
-        const response = await fetch(`${apiUrl}/posts?slug=${slug}`)
+        const url = `${apiUrl}/posts?slug=${slug}`;
+        const response = await fetch(url);
+
+        console.log({url});
+        
 
         // if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
