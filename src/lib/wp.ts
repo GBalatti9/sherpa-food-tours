@@ -157,9 +157,9 @@ export const wp = {
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
 
-        const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = await response.json();
+        const { title: { rendered: title }, content: { rendered: content }, featured_media, acf, slug } = await response.json();
 
-        return { title, content, featured_media, acf }
+        return { title, content, featured_media, acf, slug }
     },
     getCityBySlug: async (slug: string) => {
         const response = await fetch(`${apiUrl}/cities?slug=${slug}`)

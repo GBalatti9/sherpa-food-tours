@@ -1,9 +1,12 @@
 import { TourFormatted } from "@/types/tour";
 import BookNowButton from "@/ui/components/book-now";
 import "./css/travel-guide-cards-section.css";
+import Link from "next/link";
 
 
 export default function TravelGuideCardsSection({ tours }: { tours: TourFormatted[] }) {
+    console.log({ tours });
+
     return (
         <section className="tour-cards-section">
             <div className="tour-cards">
@@ -59,7 +62,9 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                     <p>From: <span>USD{tour.acf.price}</span></p>
                                 </div>
                                 <div className="final">
-                                    <p>Learn More</p>
+                                    <Link href={`/tour/${tour.slug}`}>
+                                        Learn More
+                                    </Link>
                                     <BookNowButton />
                                 </div>
                             </div>

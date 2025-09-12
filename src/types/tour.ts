@@ -36,6 +36,7 @@ export interface TourFormatted extends TourRelationship {
   title: string,
   content: string;
   featured_media: number;
+  slug: string;
   acf: {
     ciudad: number;
     duration: string;
