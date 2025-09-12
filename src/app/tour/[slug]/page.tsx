@@ -36,8 +36,11 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         .map(([, value]) => value)
         .filter((element) => element !== "");
 
+    let images;
 
-    const images = await fetchImages(imagesId as number[]);
+    if (imagesId.length > 0) {
+        images = await fetchImages(imagesId as number[]);
+    }
 
     const reviewsFormatted = {
         google: {
@@ -50,9 +53,9 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         }
     }
 
-    const tourData = Object.entries(acf.tour_data).filter(([key]) => key.includes("item")).map(([, value]) => value).filter((element) => element !== "") as {title: string; description: string}[]
+    const tourData = Object.entries(acf.tour_data).filter(([key]) => key.includes("item")).map(([, value]) => value).filter((element) => element !== "") as { title: string; description: string }[]
 
-    console.log({tourData});
+    console.log({ reviewsFormatted });
 
 
     const tourConditions = await Promise.all(
@@ -93,7 +96,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         <main>
             <section className="tour-hero-section">
                 <div className="image-gallery">
-                    {images.slice(0, 3).map((image, i) => (
+                    {images && images.slice(0, 3).map((image, i) => (
                         <div key={image.img + i} className="image-item">
                             <img src={image.img} alt={image.alt || 'Tour Image'} />
                         </div>
