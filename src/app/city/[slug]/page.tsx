@@ -16,6 +16,16 @@ import { formatFaqs } from "@/app/utils/formatFaqs";
 import FaqSection from "@/ui/components/faq-section";
 import NextAdventure from "@/ui/components/redy-next-adventure";
 
+export async function generateStaticParams() {
+  // Traer todos los slugs de las ciudades desde WP
+  const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
+//   console.log({cities});
+  
+  return cities.map((city: { slug: string }) => ({
+    slug: city.slug
+  }));
+}
+
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
 
