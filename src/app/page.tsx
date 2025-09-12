@@ -64,7 +64,10 @@ export default async function Home() {
     citiesRaw.map(async (data: City) => {
       
       const country_id = data.acf.pais;
-      const countryData = await wp.getCountry(country_id);
+      let countryData = null;
+      if (country_id) {
+        countryData = await wp.getCountry(country_id);
+      }
 
       const image_id = data.featured_media;
       const image = await wp.getPostImage(image_id);
@@ -72,7 +75,7 @@ export default async function Home() {
       return {
         city: data.title.rendered,
         slug: data.slug,
-        country: countryData.country_name,
+        country: countryData ? countryData.country_name : null,
         image: image,
       }
     })

@@ -6,8 +6,11 @@ console.log({domain, apiUrl});
 
 export const wp = {
     getPageInfo: async (slug: string) => {
-        const response = await fetch(`${apiUrl}/pages?slug=${slug}`)
+        const url = `${apiUrl}/pages?slug=${slug}`;
+        const response = await fetch(url)
 
+        console.log({url});
+        
         // if (!response.ok) throw new Error("No se obtuvieron datos");
 
         const [data] = await response.json();
@@ -91,17 +94,19 @@ export const wp = {
         return data;
     },
     getCity: async (id: number) => {
-        const response = await fetch(`${apiUrl}/cities/${id}`)
+        const url = `${apiUrl}/cities/${id}`;
+        const response = await fetch(url);
 
-        if (!response.ok) throw new Error("No se obtuvieron datos");
+        if (!response.ok) throw new Error(`No se obtuvieron datos ${url}`);
         const { title: { rendered: title }, acf: { pais: country_id }, slug } = await response.json();
 
         return { city_name: title, country_id: country_id, slug };
     },
     getCountry: async (id: number) => {
-        const response = await fetch(`${apiUrl}/countries/${id}`)
+        const url = `${apiUrl}/countries/${id}`;
+        const response = await fetch(url)
 
-        if (!response.ok) throw new Error("No se obtuvieron datos");
+        if (!response.ok) throw new Error(`No se obtuvieron datos ${url}`);
         const { title: { rendered: title } } = await response.json();
 
         return { country_name: title };
