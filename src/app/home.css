@@ -32,8 +32,25 @@
                 align-items: center;
                 justify-content: center;
                 gap: 2rem;
-                padding-top: 1rem;
-                padding-left: 1.5rem;
+                padding-top: 2rem;
+                /* padding-left: 1rem; */
+
+                .logo-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    .review {
+                        display: flex;
+                        font-size: 1rem;
+                        font-family: var(--font-excelsior);
+                    }
+                    .star {
+                        padding-top: .5rem;
+                        display: flex;
+                        gap: .2rem;
+                    }
+                }
 
                 .image-container {
                     filter: brightness(1);
@@ -130,8 +147,8 @@
         background-color: var(--main-color);
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        padding: 3rem 2rem;
-        gap: 1rem;
+        padding: 3rem 1.3rem;
+        gap: .8rem;
 
         :first-child {
             grid-column: span 2;
@@ -155,6 +172,21 @@
                     font-family: var(--font-excelsior);
                     color: #333;
                     font-size: .85rem;
+                }
+            }
+        }
+
+        .tour-card:not(:first-child) {
+            height: 224px;
+
+            .img-container {
+                aspect-ratio: 1 / 1;
+                overflow: hidden;
+                
+                img {
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
                 }
             }
         }
@@ -213,7 +245,7 @@
 
 
         .memory-container:nth-child(1) {
-            top: -1%;
+            top: 2cqh;
             left: 8%;
             /* z-index: 999; */
         }

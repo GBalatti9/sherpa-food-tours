@@ -57,8 +57,8 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 // ----------------------
 export async function generateStaticParams() {
     const posts = await wp.getAllPost();
-    
-    
+
+
     return posts.map((post: WPPost) => ({
         slug: post.slug,
         city: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0].title) : "default-city",
@@ -76,7 +76,20 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
     const { img, alt } = await wp.getPostImage(featured_media);
 
     const { tours } = relaciones;
-    
+
+    const toursData = await Promise.all(tours.map(async (tour: TourRelationship) => {
+        const { id } = tour;
+        const tourData = await wp.getTourById(id);
+        const tourImage = await wp.getPostImage(tourData.featured_media)
+
+        console.log({ tourData, tourImage });
+
+        return {
+            ...tourData,
+            image: tourImage
+        }
+    }))
+
 
 
     const imageUrl = img || "https://www.sherpafoodtours.com/default-og.jpg";
@@ -86,22 +99,22 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     const renderContent = () => {
         const parts = content.split(/(\[tours-cards-section\])/g);
-        return parts.map(async (part: string, index: number) => {            
+        return parts.map(async (part: string, index: number) => {
             // Detectamos [custom-cards-section]
             if (part === '[tours-cards-section]') {
                 const toursData = await Promise.all(tours.map(async (tour: TourRelationship) => {
-                    const {id} = tour;
+                    const { id } = tour;
                     const tourData = await wp.getTourById(id);
                     const tourImage = await wp.getPostImage(tourData.featured_media)
 
-                    console.log({tourData, tourImage});
-                    
+                    console.log({ tourData, tourImage });
+
                     return {
                         ...tourData,
                         image: tourImage
                     }
                 }))
-                
+
                 return <TravelGuideCardsSection key={index} tours={toursData} />;
             }
 
@@ -147,10 +160,14 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                     {renderContent()}
                     {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
                 </div>
-                <NotReadyToBook
-                    titles={not_ready_to_book_section.titles}
-                    posts={not_ready_to_book_section.posts}
-                />
+                <TravelGuideCardsSection tours={toursData} />
+                <div style={{ marginTop: '4rem', marginBottom: '4rem' }}>
+
+                    <NotReadyToBook
+                        titles={not_ready_to_book_section.titles}
+                        posts={not_ready_to_book_section.posts}
+                    />
+                </div>
             </article>
         </>
     )

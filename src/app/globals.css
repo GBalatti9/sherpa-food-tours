@@ -156,6 +156,7 @@ body {
       margin-top: 1.3rem;
       font-size: 1.125rem;
       line-height: 1.5;
+      font-family: var(--font-excelsior);
     }
   }
 }

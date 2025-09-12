@@ -168,6 +168,15 @@ export const wp = {
         const [data] = await response.json();
         const { title: { rendered: title }, acf } = data;
         return {title, acf};
-    }
+    },
+
+    getAllCities: async () => {
+        const response = await fetch(`${apiUrl}/cities`)
+        if (!response.ok) throw new Error("No se obtuvieron datos");
+        const data = await response.json();
+        return data;
+    },
+
+
 
 }

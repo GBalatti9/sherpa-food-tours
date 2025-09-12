@@ -131,7 +131,7 @@ export default async function AboutUsPage() {
                     ))}
                 </div> */}
             </section>
-            <section className="our-story-section">
+            {/* <section className="our-story-section">
                 <div className="title-container">
                     <h3>{our_story_section.title}</h3>
                 </div>
@@ -148,7 +148,7 @@ export default async function AboutUsPage() {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
         </main>
     )
 }

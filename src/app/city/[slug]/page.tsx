@@ -37,38 +37,49 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const mainImage = await fetchImages(mainImageId);
     const asFeatureInImages = await fetchImages(asFeatureInImagesId);
 
-    let embedSectionsData = await Promise.all(acf.embed_section.map((id: number) => wp.getEmbedSectionInfoById(id)))
-    embedSectionsData = await Promise.all(
-        embedSectionsData.map(async (section) => {
-            const data = section.acf;
+    console.log({ acf });
+    let embedSectionsData = [];
 
-            // asumo que first_item.image es un ID
-            const firstItemImage = await wp.getPostImage(data.first_item.image);
+    if (acf.embed_section) {
 
-            return {
-                ...section,
-                acf: {
-                    ...data,
-                    first_item: {
-                        ...data.first_item,
-                        image: firstItemImage, // acá guardás la imagen completa en lugar del id
+        embedSectionsData = await Promise.all(acf.embed_section.map((id: number) => wp.getEmbedSectionInfoById(id)))
+        embedSectionsData = await Promise.all(
+            embedSectionsData.map(async (section) => {
+                const data = section.acf;
+
+                // asumo que first_item.image es un ID
+                const firstItemImage = await wp.getPostImage(data.first_item.image);
+
+                return {
+                    ...section,
+                    acf: {
+                        ...data,
+                        first_item: {
+                            ...data.first_item,
+                            image: firstItemImage, // acá guardás la imagen completa en lugar del id
+                        },
                     },
-                },
-            };
-        })
-    );
+                };
+            })
+        );
+    }
 
-    let tours = await Promise.all(acf.tour.map((tour_id: number) => wp.getTourById(tour_id)))
-    tours = await Promise.all(tours.map(async (tour) => {
-        const tour_image = tour.featured_media;
-        const tour_image_data = await wp.getPostImage(tour_image);
-        return {
-            ...tour,
-            image: tour_image_data
-        }
+    let tours = [];
+
+    if (acf.tour) {
+
+        tours = await Promise.all(acf.tour.map((tour_id: number) => wp.getTourById(tour_id)))
+        tours = await Promise.all(tours.map(async (tour) => {
+            const tour_image = tour.featured_media;
+            const tour_image_data = await wp.getPostImage(tour_image);
+            return {
+                ...tour,
+                image: tour_image_data
+            }
 
 
-    }))
+        }))
+    }
 
     const comments = [
         { id: 0, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month" },
@@ -86,23 +97,28 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         country_flag: countryFlag
     }
 
-    const posts = await Promise.all(acf.posts.map(async (id: number) => {
-        const postInfo = await wp.getPostInfoById(id);
+    let posts = [];
 
-        const postImage = await wp.getPostImage(postInfo.featured_media);
-        const author = await wp.getAuthor(postInfo.author);
+    if (acf.posts) {
 
-        const city_name = await wp.getCity(postInfo.acf.ciudades[0])
+        posts = await Promise.all(acf.posts.map(async (id: number) => {
+            const postInfo = await wp.getPostInfoById(id);
+
+            const postImage = await wp.getPostImage(postInfo.featured_media);
+            const author = await wp.getAuthor(postInfo.author);
+
+            const city_name = await wp.getCity(postInfo.acf.ciudades[0])
 
 
-        return {
-            ...postInfo,
-            featured_media: postImage,
-            author: author,
-            city: city_name,
-        }
+            return {
+                ...postInfo,
+                featured_media: postImage,
+                author: author,
+                city: city_name,
+            }
 
-    }));
+        }));
+    }
 
     const { acf: faqRaw } = await wp.getFaqById(76);
     const faqs = formatFaqs(faqRaw);
@@ -110,6 +126,26 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
 
 
+    if (acf.title === "") {
+        return (
+            <main>
+                <section className="city-not-found">
+                    <div className="main-section-container">
+                        <div className="image-container">
+                            <MainImage src={mainImage[0].img} alt={mainImage[0].alt} />
+                        </div>
+                    </div>
+                    <div className="data-container">
+                        <div className="data">
+                            <div className="data-info">
+                                <h1>Ciudad en construcción...</h1>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        )
+    }
 
 
 

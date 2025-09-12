@@ -10,6 +10,7 @@ import NotReadyToBook from "./components/not-ready-to-book";
 import { fetchImages } from "./utils/fetchImages";
 import MainImage from "@/ui/components/main-image";
 import AsFeaturedIn from "@/ui/components/as-featured-in";
+import { Star } from "lucide-react";
 
 export default async function Home() {
 
@@ -54,36 +55,50 @@ export default async function Home() {
 
   const [background_image, ...imgs] = images;
 
-  const toursRaw = await wp.getAllTours();
+  const citiesRaw = await wp.getAllCities();
 
-  const tours = await Promise.all(
-    toursRaw.map(async (data: Tour) => {
-      const city_id = data.acf.ciudad;
-      const cityData = await wp.getCity(city_id);
-
-      const country_id = cityData.country_id;
+  const cities = await Promise.all(
+    citiesRaw.map(async (data) => {
+      const country_id = data.acf.pais;
       const countryData = await wp.getCountry(country_id);
 
       const image_id = data.featured_media;
       const image = await wp.getPostImage(image_id);
 
       return {
-        ...data,
-        city: cityData.city_name,
+        city: data.title.rendered,
+        slug: data.slug,
         country: countryData.country_name,
         image: image,
       }
     })
   )
 
+
+  // const tours = await Promise.all(
+  //   citiesRaw.map(async (data: Tour) => {
+  //     const city_id = data.acf.ciudad;
+  //     const cityData = await wp.getCity(city_id);
+
+  //     const country_id = cityData.country_id;
+  //     const countryData = await wp.getCountry(country_id);
+
+  //     const image_id = data.featured_media;
+  //     const image = await wp.getPostImage(image_id);
+
+  //     return {
+  //       ...data,
+  //       city: cityData.city_name,
+  //       country: countryData.country_name,
+  //       image: image,
+  //     }
+  //   })
+  // )
+
   const not_ready_to_book_section = await getNotReadyToBookSection();
 
   const our_experiences_section = await wp.getEmbedSectionInfo("our-experiences");
   const our_experiences_section_image = await wp.getPostImage(our_experiences_section.featured_media);
-
-  console.log({ our_experiences_section });
-
-
 
 
   return (
@@ -95,11 +110,37 @@ export default async function Home() {
           </div>
           <div className="data-container">
             <div className="logos-container">
-              {imgs.map((img, i) => (
+              <div className="logo-container">
+                <div className="img-container">
+                  <img src="/google.png" />
+                </div>
+                <div className="review">
+                  <p>400 reviews</p>
+                </div>
+              </div>
+              <div className="logo-container">
+                <div className="img-container">
+                  <img src="/trip.png" />
+                </div>
+                <div className="review star">
+                  {Array.from({length: 5}).map((_, i) => (
+                    <Star key={"star-" + i} size={14} fill="#FFD700" stroke="#FFD700" />
+                  ))}
+                </div>
+              </div>
+              <div className="logo-container">
+                <div className="img-container">
+                  <img src="/tripadvisor-logo.png" />
+                </div>
+                <div className="review">
+                  <p>4.649 reviews</p>
+                </div>
+              </div>
+              {/* {imgs.map((img, i) => (
                 <div className="image-container" key={img.img + i}>
                   <img src={img.img} alt={img.alt} />
                 </div>
-              ))}
+              ))} */}
             </div>
             <div className="info-container">
               <p className="info-container-kicker">{acf.kicker}</p>
@@ -131,14 +172,14 @@ export default async function Home() {
           <p><span>Everything&apos;s included.</span> We handle the details and most dietary needs. Just show up ready to enjoy</p>
         </div>
         <div className="tours-section">
-          {tours.reverse().map((tour, i) => (
-            <Link className="tour-card" key={tour.city + i} href={`/city/${tour.slug}`}>
+          {cities.reverse().map((city, i) => (
+            <Link className="tour-card" key={city.slug + i} href={`/city/${city.slug}`}>
               <div className="img-container">
-                <img src={tour.image.img} alt={tour.image.alt} />
+                <img src={city.image.img} alt={city.image.alt} />
               </div>
               <div className="tour-data">
-                <h4>{tour.city}</h4>
-                <p>{tour.country}</p>
+                <h4>{city.city}</h4>
+                <p>{city.country}</p>
               </div>
             </Link>
           ))}

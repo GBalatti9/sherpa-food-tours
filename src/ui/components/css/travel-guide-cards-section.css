@@ -1,6 +1,10 @@
 .tour-cards-section {
     background-color: var(--main-color) !important;
 
+    p {
+        margin: 0;
+    }
+
     .tour-cards {
         display: flex;
         flex-direction: column;
@@ -32,11 +36,17 @@
                     color: var(--main-color);
                     max-width: 250px;
                     padding: 1rem 0 .5rem 0;
+                    margin: 0;
                 }
                 .headline {
                     font-family: var(--font-excelsior);
                     font-size: 1rem;
                     line-height: 1.5;
+                    
+                    p {
+                        font-size: 1rem;
+                        margin: 0;
+                    }
                 }
 
                 .info-container {
@@ -54,6 +64,10 @@
                             font-size: 0.9rem;
                             text-transform: uppercase;
                             color: var(--main-color);
+                            p {
+                                font-size: 0.9rem;
+
+                            }
                         }
                     }
 
