@@ -17,7 +17,7 @@ export default async function TravelGuidePage() {
     const posts = await wp.getAllPost();
     const categories = await wp.getAllCategories();
 
-    // console.log({categories});
+    console.log({posts});
     // console.log(posts[0]);
 
     const data: CompletePost[] = categories.map((cat: Category) => {

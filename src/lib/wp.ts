@@ -1,6 +1,9 @@
 const domain = process.env.NEXT_PUBLIC_WP_URL;
 const apiUrl = `${domain}/wp-json/wp/v2`
 
+console.log({domain, apiUrl});
+
+
 export const wp = {
     getPageInfo: async (slug: string) => {
         const response = await fetch(`${apiUrl}/pages?slug=${slug}`)
