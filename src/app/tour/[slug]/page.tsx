@@ -4,6 +4,7 @@ import { fetchImages } from "@/app/utils/fetchImages";
 import { wp } from "@/lib/wp";
 import BookNowButton from "@/ui/components/book-now";
 import { Star } from "lucide-react";
+import React from "react";
 
 export async function generateStaticParas() {
     const tours = await wp.getAllTours();
@@ -43,6 +44,23 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             icon: image
         }
     }))
+
+    const { title: title_highlight, ...rest } = acf.tour_hihglights;
+
+    console.log({ title_highlight, rest });
+
+    const highlightItems = await Promise.all(Object.entries(rest).filter(([key]) => key.includes("item")).map(([_, value]) => value).filter((element) => element.highlight_image !== "").map(async (element) => {
+        const image = await wp.getPostImage(element.highlight_image);
+        return {
+            ...element,
+            highlight_image: image
+        }
+    }));
+
+    console.log({ highlightItems });
+
+
+
 
 
 
@@ -151,10 +169,10 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                     {acf.tour_description
                         .split(/\r\n/)
                         .map((line, i) => (
-                            <>
+                            <React.Fragment key={i}>
                                 <p key={i}>{line}</p>
                                 <br />
-                            </>
+                            </React.Fragment>
                         ))}
                 </div>
             </section>
@@ -170,6 +188,23 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                             </div>
                         </div>
                     ))}
+                </div>
+            </section>
+            <section className="tour-highlights">
+                <div className="tour-highlights-container">
+                    <h2 className="highlight-title">{title_highlight}</h2>
+                    <div className="highlights-container">
+                        {highlightItems.length > 0 && highlightItems.map((item, i) => (
+                            <div key={item.title + i} className="highlight-item">
+                                <div className="highlight-image-container">
+                                    <img src={item.highlight_image.img} alt={item.highlight_image.alt || 'Highlight Image'} />
+                                </div>
+                                <div className="highlight-text-container">
+                                    <p>{item.highlight_description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
         </main>
