@@ -239,3 +239,8 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     )
 
 }
+
+export const revalidate = 10; // segundos
+export const dynamic = 'auto';
+export const fetchCache = 'force-cache'; // mantiene caché y permite revalidar
+export const dynamicParams = false; // No genera rutas dinámicas
