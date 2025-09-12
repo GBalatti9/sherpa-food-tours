@@ -16,17 +16,25 @@ interface HighlightItem {
 }
 
 export async function generateStaticParams() {
-  try {
-    const tours = await wp.getAllTours();
-    if (!tours || !tours.length) return [];
+    try {
+        const tours = await wp.getAllTours();
+        if (!tours || !tours.length) return [];
 
-    return tours.map((tour: { slug: string }) => ({
-      slug: tour.slug || "default-slug"
-    }));
-  } catch (err) {
-    console.warn("No se pudo obtener tours para static params:", err);
-    return [];
-  }
+        // const slugs = tours.map((tour: {slug: string}) => {
+        //     const slug = tour.slug || "default-slug";
+        //     console.log({slug});
+
+        //     return slug
+
+        // })
+
+        return tours.map((tour: { slug: string }) => ({
+                slug: tour.slug || "default-slug"
+            }));
+    } catch (err) {
+        console.warn("No se pudo obtener tours para static params:", err);
+        return [];
+    }
 }
 
 
