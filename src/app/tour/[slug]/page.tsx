@@ -16,10 +16,17 @@ interface HighlightItem {
 }
 
 export async function generateStaticParams() {
+  try {
     const tours = await wp.getAllTours();
+    if (!tours || !tours.length) return [];
+
     return tours.map((tour: { slug: string }) => ({
-        slug: tour.slug
-    }))
+      slug: tour.slug || "default-slug"
+    }));
+  } catch (err) {
+    console.warn("No se pudo obtener tours para static params:", err);
+    return [];
+  }
 }
 
 
@@ -240,7 +247,8 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
 }
 
-export const revalidate = 10; // segundos
-export const dynamic = 'auto';
-export const fetchCache = 'force-cache'; // mantiene caché y permite revalidar
-export const dynamicParams = false; // No genera rutas dinámicas
+export const revalidate = 10; // cada 10s
+export const dynamic = "auto"; // permite ISR
+export const fetchCache = "force-cache"; // cache + revalidate
+export const dynamicParams = false;
+
