@@ -27,7 +27,6 @@ export const wp = {
 
         console.log({url});
         
-
         // if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
           if (!data) return { title: "", content: "", excerpt: "", featured_media: null, date: "", modified: "", relaciones: null };
