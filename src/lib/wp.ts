@@ -170,8 +170,9 @@ export const wp = {
     },
 
     getTourBySlug: async (slug: string) => {
-        const response = await fetch(`${apiUrl}/tours?slug=${slug}`)
-        if (!response.ok) throw new Error("No se obtuvieron datos");
+        const url = `${apiUrl}/tours?slug=${slug}`;
+        const response = await fetch(url)
+        if (!response.ok) throw new Error(`No se obtuvieron datos: ${url}`);
         const [data] = await response.json();
         const { title: { rendered: title }, acf } = data;
         return {title, acf};
