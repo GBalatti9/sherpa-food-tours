@@ -17,15 +17,17 @@ import FaqSection from "@/ui/components/faq-section";
 import NextAdventure from "@/ui/components/redy-next-adventure";
 
 export async function generateStaticParams() {
-  // Traer todos los slugs de las ciudades desde WP
-  const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
-  
-  const citiesFormatted = cities.map((city: { slug: string }) => city.slug);
+    // Traer todos los slugs de las ciudades desde WP
+    const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
 
-  console.log({citiesFormatted}, "ciudades");
-  
-  
-  return citiesFormatted
+    const citiesFormatted = cities.map((city: { slug: string }) => ({
+        slug: city.slug
+    }));
+
+    console.log({ citiesFormatted }, "ciudades");
+
+
+    return citiesFormatted
 }
 
 
@@ -134,8 +136,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     }
 
     const { acf: faqRaw } = await wp.getFaqById(76);
-    console.log({faqRaw}, "listo");
-    
+    console.log({ faqRaw }, "listo");
+
     const faqs = formatFaqs(faqRaw);
 
 
