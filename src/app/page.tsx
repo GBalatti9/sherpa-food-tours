@@ -53,13 +53,13 @@ export default async function Home() {
 
   const [background_image, ...imgs] = images;
   console.log(imgs);
-  
+
 
   const citiesRaw = await wp.getAllCities();
 
   const cities = await Promise.all(
     citiesRaw.map(async (data: City) => {
-      
+
       const country_id = data.acf.pais;
       let countryData = null;
       if (country_id) {
@@ -107,7 +107,7 @@ export default async function Home() {
                   <img src="/trip.png" />
                 </div>
                 <div className="review star">
-                  {Array.from({length: 5}).map((_, i) => (
+                  {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={"star-" + i} size={14} fill="#FFD700" stroke="#FFD700" />
                   ))}
                 </div>
@@ -124,7 +124,10 @@ export default async function Home() {
             <div className="info-container">
               <p className="info-container-kicker">{acf.kicker}</p>
               <h1 className="info-container-title">{title}</h1>
-              <p className="info-container-subheadline">{acf.subhedline}</p>
+              <div className="xl-container">
+                <p className="info-container-subheadline">{acf.subhedline}</p>
+                <p className="info-container-kicker xl">{acf.kicker}</p>
+              </div>
             </div>
           </div>
         </div>
