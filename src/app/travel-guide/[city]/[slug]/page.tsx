@@ -58,11 +58,14 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 export async function generateStaticParams() {
     const posts = await wp.getAllPost();
 
-
-    return posts.map((post: WPPost) => ({
+    const formattedPosts = posts.map((post: WPPost) => ({
         slug: post.slug,
         city: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0].title) : "default-city",
     }));
+    console.log({formattedPosts}, "!!!!!");
+    
+
+    return formattedPosts
 }
 
 // ----------------------
