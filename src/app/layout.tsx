@@ -4,8 +4,9 @@ import "./globals.css";
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/free-mode';
-import NavBar from "@/ui/components/nav-bar";
+// import NavBar from "@/ui/components/nav-bar";
 import Footer from "./components/footer";
+import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 
 const excelsior = localFont({
   src: [
@@ -44,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
-        <NavBar />
+        <NavBarWrapper />
         {/* <main> */}
           {children}
         {/* </main> */}

@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
-export default function MobileMenu({ items }: { items: NavBarLink[] }) {
+export default function MobileMenu({ items, currentPath }: { items: NavBarLink[], currentPath: string }) {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +41,7 @@ export default function MobileMenu({ items }: { items: NavBarLink[] }) {
             >
                 <span className="sr-only">{isOpen ? "Close menu" : "Open menu"}</span>
                 <div className="transition-transform duration-300">
-                    {isOpen ? <X className="h-6 w-6 rotate-90" aria-hidden /> : <Menu className="h-8 w-8" aria-hidden />}
+                    {isOpen ? <X className="h-6 w-6 rotate-90" aria-hidden /> : <Menu className="h-8 w-8" aria-hidden style={{color: currentPath === '/' ? 'var(--background)' : '#333'}}/>}
                 </div>
             </button>
 

@@ -3,8 +3,33 @@
     font-family: var(--font-excelsior);
     font-size: 0.93rem;
     padding: .5rem 1rem;
+    position: fixed;
+    z-index: 9999;
+    background-color: var(--background);
+    width: 100%;
+
     .sherpa-navbar {
         height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .logo-container {
+            padding: 0;
+            padding-top: .3rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 35px;
+            width: fit-content;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
     }
 }
 
@@ -17,5 +42,11 @@
 @media (min-width: 1024px) {
     .sherpa-header {
         padding: 1rem 4rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .sherpa-header {
+        padding: 1rem 6rem;
     }
 }
