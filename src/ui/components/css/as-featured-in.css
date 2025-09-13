@@ -8,7 +8,6 @@
     background-color: var(--local-guides-bg);
 
     p {
-
         font-size: 0.8125rem;
         font-family: var(--font-excelsior);
         font-style: italic;
@@ -23,5 +22,40 @@
 
     .imgs-container .img-container:last-child {
         padding-bottom: 2px;
+    }
+}
+
+@media (min-width: 768px) {
+    .as-featured-in {
+        gap: 1.5rem;
+
+        p {
+            font-size: 1rem;
+        }
+
+        .imgs-container {
+            gap: 1.3rem;
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .as-featured-in {
+        gap: 2rem;
+        p {
+            font-size: 1.125rem;
+        }
+        .imgs-container {
+            gap: 2rem;
+
+            .img-container {
+                width: 90px;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
     }
 }
