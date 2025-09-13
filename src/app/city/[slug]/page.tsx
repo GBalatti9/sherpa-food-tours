@@ -19,11 +19,13 @@ import NextAdventure from "@/ui/components/redy-next-adventure";
 export async function generateStaticParams() {
   // Traer todos los slugs de las ciudades desde WP
   const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
-//   console.log({cities});
   
-  return cities.map((city: { slug: string }) => ({
-    slug: city.slug
-  }));
+  const citiesFormatted = cities.map((city: { slug: string }) => city.slug);
+
+  console.log({citiesFormatted}, "ciudades");
+  
+  
+  return citiesFormatted
 }
 
 
@@ -79,7 +81,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     if (acf.tour) {
 
         tours = await Promise.all(acf.tour.map((tour_id: number) => wp.getTourById(tour_id)))
-        
+
         tours = await Promise.all(tours.map(async (tour) => {
             const tour_image = tour.featured_media;
             const tour_image_data = await wp.getPostImage(tour_image);
