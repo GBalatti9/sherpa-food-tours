@@ -46,13 +46,26 @@ export const wp = {
         return { title, content, excerpt, featured_media, date, modified, relaciones, acf, author, slug };
     },
     getAllPost: async (limit?: number) => {
-        const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts`;
-        const response = await fetch(url)
+        try {
+            const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts`;
 
-        if (!response.ok) throw new Error("No se obtuvieron datos");
-        const data = await response.json();
+            const response = await fetch(url, {
+                cache: 'no-store',
+                headers: {
+                    'Cache-Control': 'no-cache',
+                }
+            });
 
-        return data;
+            if (!response.ok) {
+                console.warn(`Posts API failed: ${response.status} ${response.statusText}`);
+                return []; // Retornar array vacío en lugar de fallar
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.warn('getAllPost error:', error);
+            return []; // Retornar array vacío para no romper el build
+        }
     },
     getPostImage: async (id?: number) => {
         if (!id || id === 0) {
