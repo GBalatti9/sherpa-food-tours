@@ -1,0 +1,21 @@
+.sherpa-header {
+    /* height: 60px; */
+    font-family: var(--font-excelsior);
+    font-size: 0.93rem;
+    padding: .5rem 1rem;
+    .sherpa-navbar {
+        height: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .sherpa-header {
+        padding: 1rem 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sherpa-header {
+        padding: 1rem 4rem;
+    }
+}

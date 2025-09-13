@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BookNowButton from "./book-now";
 import MobileMenu from "./mobile-menu";
+import "./css/nav-bar.css";
 
 export default function NavBar() {
     const items = [
@@ -11,7 +12,7 @@ export default function NavBar() {
     ];
     return (
         <header role="banner" className="sherpa-header">
-            <nav className="flex justify-between items-center px-6 sm:px-8 lg:px-16 py-4 lg:py-0" aria-label="Main navigation">
+            <nav className="flex justify-between items-center sherpa-navbar" aria-label="Main navigation">
                 <div className="flex items-center">
                     {/* Mobile menu button */}
                     <div className="md:hidden h-8 mr-2">
@@ -37,7 +38,7 @@ export default function NavBar() {
                         </svg>
                     </Link>
                 </div>
-                <ul className="flex gap-0 md:gap-6 lg:gap-8 p-0 md:py-4 justify-center items-center" role="menubar">
+                <ul className="flex gap-0 md:gap-6 lg:gap-8 justify-center items-center" role="menubar">
                     {items.map((item) => (
                         <li
                             key={item.href}

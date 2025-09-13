@@ -18,9 +18,6 @@ export default async function Home() {
   const pageInfo = await wp.getPageInfo("home");
   const acf: ACFHome = pageInfo.acf;
 
-  console.log({ acf });
-
-
   const { title, content, featured_media } = pageInfo;
 
   const imagesIds = [
@@ -123,11 +120,6 @@ export default async function Home() {
                   <p>4.649 reviews</p>
                 </div>
               </div>
-              {/* {imgs.map((img, i) => (
-                <div className="image-container" key={img.img + i}>
-                  <img src={img.img} alt={img.alt} />
-                </div>
-              ))} */}
             </div>
             <div className="info-container">
               <p className="info-container-kicker">{acf.kicker}</p>
