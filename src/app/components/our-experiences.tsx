@@ -1,7 +1,6 @@
 
 
 export default function OurExperiencesSection({ title, content, src, alt }: { title: string, content: string, src: string, alt: string }) {
-    console.log({content});
     
     return (
         <section className="our-experiences-section">

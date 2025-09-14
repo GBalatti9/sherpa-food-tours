@@ -33,8 +33,8 @@ export default function NotReadyToBook({titles, posts}: {titles: NotReadyToBookT
                         </Link>
                     )
                 })}
-                <Link href="/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
             </div>
+                <Link href="/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
         </section>
     )
 }

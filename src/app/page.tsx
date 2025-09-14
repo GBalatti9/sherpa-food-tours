@@ -154,17 +154,19 @@ export default async function Home() {
           <p><span>Everything&apos;s included.</span> We handle the details and most dietary needs. Just show up ready to enjoy</p>
         </div>
         <div className="tours-section">
-          {cities.reverse().map((city, i) => (
-            <Link className="tour-card" key={city.slug + i} href={`/city/${city.slug}`}>
-              <div className="img-container">
-                <img src={city.image.img} alt={city.image.alt} />
-              </div>
-              <div className="tour-data">
-                <h4>{city.city}</h4>
-                <p>{city.country}</p>
-              </div>
-            </Link>
-          ))}
+          <div className="tours-container">
+            {cities.reverse().map((city, i) => (
+              <Link className="tour-card" key={city.slug + i} href={`/city/${city.slug}`}>
+                <div className="img-container">
+                  <img src={city.image.img} alt={city.image.alt} />
+                </div>
+                <div className="tour-data">
+                  <h4>{city.city}</h4>
+                  <p>{city.country}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
       <NotReadyToBook
