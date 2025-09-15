@@ -15,6 +15,8 @@ import Link from "next/link";
 import { formatFaqs } from "@/app/utils/formatFaqs";
 import FaqSection from "@/ui/components/faq-section";
 import NextAdventure from "@/ui/components/redy-next-adventure";
+import NotReadyToBook from "@/app/components/not-ready-to-book";
+import { slugify } from "@/app/helpers/slugify";
 
 export async function generateStaticParams() {
     // Traer todos los slugs de las ciudades desde WP
@@ -100,6 +102,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const localGuideImage = await wp.getPostImage(localGuide.profile_picture);
     const countryFlag = await wp.getPostImage(localGuide.country_flag)
 
+    
+
     const localGuideData = {
         ...localGuide,
         profile_picture: localGuideImage,
@@ -129,6 +133,19 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         }));
     }
 
+    const getToKnowTheCity = {titles: {title: "Get to know the city"}, posts: posts.map((post) => {
+        return {
+            ...post,
+            title: {rendered: post.title},
+            author_name: post.author,
+            image: post.featured_media,
+            city: post.city_name,
+            city_slug: slugify(post.city_name),
+            key: post.acf.key
+        }
+    })}
+    console.log({getToKnowTheCity});
+    
     const { acf: faqRaw } = await wp.getFaqById(76);
     console.log({ faqRaw }, "listo");
 
@@ -212,11 +229,11 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                     {comments.map((comment) => (
                         <CommentElement key={comment.id} comment={comment} />
                     ))}
-                    <p className="show-more-comments">Show more</p>
                 </div>
+                <p className="show-more-comments">Show more</p>
             </section>
 
-            <section>
+            <section className="local-guide-section">
                 <div className="local-guide-container">
                     <MeetLocalGuides localGuides={[localGuideData]} />
                 </div>
@@ -287,6 +304,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
                 </div>
             </section>
+
+            <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts.slice(0, 3)}/>
             <section className="faq-section-city">
                 <FaqSection faqs={faqs} />
             </section>

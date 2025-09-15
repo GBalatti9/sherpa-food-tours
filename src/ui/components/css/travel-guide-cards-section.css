@@ -13,14 +13,47 @@
         .tour-card {
             background-color: var(--background);
             width: 331px;
-            /* height: 642px; */
             min-height: 615px;
             margin: 1rem auto;
             padding: 1.3rem 1rem;
 
+            @media (min-width: 768px) {
+                width: 80%;
+                max-width: 768px;
+                display: flex;
+                max-height: 450px;
+                min-height: 0;
+                overflow: hidden;
+                gap: 1.5rem;
+            }
+
+            @media (min-width: 1024px) {
+                max-width: 1024px;
+                height: 330px;
+            }
+
+            @media (min-width: 1200px) {
+                max-width: 1100px;
+                height: 400px;
+                gap: 3rem;
+                padding: 2rem;
+            }
+
             .img-container {
                 aspect-ratio: 3 / 2;
                 overflow: hidden;
+
+                @media (min-width: 768px) {
+                    aspect-ratio: 4 / 5;
+                    width: 40%;
+                    /* width: 280px; */
+                    /* height: 350px; */
+                }
+
+                @media (min-width: 1024px) {
+                    aspect-ratio: 4 / 5;
+                    width: 30%;
+                }
 
                 img {
                     height: 100%;
@@ -30,6 +63,66 @@
             }
 
             .data-container {
+                @media (min-width: 768px) {
+                    width: 60%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+
+                @media (min-width: 1024px) {
+                    width: 70%;
+                }
+
+                .price-desktop {
+                    display: none;
+
+                    @media (min-width: 1024px) {
+                        display: block;
+
+                        width: fit-content;
+                        margin-left: auto;
+                        font-family: var(--font-excelsior);
+                        font-size: 1.125rem;
+
+                        span {
+                            font-weight: 700;
+                        }
+                    }
+
+                    @media (min-width: 1024px) {
+                        font-size: 1.5rem;
+                    }
+                }
+
+                .headline-desktop {
+                    display: none;
+
+                    @media (min-width: 1024px) {
+                        display: block;
+                        font-family: var(--font-excelsior);
+                        font-size: 1rem;
+                        line-height: 1.5;
+
+                        p {
+                            font-size: 1rem !important;
+                            margin: 0 !important;
+
+                            @media (min-width: 1200px) {
+                                font-size: 1.25rem !important;
+                            }
+                        }
+                    }
+                }
+
+                .title-container {
+                    @media (min-width: 1024px) {
+                        display: flex;
+                        justify-content: space-between;
+
+                    }
+                }
+
                 h3 {
                     font-family: var(--font-dk-otago);
                     font-size: 1.5rem;
@@ -37,15 +130,35 @@
                     max-width: 250px;
                     padding: 1rem 0 .5rem 0;
                     margin: 0;
+
+                    @media (min-width: 768px) {
+                        padding: 0;
+                    }
+
+                    @media (min-width: 1024px) {
+                        font-size: 2rem;
+                        max-width: 400px;
+                    }
+
+                    @media (min-width: 1200px) {
+                        font-size: 2.2rem;
+                        max-width: 450px;
+                    }
                 }
+
+
                 .headline {
                     font-family: var(--font-excelsior);
                     font-size: 1rem;
                     line-height: 1.5;
-                    
+
                     p {
                         font-size: 1rem !important;
                         margin: 0 !important;
+                    }
+
+                    @media (min-width: 1024px) {
+                        display: none;
                     }
                 }
 
@@ -55,7 +168,20 @@
                     padding: 1.5rem 0;
                     gap: 1rem;
 
-                    .duration-container, .size-container, .included-container {
+                    @media (min-width: 1024px) {
+                        display: flex;
+                        border-top: 1px solid #B9B9B9;
+                        border-bottom: 1px solid #B9B9B9;
+                        padding: 1rem 0;
+                        justify-content: space-between;
+                    }
+
+                    @media (min-width: 1200px) {
+                        padding: 1.5rem 0;
+                    }
+                    .duration-container,
+                    .size-container,
+                    .included-container {
                         .title {
                             display: flex;
                             align-items: center;
@@ -64,10 +190,30 @@
                             font-size: 0.9rem;
                             text-transform: uppercase;
                             color: var(--main-color);
+
+                            @media (min-width: 1024px) {
+                                font-size: 1rem;
+                            }
+
+                            @media (min-width: 1200px) {
+                                font-size: 1.125rem;
+                                padding-right: 3rem;
+                            }
+
                             p {
                                 font-size: 0.9rem;
+                                font-family: var(--font-excelsior);
 
                             }
+                        }
+
+                        .title-element {
+                            font-family: var(--font-excelsior);
+
+                            @media (min-width: 1024px) {
+                                font-size: 1.25rem;
+                            }
+
                         }
                     }
 
@@ -82,19 +228,36 @@
                         margin-left: auto;
                         font-family: var(--font-excelsior);
                         font-size: 1.125rem;
+
                         span {
                             font-weight: 700;
                         }
+
+                        @media (min-width: 1024px) {
+                            display: none;
+                        }
                     }
+
                     .final {
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
                         padding-top: 1rem;
                         font-family: var(--font-excelsior);
+
                         a {
                             color: var(--main-color);
                             text-decoration: underline;
+
+                            @media (min-width: 1200px){
+                                font-size: 1.2rem;
+                            }
+                        }
+                        .book-now-button {
+                            
+                            @media (min-width: 1200px){
+                                font-size: 1.2rem;
+                            }
                         }
                     }
                 }

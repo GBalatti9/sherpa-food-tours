@@ -5,8 +5,6 @@ import Link from "next/link";
 
 
 export default function TravelGuideCardsSection({ tours }: { tours: TourFormatted[] }) {
-    console.log({ tours });
-
     return (
         <section className="tour-cards-section">
             <div className="tour-cards">
@@ -16,7 +14,12 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                             <img src={tour.image.img} alt={tour.image.alt} />
                         </div>
                         <div className="data-container">
-                            <h3>{tour.title}</h3>
+                            <div className="title-container">
+                                <h3>{tour.title}</h3>
+                                <div className="price-desktop">
+                                    <p>From: <span>USD{tour.acf.price}</span></p>
+                                </div>
+                            </div>
                             <div dangerouslySetInnerHTML={{ __html: tour.content }} className="headline"></div>
 
                             <div className="info-container">
@@ -28,7 +31,7 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                         </svg>
                                         Duration
                                     </p>
-                                    <p>{tour.acf.duration}</p>
+                                    <p className="title-element">{tour.acf.duration}</p>
                                 </div>
                                 <div className="size-container">
                                     <p className="title">
@@ -42,7 +45,7 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                         </svg>
                                         Group Size
                                     </p>
-                                    <p>{tour.acf.group_size}</p>
+                                    <p className="title-element">{tour.acf.group_size}</p>
                                 </div>
                                 <div className="included-container">
                                     <p className="title">
@@ -53,9 +56,11 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                         </svg>
                                         What is included
                                     </p>
-                                    <p>{tour.acf.what_is_included}</p>
+                                    <p className="title-element">{tour.acf.what_is_included}</p>
                                 </div>
                             </div>
+
+                            <div dangerouslySetInnerHTML={{ __html: tour.content }} className="headline-desktop"></div>
 
                             <div className="footer-container">
                                 <div className="price">

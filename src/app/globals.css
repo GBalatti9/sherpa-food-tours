@@ -66,6 +66,15 @@ body {
   margin: 4rem 0;
   padding: 0 !important;
 
+  @media (min-width: 768px) {
+    max-width: 768px;
+    margin: auto;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 1024px;
+  }
+
 
   .faq-title {
     font-size: 1.5rem;
@@ -73,11 +82,22 @@ body {
     font-family: var(--font-dk-otago);
     margin: 1.5rem 0;
     text-transform: uppercase;
+
+    
+    @media (min-width: 768px) {
+      text-align: center;
+      padding: 2rem 0;
+    }
+    @media (min-width: 1024px) {
+      font-size: 2.1rem;
+    }
   }
 
   h2 {
     font-size: 1.3rem;
     color: black !important;
+
+
   }
 
   .faq-items {
@@ -100,6 +120,10 @@ body {
         align-items: center;
         cursor: pointer;
 
+        @media (min-width: 1024px) {
+          font-size: 1.2rem;
+        }
+
         &::-webkit-details-marker {
           display: none;
         }
@@ -121,6 +145,11 @@ body {
 
       .faq-answer {
         padding-bottom: 1rem;
+        font-family: var(--font-excelsior);
+
+        @media (min-width: 1024px) {
+          font-size: 1.125rem;
+        }
       }
     }
 
@@ -242,6 +271,7 @@ body {
   }
 
 }
+
 .preview-read-all {
   border: 1px solid;
   background-color: var(--main-color);

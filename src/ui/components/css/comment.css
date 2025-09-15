@@ -1,21 +1,35 @@
-
 .comment-container {
     font-family: var(--font-excelsior);
     border-bottom: 1px solid #A3A3A3;
     padding: 2rem 0;
+
+    @media (min-width: 768px) {
+        max-width: 768px;
+        margin: auto;
+    }
+
+    @media (min-width: 1024px) {
+        border: 1px solid #B9B9B9;
+        padding: 2rem;
+    }
+
     .stars-container {
         display: flex;
+
         svg {
             width: 1rem;
             fill: #E7B53F;
             stroke: none;
         }
     }
+
     .data-section {
         font-size: 1.125rem;
+
         h4 {
             font-weight: 700;
         }
+
         p {
             padding: .5rem 0 .7rem 0;
             line-height: 1.28;

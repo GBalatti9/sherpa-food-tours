@@ -13,5 +13,13 @@
     .title {
         font-family: var(--font-dk-otago);
         font-size: 1.5rem;
+        @media (min-width: 768px){
+         font-size: 2rem;   
+        }
+        br {
+            @media (min-width: 768px) {
+                display: none;
+            }
+        }
     }
 }

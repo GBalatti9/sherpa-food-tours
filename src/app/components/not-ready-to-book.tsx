@@ -3,17 +3,21 @@ import Link from "next/link"
 
 interface NotReadyToBookTitles {
     title: string;
-    content: string;
-    featured_media: number;
+    content?: string;
+    featured_media?: number;
 }
 
 
-export default function NotReadyToBook({titles, posts}: {titles: NotReadyToBookTitles, posts: FormattedWpPost[]}) {;
+export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBookTitles, posts: FormattedWpPost[] }) {
+    console.log({ titles, posts });
+
     return (
         <section className="home-fifth-section not-ready-to-book">
             <div className="title-section">
                 <h4>{titles.title}</h4>
-                <div className="subtitle" dangerouslySetInnerHTML={{ __html: titles.content }}></div>
+                {titles.content &&
+                    <div className="subtitle" dangerouslySetInnerHTML={{ __html: titles.content }}></div>
+                }
             </div>
             <div className="preview-wrapper">
                 {posts.map((post) => {
@@ -34,7 +38,7 @@ export default function NotReadyToBook({titles, posts}: {titles: NotReadyToBookT
                     )
                 })}
             </div>
-                <Link href="/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
+            <Link href="/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
         </section>
     )
 }
