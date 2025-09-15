@@ -24,9 +24,6 @@ export async function generateStaticParams() {
         slug: city.slug
     }));
 
-    console.log({ citiesFormatted }, "ciudades");
-
-
     return citiesFormatted
 }
 
@@ -34,9 +31,6 @@ export async function generateStaticParams() {
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
 
     const { slug } = await params;
-
-    console.log({ slug });
-
 
     const { acf, featured_media, content } = await wp.getCityBySlug(slug);
 
@@ -210,19 +204,6 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             <section className="fourth-section">
                 <JustRelax />
                 <TravelGuideCardsSection tours={tours} />
-                {/* <div className="tours-section">
-                    {tours.reverse().map((tour, i) => (
-                        <Link className="tour-card" key={tour.city + i} href={`/city/${tour.slug}`}>
-                            <div className="img-container">
-                                <img src={tour.image.img} alt={tour.image.alt} />
-                            </div>
-                            <div className="tour-data">
-                                <h4>{tour.city}</h4>
-                                <p>{tour.country}</p>
-                            </div>
-                        </Link>
-                    ))}
-                </div> */}
             </section>
             {/* <NotReadyToBook /> */}
 

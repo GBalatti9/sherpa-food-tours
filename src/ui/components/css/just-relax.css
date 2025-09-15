@@ -2,10 +2,25 @@
     padding: 2rem 0;
     text-align: center;
 
+
+    @media (min-width: 768px) {
+        padding: 6rem 0;
+    }
+
     h2 {
         font-family: var(--font-dk-otago);
         font-size: 1.56rem;
         line-height: 1.45;
+
+        @media (min-width: 768px) {
+            font-size: 2rem;
+        }
+
+        br {
+            @media (min-width: 768px) {
+                display: none;
+            }
+        }
     }
 
     p {
@@ -15,6 +30,12 @@
         line-height: 1.5;
         width: 80%;
         margin: auto;
+        max-width: 415px;
+
+        @media (min-width: 768px) {
+            font-size: 1.5rem;
+            max-width: 550px;
+        }
     }
 
     span {
