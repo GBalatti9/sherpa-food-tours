@@ -1,19 +1,44 @@
 .tour-hero-section {
     padding: 6rem 1.3rem 2rem 1.3rem;
+    max-width: 600px;
+    margin: auto;
+
+    @media (min-width: 768px) {
+        max-width: none;
+    }
 
     .image-gallery {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: .3rem;
+        /* max-height: 500px; */
 
         .image-item:first-child {
             grid-column: span 2;
             aspect-ratio: 3 / 2;
+            height: 223px;
+            width: 100%;
+
+            @media (min-width: 640px) {
+                height: 250px;
+            }
+
+            @media (min-width: 768px) {
+                grid-row: span 2;
+                grid-column: 1;
+                height: 100%;
+            }
         }
 
         .image-item {
             aspect-ratio: 3 / 4;
             overflow: hidden;
+            height: 219px;
+            width: 100%;
+
+            @media (min-width: 640px) {
+                height: 290px;
+            }
 
             img {
                 width: 100%;
@@ -27,6 +52,12 @@
         padding-top: 1rem;
         padding-bottom: 2rem;
         border-bottom: 1px solid #B9B9B9;
+
+        @media (min-width: 768px) {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
         .title-container {
             .stars-container {
@@ -45,6 +76,32 @@
                 font-size: 1.6rem;
                 color: var(--main-color);
                 line-height: 1.4;
+
+                @media (min-width: 768px) {
+                    font-size: 2rem;
+                }
+
+                @media (min-width: 1024px) {
+                    font-size: 2.5rem;
+                }
+            }
+        }
+
+        .price-available {
+            display: none;
+
+            @media (min-width: 768px) {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .price-container {
+                @media (min-width: 768px) {
+                    display: flex;
+                    padding-top: 0;
+                    font-size: 1.25rem;
+                }
             }
         }
 
@@ -52,6 +109,11 @@
             display: flex;
             justify-content: space-between;
             padding-top: .5rem;
+            max-width: 340px;
+
+            @media (min-width: 768px) {
+                max-width: 360px;
+            }
 
             .google-container,
             .tripadvisor-container {
@@ -78,7 +140,10 @@
                     font-family: var(--font-excelsior);
                     font-size: 0.875rem;
                     color: var(--main-color);
-                    ;
+
+                    @media (min-width: 768px) {
+                        font-size: 1rem;
+                    }
                 }
             }
         }
@@ -91,6 +156,10 @@
             columns: #333;
             gap: .3rem;
 
+            @media (min-width: 768px) {
+                display: none;
+            }
+
             h2 {
                 font-weight: 700;
             }
@@ -101,6 +170,10 @@
             align-items: center;
             justify-content: space-between;
 
+            @media (min-width: 768px) {
+                display: none;
+            }
+
             p {
                 font-family: var(--font-excelsior);
                 font-size: 1rem;
@@ -110,16 +183,17 @@
             }
         }
     }
-
 }
 
 .tour-features {
     padding: 0 1.3rem 0 1.3rem;
+
     .features-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         border-bottom: 1px solid #B9B9B9;
-        padding-bottom: 2em;
+        padding-bottom: 2rem;
+        gap: 1rem;
 
         .feature-item:last-child {
             grid-column: span 2;
@@ -128,6 +202,7 @@
         .feature-item {
             font-family: var(--font-excelsior);
             color: #333;
+
             .feature-header {
                 display: flex;
                 gap: .3rem;
@@ -137,7 +212,7 @@
             }
         }
 
-        
+
     }
 }
 
@@ -166,6 +241,7 @@
 
 .tour-highlights {
     background-color: var(--local-guides-bg);
+
     .tour-highlights-container {
         padding: 2rem 1.3rem 0 1.3rem;
 
@@ -177,6 +253,7 @@
 
         .highlights-container {
             padding-bottom: 2rem;
+
             .highlight-item {
                 background-color: white;
                 padding: .6rem;
@@ -199,6 +276,27 @@
                     font-family: var(--font-excelsior);
                     font-size: 1.125rem;
                 }
+            }
+        }
+    }
+}
+
+@media (min-width: 768px){
+    .section-container-desktop {
+        display: flex;
+        padding-right: 1.3rem;
+
+        .left-side {
+            width: 70%;
+        }
+
+        .right-side {
+            width: 30%;
+            max-height: 500px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
         }
     }
