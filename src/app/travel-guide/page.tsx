@@ -17,7 +17,7 @@ export default async function TravelGuidePage() {
     const posts = await wp.getAllPost();
     const categories = await wp.getAllCategories();
 
-    console.log({posts});
+    console.log({ posts });
     // console.log(posts[0]);
 
     const data: CompletePost[] = categories.map((cat: Category) => {
@@ -76,7 +76,7 @@ export default async function TravelGuidePage() {
                             </svg>
                         </span>
                         Travel Guide </h1>
-                    <h2>experiences made to be remembered</h2>
+                    <h2>Experiences made to be remembered</h2>
                     <Link href="/" className="btn-cta">Explore The Guide</Link>
                 </div>
             </section>
@@ -87,6 +87,30 @@ export default async function TravelGuidePage() {
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
                             <path d="M15.6484 8.02881L10.7109 12.9663L5.77344 8.02881" stroke="#0A4747" strokeWidth="1.64583" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
+                    </div>
+                    <div className="input-container">
+                        <div className="input">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M8.2181 14.1691C11.5433 14.1691 14.2389 11.4735 14.2389 8.14827C14.2389 4.82307 11.5433 2.12744 8.2181 2.12744C4.8929 2.12744 2.19727 4.82307 2.19727 8.14827C2.19727 11.4735 4.8929 14.1691 8.2181 14.1691Z" stroke="#0A4747" strokeWidth="1.41667" strokeLinejoin="round" />
+                                <path d="M10.2218 5.79079C9.70905 5.27806 9.00072 4.96094 8.21829 4.96094C7.4359 4.96094 6.72757 5.27806 6.21484 5.79079" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M12.5469 12.4771L15.5521 15.4823" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                            <input type="text" name="search" id="search" placeholder="Best bars in Mexico City" />
+                        </div>
+                    </div>
+                    <div className="filter-container">
+                        <button>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M6.44727 13.8149L15.6556 13.8149" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M11.0527 9.21094L15.6569 9.21094" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M7.51042 9.21094L2.90625 9.21094" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M2.90625 4.60693L12.1146 4.60693" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M6.44792 13.8151C6.44792 12.8371 5.65508 12.0443 4.67708 12.0443C3.69908 12.0443 2.90625 12.8371 2.90625 13.8151C2.90625 14.7931 3.69908 15.5859 4.67708 15.5859C5.65508 15.5859 6.44792 14.7931 6.44792 13.8151Z" stroke="#0A4747" strokeWidth="1.41667" strokeLinejoin="round" />
+                                <path d="M11.0514 9.2111C11.0514 8.2331 10.2586 7.44027 9.2806 7.44027C8.3026 7.44027 7.50977 8.2331 7.50977 9.2111C7.50977 10.1891 8.3026 10.9819 9.2806 10.9819C10.2586 10.9819 11.0514 10.1891 11.0514 9.2111Z" stroke="#0A4747" strokeWidth="1.41667" strokeLinejoin="round" />
+                                <path d="M15.6569 4.60661C15.6569 3.62861 14.8641 2.83577 13.8861 2.83577C12.9081 2.83577 12.1152 3.62861 12.1152 4.60661C12.1152 5.5846 12.9081 6.37744 13.8861 6.37744C14.8641 6.37744 15.6569 5.5846 15.6569 4.60661Z" stroke="#0A4747" strokeWidth="1.41667" strokeLinejoin="round" />
+                            </svg>
+                            Filtrar
+                        </button>
                     </div>
                     <div className="icons">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -106,6 +130,7 @@ export default async function TravelGuidePage() {
                     </div>
                 </div>
             </section>
+            <hr className="travel-guide-separator"/>
             <section className="travel-guide-third-section-main-container">
 
                 {/* First Section */}

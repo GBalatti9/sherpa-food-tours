@@ -61,7 +61,7 @@ export default async function AboutUsPage() {
 
 
     const acfLocalGuidesCorrect = await Promise.all(acfDataLocalGuides.map(async (element) => {
-        
+
         const countryFlag = await wp.getPostImage(element.country_flag)
         return {
             ...element,
@@ -80,24 +80,52 @@ export default async function AboutUsPage() {
             <section className="about-us-page-second-section">
                 <h2 className="section-title">Our Values</h2>
                 <div className="value-cards-container">
-
                     {acfData.map((element, i) => (
-                        <div className="value-card" key={element.title + i} style={{
-                            backgroundImage: `url(${element.background_image.img})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center"
-                        }}>
-                            <div className="info-card">
-                                <h4>{element.title}</h4>
-                                <hr />
-                                <p>{element.description}</p>
+                        <div className="value-card" key={element.title + i}>
+                            <div className="value-card-img" style={{
+                                backgroundImage: `url(${element.background_image.img})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center"
+                            }}>
+                                <div className="info-card">
+                                    <h4>{element.title}</h4>
+                                    <hr />
+                                    <p>{element.description}</p>
+                                </div>
                             </div>
                         </div>
                     ))}
                 </div>
             </section>
+            <section className="about-us-page-second-section-desktop">
+                <div className="left-side">
+                    <h2 className="section-title">Our Values</h2>
+                    <div className="value-cards-title-container">
+                        {acfData.map((element) => (
+                            <p key={element.title} className={acfData[0].title === element.title ? "selected" : ""}>{element.title}</p>
+                        ))}
+                    </div>
+                </div>
+                <div className="right-side">
+                    <div className="value-cards-container">
+                        <div className="value-card">
+                            <div className="value-card-img" style={{
+                                backgroundImage: `url(${acfData[0].background_image.img})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center"
+                            }}>
+                                <div className="info-card">
+                                    <h4>{acfData[0].title}</h4>
+                                    <hr />
+                                    <p>{acfData[0].description}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section className="about-us-page-third-section">
-                <div className="local-guide-container">
+                <div className="local-guide-container-page">
                     <MeetLocalGuides localGuides={acfLocalGuidesCorrect} />
                 </div>
                 {/* <h2 className="section-title">Meet your local guides</h2>
