@@ -40,11 +40,14 @@ export async function generateStaticParams() {
 
 export default async function TourPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
+    console.log({slug});
 
     const { acf } = await wp.getTourBySlug(slug);
 
+    
+
     const { stars, title, reviews, price, check_availability } = acf.heading_section;
-    console.log({ acf });
+    console.log("TOUR PAGE: ",{ acf });
 
     const imagesId = Object.entries(acf.heading_section)
         .filter(([key]) => key.includes("image"))
@@ -226,8 +229,8 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
 }
 
-export const revalidate = 10; // cada 10s
-export const dynamic = "auto"; // permite ISR
-export const fetchCache = "force-cache"; // cache + revalidate
-export const dynamicParams = false;
+// export const revalidate = 10; // cada 10s
+// export const dynamic = "auto"; // permite ISR
+// export const fetchCache = "force-cache"; // cache + revalidate
+// export const dynamicParams = false;
 

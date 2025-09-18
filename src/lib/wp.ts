@@ -1,7 +1,7 @@
 const domain = process.env.NEXT_PUBLIC_WP_URL;
 const apiUrl = `${domain}/wp-json/wp/v2`
 
-console.log({ domain, apiUrl });
+// console.log({ domain, apiUrl });
 
 
 export const wp = {
@@ -27,8 +27,8 @@ export const wp = {
         const url = `${apiUrl}/posts?slug=${slug}`;
         const response = await fetch(url);
 
-        console.log({ url });
-
+        // console.log({ url });
+// 
         // if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
         if (!data) return { title: "", content: "", excerpt: "", featured_media: null, date: "", modified: "", relaciones: null };
@@ -107,7 +107,7 @@ export const wp = {
         return data;
     },
     getAllTours: async () => {
-        console.log('API URL during build:', apiUrl); // Agregar este log
+        // console.log('API URL during build:', apiUrl); // Agregar este log
 
         const response = await fetch(`${apiUrl}/tours?t=${Date.now()}`, {
             cache: 'no-store', // No usar caché
@@ -118,7 +118,7 @@ export const wp = {
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const data = await response.json();
-        console.log({ data });
+        // console.log({ data });
 
 
         return data;
@@ -190,7 +190,7 @@ export const wp = {
     getTourById: async (id: number) => {
         try {
 
-            console.log({ id });
+            // console.log({ id });
 
             const url = `${apiUrl}/tours/${id}`
             const response = await fetch(url)
@@ -230,12 +230,19 @@ export const wp = {
     },
 
     getTourBySlug: async (slug: string) => {
-        const url = `${apiUrl}/tours?slug=${slug}`;
-        const response = await fetch(url)
-        if (!response.ok) throw new Error(`No se obtuvieron datos: ${url}`);
-        const [data] = await response.json();
-        const { title: { rendered: title }, acf } = data;
-        return { title, acf };
+        try {
+            const url = `${apiUrl}/tours?slug=${slug}`;
+            console.log({ url });
+            
+            const response = await fetch(url)
+            if (!response.ok) throw new Error(`No se obtuvieron datos: ${url}`);
+            const [data] = await response.json();
+            const { title: { rendered: title }, acf } = data;
+            return { title, acf };
+        } catch (error) {
+            console.error(error);
+            return { title: "", acf: null };
+        }
     },
 
     getAllCities: async () => {

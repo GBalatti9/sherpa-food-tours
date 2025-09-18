@@ -8,7 +8,14 @@ import React from "react";
 
 interface CompletePost {
     category: string;
-    posts: WPPost[]
+    posts: PostWithImage[]
+}
+
+interface PostWithImage extends WPPost {
+    image: {
+        img: string;
+        alt: string;
+    }
 }
 
 export default async function TravelGuidePage() {
@@ -17,18 +24,45 @@ export default async function TravelGuidePage() {
     const posts = await wp.getAllPost();
     const categories = await wp.getAllCategories();
 
-    console.log({ posts });
-    // console.log(posts[0]);
 
-    const data: CompletePost[] = categories.map((cat: Category) => {
-        const filteredPosts = posts.filter((post: WPPost) => post.categories.includes(cat.id));
+    // Primero obten todos los featured_media IDs únicos
+    const mediaIds = [...new Set(posts.map((post: WPPost) => post.featured_media))] as number[];
+
+    // Cargar todas las imágenes de una vez
+    const imagesMap = new Map();
+    await Promise.all(
+        mediaIds.map(async (mediaId) => {
+            const image = await wp.getPostImage(mediaId);
+            imagesMap.set(mediaId, image);
+        })
+    );
+
+    const formattedPosts = posts.map((post: WPPost) => {
+        const image = imagesMap.get(post.featured_media);
         return {
-            category: cat.name,
-            posts: filteredPosts
+            ...post,
+            image
         };
-    }).filter((group: CompletePost) => group.posts.length > 0);
+    }) as PostWithImage[];
 
+    // Ahora procesar sin más llamadas async
+    const data: CompletePost[] = categories
+        .map((cat: Category) => {
+            const filteredPosts = posts
+                .filter((post: WPPost) => post.categories.includes(cat.id))
+                .map((post: WPPost) => ({
+                    ...post,
+                    image: imagesMap.get(post.featured_media)
+                })) as PostWithImage[];
 
+            return {
+                category: cat.name,
+                posts: filteredPosts
+            };
+        })
+        .filter((group: CompletePost) => group.posts.length > 0);
+
+    console.log({ data });
 
     // console.log(slugify(posts[0].relaciones.ciudades[0].title));
 
@@ -130,13 +164,13 @@ export default async function TravelGuidePage() {
                     </div>
                 </div>
             </section>
-            <hr className="travel-guide-separator"/>
+            <hr className="travel-guide-separator" />
             <section className="travel-guide-third-section-main-container">
 
                 {/* First Section */}
                 <>
                     <div className="travel-guide-third-section">
-                        {posts.map((post: WPPost, i: number) => {
+                        {formattedPosts.map((post: PostWithImage, i: number) => {
                             let slug;
 
                             // console.log({ post });
@@ -167,7 +201,7 @@ export default async function TravelGuidePage() {
                                     <div className={`preview-wrapper element-${i}`} key={post.id}>
                                         <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
                                             <div className="preview-image-container">
-                                                <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
+                                                <img decoding="async" src={post.image.img} alt={post.title.rendered} />
                                                 <p className="preview-city">{slug}</p>
                                             </div>
                                             <div className="preview-data">
@@ -184,7 +218,7 @@ export default async function TravelGuidePage() {
                             if (i === 1) {
                                 return (
                                     <div className="preview-wrapper-group" key="group-1-2">
-                                        {[posts[1], posts[2]].map((p) => {
+                                        {[formattedPosts[1], formattedPosts[2]].map((p) => {
                                             const s = p.relaciones?.ciudades?.[0]?.title || null;
                                             const u = s
                                                 ? `https://www.sherpafoodtours.com/travel-guide/${slugify(s)}/${p.slug}`
@@ -194,7 +228,7 @@ export default async function TravelGuidePage() {
                                                 <div className="preview-wrapper" key={p.id}>
                                                     <a className="preview-item" href={u} target="_blank" rel="noopener noreferrer" key={p.id}>
                                                         <div className="preview-image-container">
-                                                            <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={p.title.rendered} />
+                                                            <img decoding="async" src={p.image.img} alt={p.title.rendered} />
                                                             <p className="preview-city">{s}</p>
                                                         </div>
                                                         <div className="preview-data">
@@ -215,7 +249,7 @@ export default async function TravelGuidePage() {
                                     <div className="preview-wrapper list" key={post.id}>
                                         <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
                                             <div className="preview-image-container">
-                                                <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
+                                                <img decoding="async" src={post.image.img} alt={post.title.rendered} />
                                                 <p className="preview-city">{slug}</p>
                                             </div>
                                             <div className="preview-data">
@@ -275,7 +309,7 @@ export default async function TravelGuidePage() {
                     <div className="category-container" key={element.category + i}>
                         <h3 className="category-title">{element.category}</h3>
                         <div className="travel-guide-third-section">
-                            {element.posts.map((post) => {
+                            {element.posts.map((post: PostWithImage) => {
                                 let slug;
 
                                 if (post.relaciones.ciudades && post.relaciones.ciudades.length > 0) {
@@ -297,7 +331,7 @@ export default async function TravelGuidePage() {
                                     <div className={`preview-wrapper`} key={post.id}>
                                         <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
                                             <div className="preview-image-container">
-                                                <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
+                                                <img decoding="async" src={post.image.img} alt={post.title.rendered} />
                                                 <p className="preview-city">{slug}</p>
                                             </div>
                                             <div className="preview-data">

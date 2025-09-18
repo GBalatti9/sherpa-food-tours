@@ -82,7 +82,7 @@ export default async function Home() {
   const not_ready_to_book_section = await getNotReadyToBookSection();
 
   const our_experiences_section = await wp.getEmbedSectionInfo("our-experiences");
-  console.log({ our_experiences_section });
+  // console.log({ our_experiences_section });
 
   let data_our_experiences_section = null;
 
