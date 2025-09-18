@@ -6,20 +6,22 @@ console.log({ domain, apiUrl });
 
 export const wp = {
     getPageInfo: async (slug: string) => {
-        const url = `${apiUrl}/pages?slug=${slug}`;
-        const response = await fetch(url)
+        try {
 
-        console.log({ url });
+            const url = `${apiUrl}/pages?slug=${slug}`;
+            const response = await fetch(url);
+            // if (!response.ok) throw new Error("No se obtuvieron datos");
+            if (!response.ok) console.error("No se pudo hacer fecth a la url: " + url);
+            const [data] = await response.json();
+            if (!data) return { title: "", content: "", acf: "", featured_media: null };
 
-        // if (!response.ok) throw new Error("No se obtuvieron datos");
 
-        const [data] = await response.json();
-        if (!data) return { title: "", content: "", acf: "", featured_media: null };
+            const { title: { rendered: title }, content: { rendered: content }, acf, featured_media } = data;
 
-
-        const { title: { rendered: title }, content: { rendered: content }, acf, featured_media } = data;
-
-        return { title, content, acf, featured_media };
+            return { title, content, acf, featured_media };
+        } catch (error) {
+            return { title: "", content: "", acf: "", featured_media: null };
+        }
     },
     getPostInfo: async (slug: string) => {
         const url = `${apiUrl}/posts?slug=${slug}`;
@@ -47,7 +49,7 @@ export const wp = {
     },
     getAllPost: async (limit?: number) => {
         try {
-            const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts`;
+            const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts?v=ass`;
 
             const response = await fetch(url, {
                 cache: 'no-store',
@@ -79,21 +81,23 @@ export const wp = {
         try {
             const url = `${apiUrl}/media/${id}`;
             const response = await fetch(url);
+
             if (!response.ok) throw new Error("No se obtuvieron datos");
 
             const data = await response.json();
             return {
-                img: data.source_url || "https://www.sherpafoodtours.com/default-og.jpg",
+                img: `${data.source_url}?t=${Date.now()}` || "https://www.sherpafoodtours.com/default-og.jpg",
                 alt: data.alt_text || "",
             };
         } catch (e) {
-            console.warn("No se pudo obtener la imagen del post:");
+            console.warn("No se pudo obtener la imagen del post:", e);
             return {
                 img: "https://www.sherpafoodtours.com/default-og.jpg",
                 alt: "",
             };
         }
     },
+
     getAllCategories: async () => {
         const response = await fetch(`${apiUrl}/categories`)
 
@@ -120,22 +124,33 @@ export const wp = {
         return data;
     },
     getCity: async (id: number) => {
-        const url = `${apiUrl}/cities/${id}`;
-        const response = await fetch(url);
 
-        if (!response.ok) throw new Error(`No se obtuvieron datos ${url}`);
-        const { title: { rendered: title }, acf: { pais: country_id }, slug } = await response.json();
+        try {
+            const url = `${apiUrl}/cities/${id}`;
+            const response = await fetch(url);
 
-        return { city_name: title, country_id: country_id, slug };
+            if (!response.ok) throw new Error(`No se obtuvieron datos ${url}`);
+            const { title: { rendered: title }, acf: { pais: country_id }, slug } = await response.json();
+
+            return { city_name: title, country_id: country_id, slug };
+        } catch (error) {
+            console.error(error);
+            return { city_name: "", country_id: 0, slug: "" };
+        }
     },
     getCountry: async (id: number) => {
-        const url = `${apiUrl}/countries/${id}`;
-        const response = await fetch(url)
+        try {
 
-        if (!response.ok) throw new Error(`No se obtuvieron datos ${url}`);
-        const { title: { rendered: title } } = await response.json();
+            const url = `${apiUrl}/countries/${id}`;
+            const response = await fetch(url)
 
-        return { country_name: title };
+            if (!response.ok) throw new Error(`No se obtuvieron datos ${url}`);
+            const { title: { rendered: title } } = await response.json();
+
+            return { country_name: title };
+        } catch (error) {
+            return { country_name: "" }
+        }
     },
     getEmbedSectionInfo: async (slug: string) => {
         try {
@@ -173,24 +188,38 @@ export const wp = {
         return { name };
     },
     getTourById: async (id: number) => {
-        console.log({ id });
+        try {
 
-        const response = await fetch(`${apiUrl}/tours/${id}`)
+            console.log({ id });
 
-        if (!response.ok) throw new Error("No se obtuvieron datos");
+            const url = `${apiUrl}/tours/${id}`
+            const response = await fetch(url)
 
-        const { title: { rendered: title }, content: { rendered: content }, featured_media, acf, slug } = await response.json();
+            if (!response.ok) throw new Error(`No se obtuvieron datos ${url}`);
 
-        return { title, content, featured_media, acf, slug }
+            const { title: { rendered: title }, content: { rendered: content }, featured_media, acf, slug } = await response.json();
+
+            return { title, content, featured_media, acf, slug }
+        } catch (error) {
+            console.error(error);
+            return { title: "", content: "", featured_media: null, acf: null, slug: "" };
+
+        }
     },
     getCityBySlug: async (slug: string) => {
-        const response = await fetch(`${apiUrl}/cities?slug=${slug}`)
+        try {
 
-        if (!response.ok) throw new Error("No se obtuvieron datos");
-        const [data] = await response.json();
-        const { title: { rendered: title }, content: { rendered: content }, acf: { pais: country_id }, acf, featured_media } = data;
+            const url = `${apiUrl}/cities?slug=${slug}`;
+            const response = await fetch(url)
 
-        return { city_name: title, content, country_id: country_id, acf, featured_media };
+            if (!response.ok) throw new Error(`No se obtuvieron datos ${url}}`);
+            const [data] = await response.json();
+            const { title: { rendered: title }, content: { rendered: content }, acf: { pais: country_id }, acf, featured_media } = data;
+
+            return { city_name: title, content, country_id: country_id, acf, featured_media };
+        } catch (error) {
+            return { city_name: "", content: "", country_id: 0, acf: null, featured_media: null };
+        }
     },
 
     getFaqById: async (id: number) => {
@@ -210,10 +239,16 @@ export const wp = {
     },
 
     getAllCities: async () => {
-        const response = await fetch(`${apiUrl}/cities`)
-        if (!response.ok) throw new Error("No se obtuvieron datos");
-        const data = await response.json();
-        return data;
+        try {
+
+            const response = await fetch(`${apiUrl}/cities`)
+            if (!response.ok) throw new Error("No se obtuvieron datos");
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
     },
 
 

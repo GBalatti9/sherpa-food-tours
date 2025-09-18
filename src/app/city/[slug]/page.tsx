@@ -18,16 +18,16 @@ import NextAdventure from "@/ui/components/redy-next-adventure";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { slugify } from "@/app/helpers/slugify";
 
-export async function generateStaticParams() {
-    // Traer todos los slugs de las ciudades desde WP
-    const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
+// export async function generateStaticParams() {
+//     // Traer todos los slugs de las ciudades desde WP
+//     const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
 
-    const citiesFormatted = cities.map((city: { slug: string }) => ({
-        slug: city.slug
-    }));
+//     const citiesFormatted = cities.map((city: { slug: string }) => ({
+//         slug: city.slug
+//     }));
 
-    return citiesFormatted
-}
+//     return citiesFormatted
+// }
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -37,9 +37,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const { acf, featured_media, content } = await wp.getCityBySlug(slug);
 
     const asFeatureInImagesId = [
-        acf.first_img,
-        acf.second_img,
-        acf.third_img
+        acf?.first_img,
+        acf?.second_img,
+        acf?.third_img
     ]
 
     const mainImageId = [featured_media]
@@ -50,7 +50,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     console.log({ acf });
     let embedSectionsData = [];
 
-    if (acf.embed_section) {
+    if (acf?.embed_section) {
 
         embedSectionsData = await Promise.all(acf.embed_section.map((id: number) => wp.getEmbedSectionInfoById(id)))
         embedSectionsData = await Promise.all(
@@ -58,6 +58,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 const data = section.acf;
 
                 // asumo que first_item.image es un ID
+                console.log({data});
+                
+                if (!data.first_item.image) return;
                 const firstItemImage = await wp.getPostImage(data.first_item.image);
 
                 return {
@@ -76,7 +79,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     let tours = [];
 
-    if (acf.tour) {
+    if (acf?.tour) {
 
         tours = await Promise.all(acf.tour.map((tour_id: number) => wp.getTourById(tour_id)))
 
@@ -102,7 +105,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const localGuideImage = await wp.getPostImage(localGuide.profile_picture);
     const countryFlag = await wp.getPostImage(localGuide.country_flag)
 
-    
+
 
     const localGuideData = {
         ...localGuide,
@@ -133,19 +136,21 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         }));
     }
 
-    const getToKnowTheCity = {titles: {title: "Get to know the city"}, posts: posts.map((post) => {
-        return {
-            ...post,
-            title: {rendered: post.title},
-            author_name: post.author,
-            image: post.featured_media,
-            city: post.city_name,
-            city_slug: slugify(post.city_name),
-            key: post.acf.key
-        }
-    })}
-    console.log({getToKnowTheCity});
-    
+    const getToKnowTheCity = {
+        titles: { title: "Get to know the city" }, posts: posts.map((post) => {
+            return {
+                ...post,
+                title: { rendered: post.title },
+                author_name: post.author,
+                image: post.featured_media,
+                city: post.city_name,
+                city_slug: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0]?.title) : null,
+                key: post.acf.key
+            }
+        })
+    }
+    console.log({ getToKnowTheCity });
+
     const { acf: faqRaw } = await wp.getFaqById(76);
     console.log({ faqRaw }, "listo");
 
@@ -305,7 +310,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 </div>
             </section>
 
-            <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts.slice(0, 3)}/>
+            <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts
+                ?.filter(Boolean) 
+                .slice(0, 3)} />
             <section className="faq-section-city">
                 <FaqSection faqs={faqs} />
             </section>

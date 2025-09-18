@@ -8,8 +8,8 @@ export default function NavBar({currentPath}: {currentPath: string}) {
     
     const items = [
         { label: 'Cities', href: '/' },
-        { label: 'Travel Guide', href: '/tours' },
-        { label: 'About us', href: '/about' },
+        { label: 'Travel Guide', href: '/travel-guide' },
+        { label: 'About us', href: '/about-us' },
         { label: 'Contact', href: '/contact' }
     ];
     return (

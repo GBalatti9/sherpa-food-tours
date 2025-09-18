@@ -83,11 +83,12 @@ body {
     margin: 1.5rem 0;
     text-transform: uppercase;
 
-    
+
     @media (min-width: 768px) {
       text-align: center;
       padding: 2rem 0;
     }
+
     @media (min-width: 1024px) {
       font-size: 2.1rem;
     }
@@ -312,10 +313,17 @@ body {
 
 .our-experiences-section {
   background-color: var(--main-color);
+  color: white;
 
   .our-experiences-section-first-part {
-    padding: 2rem 1.3rem 2rem 1.3rem;
+    padding: 2rem 1.3rem 0rem 1.3rem;
     color: white;
+    max-width: 480px;
+    margin: auto;
+
+    @media (min-width: 480px) {
+      padding-left: 0;
+    }
 
     .title-section {
       h2 {
@@ -360,10 +368,11 @@ body {
     }
   }
 
-  .our-experiences-section-last-part {
+  /* .our-experiences-section-last-part {
     padding: 1.3rem;
     display: flex;
     flex-direction: column;
+
 
     button {
       width: fit-content;
@@ -379,6 +388,69 @@ body {
       padding-top: 1.3rem;
     }
 
+  } */
+
+  .our-experiences-section-second-part {
+    padding: 0rem 0rem 2rem 0rem;
+    max-width: 480px;
+    margin: auto;
+
+
+    .item {
+
+      summary {
+        padding: 0 1.3rem;
+        width: fit-content;
+        font-family: var(--font-dk-otago);
+        font-size: 1.5rem;
+        padding-bottom: 1rem;
+
+        @media (min-width: 480px) {
+          padding-left: 0;
+        }
+
+      }
+
+      .content {
+        padding: 0 1.3rem 1rem 1.3rem;
+        font-family: var(--font-excelsior);
+        font-size: 25px;
+        max-width: 360px;
+        padding-top: 1rem;
+        line-height: 1.25;
+
+        @media (min-width: 480px) {
+          padding-left: 0;
+        }
+
+        span {
+          font-style: italic;
+        }
+      }
+
+      .img-container {
+        padding-bottom: 1rem;
+      }
+    }
+
+    .item summary {
+      list-style: none;
+    }
+
+    .item summary::-webkit-details-marker,
+    .item summary::marker {
+      display: none;
+    }
+
+    hr {
+      padding: .3rem 0;
+      width: 90%;
+      margin: auto;
+
+      @media (min-width: 480px) {
+        width: 100%;
+      }
+    }
   }
 }
 
@@ -433,42 +505,83 @@ body {
     height: 515px;
 
     .our-experiences-section-first-part {
-      padding: 3rem 1.3rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      width: 50%;
+      display: none;
+    }
 
-      .title-section {
+    .our-experiences-section-second-part {
+      display: none;
+    }
+
+    .our-experiences-section-desktop {
+      display: flex;
+      width: 100%;
+      gap: 1rem;
+      font-family: var(--font-dk-otago);
+
+      .info-section {
+        width: 50%;
+        padding: 2rem 1.3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
         h2 {
+          font-size: 2.2rem;
+        }
+
+        .item {
           font-size: 1.8rem;
+          padding-top: 1.5rem;
+
+          summary {
+            cursor: pointer;
+          }
+
+          .content {
+            font-size: 1.6rem;
+            font-family: var(--font-excelsior);
+
+            span {
+              font-style: italic;
+            }
+          }
         }
       }
 
-      .content-section {
+      .images-section {
+        width: 50%;
+
+        .images-container {
+          height: 100%;
+          width: 100%;
+          position: relative;
+
+          .img-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity .2s ease-in;
+            /* height: 100%; */
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+          }
+
+          .active {
+            opacity: 1;
+          }
 
 
-        p {}
-
-        span {}
+        }
       }
-    }
-
-    .img-container {
-      width: 50%;
 
     }
 
-    .our-experiences-section-last-part {
-      display: none;
-
-      button {}
-
-      .share-btn {}
-
-      .explore-btn {}
-
-    }
   }
 
   .not-ready-to-book {
@@ -500,38 +613,16 @@ body {
 
 @media (min-width: 1024px) {
   .our-experiences-section {
-    display: flex;
     height: 700px;
 
-    .our-experiences-section-first-part {
-      gap: 5rem;
-      padding: 3rem 4rem;
+    .our-experiences-section-desktop {
 
-      .title-section {
-        h2 {
-          font-size: 2.1rem;
-        }
+      .info-section {
+        padding-top: 0rem;
+        padding-left: 3rem;
+        max-width: 600px;
+        margin: auto;
       }
-
-      .content-section {
-        font-size: 1.8rem;
-      }
-    }
-
-    .img-container {
-
-      img {}
-    }
-
-    .our-experiences-section-last-part {
-      display: none;
-
-      button {}
-
-      .share-btn {}
-
-      .explore-btn {}
-
     }
   }
 

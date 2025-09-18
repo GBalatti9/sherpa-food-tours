@@ -52,7 +52,7 @@ export default async function Home() {
 
 
   const [background_image, ...imgs] = images;
-  console.log(imgs);
+  // console.log(imgs);
 
 
   const citiesRaw = await wp.getAllCities();
@@ -82,9 +82,38 @@ export default async function Home() {
   const not_ready_to_book_section = await getNotReadyToBookSection();
 
   const our_experiences_section = await wp.getEmbedSectionInfo("our-experiences");
+  console.log({ our_experiences_section });
+
+  let data_our_experiences_section = null;
+
+  if (our_experiences_section && our_experiences_section.acf) {
+    const formattedData = {
+      title: our_experiences_section.title,
+      items: [
+        {
+          title: our_experiences_section.acf.first_item.title,
+          description: our_experiences_section.acf.first_item.description,
+          image: await wp.getPostImage(our_experiences_section.acf.first_item.image),
+        },
+        {
+          title: our_experiences_section.acf.second_item.title,
+          description: our_experiences_section.acf.second_item.description,
+          image: await wp.getPostImage(our_experiences_section.acf.second_item.image),
+        },
+        {
+          title: our_experiences_section.acf.third_item.title,
+          description: our_experiences_section.acf.third_item.description,
+          image: await wp.getPostImage(our_experiences_section.acf.third_item.image),
+        }],
+    }
+
+    data_our_experiences_section = formattedData;
+
+  }
+
   const our_experiences_section_image = await wp.getPostImage(our_experiences_section.featured_media);
 
-
+  // return null
   return (
     <main>
       <section className="home-first-section">
@@ -140,12 +169,13 @@ export default async function Home() {
         <div className="content" dangerouslySetInnerHTML={{ __html: content }}>
         </div>
       </section>
-      {our_experiences_section &&
+      {data_our_experiences_section &&
         <OurExperiencesSection
-          title={our_experiences_section.title}
-          content={our_experiences_section.content}
-          src={our_experiences_section_image.img}
-          alt={our_experiences_section_image.alt}
+          title={data_our_experiences_section.title}
+          items={data_our_experiences_section.items}
+          // content={our_experiences_section.content}
+          // src={our_experiences_section_image.img}
+          // alt={our_experiences_section_image.alt}
         />
       }
       <section className="home-fourth-section">
@@ -189,10 +219,15 @@ export default async function Home() {
 
     </main>
   );
+
+
 }
 
 
-export const revalidate = 10; // segundos
-export const dynamic = 'auto';
-export const fetchCache = 'force-cache'; // mantiene caché y permite revalidar
-export const dynamicParams = false; // No genera rutas dinámicas
+// export const revalidate = 10; // segundos
+// export const dynamic = 'auto';
+// export const fetchCache = 'force-cache'; // mantiene caché y permite revalidar
+// export const dynamicParams = false; // No genera rutas dinámicas
+
+export const revalidate = 0;
+export const dynamic = "force-dynamic";

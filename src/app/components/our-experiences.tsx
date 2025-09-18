@@ -1,24 +1,101 @@
+"use client";
+
+import React, { useState } from "react";
+
+interface Item {
+    title: string;
+    description: string;
+    image: {
+        img: string;
+        alt: string;
+    };
+}
+
+export default function OurExperiencesSection({
+    title,
+    items,
+}: {
+    title: string;
+    items: Item[];
+}) {
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+    const handleToggle = (i: number) => {
+        setOpenIndex(openIndex === i ? openIndex : i); // si clickeo el mismo -> cerrar, sino abrir ese
+    };
+
+    const images = items.map((item) => { return { title: item.title, image: item.image } });
 
 
-export default function OurExperiencesSection({ title, content, src, alt }: { title: string, content: string, src: string, alt: string }) {
-    
     return (
         <section className="our-experiences-section">
             <div className="our-experiences-section-first-part">
                 <div className="title-section">
                     <h2>{title}</h2>
                 </div>
-                <div className="content-section" dangerouslySetInnerHTML={{ __html: content }}></div>
             </div>
-            <div className="img-container">
-                <img src={src} alt={alt} />
+
+            <div className="our-experiences-section-second-part">
+                {items.map((item, i) => (
+                    <React.Fragment key={item.title + i}>
+                        <details
+                            className="item"
+                            open={openIndex === i} // solo este se abre
+                            onClick={(e) => {
+                                e.preventDefault(); // evita el toggle nativo
+                                handleToggle(i);
+                            }}
+                        >
+                            <summary>{item.title}</summary>
+                            <hr />
+                            <div
+                                className="content"
+                                dangerouslySetInnerHTML={{ __html: item.description }}
+                            ></div>
+                            <div className="img-container">
+                                <img src={item.image.img} alt={item.image.alt} />
+                            </div>
+                        </details>
+                    </React.Fragment>
+                ))}
             </div>
-            <div className="our-experiences-section-last-part">
-                <button className="share-btn">Share</button>
-                <hr />
-                <button className="explore-btn">Explore</button>
+
+            {/* DESKTOP */}
+
+            <div className="our-experiences-section-desktop">
+                <div className="info-section">
+                    <h2>{title}</h2>
+                    <div className="items">
+                        {items.map((item, i) => (
+                            <details
+                                key={item.title + i}
+                                className="item"
+                                open={openIndex === i} // solo este se abre
+                                onClick={(e) => {
+                                    e.preventDefault(); // evita el toggle nativo
+                                    handleToggle(i);
+                                }}
+                            >
+                                <summary>{item.title}</summary>
+                                <hr />
+                                <div
+                                    className="content"
+                                    dangerouslySetInnerHTML={{ __html: item.description }}
+                                ></div>
+                            </details>
+                        ))}
+                    </div>
+                </div>
+                <div className="images-section">
+                    <div className="images-container">
+                        {images.map((image, i) => (
+                            <div className={`img-item ${openIndex === i ? 'active' : ''}`} key={image.title + i}>
+                                <img src={image.image.img} alt={image.image.alt} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </section>
-    )
-
+    );
 }

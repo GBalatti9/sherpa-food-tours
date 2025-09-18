@@ -51,6 +51,7 @@
                     @media (min-width: 1024px) {
                         font-size: 4.6rem;
                         padding-bottom: 1rem;
+                        max-width: 900px;
                     }
                 }
 

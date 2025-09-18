@@ -52,21 +52,20 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 
 
 
-// ----------------------
-// BUILD TIME
-// ----------------------
-export async function generateStaticParams() {
-    const posts = await wp.getAllPost();
-
-    const formattedPosts = posts.map((post: WPPost) => ({
-        slug: post.slug,
-        city: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0].title) : "default-city",
-    }));
-    console.log({formattedPosts}, "!!!!!");
+// // ----------------------
+// // BUILD TIME
+// // ----------------------
+// export async function generateStaticParams() {
+//     const posts = await wp.getAllPost();
     
 
-    return formattedPosts
-}
+//     const formattedPosts = posts.map((post: WPPost) => ({
+//         slug: post.slug,
+//         city: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0].title) : "default-city",
+//     }));
+    
+//     return formattedPosts
+// }
 
 // ----------------------
 // DATA
@@ -75,6 +74,8 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     const { city, slug } = await params;
 
+    console.log({city, slug});
+    
     const { title, content, featured_media, excerpt, date, modified, relaciones } = await wp.getPostInfo(slug);
     const { img, alt } = await wp.getPostImage(featured_media);
 
@@ -180,7 +181,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 // export const revalidate = 86400; 
 
 
-export const revalidate = false; // Completamente estático
-export const dynamic = 'force-static';
-export const fetchCache = 'force-cache'; // Cachea todos los fetch
-export const dynamicParams = false; // No genera rutas dinámicas
+export const revalidate = 0; // Completamente estático
+// export const dynamic = 'force-static';
+// export const fetchCache = 'force-cache'; // Cachea todos los fetch
+export const dynamic = "force-dynamic";
