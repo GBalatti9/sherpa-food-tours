@@ -1,5 +1,6 @@
 "use client";
 
+import "../../ui/components/css/our-experiences.css"
 import React, { useState } from "react";
 
 interface Item {
@@ -24,7 +25,7 @@ export default function OurExperiencesSection({
         setOpenIndex(openIndex === i ? openIndex : i); // si clickeo el mismo -> cerrar, sino abrir ese
     };
 
-    const images = items.map((item) => { return { title: item.title, image: item.image } });
+    const images = items ? items.map((item) => { return { title: item.title, image: item.image } }) : [];
 
 
     return (

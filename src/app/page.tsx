@@ -111,7 +111,7 @@ export default async function Home() {
 
   }
 
-  const our_experiences_section_image = await wp.getPostImage(our_experiences_section.featured_media);
+  // const our_experiences_section_image = await wp.getPostImage(our_experiences_section.featured_media);
 
   // return null
   return (
@@ -173,9 +173,6 @@ export default async function Home() {
         <OurExperiencesSection
           title={data_our_experiences_section.title}
           items={data_our_experiences_section.items}
-          // content={our_experiences_section.content}
-          // src={our_experiences_section_image.img}
-          // alt={our_experiences_section_image.alt}
         />
       }
       <section className="home-fourth-section">
