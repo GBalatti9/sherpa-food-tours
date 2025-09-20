@@ -20,7 +20,7 @@ export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBo
             <div className="preview-wrapper">
                 {posts.map((post, i) => {
                     return (
-                        <Link className="preview-item" key={post.image.img + i} href={`${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${post.city_slug}/${post.slug}`}>
+                        <Link className="preview-item" key={post.image.img + i} href={`/travel-guide/${post.city_slug}/${post.slug}`}>
                             <div className="preview-image-container">
                                 <img src={post.image.img} alt={post.image.alt} loading="eager" />
                                 <p className="preview-city">{post.city}</p>

@@ -174,13 +174,33 @@
                 display: none;
             }
 
-            p {
+            .availability-btn {
                 font-family: var(--font-excelsior);
                 font-size: 1rem;
                 color: var(--main-color);
                 line-height: 1.28;
                 text-decoration: underline;
+                display: flex;
+
+                svg {
+                    rotate: 180deg;
+                }
             }
+        }
+
+        .calendar-availability {
+            padding-top: 2rem;
+            transition: all .4s ease-in-out;
+        }
+
+        .calendar-availability.inactive {
+            opacity: 0;
+            display: none;
+            z-index: 0;
+        }
+        .calendar-availability.active {
+            opacity: 1;
+            z-index: 1;
         }
     }
 }

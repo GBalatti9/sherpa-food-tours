@@ -5,6 +5,7 @@ import { wp } from "@/lib/wp";
 import BookNowButton from "@/ui/components/book-now";
 import { Star } from "lucide-react";
 import React from "react";
+import CheckAvailabilityButton from "./components/check-availability-btn";
 
 interface TourCondition {
     icon: number;
@@ -44,7 +45,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
     const { acf } = await wp.getTourBySlug(slug);
 
-    
+
 
     const { stars, title, reviews, price, check_availability } = acf.heading_section;
     // console.log("TOUR PAGE: ",{ acf });
@@ -150,10 +151,9 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                         <p>From:</p>
                         <h2>USD{price}</h2>
                     </div>
-                    <div className="availability-container">
-                        {check_availability && <p>Check availability</p>}
-                        <BookNowButton />
-                    </div>
+                    {/* <div className="availability-container"> */}
+                        {check_availability && <CheckAvailabilityButton />}
+                    {/* </div> */}
                 </div>
             </section>
             <div className="section-container-desktop">

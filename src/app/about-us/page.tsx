@@ -76,7 +76,7 @@ export default async function AboutUsPage() {
     return (
         <main className="about-us-page">
             <section className="about-us-page-first-section">
-                <h1>The Sherpa Manifesto</h1>
+                <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png" alt="Sherpa logo"/> manifesto</h1>
                 <div dangerouslySetInnerHTML={{ __html: content }} className="render-html"></div>
             </section>
             <OurValues items={acfData}/>

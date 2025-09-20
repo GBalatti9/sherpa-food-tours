@@ -20,6 +20,20 @@
             font-size: 2rem;
             padding-bottom: .5rem;
             text-align: center;
+            display: flex;
+            gap: .5rem;
+            justify-content: center;
+
+            img {
+                width: 100px;
+                @media (min-width: 460px) {
+                    width: 150px;
+                }
+
+                @media (min-width: 1024px) {
+                    width: 250px;
+                }
+            }
 
             @media (min-width: 460px) {
                 font-size: 2.5rem;

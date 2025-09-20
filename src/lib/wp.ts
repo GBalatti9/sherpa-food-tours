@@ -10,9 +10,10 @@ export const wp = {
 
             const url = `${apiUrl}/pages?slug=${slug}`;
             const response = await fetch(url);
-            // if (!response.ok) throw new Error("No se obtuvieron datos");
             if (!response.ok) console.error("No se pudo hacer fecth a la url: " + url);
             const [data] = await response.json();
+            console.log({data});
+            
             if (!data) return { title: "", content: "", acf: "", featured_media: null };
 
 
