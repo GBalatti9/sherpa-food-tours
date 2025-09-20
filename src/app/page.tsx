@@ -80,6 +80,7 @@ export default async function Home() {
 
 
   const not_ready_to_book_section = await getNotReadyToBookSection();
+  
 
   const our_experiences_section = await wp.getEmbedSectionInfo("our-experiences");
   // console.log({ our_experiences_section });
@@ -196,10 +197,12 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      <NotReadyToBook
-        titles={not_ready_to_book_section.titles}
-        posts={not_ready_to_book_section.posts}
-      />
+      {(not_ready_to_book_section.titles && not_ready_to_book_section.posts) &&
+        <NotReadyToBook
+          titles={not_ready_to_book_section.titles}
+          posts={not_ready_to_book_section.posts}
+        />
+      }
       <section className="home-last-section">
         <div className="titles">
           <img src="/sherpa-green.png" alt="Sherpa Food Tour Logo" />
@@ -221,10 +224,8 @@ export default async function Home() {
 }
 
 
-// export const revalidate = 10; // segundos
-// export const dynamic = 'auto';
-// export const fetchCache = 'force-cache'; // mantiene caché y permite revalidar
-// export const dynamicParams = false; // No genera rutas dinámicas
+export const dynamic = "error"; // obliga a que sea estática
+export const revalidate = false;
 
-export const revalidate = 0;
-export const dynamic = "force-dynamic";
+// export const revalidate = 0;
+// export const dynamic = "force-dynamic";

@@ -18,16 +18,16 @@ import NextAdventure from "@/ui/components/redy-next-adventure";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { slugify } from "@/app/helpers/slugify";
 
-// export async function generateStaticParams() {
-//     // Traer todos los slugs de las ciudades desde WP
-//     const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
+export async function generateStaticParams() {
+    // Traer todos los slugs de las ciudades desde WP
+    const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
 
-//     const citiesFormatted = cities.map((city: { slug: string }) => ({
-//         slug: city.slug
-//     }));
+    const citiesFormatted = cities.map((city: { slug: string }) => ({
+        slug: city.slug
+    }));
 
-//     return citiesFormatted
-// }
+    return citiesFormatted
+}
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -83,64 +83,6 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     console.log({ data_our_experiences_section });
 
-    // let embedSectionsData = [];
-
-    // if (acf?.embed_section) {
-
-    //     embedSectionsData = await Promise.all(acf.embed_section.map((id: number) => wp.getEmbedSectionInfoById(id)))
-    //     embedSectionsData = await Promise.all(
-    //         embedSectionsData.map(async (section) => {
-    //             const data = section.acf;
-
-    //             // asumo que first_item.image es un ID
-    //             console.log({ data });
-
-    //             if (!data.first_item.image) return;
-    //             const firstItemImage = await wp.getPostImage(data.first_item.image);
-
-    //             return {
-    //                 ...section,
-    //                 acf: {
-    //                     ...data,
-    //                     first_item: {
-    //                         ...data.first_item,
-    //                         image: firstItemImage, // acá guardás la imagen completa en lugar del id
-    //                     },
-    //                 },
-    //             };
-    //         })
-    //     );
-    // }
-
-    // console.log({embedSectionsData});
-
-
-    
-
-    // if (our_experiences_section && our_experiences_section.acf) {
-    //     const formattedData = {
-    //         title: our_experiences_section.title,
-    //         items: [
-    //             {
-    //                 title: our_experiences_section.acf.first_item.title,
-    //                 description: our_experiences_section.acf.first_item.description,
-    //                 image: await wp.getPostImage(our_experiences_section.acf.first_item.image),
-    //             },
-    //             {
-    //                 title: our_experiences_section.acf.second_item.title,
-    //                 description: our_experiences_section.acf.second_item.description,
-    //                 image: await wp.getPostImage(our_experiences_section.acf.second_item.image),
-    //             },
-    //             {
-    //                 title: our_experiences_section.acf.third_item.title,
-    //                 description: our_experiences_section.acf.third_item.description,
-    //                 image: await wp.getPostImage(our_experiences_section.acf.third_item.image),
-    //             }],
-    //     }
-
-    //     data_our_experiences_section = formattedData;
-
-    // }
 
     let tours = [];
 
@@ -384,3 +326,67 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     )
 }
+
+export const dynamic = "error";
+export const revalidate = false;
+export const dynamicParams = false;
+
+
+    // let embedSectionsData = [];
+
+    // if (acf?.embed_section) {
+
+    //     embedSectionsData = await Promise.all(acf.embed_section.map((id: number) => wp.getEmbedSectionInfoById(id)))
+    //     embedSectionsData = await Promise.all(
+    //         embedSectionsData.map(async (section) => {
+    //             const data = section.acf;
+
+    //             // asumo que first_item.image es un ID
+    //             console.log({ data });
+
+    //             if (!data.first_item.image) return;
+    //             const firstItemImage = await wp.getPostImage(data.first_item.image);
+
+    //             return {
+    //                 ...section,
+    //                 acf: {
+    //                     ...data,
+    //                     first_item: {
+    //                         ...data.first_item,
+    //                         image: firstItemImage, // acá guardás la imagen completa en lugar del id
+    //                     },
+    //                 },
+    //             };
+    //         })
+    //     );
+    // }
+
+    // console.log({embedSectionsData});
+
+
+    
+
+    // if (our_experiences_section && our_experiences_section.acf) {
+    //     const formattedData = {
+    //         title: our_experiences_section.title,
+    //         items: [
+    //             {
+    //                 title: our_experiences_section.acf.first_item.title,
+    //                 description: our_experiences_section.acf.first_item.description,
+    //                 image: await wp.getPostImage(our_experiences_section.acf.first_item.image),
+    //             },
+    //             {
+    //                 title: our_experiences_section.acf.second_item.title,
+    //                 description: our_experiences_section.acf.second_item.description,
+    //                 image: await wp.getPostImage(our_experiences_section.acf.second_item.image),
+    //             },
+    //             {
+    //                 title: our_experiences_section.acf.third_item.title,
+    //                 description: our_experiences_section.acf.third_item.description,
+    //                 image: await wp.getPostImage(our_experiences_section.acf.third_item.image),
+    //             }],
+    //     }
+
+    //     data_our_experiences_section = formattedData;
+
+    // }

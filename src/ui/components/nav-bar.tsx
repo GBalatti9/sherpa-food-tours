@@ -55,7 +55,8 @@ export default function NavBar({currentPath}: {currentPath: string}) {
                             >
                                 {item.label}
                                 <span
-                                    className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 ease-out group-hover:w-full"
+                                    className="absolute bottom-0 left-0 w-0 h-[1px] transition-all duration-300 ease-out group-hover:w-full"
+                                    style={{backgroundColor: currentPath === "/" ? "white" : "var(--title-color)"}}
                                 />
                             </Link>
                         </li>

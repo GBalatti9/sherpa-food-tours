@@ -20,7 +20,6 @@ interface PostWithImage extends WPPost {
 
 export default async function TravelGuidePage() {
 
-    // const { title, content } = await wp.getPageInfo("travel-guide")
     const posts = await wp.getAllPost();
     const categories = await wp.getAllCategories();
 
@@ -352,7 +351,6 @@ export default async function TravelGuidePage() {
 }
 
 
-export const revalidate = 10; // segundos
-export const dynamic = 'auto';
-export const fetchCache = 'force-cache'; // mantiene caché y permite revalidar
-export const dynamicParams = false; // No genera rutas dinámicas
+export const dynamic = "error";
+export const revalidate = false;
+export const dynamicParams = false;

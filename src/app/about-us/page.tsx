@@ -2,6 +2,7 @@ import { wp } from "@/lib/wp";
 import "./about-us.css";
 import { AboutUsInfo, AcfData, LocalGuide, ValueItem } from "./types";
 import MeetLocalGuides from "@/ui/components/meet-local-guides";
+import OurValues from "./components/our-values";
 
 type YearACF = {
     year: number,
@@ -15,7 +16,7 @@ type YearACF = {
 export default async function AboutUsPage() {
 
     const { content, acf }: AboutUsInfo = await wp.getPageInfo("about");
-    // console.log({ title, content, acf });
+    console.log({ acf });
 
     // Función para obtener entradas de ACF según un filtro
     const getACFEntries = (acf: AcfData, keyIncludes: string, validator: (item: ValueItem) => void) =>
@@ -49,6 +50,7 @@ export default async function AboutUsPage() {
         loadValueImages(values),
         loadGuideImages(localGuides),
     ]);
+    
 
     const our_story_section = await wp.getEmbedSectionInfo("our-story");
     const our_story_section_acf = our_story_section.acf as Record<string, YearACF>;
@@ -77,53 +79,7 @@ export default async function AboutUsPage() {
                 <h1>The Sherpa Manifesto</h1>
                 <div dangerouslySetInnerHTML={{ __html: content }} className="render-html"></div>
             </section>
-            <section className="about-us-page-second-section">
-                <h2 className="section-title">Our Values</h2>
-                <div className="value-cards-container">
-                    {acfData.map((element, i) => (
-                        <div className="value-card" key={element.title + i}>
-                            <div className="value-card-img" style={{
-                                backgroundImage: `url(${element.background_image.img})`,
-                                backgroundSize: "cover",
-                                backgroundPosition: "center"
-                            }}>
-                                <div className="info-card">
-                                    <h4>{element.title}</h4>
-                                    <hr />
-                                    <p>{element.description}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-            <section className="about-us-page-second-section-desktop">
-                <div className="left-side">
-                    <h2 className="section-title">Our Values</h2>
-                    <div className="value-cards-title-container">
-                        {acfData.map((element) => (
-                            <p key={element.title} className={acfData[0].title === element.title ? "selected" : ""}>{element.title}</p>
-                        ))}
-                    </div>
-                </div>
-                <div className="right-side">
-                    <div className="value-cards-container">
-                        <div className="value-card">
-                            <div className="value-card-img" style={{
-                                backgroundImage: `url(${acfData[0].background_image.img})`,
-                                backgroundSize: "cover",
-                                backgroundPosition: "center"
-                            }}>
-                                <div className="info-card">
-                                    <h4>{acfData[0].title}</h4>
-                                    <hr />
-                                    <p>{acfData[0].description}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <OurValues items={acfData}/>
             <section className="about-us-page-third-section">
                 <div className="local-guide-container-page">
                     <MeetLocalGuides localGuides={acfLocalGuidesCorrect} />
@@ -182,7 +138,6 @@ export default async function AboutUsPage() {
     )
 }
 
-export const revalidate = false; // Completamente estático
-export const dynamic = 'force-static';
-export const fetchCache = 'force-cache'; // Cachea todos los fetch
-export const dynamicParams = false; // No genera rutas dinámicas
+export const dynamic = "error";
+export const revalidate = false;
+export const dynamicParams = false;

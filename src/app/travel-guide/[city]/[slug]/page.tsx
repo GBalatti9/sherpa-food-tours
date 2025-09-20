@@ -52,20 +52,20 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 
 
 
-// // ----------------------
-// // BUILD TIME
-// // ----------------------
-// export async function generateStaticParams() {
-//     const posts = await wp.getAllPost();
-    
+// ----------------------
+// BUILD TIME
+// ----------------------
+export async function generateStaticParams() {
+    const posts = await wp.getAllPost();
 
-//     const formattedPosts = posts.map((post: WPPost) => ({
-//         slug: post.slug,
-//         city: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0].title) : "default-city",
-//     }));
-    
-//     return formattedPosts
-// }
+
+    const formattedPosts = posts.map((post: WPPost) => ({
+        slug: post.slug,
+        city: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0].title) : "default-city",
+    }));
+
+    return formattedPosts
+}
 
 // ----------------------
 // DATA
@@ -74,25 +74,36 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     const { city, slug } = await params;
 
-    console.log({city, slug});
-    
+    // console.log({ city, slug });
+
     const { title, content, featured_media, excerpt, date, modified, relaciones } = await wp.getPostInfo(slug);
     const { img, alt } = await wp.getPostImage(featured_media);
 
     const { tours } = relaciones;
 
-    const toursData = await Promise.all(tours.map(async (tour: TourRelationship) => {
-        const { id } = tour;
-        const tourData = await wp.getTourById(id);
-        const tourImage = await wp.getPostImage(tourData.featured_media)
+    const toursData = (await Promise.all(
+        tours.map(async (tour: TourRelationship) => {
+            if (!tour || !tour.id) return null; // ⬅️ devolvés null
 
-        console.log({ tourData, tourImage });
+            try {
+                const tourData = await wp.getTourById(tour.id);
+                const tourImage = await wp.getPostImage(tourData.featured_media);
 
-        return {
-            ...tourData,
-            image: tourImage
-        }
-    }))
+                return {
+                    ...tourData,
+                    image: tourImage
+                };
+            } catch (error) {
+                console.error("Error fetching tour:", tour?.id, error);
+                return null; // ⬅️ si falla el fetch también devolvés null
+            }
+        })
+    )).filter(Boolean); // ⬅️ acá limpiás todos los null
+
+    // console.log({toursData});
+    
+
+
 
 
 
@@ -111,7 +122,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                     const tourData = await wp.getTourById(id);
                     const tourImage = await wp.getPostImage(tourData.featured_media)
 
-                    console.log({ tourData, tourImage });
+                    // console.log({ tourData, tourImage });
 
                     return {
                         ...tourData,
@@ -164,7 +175,9 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                     {renderContent()}
                     {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
                 </div>
-                <TravelGuideCardsSection tours={toursData} />
+                {(toursData && toursData.length > 0) &&
+                    <TravelGuideCardsSection tours={toursData} />
+                }
                 <div style={{ marginTop: '4rem', marginBottom: '4rem' }}>
 
                     <NotReadyToBook
@@ -181,7 +194,6 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 // export const revalidate = 86400; 
 
 
-export const revalidate = 0; // Completamente estático
-// export const dynamic = 'force-static';
-// export const fetchCache = 'force-cache'; // Cachea todos los fetch
-export const dynamic = "force-dynamic";
+export const dynamic = "error";
+export const revalidate = false;
+export const dynamicParams = false;

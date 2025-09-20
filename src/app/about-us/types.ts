@@ -41,3 +41,13 @@ export interface AboutUsInfo {
   content: string;
   acf: AcfData;
 }
+
+export interface OurValues {
+    title: string;
+    description: string;
+    background_image: {
+        img: string;
+        alt: string;
+    };
+}
+

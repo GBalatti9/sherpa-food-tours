@@ -51,12 +51,14 @@ export const wp = {
         try {
             const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts?v=ass`;
 
-            const response = await fetch(url, {
-                cache: 'no-store',
-                headers: {
-                    'Cache-Control': 'no-cache',
-                }
-            });
+            // , {
+            //     cache: 'no-store',
+            //     headers: {
+            //         'Cache-Control': 'no-cache',
+            //     }
+            // }
+
+            const response = await fetch(url);
 
             if (!response.ok) {
                 console.warn(`Posts API failed: ${response.status} ${response.statusText}`);
@@ -232,7 +234,7 @@ export const wp = {
     getTourBySlug: async (slug: string) => {
         try {
             const url = `${apiUrl}/tours?slug=${slug}`;
-            console.log({ url });
+            // console.log({ url });
             
             const response = await fetch(url)
             if (!response.ok) throw new Error(`No se obtuvieron datos: ${url}`);
