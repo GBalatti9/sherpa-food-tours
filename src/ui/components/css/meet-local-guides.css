@@ -31,10 +31,14 @@
         padding: 1rem 0;
         width: fit-content;
         margin: auto;
-
+        
         @media (min-width: 768px) {
             margin: 0;
             padding-left: 2.5rem;
+            flex-direction: row;
+            overflow-x: scroll;
+            width: 100%;
+            flex-wrap: nowrap;
         }
 
 
@@ -49,6 +53,7 @@
             flex-direction: column;
             background-color: var(--background);
             padding: 2rem 1.3rem;
+            flex: 0 0 auto;
 
             .value-card-personal-info {
                 display: flex;
@@ -82,6 +87,12 @@
                         gap: .3rem;
                         font-family: var(--font-excelsior);
                         text-transform: uppercase;
+
+                        img {
+                            width: 10px;
+                            height: 10px;
+                            aspect-ratio: 1 / 1;
+                        }
                     }
                 }
 

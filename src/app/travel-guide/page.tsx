@@ -59,7 +59,7 @@ export default async function TravelGuidePage() {
                 posts: filteredPosts
             };
         })
-        .filter((group: CompletePost) => group.posts.length > 0);
+        .filter((group: CompletePost) => group.posts.length > 0 && group.category !== "Uncategorized");
 
     console.log({ data });
 

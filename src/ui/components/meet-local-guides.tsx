@@ -18,6 +18,9 @@ interface LocalGuide {
 
 export default function MeetLocalGuides({ localGuides }: { localGuides: LocalGuide[] }) {
 
+    console.log({localGuides});
+    
+
     return (
         <div className="local-guide-container">
             <h2 className="local-guide-title">Meet your local guides</h2>

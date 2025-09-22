@@ -6,6 +6,7 @@ import BookNowButton from "@/ui/components/book-now";
 import { Star } from "lucide-react";
 import React from "react";
 import CheckAvailabilityButton from "./components/check-availability-btn";
+import TourHighlights from "./components/tour-highlights";
 
 interface TourCondition {
     icon: number;
@@ -152,7 +153,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                         <h2>USD{price}</h2>
                     </div>
                     {/* <div className="availability-container"> */}
-                        {check_availability && <CheckAvailabilityButton />}
+                    {check_availability && <CheckAvailabilityButton />}
                     {/* </div> */}
                 </div>
             </section>
@@ -207,7 +208,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                     ))}
                 </div>
             </section>
-            <section className="tour-highlights">
+            {/* <section className="tour-highlights">
                 <div className="tour-highlights-container">
                     <h2 className="highlight-title">{title_highlight}</h2>
                     <div className="highlights-container">
@@ -216,14 +217,16 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                                 <div className="highlight-image-container">
                                     <img src={item.highlight_image.img} alt={item.highlight_image.alt || 'Highlight Image'} />
                                 </div>
-                                <div className="highlight-text-container">
-                                    <p>{item.highlight_description}</p>
+                                <div className="highlight-text-container" dangerouslySetInnerHTML={{__html: item.highlight_description}}>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
-            </section>
+            </section> */}
+            {highlightItems.length > 0 &&
+                <TourHighlights title_highlight={title_highlight} highlightItems={highlightItems} />
+            }
         </main>
     )
 

@@ -22,7 +22,7 @@ export default function CheckAvailabilityButton() {
     }
 
     return (
-        <div>
+        <div className="check-availaibity-component">
             <div className="availability-container">
                 <button className="availability-btn" onClick={handleClick}>
                     Check availability
