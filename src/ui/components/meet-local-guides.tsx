@@ -1,25 +1,10 @@
 
+import { LocalGuide } from "@/types/local-guide"
 import "./css/meet-local-guides.css"
 
-interface LocalGuide {
-    profile_picture: {
-        img: string;
-        alt: string
-    },
-    name: string,
-    city: string,
-    description: string,
-    favorite_dish: string;
-    country_flag: {
-        img: string;
-        alt: string
-    }
-}
+
 
 export default function MeetLocalGuides({ localGuides }: { localGuides: LocalGuide[] }) {
-
-    console.log({localGuides});
-    
 
     return (
         <div className="local-guide-container">

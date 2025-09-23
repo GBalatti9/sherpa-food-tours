@@ -21,6 +21,8 @@ export const wp = {
 
             return { title, content, acf, featured_media };
         } catch (error) {
+            console.log({error});
+            
             return { title: "", content: "", acf: "", featured_media: null };
         }
     },
@@ -152,6 +154,8 @@ export const wp = {
 
             return { country_name: title };
         } catch (error) {
+            console.log({error});
+            
             return { country_name: "" }
         }
     },
@@ -221,6 +225,7 @@ export const wp = {
 
             return { city_name: title, content, country_id: country_id, acf, featured_media };
         } catch (error) {
+            console.log({error})
             return { city_name: "", content: "", country_id: 0, acf: null, featured_media: null };
         }
     },

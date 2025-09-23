@@ -7,6 +7,7 @@ import { Star } from "lucide-react";
 import React from "react";
 import CheckAvailabilityButton from "./components/check-availability-btn";
 import TourHighlights from "./components/tour-highlights";
+import ImageGallery from "./components/image-gallery";
 
 interface TourCondition {
     icon: number;
@@ -56,11 +57,12 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         .map(([, value]) => value)
         .filter((element) => element !== "");
 
-    let images;
+    let images: {img: string; alt: string}[] = [];
 
     if (imagesId.length > 0) {
         images = await fetchImages(imagesId as number[]);
     }
+
 
     const reviewsFormatted = {
         google: {
@@ -107,13 +109,14 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     return (
         <main>
             <section className="tour-hero-section">
-                <div className="image-gallery">
+                <ImageGallery images={images} />
+                {/* <div className="image-gallery">
                     {images && images.slice(0, 3).map((image, i) => (
                         <div key={image.img + i} className="image-item">
                             <img src={image.img} alt={image.alt || 'Tour Image'} />
                         </div>
                     ))}
-                </div>
+                </div> */}
                 <div className="header-container">
                     <div className="titles-container">
                         <div className="title-container">

@@ -1,9 +1,10 @@
 
 "use client";
 
+import { HighlightItem } from "@/types/highlights-item";
 import Carousel from "@/ui/components/carousel";
 
-export default function TourHighlights({ title_highlight, highlightItems }: { title_highlight: string; highlightItems: any[] }) {
+export default function TourHighlights({ title_highlight, highlightItems }: { title_highlight: string; highlightItems: HighlightItem[] }) {
     return (
         <section className="tour-highlights">
             <div className="tour-highlights-container">

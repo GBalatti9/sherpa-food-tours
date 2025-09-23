@@ -26,10 +26,11 @@
 
     .value-cards-container {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        overflow-x: scroll;
         gap: 1rem;
         padding: 1rem 0;
-        width: fit-content;
+        width: 100%;
         margin: auto;
         
         @media (min-width: 768px) {
@@ -49,11 +50,12 @@
             margin: auto;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             flex-direction: column;
             background-color: var(--background);
             padding: 2rem 1.3rem;
             flex: 0 0 auto;
+            min-height: 466px;
 
             .value-card-personal-info {
                 display: flex;

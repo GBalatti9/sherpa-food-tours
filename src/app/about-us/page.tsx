@@ -4,12 +4,12 @@ import { AboutUsInfo, AcfData, LocalGuide, ValueItem } from "./types";
 import MeetLocalGuides from "@/ui/components/meet-local-guides";
 import OurValues from "./components/our-values";
 
-type YearACF = {
-    year: number,
-    description: string,
-    extra_info: string,
-    image: number,
-};
+// type YearACF = {
+//     year: number,
+//     description: string,
+//     extra_info: string,
+//     image: number,
+// };
 
 
 
@@ -52,8 +52,8 @@ export default async function AboutUsPage() {
     ]);
     
 
-    const our_story_section = await wp.getEmbedSectionInfo("our-story");
-    const our_story_section_acf = our_story_section.acf as Record<string, YearACF>;
+    // const our_story_section = await wp.getEmbedSectionInfo("our-story");
+    // const our_story_section_acf = our_story_section.acf as Record<string, YearACF>;
 
 
     // const yearsArray = Object.entries(our_story_section_acf).map(([key, value]) => ({

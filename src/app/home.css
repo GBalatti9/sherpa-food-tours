@@ -1,6 +1,6 @@
 .home-first-section {
 
-    height: 100svh;
+    height: 80svh;
     overflow: hidden;
 
     .first-section-container {
@@ -36,7 +36,7 @@
                 align-items: center;
                 justify-content: center;
                 gap: 2rem;
-                padding-top: 2rem;
+                /* padding-top: 2rem; */
                 /* padding-left: 1rem; */
 
                 .logo-container {

@@ -17,17 +17,18 @@ import FaqSection from "@/ui/components/faq-section";
 import NextAdventure from "@/ui/components/redy-next-adventure";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { slugify } from "@/app/helpers/slugify";
+import {  LocalGuide, LocalGuideRaw } from "@/types/local-guide";
 
-export async function generateStaticParams() {
-    // Traer todos los slugs de las ciudades desde WP
-    const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
+// export async function generateStaticParams() {
+//     // Traer todos los slugs de las ciudades desde WP
+//     const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
 
-    const citiesFormatted = cities.map((city: { slug: string }) => ({
-        slug: city.slug
-    }));
+//     const citiesFormatted = cities.map((city: { slug: string }) => ({
+//         slug: city.slug
+//     }));
 
-    return citiesFormatted
-}
+//     return citiesFormatted
+// }
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -35,6 +36,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const { slug } = await params;
 
     const { acf, featured_media, content } = await wp.getCityBySlug(slug);
+    console.log({acf});
+    
 
     const asFeatureInImagesId = [
         acf?.first_img,
@@ -108,17 +111,43 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         { id: 2, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month" },
     ]
 
-    const localGuide = acf.first_local_guide;
-    const localGuideImage = await wp.getPostImage(localGuide.profile_picture);
-    const countryFlag = await wp.getPostImage(localGuide.country_flag)
+const localGuidesRaw = await Promise.all(
+  Object.entries(acf)
+    .filter(([key]) => key.includes("local_guide"))
+    .map(([, value]) => value as LocalGuideRaw) 
+    .filter(Boolean) 
+    .map(async (localGuide) => {
+      if (!localGuide.profile_picture || !localGuide.country_flag) return null;
 
+      const profile_picture = await wp.getPostImage(localGuide.profile_picture) as {img: string; alt: string};
 
+      const countryFlag = await wp.getPostImage(localGuide.country_flag) as {img: string; alt: string};
 
-    const localGuideData = {
+      return {
         ...localGuide,
-        profile_picture: localGuideImage,
+        profile_picture,
         country_flag: countryFlag
-    }
+      };
+    })
+) as LocalGuide[];
+
+// saco los null/undefined
+const localGuides = localGuidesRaw.filter(Boolean);
+
+console.log({ localGuides });
+
+    
+  
+    // const localGuideImage = await wp.getPostImage(localGuide.profile_picture);
+    // const countryFlag = await wp.getPostImage(localGuide.country_flag)
+
+
+
+    // const localGuideData = {
+    //     ...localGuide,
+    //     profile_picture: localGuideImage,
+    //     country_flag: countryFlag
+    // }
 
     let posts = [];
 
@@ -239,16 +268,17 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 <p className="show-more-comments">Show more</p>
             </section>
 
-            <section className="local-guide-section">
-                <div className="local-guide-container">
-                    <MeetLocalGuides localGuides={[localGuideData]} />
-                </div>
-            </section>
+                    {localGuides.length > 0 && 
+                        <section className="local-guide-section">
+                            <div className="local-guide-container">
+                                <MeetLocalGuides localGuides={localGuides} />
+                            </div>
+                        </section>
+                }
 
             <section className="know-the-city">
                 <h2>Get to know the city</h2>
                 <div className="posts-container">
-                    {/* Primer post */}
                     {posts[0] && (
                         <Link href={`/travel-guide/${posts[0].city.slug}/${posts[0].slug}`} key={0} className="post">
                             <div className="img-container">
@@ -268,7 +298,6 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                         </Link>
                     )}
 
-                    {/* Grupo con post 1 y 2 */}
                     {posts.length > 2 && (
                         <div className="group-posts">
                             {[posts[1], posts[2]].map((post, i) => (
@@ -311,9 +340,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 </div>
             </section>
 
-            <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts
+            {/* <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts
                 ?.filter(Boolean)
-                .slice(0, 3)} />
+                .slice(0, 3)} /> */}
             <section className="faq-section-city">
                 <FaqSection faqs={faqs} />
             </section>
@@ -327,9 +356,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     )
 }
 
-export const dynamic = "error";
-export const revalidate = false;
-export const dynamicParams = false;
+// export const dynamic = "error";
+// export const revalidate = false;
+// export const dynamicParams = false;
 
 
     // let embedSectionsData = [];

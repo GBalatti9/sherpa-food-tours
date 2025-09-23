@@ -20,6 +20,9 @@ export default async function Home() {
 
   const { title, content, featured_media } = pageInfo;
 
+  console.log({acf});
+  
+
   const imagesIds = [
     featured_media,
     acf.google_logo,
@@ -52,7 +55,7 @@ export default async function Home() {
 
 
   const [background_image, ...imgs] = images;
-  // console.log(imgs);
+  console.log(imgs);
 
 
   const citiesRaw = await wp.getAllCities();
@@ -224,8 +227,8 @@ export default async function Home() {
 }
 
 
-export const dynamic = "error"; // obliga a que sea estática
-export const revalidate = false;
+// export const dynamic = "error"; // obliga a que sea estática
+// export const revalidate = false;
 
 // export const revalidate = 0;
 // export const dynamic = "force-dynamic";

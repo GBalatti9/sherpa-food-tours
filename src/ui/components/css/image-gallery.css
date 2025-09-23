@@ -1,0 +1,64 @@
+.image-gallery {
+    position: relative;
+
+    .total-images {
+        display: flex;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        z-index: 49;
+        background-color: #333333;
+        color: white;
+        border: 1px solid white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-family: var(--font-excelsior);
+        align-items: center;
+        justify-content: center;
+        gap: .3rem;
+        width: 70px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999999;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 80%;
+    margin: auto;
+}
+
+.lightbox .close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.swiper-slide {
+    margin: auto 10px auto 0 !important;
+}
+.swiper-pagination-bullet-active {
+    background-color: white !important;
+}
+
+.swiper-button-prev, .swiper-button-next {
+    color: white !important;
+}
