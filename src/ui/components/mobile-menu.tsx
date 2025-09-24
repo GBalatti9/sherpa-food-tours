@@ -41,7 +41,13 @@ export default function MobileMenu({ items, currentPath }: { items: NavBarLink[]
             >
                 <span className="sr-only">{isOpen ? "Close menu" : "Open menu"}</span>
                 <div className="transition-transform duration-300">
-                    {isOpen ? <X className="h-6 w-6 rotate-90" aria-hidden /> : <Menu className="h-8 w-8" aria-hidden style={{color: currentPath === '/' ? 'var(--background)' : '#333'}}/>}
+                    {isOpen ? <X className="h-6 w-6 rotate-90" aria-hidden /> :
+                        <Menu 
+                            className="h-8 w-8" 
+                            aria-hidden
+                            style={{color: currentPath.includes("travel-guide") ? "#333" : "var(--background)"}}
+                        />
+                    }
                 </div>
             </button>
 
@@ -49,9 +55,8 @@ export default function MobileMenu({ items, currentPath }: { items: NavBarLink[]
             <div
                 id="mobile-menu"
                 ref={menuRef}
-                className={`fixed inset-0 z-40 bg-background/95 backdrop-blur-sm transition-all duration-300 ${
-                    isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-                }`}
+                className={`fixed inset-0 z-40 bg-background/95 backdrop-blur-sm transition-all duration-300 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                    }`}
                 role="dialog"
                 aria-modal="true"
                 aria-label="Mobile navigation"
@@ -62,9 +67,8 @@ export default function MobileMenu({ items, currentPath }: { items: NavBarLink[]
                             key={item.href}
                             href={item.href}
                             onClick={() => setIsOpen(false)}
-                            className={`text-2xl font-medium text-foreground hover:text-primary transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                                isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                            }`}
+                            className={`text-2xl font-medium text-foreground hover:text-primary transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                                }`}
                             style={{
                                 transitionDelay: isOpen ? `${index * 100}ms` : "0ms",
                             }}

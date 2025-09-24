@@ -58,6 +58,10 @@
                     }
                 }
 
+                .logo-container:nth-child(2){
+                    width: 80px;
+                }
+
                 .image-container {
                     filter: brightness(1);
                 }

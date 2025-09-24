@@ -5,6 +5,7 @@ import { slugify } from "../helpers/slugify";
 import { WPPost } from "@/types/post";
 import { Category } from "@/types/category";
 import React from "react";
+import CitiesDropdown from "@/ui/components/cities-dropdown";
 
 interface CompletePost {
     category: string;
@@ -21,8 +22,13 @@ interface PostWithImage extends WPPost {
 export default async function TravelGuidePage() {
 
     const posts = await wp.getAllPost();
-    const categories = await wp.getAllCategories();
-
+    let categories = await wp.getAllCategories();
+    categories = categories.filter((category: {name: string}) => category.name !== "Uncategorized")
+    const formattedCategories = categories.map((category: {name: string}) => category.name)
+    
+    let cities = await wp.getAllCities();
+    cities = cities.map((city: {slug: string; title: {rendered: string}}) => {return {slug: city.slug, city: city.title.rendered}});
+    
 
     // Primero obten todos los featured_media IDs únicos
     const mediaIds = [...new Set(posts.map((post: WPPost) => post.featured_media))] as number[];
@@ -115,12 +121,13 @@ export default async function TravelGuidePage() {
             </section>
             <section className="travel-guide-second-section">
                 <div className="second-section-main-container">
-                    <div className="main-searcher">
+                    {/* <div className="main-searcher">
                         <p className="searcher">Explore Our Cities</p>
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
                             <path d="M15.6484 8.02881L10.7109 12.9663L5.77344 8.02881" stroke="#0A4747" strokeWidth="1.64583" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                    </div>
+                    </div> */}
+                    <CitiesDropdown cities={cities}/>
                     <div className="input-container">
                         <div className="input">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">

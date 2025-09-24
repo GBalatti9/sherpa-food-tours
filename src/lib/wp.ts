@@ -9,7 +9,7 @@ export const wp = {
         try {
 
             const url = `${apiUrl}/pages?slug=${slug}`;
-            const response = await fetch(url);
+            const response = await fetch(url, {cache: "no-store"});
             if (!response.ok) console.error("No se pudo hacer fecth a la url: " + url);
             const [data] = await response.json();
             console.log({data});

@@ -1,0 +1,70 @@
+
+.main-searcher {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.searcher {
+  color: var(--second-green);
+  font-family: var(--font-excelsior);
+  font-size: 1rem;
+  line-height: 1.28;
+  text-decoration: underline;
+  margin: 0;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
+  min-width: 200px;
+  margin-top: 0.5rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.city-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.city-item {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-excelsior);
+  font-size: 0.95rem;
+  color: var(--second-green);
+  transition: background-color 0.15s ease;
+}
+
+.city-item:hover {
+  background-color: #f3f4f6;
+}
+
+.city-item:focus {
+  outline: 2px solid var(--second-green);
+  outline-offset: -2px;
+  background-color: #f3f4f6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

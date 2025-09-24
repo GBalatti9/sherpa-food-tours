@@ -20,9 +20,6 @@ export default async function Home() {
 
   const { title, content, featured_media } = pageInfo;
 
-  console.log({acf});
-  
-
   const imagesIds = [
     featured_media,
     acf.google_logo,
@@ -137,7 +134,7 @@ export default async function Home() {
               </div>
               <div className="logo-container">
                 <div className="img-container">
-                  <img src="/trip.png" />
+                  <img src="/trip.webp" />
                 </div>
                 <div className="review star">
                   {Array.from({ length: 5 }).map((_, i) => (

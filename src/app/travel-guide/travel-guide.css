@@ -176,7 +176,8 @@
             max-width: 1024px;
         }
 
-        .main-searcher {
+        
+        /* .main-searcher {
             display: flex;
             gap: 0.3rem;
 
@@ -187,7 +188,7 @@
                 line-height: 1.28;
                 text-decoration: underline;
             }
-        }
+        } */
 
         .input-container {
             display: none;
