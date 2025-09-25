@@ -33,6 +33,17 @@
     }
 }
 
+.navbar-desktop {
+    .main-searcher {
+        .searcher {
+            color: white !important;
+        }
+        svg {
+            display: none;
+        }
+    }
+}
+
 @media (min-width: 768px) {
     .sherpa-header {
         padding: 1rem 2rem;

@@ -9,7 +9,7 @@ interface CityDisplay {
     city: string;
 }
 
-export default function CitiesDropdown({cities} : {cities: CityDisplay[]}) {
+export default function CitiesDropdown({text = "Explore Our Cities", cities} : {text?: string; cities: CityDisplay[]}) {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleDropdown = () => {
@@ -32,7 +32,7 @@ export default function CitiesDropdown({cities} : {cities: CityDisplay[]}) {
           }
         }}
       >
-        <p className="searcher">Explore Our Cities</p>
+        <p className="searcher">{text}</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="21"
