@@ -19,16 +19,16 @@ import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { slugify } from "@/app/helpers/slugify";
 import {  LocalGuide, LocalGuideRaw } from "@/types/local-guide";
 
-// export async function generateStaticParams() {
-//     // Traer todos los slugs de las ciudades desde WP
-//     const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
+export async function generateStaticParams() {
+    // Traer todos los slugs de las ciudades desde WP
+    const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
 
-//     const citiesFormatted = cities.map((city: { slug: string }) => ({
-//         slug: city.slug
-//     }));
+    const citiesFormatted = cities.map((city: { slug: string }) => ({
+        slug: city.slug
+    }));
 
-//     return citiesFormatted
-// }
+    return citiesFormatted
+}
 
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -356,9 +356,9 @@ console.log({ localGuides });
     )
 }
 
-// export const dynamic = "error";
-// export const revalidate = false;
-// export const dynamicParams = false;
+export const dynamic = "error";
+export const revalidate = false;
+export const dynamicParams = false;
 
 
     // let embedSectionsData = [];

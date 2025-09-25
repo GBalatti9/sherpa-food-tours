@@ -3,11 +3,8 @@ import BookNowButton from "./book-now";
 import MobileMenu from "./mobile-menu";
 import "./css/nav-bar.css";
 
-export default function NavBar({ currentPath }: { currentPath: string }) {
-
-    console.log({currentPath});
+export default function NavBar({ currentPath, cities }: { currentPath: string; cities: {city: string; slug: string}[] }) {
     
-
     const items = [
         { label: 'Cities', href: '/' },
         { label: 'Travel Guide', href: '/travel-guide' },
@@ -20,7 +17,7 @@ export default function NavBar({ currentPath }: { currentPath: string }) {
                 <div className="flex items-center">
                     {/* Mobile menu button */}
                     <div className="md:hidden h-8 mr-2">
-                        <MobileMenu items={items} currentPath={currentPath} />
+                        <MobileMenu items={items} currentPath={currentPath} cities={cities}/>
                     </div>
                     <Link href="/" aria-label="Go to homepage" className="logo-container">
                         {/* <img src="/sherpa.png" alt="Sherpa Food Tours Logo" loading="eager" width={40} height={40} className="w-full h-full object-cover" /> */}
