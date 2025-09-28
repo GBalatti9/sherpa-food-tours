@@ -3,6 +3,8 @@ import "./about-us.css";
 import { AboutUsInfo, AcfData, LocalGuide, ValueItem } from "./types";
 import MeetLocalGuides from "@/ui/components/meet-local-guides";
 import OurValues from "./components/our-values";
+import type { OurStory } from "@/types/our-story";
+import OurStoryComponent from "./components/our-story";
 
 // type YearACF = {
 //     year: number,
@@ -50,7 +52,33 @@ export default async function AboutUsPage() {
         loadValueImages(values),
         loadGuideImages(localGuides),
     ]);
-    
+
+    let our_story: OurStory = {
+        title: "",
+        items: []
+    }
+
+    if (acf.our_story) {
+        our_story.title = acf.our_story.title;
+
+        const formattedYears = Object.entries(acf.our_story.years).map(([, value]) => value);
+        const completeYears = await Promise.all(formattedYears.map(async (element) => {
+            console.log({ element });
+
+            if (!element.image_2019) return {...element, image: null};
+            const img = await wp.getPostImage(element.image_2019);
+            return {
+                ...element,
+                image: img
+            }
+        }))
+        our_story.items = completeYears.filter(
+            (element) => element.title !== "" && element.title !== null
+        );
+    }
+
+    console.log({ our_story });
+
 
     // const our_story_section = await wp.getEmbedSectionInfo("our-story");
     // const our_story_section_acf = our_story_section.acf as Record<string, YearACF>;
@@ -76,64 +104,16 @@ export default async function AboutUsPage() {
     return (
         <main className="about-us-page">
             <section className="about-us-page-first-section">
-                <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png" alt="Sherpa logo"/> manifesto</h1>
+                <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png" alt="Sherpa logo" /> manifesto</h1>
                 <div dangerouslySetInnerHTML={{ __html: content }} className="render-html"></div>
             </section>
-            <OurValues items={acfData}/>
+            <OurValues items={acfData} />
             <section className="about-us-page-third-section">
                 <div className="local-guide-container-page">
                     <MeetLocalGuides localGuides={acfLocalGuidesCorrect} />
                 </div>
-                {/* <h2 className="section-title">Meet your local guides</h2>
-                <div className="value-cards-container">
-                    {acfDataLocalGuides.map((element, i) => (
-                        <div className="value-card" key={element.name + i}>
-                            <div className="value-card-personal-info">
-                                <div className="img-container">
-                                    <img src={element.profile_picture.img} alt={element.profile_picture.alt} />
-                                </div>
-                                <div className="value-card-titles">
-                                    <p className="value-card-name">{element.name}</p>
-                                    <p>{element.city}</p>
-                                </div>
-                            </div>
-                            <hr />
-                            <div className="value-card-description">
-                                <p>{element.description}</p>
-                                <div className="value-card-last-section">
-                                    <p className="last-section-title">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
-                                            <path d="M4.83398 2.08374V15.0699" stroke="#017E80" strokeWidth="1.29861" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M2.88672 2.40845V5.65498C2.88672 7.27825 4.83464 7.27825 4.83464 7.27825C4.83464 7.27825 6.78256 7.27825 6.78256 5.65498V2.40845" stroke="#017E80" strokeWidth="1.29861" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M12.6265 7.60285H10.0293V4.68097C10.0293 2.08374 12.6265 2.08374 12.6265 2.08374V7.60285ZM12.6265 7.60285V15.0699" stroke="#017E80" strokeWidth="1.29861" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        Favorite Dish
-                                    </p>
-                                    <p>{element.favorite_dish}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div> */}
             </section>
-            {/* <section className="our-story-section">
-                <div className="title-container">
-                    <h3>{our_story_section.title}</h3>
-                </div>
-                <div className="timeline">
-                    {yearsArray.map((year, index) => (
-                        <div
-                            className={`data-container ${index % 2 === 0 ? 'left' : 'right'}`}
-                            key={year.year}
-                        >
-                            <p className="year">
-                                {year.year}
-                            </p>
-                            <div className="circle"></div>
-                        </div>
-                    ))}
-                </div>
-            </section> */}
+            <OurStoryComponent our_story={our_story}/>
         </main>
     )
 }

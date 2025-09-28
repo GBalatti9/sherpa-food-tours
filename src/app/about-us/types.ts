@@ -34,6 +34,19 @@ export interface AcfData {
   eighth_value: ValueItem;
   ninth_value: ValueItem;
   tenth_value: ValueItem;
+  our_story: OurStoryACF;
+}
+
+export interface OurStoryACF {
+  title: "string";
+  years: {
+    year_group: {
+      year: number;
+      title: string;
+      image_2019: number | null;
+      item: string;
+    }
+  }
 }
 
 export interface AboutUsInfo {
@@ -43,11 +56,11 @@ export interface AboutUsInfo {
 }
 
 export interface OurValues {
-    title: string;
-    description: string;
-    background_image: {
-        img: string;
-        alt: string;
-    };
+  title: string;
+  description: string;
+  background_image: {
+    img: string;
+    alt: string;
+  };
 }
 

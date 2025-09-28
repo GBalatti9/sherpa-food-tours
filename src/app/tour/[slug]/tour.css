@@ -420,6 +420,12 @@
     .itinerary-container {
         padding: 2rem 1.3rem;
 
+        .itinerary-title {
+            font-family: var(--font-dk-otago);
+            padding-bottom: 2rem;
+            font-size: 1.5rem;
+        }
+
         .itinerary-container-elements {
             @media (min-width: 768px) {
                 display: flex;
@@ -440,6 +446,7 @@
                         top: 0;
                         display: flex;
                         flex-direction: column;
+
                         .img-container {
                             height: 400px;
                             overflow: hidden;
@@ -450,150 +457,150 @@
                                 object-fit: cover;
                             }
                         }
-                        .img-container:nth-child(1){
+
+                        .img-container:nth-child(1) {
                             transform: scale(.7) rotate(-20deg);
                         }
 
-                        .img-container:nth-child(2){
+                        .img-container:nth-child(2) {
                             transform: scale(.7) rotate(20deg) translate(10rem, -10rem);
                         }
 
-                        .img-container:nth-child(3){
+                        .img-container:nth-child(3) {
                             top: 0;
                             transform: scale(.7) rotate(20deg) translate(10rem, -10rem);
                         }
                     }
-                    
+
                 }
 
-                .itinerary-title {
-                    font-family: var(--font-dk-otago);
-                    padding-bottom: 2rem;
-                    font-size: 1.5rem;
+            }
+
+
+
+
+            .itinerary-steps-container {
+
+                @media (min-width: 768px) {
+                    width: 50%;
                 }
 
-                .itinerary-steps-container {
+                position: relative;
+                padding-left: 1.5rem;
 
-                    @media (min-width: 768px) {
-                        width: 50%;
-                    }
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: .45rem;
+                    /* Centrada con los círculos principales */
+                    top: 1.7rem;
+                    /* Empieza después del primer círculo */
+                    bottom: 6rem;
+                    /* Termina antes del último círculo */
+                    width: 2px;
+                    background-color: var(--title-color);
+                    z-index: -1;
+                    /* Detrás de los círculos */
+                }
 
+
+
+                .itinerary-step {
                     position: relative;
-                    padding-left: 1.5rem;
+                    padding-bottom: 1rem;
 
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        left: .45rem;
-                        /* Centrada con los círculos principales */
-                        top: 1.7rem;
-                        /* Empieza después del primer círculo */
-                        bottom: 6rem;
-                        /* Termina antes del último círculo */
-                        width: 2px;
-                        background-color: var(--title-color);
-                        z-index: -1;
-                        /* Detrás de los círculos */
+                    .itinerary-step-title {
+                        font-size: 1.3rem;
+                        font-family: var(--font-dk-otago);
+                        color: var(--title-color);
                     }
 
+                    .itinerary-step-information {
+                        display: flex;
+                        padding: 1rem 0;
+                        font-family: var(--font-excelsior);
 
+                        .itinerary-step-data {
+                            span {
+                                color: var(--title-color)
+                            }
+                        }
+                    }
 
-                    .itinerary-step {
-                        position: relative;
+                    .itinerary-step-subtitle {
+                        color: #333;
+                        opacity: 50%;
+                        font-size: 1rem;
+                        font-family: var(--font-excelsior);
                         padding-bottom: 1rem;
-
-                        .itinerary-step-title {
-                            font-size: 1.3rem;
-                            font-family: var(--font-dk-otago);
-                            color: var(--title-color);
-                        }
-
-                        .itinerary-step-information {
-                            display: flex;
-                            padding: 1rem 0;
-                            font-family: var(--font-excelsior);
-
-                            .itinerary-step-data {
-                                span {
-                                    color: var(--title-color)
-                                }
-                            }
-                        }
-
-                        .itinerary-step-subtitle {
-                            color: #333;
-                            opacity: 50%;
-                            font-size: 1rem;
-                            font-family: var(--font-excelsior);
-                            padding-bottom: 1rem;
-                        }
-
-                        .stop-items-container {
-                            display: flex;
-                            flex-direction: column;
-                            gap: .6rem;
-
-                            .stop-item {
-                                font-family: var(--font-excelsior);
-                                font-size: 1.1rem;
-                                position: relative;
-
-                                span {
-                                    font-style: italic;
-                                }
-
-
-                                .stop-item-img {
-                                    aspect-ratio: 3 / 4;
-                                    max-height: 300px;
-                                    overflow: hidden;
-
-                                    img {
-                                        width: 100%;
-                                        height: 100%;
-                                        object-fit: cover;
-                                    }
-
-                                    @media (min-width: 460px) {
-                                        display: none;
-                                    }
-                                }
-
-                            }
-
-                            .stop-item::before {
-                                content: "";
-                                position: absolute;
-                                left: -1.4rem;
-                                top: .5rem;
-                                width: 14px;
-                                height: 14px;
-                                border-radius: 50%;
-                                background-color: white;
-                                border: 1px solid var(--title-color);
-                            }
-
-                        }
                     }
 
-                    .itinerary-step::before {
-                        content: "";
-                        position: absolute;
-                        left: -1.5rem;
-                        top: .5rem;
-                        width: 1rem;
-                        height: 1rem;
-                        border-radius: 50%;
-                        background-color: var(--title-color);
-                        z-index: 1;
+                    .stop-items-container {
+                        display: flex;
+                        flex-direction: column;
+                        gap: .6rem;
+
+                        .stop-item {
+                            font-family: var(--font-excelsior);
+                            font-size: 1.1rem;
+                            position: relative;
+
+                            span {
+                                font-style: italic;
+                            }
+
+
+                            .stop-item-img {
+                                aspect-ratio: 3 / 4;
+                                max-height: 300px;
+                                overflow: hidden;
+
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                }
+
+                                @media (min-width: 460px) {
+                                    display: none;
+                                }
+                            }
+
+                        }
+
+                        .stop-item::before {
+                            content: "";
+                            position: absolute;
+                            left: -1.4rem;
+                            top: .5rem;
+                            width: 14px;
+                            height: 14px;
+                            border-radius: 50%;
+                            background-color: white;
+                            border: 1px solid var(--title-color);
+                        }
+
                     }
-
-
                 }
+
+                .itinerary-step::before {
+                    content: "";
+                    position: absolute;
+                    left: -1.5rem;
+                    top: .5rem;
+                    width: 1rem;
+                    height: 1rem;
+                    border-radius: 50%;
+                    background-color: var(--title-color);
+                    z-index: 1;
+                }
+
+
             }
         }
     }
 }
+
 
 @media (min-width: 768px) {
     .section-container-desktop {
