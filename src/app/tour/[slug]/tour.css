@@ -490,6 +490,24 @@
                         span {
                             font-style: italic;
                         }
+
+
+                        .stop-item-img {
+                            aspect-ratio: 3 / 4;
+                            max-height: 300px;
+                            overflow: hidden;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+
+                            @media (min-width: 460px) {
+                                display: none;
+                            }
+                        }
+
                     }
 
                     .stop-item::before {

@@ -22,6 +22,7 @@ interface HighlightItem {
 interface StepItem {
     show_empty: boolean;
     title: string;
+    mobile_img?: { img: string; alt: string };
 }
 
 interface ACFItineraryStep {
@@ -154,6 +155,8 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         items: [] as ValidStep[]
     };
 
+    let desktopImgs: { img: string; alt: string }[] = [];
+
     console.log({ acf });
 
 
@@ -166,10 +169,16 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         const filterValidSteps = formattedItinerary.filter((element) => element.title.trim().length !== 0);
 
         const formattedValidSteps: ValidStep[] = await Promise.all(filterValidSteps.map(async (step) => {
-            const items = Object.entries(step)
+            const items = await Promise.all(Object.entries(step)
                 .filter(([key]) => key.endsWith("_item"))
                 .map(([, value]) => value)
                 .filter((element) => element.show_empty || element.title.trim().length > 0)
+                .map(async (element) => {
+                    return {
+                        ...element,
+                        mobile_img: element.mobile_img ? await wp.getPostImage(element.mobile_img) : null,
+                    }
+                }))
 
             return {
                 title: step.title,
@@ -181,9 +190,19 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         }))
 
         itinerary.items = formattedValidSteps;
-        console.log({ formattedValidSteps });
-
     }
+
+    console.log({ itinerary });
+
+    if (itinerary.items.length > 0) {
+        desktopImgs = itinerary.items.flatMap((element) =>
+            element.items.flatMap((e) => (e.mobile_img ? [e.mobile_img] : []))
+        );
+    }
+
+
+    console.log({ desktopImgs });
+
 
 
 
@@ -319,7 +338,14 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                                 <div className="stop-items-container">
                                     {item.items.map((internal_item) => (
                                         internal_item.title ?
-                                            <div className="stop-item" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
+                                            <div className="stop-item">
+                                                <div className="stop-item-text" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
+                                                {internal_item.mobile_img &&
+                                                    <div className="stop-item-img">
+                                                        <img src={internal_item.mobile_img.img} alt={internal_item.mobile_img.alt} />
+                                                    </div>
+                                                }
+                                            </div>
                                             : <p className="stop-item">&nbsp;</p>
                                     ))}
                                 </div>
