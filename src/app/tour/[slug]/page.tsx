@@ -18,6 +18,48 @@ interface HighlightItem {
     highlight_description: string;
 }
 
+
+interface StepItem {
+    show_empty: boolean;
+    title: string;
+}
+
+interface ACFItineraryStep {
+    information?: string;
+    map_img?: number;
+    title: string;
+    subtitle?: string;
+    first_item: StepItem;
+    second_item: StepItem;
+    third_item: StepItem;
+    fourth_item: StepItem;
+    fifth_item: StepItem;
+}
+
+interface ACFItinerary {
+    title: string;
+    itinerary_steps: {
+        "a-start": ACFItineraryStep;
+        "b-first-step": ACFItineraryStep;
+        "c-second-step": ACFItineraryStep;
+        "d-third-step": ACFItineraryStep;
+        "e-fourth-step": ACFItineraryStep;
+        "f-fifth-step": ACFItineraryStep;
+        "z-end": ACFItineraryStep;
+    }
+}
+
+interface ValidStep {
+    title: string;
+    information?: string;
+    map: {
+        img: string;
+        alt: string;
+    } | null;
+    subtitle?: string;
+    items: StepItem[];
+}
+
 export async function generateStaticParams() {
     try {
         const tours = await wp.getAllTours();
@@ -46,6 +88,8 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     // console.log({slug});
 
     const { acf } = await wp.getTourBySlug(slug);
+    console.log({ acf });
+
 
 
 
@@ -57,7 +101,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         .map(([, value]) => value)
         .filter((element) => element !== "");
 
-    let images: {img: string; alt: string}[] = [];
+    let images: { img: string; alt: string }[] = [];
 
     if (imagesId.length > 0) {
         images = await fetchImages(imagesId as number[]);
@@ -103,6 +147,44 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             highlight_image: image
         }
     })) as { highlight_image: { img: string; alt: string }; highlight_description: string }[]
+
+
+    let itinerary = {
+        title: "",
+        items: [] as ValidStep[]
+    };
+
+    console.log({ acf });
+
+
+    if (acf.itinerary) {
+        const itineraryData: ACFItinerary = acf.itinerary;
+        itinerary.title = itineraryData.title;
+        // Transformo el objeto en array y me quedo solo con los value
+        const formattedItinerary = Object.entries(itineraryData.itinerary_steps).map(([, value]) => value);
+
+        const filterValidSteps = formattedItinerary.filter((element) => element.title.trim().length !== 0);
+
+        const formattedValidSteps: ValidStep[] = await Promise.all(filterValidSteps.map(async (step) => {
+            const items = Object.entries(step)
+                .filter(([key]) => key.endsWith("_item"))
+                .map(([, value]) => value)
+                .filter((element) => element.show_empty || element.title.trim().length > 0)
+
+            return {
+                title: step.title,
+                information: step.information,
+                map: step.map_img ? await wp.getPostImage(step.map_img) : null,
+                subtitle: step.subtitle,
+                items
+            }
+        }))
+
+        itinerary.items = formattedValidSteps;
+        console.log({ formattedValidSteps });
+
+    }
+
 
 
 
@@ -211,25 +293,42 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                     ))}
                 </div>
             </section>
-            {/* <section className="tour-highlights">
-                <div className="tour-highlights-container">
-                    <h2 className="highlight-title">{title_highlight}</h2>
-                    <div className="highlights-container">
-                        {highlightItems.length > 0 && highlightItems.map((item, i) => (
-                            <div key={item.highlight_description + i} className="highlight-item">
-                                <div className="highlight-image-container">
-                                    <img src={item.highlight_image.img} alt={item.highlight_image.alt || 'Highlight Image'} />
+            {highlightItems.length > 0 &&
+                <TourHighlights title_highlight={title_highlight} highlightItems={highlightItems} />
+            }
+
+            <section className="itinerary-section">
+                <div className="itinerary-container">
+                    <h2 className="itinerary-title"> {itinerary.title}</h2>
+                    <div className="itinerary-steps-container">
+                        {itinerary.items.map((item) => (
+                            <div className="itinerary-step" key={item.title}>
+                                <p className="itinerary-step-title">{item.title}</p>
+
+                                {/* Solo para START y END */}
+                                {item.information &&
+                                    <div className="itinerary-step-information">
+                                        <img src={item?.map?.img} alt="Map pin icon" />
+                                        <div className="itinerary-step-data" dangerouslySetInnerHTML={{ __html: item.information }}>
+                                        </div>
+                                    </div>
+                                }
+
+                                {item.subtitle && <p className="itinerary-step-subtitle">{item.subtitle}</p>}
+
+                                <div className="stop-items-container">
+                                    {item.items.map((internal_item) => (
+                                        internal_item.title ?
+                                            <div className="stop-item" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
+                                            : <p className="stop-item">&nbsp;</p>
+                                    ))}
                                 </div>
-                                <div className="highlight-text-container" dangerouslySetInnerHTML={{__html: item.highlight_description}}>
-                                </div>
+
                             </div>
                         ))}
                     </div>
                 </div>
-            </section> */}
-            {highlightItems.length > 0 &&
-                <TourHighlights title_highlight={title_highlight} highlightItems={highlightItems} />
-            }
+            </section>
         </main>
     )
 
