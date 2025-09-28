@@ -319,39 +319,51 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             <section className="itinerary-section">
                 <div className="itinerary-container">
                     <h2 className="itinerary-title"> {itinerary.title}</h2>
-                    <div className="itinerary-steps-container">
-                        {itinerary.items.map((item) => (
-                            <div className="itinerary-step" key={item.title}>
-                                <p className="itinerary-step-title">{item.title}</p>
+                    <div className="itinerary-container-elements">
+                        <div className="itinerary-steps-container">
+                            {itinerary.items.map((item) => (
+                                <div className="itinerary-step" key={item.title}>
+                                    <p className="itinerary-step-title">{item.title}</p>
 
-                                {/* Solo para START y END */}
-                                {item.information &&
-                                    <div className="itinerary-step-information">
-                                        <img src={item?.map?.img} alt="Map pin icon" />
-                                        <div className="itinerary-step-data" dangerouslySetInnerHTML={{ __html: item.information }}>
-                                        </div>
-                                    </div>
-                                }
-
-                                {item.subtitle && <p className="itinerary-step-subtitle">{item.subtitle}</p>}
-
-                                <div className="stop-items-container">
-                                    {item.items.map((internal_item) => (
-                                        internal_item.title ?
-                                            <div className="stop-item">
-                                                <div className="stop-item-text" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
-                                                {internal_item.mobile_img &&
-                                                    <div className="stop-item-img">
-                                                        <img src={internal_item.mobile_img.img} alt={internal_item.mobile_img.alt} />
-                                                    </div>
-                                                }
+                                    {/* Solo para START y END */}
+                                    {item.information &&
+                                        <div className="itinerary-step-information">
+                                            <img src={item?.map?.img} alt="Map pin icon" />
+                                            <div className="itinerary-step-data" dangerouslySetInnerHTML={{ __html: item.information }}>
                                             </div>
-                                            : <p className="stop-item">&nbsp;</p>
-                                    ))}
-                                </div>
+                                        </div>
+                                    }
 
+                                    {item.subtitle && <p className="itinerary-step-subtitle">{item.subtitle}</p>}
+
+                                    <div className="stop-items-container">
+                                        {item.items.map((internal_item) => (
+                                            internal_item.title ?
+                                                <div className="stop-item">
+                                                    <div className="stop-item-text" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
+                                                    {internal_item.mobile_img &&
+                                                        <div className="stop-item-img">
+                                                            <img src={internal_item.mobile_img.img} alt={internal_item.mobile_img.alt} />
+                                                        </div>
+                                                    }
+                                                </div>
+                                                : <p className="stop-item">&nbsp;</p>
+                                        ))}
+                                    </div>
+
+                                </div>
+                            ))}
+                        </div>
+                        <div className="desktop-images">
+                            <div className="images-container">
+
+                                {desktopImgs.map((element, i) => (
+                                    <div className="img-container" key={element.img + i}>
+                                        <img src={element.img} alt={element.alt} />
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        </div>
                     </div>
                 </div>
             </section>
