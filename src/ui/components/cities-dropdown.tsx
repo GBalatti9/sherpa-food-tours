@@ -9,7 +9,7 @@ interface CityDisplay {
     city: string;
 }
 
-export default function CitiesDropdown({text = "Explore Our Cities", cities} : {text?: string; cities: CityDisplay[]}) {
+export default function CitiesDropdown({text = "Explore Our Cities", cities, color} : {text?: string; cities: CityDisplay[], color?: string}) {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleDropdown = () => {
@@ -32,7 +32,7 @@ export default function CitiesDropdown({text = "Explore Our Cities", cities} : {
           }
         }}
       >
-        <p className="searcher">{text}</p>
+        <p className="searcher" style={{color: color}}>{text}</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="21"
@@ -57,7 +57,7 @@ export default function CitiesDropdown({text = "Explore Our Cities", cities} : {
           <ul className="city-list">
             {cities.map((city, index) => (
               <li key={index}>
-                <Link className="city-item" href={`/city/${city.slug}`} rel="noopener noreferrer">{city.city}</Link>
+                <Link className="city-item" href={`/city/${city.slug}`} rel="noopener noreferrer" onClick={() => toggleDropdown()}>{city.city}</Link>
                 {/* <button
                   onClick={() => handleCitySelect(city.slug)}
                   onKeyDown={(e) => {

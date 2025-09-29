@@ -6,6 +6,7 @@ import { WPPost } from "@/types/post";
 import { Category } from "@/types/category";
 import React from "react";
 import CitiesDropdown from "@/ui/components/cities-dropdown";
+import FiltersDropdown from "@/ui/components/filter-dropdown";
 
 interface CompletePost {
     category: string;
@@ -23,12 +24,12 @@ export default async function TravelGuidePage() {
 
     const posts = await wp.getAllPost();
     let categories = await wp.getAllCategories();
-    categories = categories.filter((category: {name: string}) => category.name !== "Uncategorized")
-    const formattedCategories = categories.map((category: {name: string}) => category.name)
-    
+    categories = categories.filter((category: { name: string }) => category.name !== "Uncategorized")
+    const formattedCategories = categories.map((category: { name: string }) => category.name)
+
     let cities = await wp.getAllCities();
-    cities = cities.map((city: {slug: string; title: {rendered: string}}) => {return {slug: city.slug, city: city.title.rendered}});
-    
+    cities = cities.map((city: { slug: string; title: { rendered: string } }) => { return { slug: city.slug, city: city.title.rendered } });
+
 
     // Primero obten todos los featured_media IDs únicos
     const mediaIds = [...new Set(posts.map((post: WPPost) => post.featured_media))] as number[];
@@ -71,31 +72,22 @@ export default async function TravelGuidePage() {
 
     // console.log(slugify(posts[0].relaciones.ciudades[0].title));
 
-
-    const images = ["https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg", "https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg"]
-
-    const images2 = ["https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg", "https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg"]
     return (
         <>
             <section className="travel-guide-first-section">
-                <div className="imgs-galleries">
-                    <div className="img-gallery">
-                        {images.map((src, index) => (
-                            <div className="img-container" key={index}>
-                                <img key={index} src={src} alt={`img-${index}`} />
-                            </div>
-                        ))}
-                    </div>
-                    <div className="img-gallery right">
-                        {images2.map((src, index) => (
-                            <div className="img-container" key={index}>
-                                <img key={index} src={src} alt={`img-${index}`} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="titles-container">
-                    <h1>
+                <div
+                    className="imgs-galleries"
+                    style={{
+                        backgroundImage: "url('https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Imagen-de-portada.png')",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover", // opcional: para que se ajuste al div
+                        // backgroundPosition: "center" // opcional: centrado
+                    }}
+                >
+            </div>
+            <div className="titles-container">
+                <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1-1.png" alt="Sherpa logo" /> <br /> travel guide</h1>
+                {/* <h1>
                         <span>
                             The
                             <svg xmlns="http://www.w3.org/2000/svg" width="152" height="61" viewBox="0 0 152 61" fill="none">
@@ -114,11 +106,11 @@ export default async function TravelGuidePage() {
                                 </defs>
                             </svg>
                         </span>
-                        Travel Guide </h1>
-                    <h2>Experiences made to be remembered</h2>
-                    <Link href="/" className="btn-cta">Explore The Guide</Link>
-                </div>
-            </section>
+                        Travel Guide </h1> */}
+                <h2>Experiences made to be remembered</h2>
+                <Link href="/" className="btn-cta">Explore The Guide</Link>
+            </div>
+        </section >
             <section className="travel-guide-second-section">
                 <div className="second-section-main-container">
                     {/* <div className="main-searcher">
@@ -153,15 +145,8 @@ export default async function TravelGuidePage() {
                         </button>
                     </div>
                     <div className="icons">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                            <path d="M6.44727 13.8149L15.6556 13.8149" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M11.0527 9.21094L15.6569 9.21094" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M7.51042 9.21094L2.90625 9.21094" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M2.90625 4.60693L12.1146 4.60693" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M6.44792 13.8151C6.44792 12.8371 5.65508 12.0443 4.67708 12.0443C3.69908 12.0443 2.90625 12.8371 2.90625 13.8151C2.90625 14.7931 3.69908 15.5859 4.67708 15.5859C5.65508 15.5859 6.44792 14.7931 6.44792 13.8151Z" stroke="#0A4747" strokeWidth="1.41667" strokeLinejoin="round" />
-                            <path d="M11.0514 9.2111C11.0514 8.2331 10.2586 7.44027 9.2806 7.44027C8.3026 7.44027 7.50977 8.2331 7.50977 9.2111C7.50977 10.1891 8.3026 10.9819 9.2806 10.9819C10.2586 10.9819 11.0514 10.1891 11.0514 9.2111Z" stroke="#0A4747" strokeWidth="1.41667" strokeLinejoin="round" />
-                            <path d="M15.6569 4.60661C15.6569 3.62861 14.8641 2.83577 13.8861 2.83577C12.9081 2.83577 12.1152 3.62861 12.1152 4.60661C12.1152 5.5846 12.9081 6.37744 13.8861 6.37744C14.8641 6.37744 15.6569 5.5846 15.6569 4.60661Z" stroke="#0A4747" strokeWidth="1.41667" strokeLinejoin="round" />
-                        </svg>
+
+                    <FiltersDropdown />                        
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                             <path d="M8.2181 14.1691C11.5433 14.1691 14.2389 11.4735 14.2389 8.14827C14.2389 4.82307 11.5433 2.12744 8.2181 2.12744C4.8929 2.12744 2.19727 4.82307 2.19727 8.14827C2.19727 11.4735 4.8929 14.1691 8.2181 14.1691Z" stroke="#0A4747" strokeWidth="1.41667" strokeLinejoin="round" />
                             <path d="M10.2218 5.79079C9.70905 5.27806 9.00072 4.96094 8.21829 4.96094C7.4359 4.96094 6.72757 5.27806 6.21484 5.79079" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />
@@ -268,43 +253,6 @@ export default async function TravelGuidePage() {
                             }
 
                             return null;
-
-                            // return (
-
-                            //     <React.Fragment key={post.id}>
-                            //         {i === 0 && (
-                            //             <div className="preview-wrapper">
-                            //                 <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
-                            //                     <div className="preview-image-container">
-                            //                         <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
-                            //                         <p className="preview-city">{slug}</p>
-                            //                     </div>
-                            //                     <div className="preview-data">
-                            //                         <h3>{post.title.rendered}</h3>
-                            //                         <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
-                            //                         <p className="preview-author"><span>Por: </span>{post.author}</p>
-                            //                     </div>
-                            //                 </a>
-                            //             </div>
-                            //         )}
-
-                            //         {(i === 1 || i === 2) && (
-                            //             <div className="preview-wrapper-group">
-                            //                 <a className="preview-item" href={url} target="_blank" rel="noopener noreferrer">
-                            //                     <div className="preview-image-container">
-                            //                         <img decoding="async" src="http://localhost:8881/wp-content/uploads/2025/07/bd-300x200.jpg" alt={post.title.rendered} />
-                            //                         <p className="preview-city">{slug}</p>
-                            //                     </div>
-                            //                     <div className="preview-data">
-                            //                         <h3>{post.title.rendered}</h3>
-                            //                         <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
-                            //                         <p className="preview-author"><span>Por: </span>{post.author}</p>
-                            //                     </div>
-                            //                 </a>
-                            //             </div>
-                            //         )}
-                            //     </React.Fragment>
-                            // )
                         })}
                     </div>
                     <Link href="/" className="show-more">Show more</Link>

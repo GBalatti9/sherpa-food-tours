@@ -12,6 +12,7 @@ import MainImage from "@/ui/components/main-image";
 import AsFeaturedIn from "@/ui/components/as-featured-in";
 import { Star } from "lucide-react";
 import { City } from "@/types/city";
+import Memories from "./components/memories";
 
 export default async function Home() {
 
@@ -80,7 +81,7 @@ export default async function Home() {
 
 
   const not_ready_to_book_section = await getNotReadyToBookSection();
-  
+
 
   const our_experiences_section = await wp.getEmbedSectionInfo("our-experiences");
   // console.log({ our_experiences_section });
@@ -126,7 +127,7 @@ export default async function Home() {
             <div className="logos-container">
               <div className="logo-container">
                 <div className="img-container">
-                  <img src="/google.png" />
+                  <img src="/google.webp" alt="Google's logo" />
                 </div>
                 <div className="review">
                   <p>400 reviews</p>
@@ -138,7 +139,7 @@ export default async function Home() {
                 </div>
                 <div className="review star">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={"star-" + i} size={14} fill="#FFD700" stroke="#FFD700" />
+                    <Star key={"star-" + i} size={14} fill="#f2b203" stroke="#f2b203" />
                   ))}
                 </div>
               </div>
@@ -203,19 +204,11 @@ export default async function Home() {
           posts={not_ready_to_book_section.posts}
         />
       }
-      <section className="home-last-section">
-        <div className="titles">
-          <img src="/sherpa-green.png" alt="Sherpa Food Tour Logo" />
-          <p className="title">memories</p>
-        </div>
-        <div className="memories-container">
-          {memories.map((memory, i) => (
-            <div className="memory-container" key={memory.img + i}>
-              <img src={memory.img} alt={memory.alt} />
-            </div>
-          ))}
-        </div>
-      </section>
+      {memories.length > 0 &&
+        <section className="home-last-section">
+          <Memories memories={memories} />
+        </section>
+      }
 
     </main>
   );

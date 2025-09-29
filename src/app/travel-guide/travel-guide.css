@@ -26,9 +26,11 @@
             padding: 6rem 0 0 0;
         }
 
-        @media screen and (min-width: 1200px) {
-            align-self: center;
-            padding: 16rem 0 0 0;
+        @media screen and (min-width: 1024px) {
+            /* align-self: center; */
+            /* padding: 16rem 0 0 0; */
+            max-width: none;
+            /* border: 1px solid red; */
             /* gap: 1rem; */
         }
 
@@ -37,13 +39,31 @@
             line-height: 1;
             font-family: var(--font-dk-otago);
 
+            img {
+                width: 40%;
+                display: inline;
+                @media screen and (min-width: 768px) {
+                    width: 25%;
+                }
+            }
+
+            br {
+                @media screen and (min-width: 768px) {
+                    display: none;
+                }
+
+            }
+
             @media screen and (min-width: 768px) {
                 display: flex;
                 font-size: 3rem;
                 gap: .5rem;
+                width: fit-content;
+                
             }
 
             @media screen and (min-width: 1024px) {
+                gap: .8rem;
                 font-size: 4.61rem;
             }
 
@@ -54,31 +74,6 @@
 
             span {
                 display: flex;
-                align-items: center;
-                gap: 0.5rem;
-
-                @media screen and (min-width: 768px) {
-                    align-items: normal;
-                }
-
-                @media screen and (min-width: 1200px) {
-                    align-items: center;
-                }
-
-                svg {
-                    padding-top: 1px;
-
-                    @media screen and (min-width: 768px) {
-                        padding-top: 0;
-                        padding-bottom: 2px;
-                    }
-
-                    @media screen and (min-width: 1024px) {
-                        height: 100%;
-                    }
-
-
-                }
             }
         }
 
@@ -122,7 +117,7 @@
     }
 
     .imgs-galleries {
-        filter: brightness(.4);
+        filter: brightness(.8);
         background-color: var(--background);
         min-height: 100svh;
         padding-top: 3.2rem;
@@ -150,13 +145,14 @@
         gap: 1.2rem;
         width: 300px;
         /* overflow: hidden; */
+        height: 100svh;
         padding-top: 1rem;
 
-        img {
+        /* img {
             width: 300px;
             height: 200px;
             flex-shrink: 0;
-        }
+        } */
     }
 
 

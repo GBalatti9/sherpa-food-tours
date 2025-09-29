@@ -8,6 +8,7 @@ import React from "react";
 import CheckAvailabilityButton from "./components/check-availability-btn";
 import TourHighlights from "./components/tour-highlights";
 import ImageGallery from "./components/image-gallery";
+import ItineraryComponent from "./components/itinerary";
 
 interface TourCondition {
     icon: number;
@@ -65,14 +66,6 @@ export async function generateStaticParams() {
     try {
         const tours = await wp.getAllTours();
         if (!tours || !tours.length) return [];
-
-        // const slugs = tours.map((tour: {slug: string}) => {
-        //     const slug = tour.slug || "default-slug";
-        //     console.log({slug});
-
-        //     return slug
-
-        // })
 
         return tours.map((tour: { slug: string }) => ({
             slug: tour.slug || "default-slug"
@@ -157,8 +150,6 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
     let desktopImgs: { img: string; alt: string }[] = [];
 
-    console.log({ acf });
-
 
     if (acf.itinerary) {
         const itineraryData: ACFItinerary = acf.itinerary;
@@ -192,16 +183,11 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         itinerary.items = formattedValidSteps;
     }
 
-    console.log({ itinerary });
-
     if (itinerary.items.length > 0) {
         desktopImgs = itinerary.items.flatMap((element) =>
             element.items.flatMap((e) => (e.mobile_img ? [e.mobile_img] : []))
         );
     }
-
-
-    console.log({ desktopImgs });
 
 
 
@@ -250,7 +236,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                             <p>From:</p>
                             <h2>USD{price}</h2>
                         </div>
-                        <BookNowButton />
+                        <BookNowButton link={acf.fareharbor.link} data_tour={acf.fareharbor.id} />
                     </div>
                     <div className="price-container">
                         <p>From:</p>
@@ -316,57 +302,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                 <TourHighlights title_highlight={title_highlight} highlightItems={highlightItems} />
             }
 
-            <section className="itinerary-section">
-                <div className="itinerary-container">
-                    <h2 className="itinerary-title"> {itinerary.title}</h2>
-                    <div className="itinerary-container-elements">
-                        <div className="itinerary-steps-container">
-                            {itinerary.items.map((item) => (
-                                <div className="itinerary-step" key={item.title}>
-                                    <p className="itinerary-step-title">{item.title}</p>
-
-                                    {/* Solo para START y END */}
-                                    {item.information &&
-                                        <div className="itinerary-step-information">
-                                            <img src={item?.map?.img} alt="Map pin icon" />
-                                            <div className="itinerary-step-data" dangerouslySetInnerHTML={{ __html: item.information }}>
-                                            </div>
-                                        </div>
-                                    }
-
-                                    {item.subtitle && <p className="itinerary-step-subtitle">{item.subtitle}</p>}
-
-                                    <div className="stop-items-container">
-                                        {item.items.map((internal_item) => (
-                                            internal_item.title ?
-                                                <div className="stop-item">
-                                                    <div className="stop-item-text" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
-                                                    {internal_item.mobile_img &&
-                                                        <div className="stop-item-img">
-                                                            <img src={internal_item.mobile_img.img} alt={internal_item.mobile_img.alt} />
-                                                        </div>
-                                                    }
-                                                </div>
-                                                : <p className="stop-item">&nbsp;</p>
-                                        ))}
-                                    </div>
-
-                                </div>
-                            ))}
-                        </div>
-                        <div className="desktop-images">
-                            <div className="images-container">
-
-                                {desktopImgs.map((element, i) => (
-                                    <div className="img-container" key={element.img + i}>
-                                        <img src={element.img} alt={element.alt} />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <ItineraryComponent itinerary={itinerary} desktopImgs={desktopImgs}/>
         </main>
     )
 

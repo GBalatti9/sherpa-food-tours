@@ -1,14 +1,12 @@
 "use client";
-
 import { useRef, ReactNode } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
-
 import "swiper/css";
-
+import "./css/carousel.css"
 type CarouselProps = {
-  children: ReactNode; // 👈 en vez de `slides`
+  children: ReactNode;
   autoplayDelay?: number;
   loop?: boolean;
 };
@@ -44,6 +42,8 @@ export default function Carousel({
         slidesPerView={1}
         spaceBetween={20}
         loop={loop}
+        centeredSlides={true} // 👈 Centrar slides siempre
+        initialSlide={0} // 👈 Empezar con la primera slide centrada
         autoplay={{
           delay: autoplayDelay,
           disableOnInteraction: false,

@@ -34,12 +34,26 @@
 }
 
 .navbar-desktop {
-    .main-searcher {
-        .searcher {
-            color: white !important;
+    .container {
+        .main-searcher {
+            .searcher {
+                color: white;
+                text-decoration: none;
+            }
+
+            svg {
+                display: none;
+            }
         }
-        svg {
-            display: none;
+
+        .dropdown-menu {
+            .city-list {
+                min-width: 200px;
+                .city-item {
+                    /* border: 1px solid; */
+                    font-size: 1.2rem;
+                }
+            }
         }
     }
 }

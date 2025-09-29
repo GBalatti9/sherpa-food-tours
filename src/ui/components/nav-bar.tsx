@@ -53,9 +53,15 @@ export default function NavBar({ currentPath, cities }: { currentPath: string; c
                             className="hidden md:block text-sm 2xl:text-base group"
                             role="none"
                         >
-                            {item.label.toLowerCase() === "cities" ? 
-                                <CitiesDropdown text={item.label} cities={cities} />
-                            :
+                            {item.label.toLowerCase() === "cities" ?
+                                <div className="relative container">
+                                    <CitiesDropdown text={item.label} cities={cities} color={currentPath.includes("travel-guide") ? "#333" : "var(--background)"}/>
+                                    <span
+                                        className="absolute bottom-0 left-0 w-0 h-[1px] transition-all duration-300 ease-out group-hover:w-full"
+                                        style={{ backgroundColor: currentPath.includes("travel-guide") ? "var(--title-color)" : "white" }}
+                                    />
+                                </div>
+                                :
                                 <Link
                                     href={item.href}
                                     className="relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
@@ -73,7 +79,7 @@ export default function NavBar({ currentPath, cities }: { currentPath: string; c
 
                     ))}
                     <li role="none">
-                        <BookNowButton />
+                        <BookNowButton link="https://fareharbor.com/embeds/book/sherpafoodtours_argentina/?flow=1413860&ga4t=G-KJV962ZQ3V,1083513053.1749557566__1758810037;AW-16551382136,undefined__undefined;&language=en-us&full-items=yes&back=https://www.sherpafoodtours.com/&g4=yes"/>
                     </li>
                 </ul>
             </nav>

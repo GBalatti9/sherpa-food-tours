@@ -1,0 +1,27 @@
+
+
+.swiper-wrapper {
+    gap: .6rem;
+}
+
+.carousel-wrapper .swiper {
+    width: 100%;
+    padding: 0;
+}
+
+.carousel-wrapper .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Opcional: agregar transición suave */
+.carousel-wrapper .swiper-slide-active {
+    transform: scale(1);
+}
+
+.carousel-wrapper .swiper-slide {
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}

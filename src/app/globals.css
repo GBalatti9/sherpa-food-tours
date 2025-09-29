@@ -46,6 +46,12 @@ body {
     padding: 4px 15px;
     font-family: var(--font-excelsior);
     font-size: 1rem;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+
+    &:hover{
+      transform: scale(1.05);
+    }
   }
 
 }

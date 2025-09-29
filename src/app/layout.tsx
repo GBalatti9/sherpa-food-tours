@@ -8,6 +8,7 @@ import 'swiper/css/free-mode';
 import Footer from "./components/footer";
 import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 import { wp } from "@/lib/wp";
+import Script from "next/script";
 
 const excelsior = localFont({
   src: [
@@ -47,17 +48,21 @@ export default async function RootLayout({
   const citiesRaw = await wp.getAllCities(); // fetch server-side directo
   let cities = null;
   if (citiesRaw && citiesRaw.length > 0) {
-    cities = citiesRaw.map((city: {title: {rendered: string}; slug: string}) => {return {city: city.title.rendered, slug: city.slug}})
+    cities = citiesRaw.map((city: { title: { rendered: string }; slug: string }) => { return { city: city.title.rendered, slug: city.slug } })
   }
 
   return (
     <html lang="en">
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
-        <NavBarWrapper cities={cities}/>
-        {/* <main> */}
+        <NavBarWrapper cities={cities} />
         {children}
-        {/* </main> */}
         <Footer />
+
+
+        <Script
+          src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
