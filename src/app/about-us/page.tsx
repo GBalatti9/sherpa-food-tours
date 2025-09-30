@@ -6,7 +6,10 @@ import OurValues from "./components/our-values";
 import type { OurStory } from "@/types/our-story";
 import OurStoryComponent from "./components/our-story";
 
-
+export const metadata = {
+    title: "About Us | Sherpa Food Tours",
+    description: "Discover the ultimate travel guide for food, drinks, and unique experiences around the world. Explore authentic flavors, hidden gems, and the best places to eat, drink, and explore with Sherpa Food Tours."
+}
 
 export default async function AboutUsPage() {
 
@@ -96,6 +99,4 @@ export default async function AboutUsPage() {
     )
 }
 
-export const dynamic = "error";
-export const revalidate = false;
-export const dynamicParams = false;
+export const revalidate = 86400;

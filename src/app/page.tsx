@@ -216,9 +216,10 @@ export default async function Home() {
 
 }
 
+export const revalidate = 86400;
 
-export const dynamic = "error"; // obliga a que sea estática
-export const revalidate = false;
+// export const dynamic = "error"; // obliga a que sea estática
+// export const revalidate = false;
 
 // export const revalidate = 0;
 // export const dynamic = "force-dynamic";

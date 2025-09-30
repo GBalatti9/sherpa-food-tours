@@ -16,9 +16,52 @@ import { formatFaqs } from "@/app/utils/formatFaqs";
 import FaqSection from "@/ui/components/faq-section";
 import NextAdventure from "@/ui/components/redy-next-adventure";
 //import NotReadyToBook from "@/app/components/not-ready-to-book";
-import { slugify } from "@/app/helpers/slugify";
-import {  LocalGuide, LocalGuideRaw } from "@/types/local-guide";
+// import { slugify } from "@/app/helpers/slugify";
+import { LocalGuide, LocalGuideRaw } from "@/types/local-guide";
+import { extractDescription } from "@/app/helpers/extractDescription";
 
+
+export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }) {
+    const { city, slug } = await params;
+
+    const cityBySlug = await wp.getCityBySlug(slug);
+    const image = await wp.getPostImage(cityBySlug.featured_media);
+    console.log(image);
+
+
+    console.log({ slug });
+    const title = `${cityBySlug.city_name} | Sherpa Food Tour`;
+
+    const description = extractDescription(cityBySlug.content)
+    return {
+        title: title,
+        description,
+        openGraph: {
+            title,
+            description,
+            url: `https://www.sherpafoodtours.com/travel-guide/${city}/${slug}`,
+            type: "article",
+            images: [
+                {
+                    url: image.img,
+                    width: 1200,
+                    height: 630,
+                    alt: image.alt?.trim().length > 0 ? image.alt : title,
+                },
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: [image.img],
+        },
+        alternates: {
+            canonical: `https://www.sherpafoodtours.com/travel-guide/${city}/${slug}`,
+        },
+    }
+
+}
 export async function generateStaticParams() {
     // Traer todos los slugs de las ciudades desde WP
     const cities = await wp.getAllCities(); // <--- función que devuelva [{slug: 'mexico-city'}, ...]
@@ -35,7 +78,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     const { slug } = await params;
 
-    const { acf, featured_media, content } = await wp.getCityBySlug(slug);    
+    const { acf, featured_media, content } = await wp.getCityBySlug(slug);
 
     const asFeatureInImagesId = [
         acf?.first_img,
@@ -107,31 +150,31 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         { id: 2, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month" },
     ]
 
-const localGuidesRaw = await Promise.all(
-  Object.entries(acf)
-    .filter(([key]) => key.includes("local_guide"))
-    .map(([, value]) => value as LocalGuideRaw) 
-    .filter(Boolean) 
-    .map(async (localGuide) => {
-      if (!localGuide.profile_picture || !localGuide.country_flag) return null;
+    const localGuidesRaw = await Promise.all(
+        Object.entries(acf)
+            .filter(([key]) => key.includes("local_guide"))
+            .map(([, value]) => value as LocalGuideRaw)
+            .filter(Boolean)
+            .map(async (localGuide) => {
+                if (!localGuide.profile_picture || !localGuide.country_flag) return null;
 
-      const profile_picture = await wp.getPostImage(localGuide.profile_picture) as {img: string; alt: string};
+                const profile_picture = await wp.getPostImage(localGuide.profile_picture) as { img: string; alt: string };
 
-      const countryFlag = await wp.getPostImage(localGuide.country_flag) as {img: string; alt: string};
+                const countryFlag = await wp.getPostImage(localGuide.country_flag) as { img: string; alt: string };
 
-      return {
-        ...localGuide,
-        profile_picture,
-        country_flag: countryFlag
-      };
-    })
-) as LocalGuide[];
+                return {
+                    ...localGuide,
+                    profile_picture,
+                    country_flag: countryFlag
+                };
+            })
+    ) as LocalGuide[];
 
-// saco los null/undefined
-const localGuides = localGuidesRaw.filter(Boolean);
+    // saco los null/undefined
+    const localGuides = localGuidesRaw.filter(Boolean);
 
-    
-  
+
+
     // const localGuideImage = await wp.getPostImage(localGuide.profile_picture);
     // const countryFlag = await wp.getPostImage(localGuide.country_flag)
 
@@ -249,7 +292,6 @@ const localGuides = localGuidesRaw.filter(Boolean);
                 <JustRelax />
                 <TravelGuideCardsSection tours={tours} />
             </section>
-            {/* <NotReadyToBook /> */}
 
             <section className="city-comments-section">
                 <div className="city-comments-container">
@@ -260,13 +302,13 @@ const localGuides = localGuidesRaw.filter(Boolean);
                 <p className="show-more-comments">Show more</p>
             </section>
 
-                    {localGuides.length > 0 && 
-                        <section className="local-guide-section">
-                            <div className="local-guide-container">
-                                <MeetLocalGuides localGuides={localGuides} />
-                            </div>
-                        </section>
-                }
+            {localGuides.length > 0 &&
+                <section className="local-guide-section">
+                    <div className="local-guide-container">
+                        <MeetLocalGuides localGuides={localGuides} />
+                    </div>
+                </section>
+            }
 
             <section className="know-the-city">
                 <h2>Get to know the city</h2>
@@ -331,10 +373,6 @@ const localGuides = localGuidesRaw.filter(Boolean);
 
                 </div>
             </section>
-
-            {/* <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts
-                ?.filter(Boolean)
-                .slice(0, 3)} /> */}
             <section className="faq-section-city">
                 <FaqSection faqs={faqs} />
             </section>
@@ -348,66 +386,4 @@ const localGuides = localGuidesRaw.filter(Boolean);
     )
 }
 
-export const dynamic = "error";
-export const revalidate = false;
-export const dynamicParams = false;
-
-
-    // let embedSectionsData = [];
-
-    // if (acf?.embed_section) {
-
-    //     embedSectionsData = await Promise.all(acf.embed_section.map((id: number) => wp.getEmbedSectionInfoById(id)))
-    //     embedSectionsData = await Promise.all(
-    //         embedSectionsData.map(async (section) => {
-    //             const data = section.acf;
-
-    //             // asumo que first_item.image es un ID
-    //             console.log({ data });
-
-    //             if (!data.first_item.image) return;
-    //             const firstItemImage = await wp.getPostImage(data.first_item.image);
-
-    //             return {
-    //                 ...section,
-    //                 acf: {
-    //                     ...data,
-    //                     first_item: {
-    //                         ...data.first_item,
-    //                         image: firstItemImage, // acá guardás la imagen completa en lugar del id
-    //                     },
-    //                 },
-    //             };
-    //         })
-    //     );
-    // }
-
-    // console.log({embedSectionsData});
-
-
-    
-
-    // if (our_experiences_section && our_experiences_section.acf) {
-    //     const formattedData = {
-    //         title: our_experiences_section.title,
-    //         items: [
-    //             {
-    //                 title: our_experiences_section.acf.first_item.title,
-    //                 description: our_experiences_section.acf.first_item.description,
-    //                 image: await wp.getPostImage(our_experiences_section.acf.first_item.image),
-    //             },
-    //             {
-    //                 title: our_experiences_section.acf.second_item.title,
-    //                 description: our_experiences_section.acf.second_item.description,
-    //                 image: await wp.getPostImage(our_experiences_section.acf.second_item.image),
-    //             },
-    //             {
-    //                 title: our_experiences_section.acf.third_item.title,
-    //                 description: our_experiences_section.acf.third_item.description,
-    //                 image: await wp.getPostImage(our_experiences_section.acf.third_item.image),
-    //             }],
-    //     }
-
-    //     data_our_experiences_section = formattedData;
-
-    // }
+export const revalidate = 86400;

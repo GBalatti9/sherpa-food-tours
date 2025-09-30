@@ -64,6 +64,17 @@ interface ValidStep {
     items: StepItem[];
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    
+    const tour = await wp.getTourBySlug(slug);
+    
+    return {
+        title: `${tour.title} | Sherpa Food Tours`,
+        description: tour.acf.tour_description,
+    }
+}
+
 export async function generateStaticParams() {
     try {
         const tours = await wp.getAllTours();
@@ -288,7 +299,10 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                         </div>
                     </section>
                 </div>
-                <Calendar />
+                <div className="calendar-container">
+
+                    <Calendar />
+                </div>
             </div>
             <section className="tour-conditions">
                 <div className="tour-condition-container">
@@ -314,7 +328,5 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
 }
 
-export const dynamic = "error";
-export const revalidate = false;
-export const dynamicParams = false;
+export const revalidate = 86400;
 

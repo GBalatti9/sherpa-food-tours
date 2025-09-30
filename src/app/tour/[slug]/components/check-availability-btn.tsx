@@ -2,6 +2,7 @@
 
 import BookNowButton from "@/ui/components/book-now";
 import { useRef, useState } from "react";
+import Calendar from "./calendar";
 
 
 export default function CheckAvailabilityButton() {
@@ -33,7 +34,7 @@ export default function CheckAvailabilityButton() {
                 <BookNowButton />
             </div>
             <div className={`calendar-availability ${open ? "active" : "inactive"}`} >
-                <img src="/calendar.png" alt="" />
+                <Calendar />
             </div>
         </div>
     )

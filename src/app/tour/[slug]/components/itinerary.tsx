@@ -57,7 +57,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                 {item.subtitle && <p className="itinerary-step-subtitle">{item.subtitle}</p>}
 
                                 <div className="stop-items-container">
-                                    {item.items.map((internal_item) => (
+                                    {item.items.map((internal_item, i) => (
                                         internal_item.title ?
                                             <div className="stop-item" key={internal_item.title}>
                                                 <div className="stop-item-text" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
@@ -67,7 +67,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                                     </div>
                                                 }
                                             </div>
-                                            : <p className="stop-item" key={internal_item.title}>&nbsp;</p>
+                                            : <p className="stop-item" key={internal_item.title + i}>&nbsp;</p>
                                     ))}
                                 </div>
 
