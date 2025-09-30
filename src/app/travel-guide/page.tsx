@@ -458,7 +458,7 @@ export default async function TravelGuidePage() {
                             if (!slug) {
                                 url = "https://www.sherpafoodtours.com/travel-guide"
                             } else {
-                                url = `${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`
+                                url = `/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`
                             }
 
                             // ------------------
