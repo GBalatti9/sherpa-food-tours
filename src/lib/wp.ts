@@ -9,10 +9,10 @@ export const wp = {
         try {
 
             const url = `${apiUrl}/pages?slug=${slug}`;
-            const response = await fetch(url, { cache: "no-store" });
+            const response = await fetch(url);
             if (!response.ok) console.error("No se pudo hacer fecth a la url: " + url);
             const [data] = await response.json();
-            console.log({ data });
+            //console.log({ data });
 
             if (!data) return { title: "", content: "", acf: "", featured_media: null };
 
@@ -54,13 +54,6 @@ export const wp = {
         try {
             const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts?v=ass`;
 
-            // , {
-            //     cache: 'no-store',
-            //     headers: {
-            //         'Cache-Control': 'no-cache',
-            //     }
-            // }
-
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -74,7 +67,7 @@ export const wp = {
             return []; // Retornar array vacío para no romper el build
         }
     },
-    getPostImage: async (id?: number) => {
+    getPostImage: async (id?: number) => {        
         if (!id || id === 0) {
             // Si no hay media, devolver imagen por defecto
             return {
@@ -114,12 +107,7 @@ export const wp = {
     getAllTours: async () => {
         // console.log('API URL during build:', apiUrl); // Agregar este log
 
-        const response = await fetch(`${apiUrl}/tours?t=${Date.now()}`, {
-            cache: 'no-store', // No usar caché
-            headers: {
-                'Cache-Control': 'no-cache',
-            }
-        });
+        const response = await fetch(`${apiUrl}/tours`);
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const data = await response.json();
@@ -245,6 +233,12 @@ export const wp = {
             const response = await fetch(url)
             if (!response.ok) throw new Error(`No se obtuvieron datos: ${url}`);
             const [data] = await response.json();
+
+            //console.log({data});
+            if (!data) {
+                return { title: "", acf: null };
+            }
+            
             const { title: { rendered: title }, acf } = data;
             return { title, acf };
         } catch (error) {

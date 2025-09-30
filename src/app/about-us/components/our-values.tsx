@@ -7,8 +7,6 @@ import type { OurValues } from "../types";
 export default function OurValues({ items }: { items: OurValues[] }) {
 
     const [openIndex, setOpenIndex] = useState(0);
-    console.log({ items });
-
 
     return (
         <>

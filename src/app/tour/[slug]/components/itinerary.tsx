@@ -11,7 +11,6 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    console.log({ entry });
 
                     if (entry.isIntersecting) {
                         entry.target.classList.add("opacity");
@@ -43,7 +42,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                 <div className="itinerary-container-elements">
                     <div className="itinerary-steps-container">
                         {itinerary.items.map((item, index) => (
-                            <div className="itinerary-step" key={item.title} ref={(el) => { refs.current[index] = el }}>
+                            <div className="itinerary-step" key={item.title + index} ref={(el) => { refs.current[index] = el }}>
                                 <p className="itinerary-step-title">{item.title}</p>
 
                                 {/* Solo para START y END */}
@@ -60,7 +59,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                 <div className="stop-items-container">
                                     {item.items.map((internal_item) => (
                                         internal_item.title ?
-                                            <div className="stop-item">
+                                            <div className="stop-item" key={internal_item.title}>
                                                 <div className="stop-item-text" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
                                                 {internal_item.mobile_img &&
                                                     <div className="stop-item-img">
@@ -68,7 +67,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                                     </div>
                                                 }
                                             </div>
-                                            : <p className="stop-item">&nbsp;</p>
+                                            : <p className="stop-item" key={internal_item.title}>&nbsp;</p>
                                     ))}
                                 </div>
 

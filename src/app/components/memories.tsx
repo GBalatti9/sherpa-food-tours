@@ -10,7 +10,6 @@ export default function Memories({ memories }: { memories: { img: string; alt: s
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    console.log({ entry });
 
                     if (entry.isIntersecting) {
                         entry.target.classList.add("opacity");

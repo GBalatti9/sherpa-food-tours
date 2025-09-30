@@ -15,7 +15,7 @@ import Link from "next/link";
 import { formatFaqs } from "@/app/utils/formatFaqs";
 import FaqSection from "@/ui/components/faq-section";
 import NextAdventure from "@/ui/components/redy-next-adventure";
-import NotReadyToBook from "@/app/components/not-ready-to-book";
+//import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { slugify } from "@/app/helpers/slugify";
 import {  LocalGuide, LocalGuideRaw } from "@/types/local-guide";
 
@@ -35,9 +35,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     const { slug } = await params;
 
-    const { acf, featured_media, content } = await wp.getCityBySlug(slug);
-    console.log({acf});
-    
+    const { acf, featured_media, content } = await wp.getCityBySlug(slug);    
 
     const asFeatureInImagesId = [
         acf?.first_img,
@@ -83,8 +81,6 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
         data_our_experiences_section = formattedData;
     }
-
-    console.log({ data_our_experiences_section });
 
 
     let tours = [];
@@ -134,8 +130,6 @@ const localGuidesRaw = await Promise.all(
 // saco los null/undefined
 const localGuides = localGuidesRaw.filter(Boolean);
 
-console.log({ localGuides });
-
     
   
     // const localGuideImage = await wp.getPostImage(localGuide.profile_picture);
@@ -172,23 +166,21 @@ console.log({ localGuides });
         }));
     }
 
-    const getToKnowTheCity = {
-        titles: { title: "Get to know the city" }, posts: posts.map((post) => {
-            return {
-                ...post,
-                title: { rendered: post.title },
-                author_name: post.author,
-                image: post.featured_media,
-                city: post.city_name,
-                city_slug: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0]?.title) : null,
-                key: post.acf.key
-            }
-        })
-    }
-    console.log({ getToKnowTheCity });
+    //const getToKnowTheCity = {
+    //    titles: { title: "Get to know the city" }, posts: posts.map((post) => {
+    //        return {
+    //            ...post,
+    //            title: { rendered: post.title },
+    //            author_name: post.author,
+    //            image: post.featured_media,
+    //            city: post.city_name,
+    //            city_slug: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0]?.title) : null,
+    //            key: post.acf.key
+    //        }
+    //    })
+    //}
 
     const { acf: faqRaw } = await wp.getFaqById(76);
-    console.log({ faqRaw }, "listo");
 
     const faqs = formatFaqs(faqRaw);
 

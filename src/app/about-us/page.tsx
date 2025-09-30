@@ -6,19 +6,11 @@ import OurValues from "./components/our-values";
 import type { OurStory } from "@/types/our-story";
 import OurStoryComponent from "./components/our-story";
 
-// type YearACF = {
-//     year: number,
-//     description: string,
-//     extra_info: string,
-//     image: number,
-// };
-
 
 
 export default async function AboutUsPage() {
 
     const { content, acf }: AboutUsInfo = await wp.getPageInfo("about");
-    console.log({ acf });
 
     // Función para obtener entradas de ACF según un filtro
     const getACFEntries = (acf: AcfData, keyIncludes: string, validator: (item: ValueItem) => void) =>
@@ -53,18 +45,18 @@ export default async function AboutUsPage() {
         loadGuideImages(localGuides),
     ]);
 
-    let our_story: OurStory = {
+    const our_story: OurStory = {
         title: "",
         items: []
     }
 
+    console.log("ABOUT US ACF: ",{acf, acfData});
+    
     if (acf.our_story) {
         our_story.title = acf.our_story.title;
 
         const formattedYears = Object.entries(acf.our_story.years).map(([, value]) => value);
         const completeYears = await Promise.all(formattedYears.map(async (element) => {
-            console.log({ element });
-
             if (!element.image_2019) return {...element, image: null};
             const img = await wp.getPostImage(element.image_2019);
             return {
@@ -77,18 +69,9 @@ export default async function AboutUsPage() {
         );
     }
 
-    console.log({ our_story });
 
-
-    // const our_story_section = await wp.getEmbedSectionInfo("our-story");
-    // const our_story_section_acf = our_story_section.acf as Record<string, YearACF>;
-
-
-    // const yearsArray = Object.entries(our_story_section_acf).map(([key, value]) => ({
-    //     key,
-    //     ...value
-    // })).filter(item => item.year && String(item.year).trim().length > 0);
-
+    console.log({our_story});
+    
 
     const acfLocalGuidesCorrect = await Promise.all(acfDataLocalGuides.map(async (element) => {
 

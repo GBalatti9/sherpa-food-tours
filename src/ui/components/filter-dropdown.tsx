@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown } from "lucide-react"
+//import { ChevronDown } from "lucide-react"
 
 interface FilterOption {
     value: string
@@ -29,7 +29,7 @@ export default function FiltersDropdown({
     const [internalSelectedFilter, setInternalSelectedFilter] = useState<string | null>(selectedFilter)
 
     const currentFilter = selectedFilter !== undefined ? selectedFilter : internalSelectedFilter
-    const displayText = currentFilter ? filterOptions.find((f) => f.value === currentFilter)?.label || text : text
+    //const displayText = currentFilter ? filterOptions.find((f) => f.value === currentFilter)?.label || text : text
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen)

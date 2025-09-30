@@ -9,6 +9,8 @@ import CheckAvailabilityButton from "./components/check-availability-btn";
 import TourHighlights from "./components/tour-highlights";
 import ImageGallery from "./components/image-gallery";
 import ItineraryComponent from "./components/itinerary";
+import Calendar from "./components/calendar";
+import { redirect } from "next/navigation";
 
 interface TourCondition {
     icon: number;
@@ -65,6 +67,7 @@ interface ValidStep {
 export async function generateStaticParams() {
     try {
         const tours = await wp.getAllTours();
+
         if (!tours || !tours.length) return [];
 
         return tours.map((tour: { slug: string }) => ({
@@ -79,16 +82,20 @@ export async function generateStaticParams() {
 
 export default async function TourPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    // console.log({slug});
 
+    if (slug === "london" || slug === "amsterdam") {
+        redirect("/")
+    }
     const { acf } = await wp.getTourBySlug(slug);
-    console.log({ acf });
 
+    if (!acf) {
+        console.warn("Tour no encontrado para slug:", slug);
 
+        redirect("/")
+    }
 
 
     const { stars, title, reviews, price, check_availability } = acf.heading_section;
-    // console.log("TOUR PAGE: ",{ acf });
 
     const imagesId = Object.entries(acf.heading_section)
         .filter(([key]) => key.includes("image"))
@@ -114,8 +121,6 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     }
 
     const tourData = Object.entries(acf.tour_data).filter(([key]) => key.includes("item")).map(([, value]) => value).filter((element) => element !== "") as { title: string; description: string }[]
-
-    // console.log({ reviewsFormatted });
 
 
     const tourConditions = await Promise.all(
@@ -143,7 +148,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     })) as { highlight_image: { img: string; alt: string }; highlight_description: string }[]
 
 
-    let itinerary = {
+    const itinerary = {
         title: "",
         items: [] as ValidStep[]
     };
@@ -236,7 +241,10 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                             <p>From:</p>
                             <h2>USD{price}</h2>
                         </div>
-                        <BookNowButton link={acf.fareharbor.link} data_tour={acf.fareharbor.id} />
+                        <BookNowButton
+                            link={acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
+                            data_tour={acf.fareharbor?.id ?? "627977"}
+                        />
                     </div>
                     <div className="price-container">
                         <p>From:</p>
@@ -280,9 +288,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                         </div>
                     </section>
                 </div>
-                <div className="right-side">
-                    <img src="/calendar.png" alt="" />
-                </div>
+                <Calendar />
             </div>
             <section className="tour-conditions">
                 <div className="tour-condition-container">
@@ -302,7 +308,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                 <TourHighlights title_highlight={title_highlight} highlightItems={highlightItems} />
             }
 
-            <ItineraryComponent itinerary={itinerary} desktopImgs={desktopImgs}/>
+            <ItineraryComponent itinerary={itinerary} desktopImgs={desktopImgs} />
         </main>
     )
 

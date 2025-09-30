@@ -418,3 +418,7 @@ body {
     }
   }
 }
+
+.embed-calendar-header {
+    display: none !important;
+}

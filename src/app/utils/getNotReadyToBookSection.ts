@@ -11,9 +11,6 @@ export async function getNotReadyToBookSection() {
         wp.getAllPost(3)
     ]);    
     
-
-    console.log({titles, posts}, "NOT READY TO BOOK SECTION");
-    
     // Formatear posts en paralelo
     const postDataFormatted = await Promise.all(
         posts.map(async (post: WPPost) => {

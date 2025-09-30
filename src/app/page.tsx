@@ -48,12 +48,13 @@ export default async function Home() {
   ]
 
   const images = await fetchImages(imagesIds);
+  //console.log("PAGE!!:", {acf, asFeatureInImagesId});
+  
   const asFeatureInImages = await fetchImages(asFeatureInImagesId);
   const memories = await fetchImages(memoriesImagesIds);
 
 
   const [background_image, ...imgs] = images;
-  console.log(imgs);
 
 
   const citiesRaw = await wp.getAllCities();
@@ -84,7 +85,6 @@ export default async function Home() {
 
 
   const our_experiences_section = await wp.getEmbedSectionInfo("our-experiences");
-  // console.log({ our_experiences_section });
 
   let data_our_experiences_section = null;
 

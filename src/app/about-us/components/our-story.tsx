@@ -10,9 +10,7 @@ export default function OurStoryComponent({ our_story }: { our_story: OurStory }
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                entries.forEach((entry) => {
-                    console.log({entry});
-                    
+                entries.forEach((entry) => {                    
                     if (entry.isIntersecting) {
                         entry.target.classList.add("opacity");
                     } else {

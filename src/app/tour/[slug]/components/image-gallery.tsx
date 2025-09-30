@@ -17,8 +17,6 @@ export default function ImageGallery({ images }: { images: { img: string; alt: s
     const [initialIndex, setInitialIndex] = useState(0);
 
     const openGallery = (index: number) => {
-        console.log({ index });
-
         setInitialIndex(index);
         setIsOpen(true);
     };
