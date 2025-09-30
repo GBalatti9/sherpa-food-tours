@@ -49,8 +49,6 @@ export default async function AboutUsPage() {
         title: "",
         items: []
     }
-
-    console.log("ABOUT US ACF: ",{acf, acfData});
     
     if (acf.our_story) {
         our_story.title = acf.our_story.title;
@@ -69,9 +67,6 @@ export default async function AboutUsPage() {
         );
     }
 
-
-    console.log({our_story});
-    
 
     const acfLocalGuidesCorrect = await Promise.all(acfDataLocalGuides.map(async (element) => {
 

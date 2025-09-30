@@ -7,6 +7,7 @@ import { Category } from "@/types/category";
 import React from "react";
 import CitiesDropdown from "@/ui/components/cities-dropdown";
 import FiltersDropdown from "@/ui/components/filter-dropdown";
+import { Metadata } from "next";
 
 interface CompletePost {
     category: string;
@@ -18,6 +19,11 @@ interface PostWithImage extends WPPost {
         img: string;
         alt: string;
     }
+}
+
+export const metadata: Metadata = {
+    title: "Travel Guide | Sherpa Food Tours",
+    description: "Discover the ultimate travel guide for food, drinks, and unique experiences around the world. Explore authentic flavors, hidden gems, and the best places to eat, drink, and explore with Sherpa Food Tours."
 }
 
 export default async function TravelGuidePage() {
@@ -49,7 +55,7 @@ export default async function TravelGuidePage() {
             image
         };
     }).filter((post: PostWithImage) => post.image.img !== "https://www.sherpafoodtours.com/default-og.jpg") as PostWithImage[];
-    
+
 
     // Ahora procesar sin más llamadas async
     const data: CompletePost[] = categories
@@ -68,7 +74,7 @@ export default async function TravelGuidePage() {
             };
         })
         .filter((group: CompletePost) => group.posts.length > 0 && group.category !== "Uncategorized");
-        
+
 
     return (
         <>
@@ -81,10 +87,10 @@ export default async function TravelGuidePage() {
                         backgroundSize: "cover", // opcional: para que se ajuste al div
                     }}
                 >
-            </div>
-            <div className="titles-container">
-                <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1-1.png" alt="Sherpa logo" /> <br /> travel guide</h1>
-                {/* <h1>
+                </div>
+                <div className="titles-container">
+                    <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1-1.png" alt="Sherpa logo" /> <br /> travel guide</h1>
+                    {/* <h1>
                         <span>
                             The
                             <svg xmlns="http://www.w3.org/2000/svg" width="152" height="61" viewBox="0 0 152 61" fill="none">
@@ -104,13 +110,13 @@ export default async function TravelGuidePage() {
                             </svg>
                         </span>
                         Travel Guide </h1> */}
-                <h2>Experiences made to be remembered</h2>
-                <Link href="/" className="btn-cta">Explore The Guide</Link>
-            </div>
-        </section >
+                    <h2>Experiences made to be remembered</h2>
+                    <Link href="/" className="btn-cta">Explore The Guide</Link>
+                </div>
+            </section >
             <section className="travel-guide-second-section">
                 <div className="second-section-main-container">
-                    <CitiesDropdown cities={cities}/>
+                    <CitiesDropdown cities={cities} />
                     <div className="input-container">
                         <div className="input">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -137,7 +143,7 @@ export default async function TravelGuidePage() {
                     </div>
                     <div className="icons">
 
-                    <FiltersDropdown />                        
+                        <FiltersDropdown />
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                             <path d="M8.2181 14.1691C11.5433 14.1691 14.2389 11.4735 14.2389 8.14827C14.2389 4.82307 11.5433 2.12744 8.2181 2.12744C4.8929 2.12744 2.19727 4.82307 2.19727 8.14827C2.19727 11.4735 4.8929 14.1691 8.2181 14.1691Z" stroke="#0A4747" strokeWidth="1.41667" strokeLinejoin="round" />
                             <path d="M10.2218 5.79079C9.70905 5.27806 9.00072 4.96094 8.21829 4.96094C7.4359 4.96094 6.72757 5.27806 6.21484 5.79079" stroke="#0A4747" strokeWidth="1.41667" strokeLinecap="round" strokeLinejoin="round" />

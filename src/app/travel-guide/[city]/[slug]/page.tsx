@@ -7,22 +7,25 @@ import { getNotReadyToBookSection } from "@/app/utils/getNotReadyToBookSection";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section";
 import { TourRelationship } from "@/types/tour";
+import { cleanExcerpt } from "@/app/helpers/cleanExcerpt";
 
 
 // ----------------------
 // SEO
 // ----------------------
 export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }) {
-    const { city, slug } = await params;  // <-- await aquí
+    const { city, slug } = await params;  
     const post = await wp.getPostInfo(slug);
     const { img, alt } = await wp.getPostImage(post.featured_media);
 
-    const description = post.excerpt?.replace(/<[^>]+>/g, "") || post.content.replace(/<[^>]+>/g, "").slice(0, 150);
+    const rawDescription = post.excerpt?.replace(/<[^>]+>/g, "") || post.content.replace(/<[^>]+>/g, "").slice(0, 150);
+    const description = cleanExcerpt(rawDescription);
+    
     const imageUrl = img || "https://www.sherpafoodtours.com/default-og.jpg";
-    const title = post.title.rendered;
+    const title = post.title;
 
     return {
-        title,
+        title: `${title} | Sherpa Food Tours`,
         description,
         openGraph: {
             title,
@@ -74,8 +77,6 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     const { city, slug } = await params;
 
-    // console.log({ city, slug });
-
     const { title, content, featured_media, excerpt, date, modified, relaciones } = await wp.getPostInfo(slug);
     const { img, alt } = await wp.getPostImage(featured_media);
 
@@ -95,13 +96,10 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 };
             } catch (error) {
                 console.error("Error fetching tour:", tour?.id, error);
-                return null; // ⬅️ si falla el fetch también devolvés null
+                return null;
             }
         })
-    )).filter(Boolean); // ⬅️ acá limpiás todos los null
-
-    // console.log({toursData});
-    
+    )).filter(Boolean); 
 
 
 
@@ -112,31 +110,34 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     const not_ready_to_book_section = await getNotReadyToBookSection();
 
-    const renderContent = () => {
-        const parts = content.split(/(\[tours-cards-section\])/g);
-        return parts.map(async (part: string, index: number) => {
-            // Detectamos [custom-cards-section]
-            if (part === '[tours-cards-section]') {
-                const toursData = await Promise.all(tours.map(async (tour: TourRelationship) => {
-                    const { id } = tour;
-                    const tourData = await wp.getTourById(id);
-                    const tourImage = await wp.getPostImage(tourData.featured_media)
+    // const renderContent = () => {
+    //     const parts = content.split(/(\[tours-cards-section\])/g);
+        
+    //     return parts.map(async (part: string, index: number) => {
+    //         // Detectamos [custom-cards-section]
+    //         // if (part === '[tours-cards-section]') {
+    //         //     console.log("aca");
+                
+    //         //     const toursData = await Promise.all(tours.map(async (tour: TourRelationship) => {
+    //         //         const { id } = tour;
+    //         //         const tourData = await wp.getTourById(id);
+    //         //         const tourImage = await wp.getPostImage(tourData.featured_media)
 
-                    // console.log({ tourData, tourImage });
+    //         //         // console.log({ tourData, tourImage });
 
-                    return {
-                        ...tourData,
-                        image: tourImage
-                    }
-                }))
+    //         //         return {
+    //         //             ...tourData,
+    //         //             image: tourImage
+    //         //         }
+    //         //     }))
 
-                return <TravelGuideCardsSection key={index} tours={toursData} />;
-            }
+    //         //     return <TravelGuideCardsSection key={index} tours={toursData} />;
+    //         // }
 
-            // Todo lo demás es HTML normal
-            return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />;
-        });
-    }
+    //         // Todo lo demás es HTML normal
+    //         return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />;
+    //     });
+    // }
 
 
     return (
@@ -172,8 +173,8 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 </div>
                 <div className="article-content">
                     <h1>{title}</h1>
-                    {renderContent()}
-                    {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
+                    {/* {renderContent()} */}
+                    <div dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
                 {(toursData && toursData.length > 0) &&
                     <TravelGuideCardsSection tours={toursData} />
@@ -191,9 +192,4 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
 }
 
-// export const revalidate = 86400; 
-
-
-export const dynamic = "error";
-export const revalidate = false;
-export const dynamicParams = false;
+export const revalidate = 86400;
