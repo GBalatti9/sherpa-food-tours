@@ -67,7 +67,7 @@ export const wp = {
             return []; // Retornar array vacío para no romper el build
         }
     },
-    getPostImage: async (id?: number) => {        
+    getPostImage: async (id?: number) => {
         if (!id || id === 0) {
             // Si no hay media, devolver imagen por defecto
             return {
@@ -78,6 +78,8 @@ export const wp = {
 
         try {
             const url = `${apiUrl}/media/${id}`;
+            console.log({url});
+            
             const response = await fetch(url);
 
             if (!response.ok) throw new Error("No se obtuvieron datos");
@@ -238,7 +240,7 @@ export const wp = {
             if (!data) {
                 return { title: "", acf: null };
             }
-            
+
             const { title: { rendered: title }, acf } = data;
             return { title, acf };
         } catch (error) {
@@ -261,6 +263,17 @@ export const wp = {
             return [];
         }
     },
+
+    getPostsByCategory: async (id: number, limit = 10) => {
+        try {
+            const url = `${apiUrl}/posts?categories=${id}&per_page=${limit}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            return { ok: true, data };
+        } catch (error) {
+            return { ok: false, data: null }
+        }
+    }
 
 
 
