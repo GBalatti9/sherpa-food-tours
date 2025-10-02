@@ -21,14 +21,15 @@ export default function NavBar({ currentPath, cities }: { currentPath: string; c
                         <MobileMenu items={items} currentPath={currentPath} cities={cities} />
                     </div>
                     <Link href="/" aria-label="Go to homepage" className="logo-container">
-                        {/* <img src="/sherpa.png" alt="Sherpa Food Tours Logo" loading="eager" width={40} height={40} className="w-full h-full object-cover" /> */}
-                        {/* <img src="/logo.png" alt="Sherpa Food Tours Logo" loading="eager" className="w-full h-[20px] object-contain ml-[-20px]" /> */}
+
                         <svg xmlns="http://www.w3.org/2000/svg"
-                            width="79"
-                            height="31"
                             viewBox="0 0 79 31"
-                            style={{ color: currentPath.includes("travel-guide") ? "#333" : "var(--background)" }}
-                        // fill={currentPath.includes("travel-guide") ? '#333' : 'var(--background)'}
+                            style={{
+                                width: "100%",
+                                height: "auto",
+                                maxWidth: "110px", // si querés limitarlo
+                                color: currentPath.includes("travel-guide") ? "#333" : "var(--background)"
+                            }}
                         >
                             <g clipPath="url(#clip0_298_35177)">
                                 <path d="M35.3806 4.72762C36.6478 4.4524 37.8997 4.17349 39.1554 3.91151C39.9696 3.74152 40.7208 3.74962 41.2805 4.51127C41.6469 5.01094 41.568 5.39728 40.9554 5.60112C38.7499 6.33628 36.5351 7.04789 34.3456 7.82573C33.983 7.95451 33.6013 8.3151 33.4495 8.65802C32.84 10.0393 32.3172 11.4552 31.7046 13.0035C32.0144 12.924 32.2267 12.8644 32.4414 12.8143C33.0409 12.676 33.6404 12.5406 34.2406 12.4059C34.9122 12.2558 35.4235 12.4589 35.8904 12.9586C36.4676 13.5767 36.4561 14.0779 35.6397 14.3958C34.2598 14.933 32.8538 15.4157 31.431 15.8352C30.9449 15.9787 30.6597 16.1295 30.695 16.6241C30.7686 17.6602 30.8207 18.7008 30.9595 19.7295C31.0231 20.2034 31.3712 20.3337 31.9086 20.1873C33.2409 19.8245 34.4767 19.3035 35.5416 18.4447C36.2538 17.8707 37.0687 17.8942 37.8775 18.1268C38.6349 18.3446 38.8434 19.3542 38.2477 19.8451C36.4362 21.3389 34.3234 22.3074 32.0182 22.8019C31.2148 22.9748 30.2933 22.7732 29.4515 22.6157C28.5331 22.4442 27.985 21.768 27.8079 20.9276C27.5618 19.7626 27.3303 18.5889 27.7382 17.385C27.9528 16.7521 28.1184 16.0633 27.568 15.4312C27.476 15.3259 27.6186 14.8381 27.7788 14.7578C28.4787 14.4076 28.6681 13.7997 28.8911 13.1543C29.3841 11.7274 29.9399 10.3204 30.4673 8.90455C30.4995 8.81771 30.5079 8.72278 30.5133 8.69629C30.0894 8.33129 29.6831 8.02663 29.3358 7.66972C29.0383 7.36359 29.0728 7.00153 29.5297 6.89409C31.2723 6.48567 32.4099 5.39875 33.336 3.99467C33.5415 3.68339 34.0421 3.456 34.4461 3.37946C35.2855 3.22051 35.5669 3.65542 35.3798 4.72688L35.3806 4.72762Z" fill="currentColor" />
@@ -55,7 +56,7 @@ export default function NavBar({ currentPath, cities }: { currentPath: string; c
                         >
                             {item.label.toLowerCase() === "cities" ?
                                 <div className="relative container">
-                                    <CitiesDropdown text={item.label} cities={cities} color={currentPath.includes("travel-guide") ? "#333" : "var(--background)"}/>
+                                    <CitiesDropdown text={item.label} cities={cities} color={currentPath.includes("travel-guide") ? "#333" : "var(--background)"} />
                                     <span
                                         className="absolute bottom-0 left-0 w-0 h-[1px] transition-all duration-300 ease-out group-hover:w-full"
                                         style={{ backgroundColor: currentPath.includes("travel-guide") ? "var(--title-color)" : "white" }}
@@ -79,7 +80,7 @@ export default function NavBar({ currentPath, cities }: { currentPath: string; c
 
                     ))}
                     <li role="none">
-                        <BookNowButton link="https://fareharbor.com/embeds/book/sherpafoodtours_argentina/?flow=1413860&ga4t=G-KJV962ZQ3V,1083513053.1749557566__1758810037;AW-16551382136,undefined__undefined;&language=en-us&full-items=yes&back=https://www.sherpafoodtours.com/&g4=yes"/>
+                        <BookNowButton link="https://fareharbor.com/embeds/book/sherpafoodtours_argentina/?flow=1413860&ga4t=G-KJV962ZQ3V,1083513053.1749557566__1758810037;AW-16551382136,undefined__undefined;&language=en-us&full-items=yes&back=https://www.sherpafoodtours.com/&g4=yes" />
                     </li>
                 </ul>
             </nav>

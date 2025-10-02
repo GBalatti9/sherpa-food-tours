@@ -127,7 +127,7 @@ export default async function Home() {
             <div className="logos-container">
               <div className="logo-container">
                 <div className="img-container">
-                  <img src="/google.webp" alt="Google's logo" />
+                  <img src="/google.png" alt="Google's logo" />
                 </div>
                 <div className="review">
                   <p>400 reviews</p>

@@ -1,6 +1,6 @@
 .home-first-section {
 
-    height: 80svh;
+    height: 95svh;
     overflow: hidden;
 
     .first-section-container {
@@ -35,7 +35,11 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 2rem;
+
+                @media (min-width: 768px) {
+                    gap: 2rem;
+                }
+
                 /* padding-top: 2rem; */
                 /* padding-left: 1rem; */
 
@@ -53,14 +57,45 @@
                     }
 
                     .star {
-                        padding-top: .5rem;
+                        padding-top: 1rem;
                         display: flex;
                         gap: .2rem;
+                        width: 90%;
+                        justify-content: space-around;
                     }
                 }
 
                 .logo-container:nth-child(2) {
-                    width: 80px;
+                    width: 120px;
+
+                    .img-container {
+                        width: 75% !important;
+                    }
+                }
+
+                .logo-container:nth-child(3) {
+                    /* border: 1px solid red; */
+                    /* margin-top: .2rem; */
+                    display: flex;
+                    justify-content: space-between;
+                    min-height: 50px;
+                    @media (min-width: 768px) {   
+                        min-height: 61px;
+                    }
+
+                    .img-container {
+                        width: 100%;
+
+                        @media (min-width: 768px) {
+                            margin-left: 15%;
+                        }
+                    }
+
+                    .review {
+                        @media (min-width: 768px) {
+                            margin-left: 15%;
+                        }
+                    }
                 }
 
                 .image-container {
@@ -247,6 +282,7 @@
     overflow: hidden;
     background-color: #CBDCD9;
     padding: 2rem 0;
+
     .items-container {
         max-width: 1200px;
         margin: auto;
@@ -668,11 +704,13 @@
                     /* 3.1 */
                     .info-container-title {
                         font-size: 4.68rem;
-                        max-width: 900px;
+                        max-width: 1000px;
+                        padding-left: 5%;
                     }
 
                     .info-container-subheadline {
                         font-size: 2.5rem;
+                        padding-left: 5%;
                     }
                 }
             }
@@ -834,6 +872,7 @@
 
                     .info-container-kicker.xl {
                         display: block;
+                        padding-right: 5%;
                     }
 
                     .xl-container {

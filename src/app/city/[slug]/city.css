@@ -34,6 +34,7 @@
 
             @media (min-width: 1024px) {
                 gap: 3rem;
+                padding-left: 5%;
             }
 
             .data-info {
@@ -345,4 +346,8 @@
             /* gap: 4rem; */
         }
     }
+}
+
+.faq-accordion {
+    border-top: none !important;
 }

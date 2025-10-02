@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/free-mode';
 // import NavBar from "@/ui/components/nav-bar";
-import Footer from "./components/footer";
+import Footer from "../ui/components/footer";
 import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 import { wp } from "@/lib/wp";
 import Script from "next/script";
@@ -80,7 +80,7 @@ export default async function RootLayout({
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
         <NavBarWrapper cities={cities} />
         {children}
-        <Footer />
+        <Footer cities={cities}/>
 
 
         <Script

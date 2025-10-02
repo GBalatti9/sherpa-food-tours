@@ -22,7 +22,12 @@
             align-items: center;
             justify-content: center;
             height: 35px;
-            width: fit-content;
+            width: 85px;
+
+            @media (min-width: 768px){
+                width: 110px;
+            }
+
 
             img {
                 width: 100%;
@@ -39,6 +44,7 @@
             .searcher {
                 color: white;
                 text-decoration: none;
+                font-size: 14px;
             }
 
             svg {
