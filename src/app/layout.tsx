@@ -8,7 +8,7 @@ import 'swiper/css/free-mode';
 import Footer from "../ui/components/footer";
 import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 import { wp } from "@/lib/wp";
-import Script from "next/script";
+import FareharborScript from "@/ui/components/FareharborScript";
 
 const excelsior = localFont({
   src: [
@@ -83,12 +83,8 @@ export default async function RootLayout({
         <Footer cities={cities}/>
 
 
-        <Script
-          src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"
-          strategy="afterInteractive"
-        />
 
-        
+        <FareharborScript />
       </body>
     </html>
   );
