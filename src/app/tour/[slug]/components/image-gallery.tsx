@@ -23,7 +23,7 @@ export default function ImageGallery({ images }: { images: { img: string; alt: s
 
     return (
         <div className="image-gallery">
-            {images && images.slice(0, 3).map((image, i) => (
+            {images && images.slice(0, 4).map((image, i) => (
                 <div key={image.img + i} className="image-item" onClick={() => openGallery(i)}>
                     <img src={image.img} alt={image.alt || 'Tour Image'} />
                 </div>

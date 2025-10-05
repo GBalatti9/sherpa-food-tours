@@ -70,9 +70,22 @@ export default async function RootLayout({
 }>) {
 
   const citiesRaw = await wp.getAllCities(); // fetch server-side directo
-  let cities = null;
+  let cities: { city: string; slug: string; flag: { img: string; alt: string } }[] = [];
+
   if (citiesRaw && citiesRaw.length > 0) {
-    cities = citiesRaw.map((city: { title: { rendered: string }; slug: string }) => { return { city: city.title.rendered, slug: city.slug } })
+    cities = await Promise.all(
+      citiesRaw.map(async (city: {
+        title: { rendered: string };
+        slug: string;
+        acf: { country_flag: number };
+      }) => {
+        return {
+          city: city.title.rendered,
+          slug: city.slug,
+          flag: await wp.getPostImage(city.acf.country_flag)
+        };
+      })
+    );
   }
 
   return (
@@ -80,12 +93,10 @@ export default async function RootLayout({
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
         <NavBarWrapper cities={cities} />
         {children}
-        <Footer cities={cities}/>
-
-
-
+        <Footer cities={cities} />
         <FareharborScript />
       </body>
     </html>
   );
 }
+

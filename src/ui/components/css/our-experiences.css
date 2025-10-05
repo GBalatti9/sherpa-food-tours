@@ -88,6 +88,7 @@
 
 
         .item {
+            color: #333333;
 
             summary {
                 padding: 0 1.3rem;
@@ -101,6 +102,12 @@
                 }
 
             }
+
+            summary.active {
+                color: white;
+            }
+
+
 
             .content {
                 padding: 0 1.3rem 1rem 1.3rem;
@@ -122,6 +129,11 @@
             .img-container {
                 padding-bottom: 1rem;
             }
+        }
+
+        details[open] .content,
+        details[open] hr {
+            color: white;
         }
 
         .item summary {
@@ -178,6 +190,7 @@
                 .item {
                     font-size: 1.8rem;
                     padding-top: 1.5rem;
+                    color: #333333;
 
                     summary {
                         cursor: pointer;
@@ -191,7 +204,17 @@
                             font-style: italic;
                         }
                     }
+
+                    summary.active {
+                        color: white;
+                    }
                 }
+
+                details[open] .content,
+                details[open] hr {
+                    color: white;
+                }
+
             }
 
             .images-section {

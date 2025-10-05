@@ -5,7 +5,7 @@ import Link from "next/link";
 
 
 
-export default function Footer({ cities }: { cities: { city: string; slug: string }[] }) {
+export default function Footer({ cities }: { cities: { city: string; slug: string; flag: { img: string; alt: string; } }[] }) {
     return (
         <footer className="footer">
             <div className="footer-first-section">
@@ -42,8 +42,8 @@ export default function Footer({ cities }: { cities: { city: string; slug: strin
 
                     <div className="positions-desktop">
                         <div className="positions">
-                            <Link href="/partners" >Partner With Us</Link>
-                            <Link href="/careers" >Careers</Link>
+                            <Link href="/contact" >Partner With Us</Link>
+                            <Link href="/contact" >Careers</Link>
                         </div>
                         <div className="social-media">
                             <div className="img-container">
@@ -68,8 +68,8 @@ export default function Footer({ cities }: { cities: { city: string; slug: strin
                 <div className="second-section">
                     {/* <Link href="/travel-guide"> Explore Our Cities</Link> */}
                     <CitiesDropdown text="Explore Our Cities" cities={cities} color="#fff"/>
-                    <Link href="/partners" >Partner With Us</Link>
-                    <Link href="/careers" >Careers</Link>
+                    <Link href="/contact" >Partner With Us</Link>
+                    <Link href="/contact" >Careers</Link>
                 </div>
             </div>
 

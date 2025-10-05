@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
-export default function MobileMenu({ items, currentPath, cities }: { items: NavBarLink[], currentPath: string, cities: { city: string; slug: string }[] }) {
+export default function MobileMenu({ items, currentPath, cities }: { items: NavBarLink[], currentPath: string, cities: { city: string; slug: string; flag: { img: string; alt: string } }[] }) {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -71,7 +71,8 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
                                     }`}>{item.label}</p>
                                 <div className="cities-child">
                                     {cities.map((city) => (
-                                        <Link key={city.slug} href={`/city/${city.slug}`}>
+                                        <Link key={city.slug} href={`/city/${city.slug}`} className="menu-link">
+                                            <img src={city.flag.img} alt={city.flag.alt}></img>
                                             {city.city}
                                         </Link>
                                     ))}

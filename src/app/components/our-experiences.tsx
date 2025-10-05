@@ -47,7 +47,7 @@ export default function OurExperiencesSection({
                                 handleToggle(i);
                             }}
                         >
-                            <summary>{item.title}</summary>
+                            <summary className={openIndex === i ? 'active' : ''}>{item.title}</summary>
                             <hr />
                             <div
                                 className="content"
@@ -77,7 +77,7 @@ export default function OurExperiencesSection({
                                     handleToggle(i);
                                 }}
                             >
-                                <summary>{item.title}</summary>
+                                <summary className={openIndex === i ? 'active' : ''}>{item.title}</summary>
                                 <hr />
                                 <div
                                     className="content"

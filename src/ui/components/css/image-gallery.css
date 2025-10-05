@@ -50,6 +50,7 @@
     color: white;
     font-size: 2rem;
     cursor: pointer;
+    z-index: 99999;
 }
 
 .swiper-slide {

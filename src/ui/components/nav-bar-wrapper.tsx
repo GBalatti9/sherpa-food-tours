@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import NavBar from "./nav-bar";
 
 
-export default function NavBarWrapper({cities}: {cities: {city: string; slug: string}[]}) {
+export default function NavBarWrapper({cities}: {cities: {city: string; slug: string; flag: {img: string; alt: string}}[]}) {
   const pathname = usePathname();
   return <NavBar currentPath={pathname} cities={cities}/>;
 }

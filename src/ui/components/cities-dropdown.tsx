@@ -1,24 +1,52 @@
 "use client"
 
-import Link from "next/link";
+import Link from "next/link"
 import "./css/cities-dropdown.css"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 
 interface CityDisplay {
-    slug: string;
-    city: string;
+  slug: string
+  city: string
+  flag?: {
+    alt?: string;
+    img?: string;
+  }
 }
 
-export default function CitiesDropdown({text = "Explore Our Cities", cities, color} : {text?: string; cities: CityDisplay[], color?: string}) {
+export default function CitiesDropdown({
+  text = "Explore Our Cities",
+  cities,
+  color
+}: {
+  text?: string
+  cities: CityDisplay[]
+  color?: string
+}) {
   const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen)
-  }
+  const toggleDropdown = () => setIsOpen(!isOpen)
+
+  // Cierra el dropdown al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
 
 
+  console.log({cities});
+  
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" ref={dropdownRef}>
       {/* Toggle Button */}
       <div
         className="main-searcher cursor-pointer"
@@ -32,14 +60,17 @@ export default function CitiesDropdown({text = "Explore Our Cities", cities, col
           }
         }}
       >
-        <p className="searcher" style={{color: color}}>{text}</p>
+        <p className="searcher" style={{ color: color }}>
+          {text}
+        </p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="21"
           height="20"
           viewBox="0 0 21 20"
           fill="none"
-          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+            }`}
         >
           <path
             d="M15.6484 8.02881L10.7109 12.9663L5.77344 8.02881"
@@ -57,17 +88,21 @@ export default function CitiesDropdown({text = "Explore Our Cities", cities, col
           <ul className="city-list">
             {cities.map((city, index) => (
               <li key={index}>
-                <Link className="city-item" href={`/city/${city.slug}`} rel="noopener noreferrer" onClick={() => toggleDropdown()}>{city.city}</Link>
-                {/* <button
-                  onClick={() => handleCitySelect(city.slug)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleCitySelect(city.city)
-                    }
-                  }}
+                <Link
+                  className="city-item"
+                  href={`/city/${city.slug}`}
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)} // también se cierra al clickear una ciudad
                 >
+                  {city.flag &&
+                    <img
+                      src={city.flag.img}
+                      alt={city.flag.alt}
+                      className="city-flag"
+                    />
+                  }
                   {city.city}
-                </button> */}
+                </Link>
               </li>
             ))}
           </ul>

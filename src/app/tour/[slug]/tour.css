@@ -22,6 +22,10 @@
             height: 500px;
         }
 
+        @media (min-width: 768px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
         @media (min-width: 1024px) {
             height: 600px;
         }
@@ -40,8 +44,22 @@
 
             @media (min-width: 768px) {
                 grid-row: span 2;
-                grid-column: 1;
+                grid-column: span 2;
                 height: 100%;
+            }
+        }
+
+        .image-item:nth-child(2) {
+            @media (min-width: 768px) {
+                grid-column: span 2;
+            }
+        }
+
+        .image-item:nth-child(4) {
+            display: none;
+
+            @media (min-width: 768px) {
+                display: block;
             }
         }
 
@@ -169,6 +187,12 @@
                     }
                 }
             }
+
+            .tripadvisor-container {
+                .img-container {
+                    width: 90px;
+                }
+            }
         }
 
         .price-container {
@@ -238,7 +262,10 @@
         border-bottom: 1px solid #B9B9B9;
         padding-bottom: 2rem;
         gap: 1rem;
-
+        
+        @media (min-width: 1200px){
+            grid-template-columns: repeat(3, 1fr);
+        }
         .feature-item:last-child {
             grid-column: span 2;
         }

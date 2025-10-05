@@ -1,4 +1,3 @@
-
 .main-searcher {
   display: flex;
   gap: 0.3rem;
@@ -35,7 +34,6 @@
 }
 
 .city-item {
-  display: block;
   width: 100%;
   padding: 0.75rem 1rem;
   text-align: left;
@@ -46,6 +44,15 @@
   font-size: 0.95rem;
   color: var(--second-green);
   transition: background-color 0.15s ease;
+
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+
+  img {
+    aspect-ratio: 1 / 1;
+    max-width: 20px;
+  }
 }
 
 .city-item:hover {
@@ -63,6 +70,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

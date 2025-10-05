@@ -27,6 +27,17 @@
         &:first-child {
             padding: 1rem 0 0 1rem;
         }
+
+    }
+
+    .menu-link {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        img {
+            aspect-ratio: 1 / 1;
+            max-width: 20px;
+        }
     }
 }
 
@@ -34,6 +45,8 @@
     display: flex;
     flex-direction: column;
     padding-left: 2rem;
+    gap: .2rem;
+    padding-bottom: 1rem;
 
     a {
         padding-top: .3rem;
