@@ -70,7 +70,7 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                     <Link href={`/tour/${tour.slug}`}>
                                         Learn More
                                     </Link>
-                                    <BookNowButton />
+                                    <BookNowButton link={tour.acf.fareharbor.link}/>
                                 </div>
                             </div>
                         </div>

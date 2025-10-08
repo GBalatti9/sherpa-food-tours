@@ -10,7 +10,10 @@
   --main-color: #017E80;
   --second-green: #0A4747;
   --local-guides-bg: #CBDCD9;
+}
 
+html {
+  scroll-behavior: smooth;
 }
 
 @theme inline {
@@ -41,15 +44,16 @@ body {
 
   .book-now-button {
     background-color: var(--subtitle-color);
-    color: white;
+    color: white !important;
     border-radius: 3.5px;
     padding: 8px 15px;
     font-family: var(--font-excelsior);
     font-size: 1rem;
     cursor: pointer;
     transition: all .3s ease-in-out;
+    text-decoration: none !important;
 
-    &:hover{
+    &:hover {
       transform: scale(1.05);
     }
   }
@@ -377,5 +381,5 @@ body {
 }
 
 .embed-calendar-header {
-    display: none !important;
+  display: none !important;
 }

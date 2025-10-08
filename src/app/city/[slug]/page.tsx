@@ -26,10 +26,6 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 
     const cityBySlug = await wp.getCityBySlug(slug);
     const image = await wp.getPostImage(cityBySlug.featured_media);
-    console.log(image);
-
-
-    console.log({ slug });
     const title = `${cityBySlug.city_name} | Sherpa Food Tour`;
 
     const description = extractDescription(cityBySlug.content)
@@ -174,18 +170,6 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const localGuides = localGuidesRaw.filter(Boolean);
 
 
-
-    // const localGuideImage = await wp.getPostImage(localGuide.profile_picture);
-    // const countryFlag = await wp.getPostImage(localGuide.country_flag)
-
-
-
-    // const localGuideData = {
-    //     ...localGuide,
-    //     profile_picture: localGuideImage,
-    //     country_flag: countryFlag
-    // }
-
     let posts = [];
 
     if (acf.posts) {
@@ -227,6 +211,13 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     const faqs = formatFaqs(faqRaw);
 
+    let fareharborLink = null;
+
+    if (acf.fareharbor_city_link) {
+        fareharborLink = acf.fareharbor_city_link;
+    }
+    
+
 
 
 
@@ -267,15 +258,15 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                 <p>{acf.subheadline}</p>
                             </div>
                             <div className="ctas">
-                                <BookNowButton />
+                                <BookNowButton link={fareharborLink}/>
 
-                                <button className="view-the-experience">View the experience</button>
+                                <Link href="#as-feature-in" className="view-the-experience">View the experience</Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <section>
+            <section id="as-feature-in">
                 <AsFeaturedIn asFeatureInImages={asFeatureInImages} />
             </section>
             <section className="third-section">
