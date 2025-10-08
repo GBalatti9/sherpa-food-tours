@@ -48,13 +48,14 @@ export default async function Home() {
   ]
 
   const images = await fetchImages(imagesIds);
-  //console.log("PAGE!!:", {acf, asFeatureInImagesId});
   
   const asFeatureInImages = await fetchImages(asFeatureInImagesId);
   const memories = await fetchImages(memoriesImagesIds);
 
 
   const [background_image, ...imgs] = images;
+  console.log(imgs);
+  
 
 
   const citiesRaw = await wp.getAllCities();
@@ -79,6 +80,9 @@ export default async function Home() {
       }
     })
   )
+
+  console.log({cities});
+  
 
 
   const not_ready_to_book_section = await getNotReadyToBookSection();
@@ -113,9 +117,7 @@ export default async function Home() {
 
   }
 
-  // const our_experiences_section_image = await wp.getPostImage(our_experiences_section.featured_media);
 
-  // return null
   return (
     <main>
       <section className="home-first-section">

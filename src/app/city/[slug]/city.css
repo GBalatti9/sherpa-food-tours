@@ -324,14 +324,14 @@
 
 }
 
-@media (min-width: 1024) {
+@media (min-width: 1024px) {
     .third-section {
         /* padding: 4rem 1.3rem; */
         padding: 10rem 1.3rem;
 
         .content {
-            gap: 4rem;
-            max-width: none;
+            gap: 2rem !important;
+            max-width: 1200px !important;
             justify-content: center;
 
             h3 {
@@ -342,6 +342,10 @@
             p {
                 max-width: 500px;
                 font-size: 1.5rem;
+            }
+
+            p:last-child {
+                display: none;
             }
 
             /* max-width: 850px0px; */
