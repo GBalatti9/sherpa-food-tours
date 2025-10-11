@@ -188,7 +188,8 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     if (imagesId.length > 0) {
         images = await fetchImages(imagesId as number[]);
     }
-    const featuredImage = images[0];
+    
+    const featuredImage = images.length > 0 ? images[0] : { img: '', alt: '' };
 
 
     const reviewsFormatted = {
