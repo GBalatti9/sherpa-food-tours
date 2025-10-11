@@ -77,16 +77,14 @@ export const wp = {
         }
 
         try {
-            const url = `${apiUrl}/media/${id}`;
-            console.log({url});
-            
+            const url = `${apiUrl}/media/${id}`;            
             const response = await fetch(url);
 
             if (!response.ok) throw new Error("No se obtuvieron datos");
 
             const data = await response.json();
             return {
-                img: `${data.source_url}?t=${Date.now()}` || "https://www.sherpafoodtours.com/default-og.jpg",
+                img: `${data.source_url}` || "https://www.sherpafoodtours.com/default-og.jpg",
                 alt: data.alt_text || "",
             };
         } catch (e) {

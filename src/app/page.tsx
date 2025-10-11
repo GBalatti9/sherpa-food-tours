@@ -4,7 +4,6 @@ import { ACFHome } from "@/types/acf-home";
 import "./home.css";
 import Link from "next/link";
 import { getNotReadyToBookSection } from "./utils/getNotReadyToBookSection";
-// import { Tour } from "@/types/tour";
 import OurExperiencesSection from "./components/our-experiences";
 import NotReadyToBook from "./components/not-ready-to-book";
 import { fetchImages } from "./utils/fetchImages";
@@ -13,6 +12,94 @@ import AsFeaturedIn from "@/ui/components/as-featured-in";
 import { Star } from "lucide-react";
 import { City } from "@/types/city";
 import Memories from "./components/memories";
+import { Metadata } from "next";
+
+// Generate metadata for SEO
+export async function generateMetadata(): Promise<Metadata> {
+  const pageInfo = await wp.getPageInfo("home");
+  const { title, content } = pageInfo;
+  
+  // Extract description from content or use default
+  const description = content 
+    ? content.replace(/<[^>]*>/g, '').substring(0, 160) + '...'
+    : "Experience authentic food tours around the world. Enjoy local flavors, cultural insights, and unique culinary adventures in top cities with Sherpa Food Tours.";
+
+  return {
+    title: `${title} | Sherpa Food Tours - Authentic Culinary Experiences`,
+    description,
+    keywords: [
+      "food tours",
+      "culinary tours", 
+      "authentic food experiences",
+      "local food tours",
+      "walking food tours",
+      "street food tours",
+      "food and culture tours",
+      "gourmet tours",
+      "food adventures",
+      "culinary experiences",
+      "food tastings",
+      "food travel",
+      "cultural food tours",
+      "best food tours",
+      "food tour guides",
+      "local cuisine",
+      "foodie experiences",
+      "travel food tours",
+      "international food tours",
+      "food and wine tours"
+    ],
+    authors: [{ name: "Sherpa Food Tours" }],
+    creator: "Sherpa Food Tours",
+    publisher: "Sherpa Food Tours",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    metadataBase: new URL('https://sherpafoodtours.com'),
+    alternates: {
+      canonical: '/',
+    },
+    openGraph: {
+      title: `${title} | Sherpa Food Tours`,
+      description,
+      url: 'https://sherpafoodtours.com',
+      siteName: 'Sherpa Food Tours',
+      images: [
+        {
+          url: '/sherpa-complete-logo.png',
+          width: 1200,
+          height: 630,
+          alt: 'Sherpa Food Tours - Authentic Culinary Experiences',
+        },
+      ],
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${title} | Sherpa Food Tours`,
+      description,
+      images: ['/sherpa-complete-logo.png'],
+      creator: '@sherpafoodtours',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    verification: {
+      google: 'your-google-verification-code', // Replace with actual verification code
+    },
+  };
+}
 
 export default async function Home() {
 
@@ -81,9 +168,6 @@ export default async function Home() {
     })
   )
 
-  console.log({cities});
-  
-
 
   const not_ready_to_book_section = await getNotReadyToBookSection();
 
@@ -118,18 +202,87 @@ export default async function Home() {
   }
 
 
+  // Generate structured data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Sherpa Food Tours",
+    "description": "Authentic food tours and culinary experiences around the world",
+    "url": "https://sherpafoodtours.com",
+    "logo": "https://sherpafoodtours.com/sherpa-complete-logo.png",
+    "image": "https://sherpafoodtours.com/sherpa-complete-logo.png",
+    "telephone": "+1-555-123-4567", // Replace with actual phone number
+    "email": "info@sherpafoodtours.com", // Replace with actual email
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "US",
+      "addressLocality": "New York",
+      "addressRegion": "NY"
+    },
+    "sameAs": [
+      "https://www.facebook.com/sherpafoodtours",
+      "https://www.instagram.com/sherpafoodtours",
+      "https://www.tiktok.com/@sherpafoodtours"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "4649",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "offers": {
+      "@type": "Offer",
+      "category": "Food Tours",
+      "description": "Authentic culinary experiences and food tours in major cities worldwide"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Food Tours",
+      "itemListElement": cities.map((city, index) => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "TouristTrip",
+          "name": `${city.city} Food Tour`,
+          "description": `Authentic food tour experience in ${city.city}, ${city.country}`,
+          "touristType": "Food Lovers",
+          "itinerary": {
+            "@type": "ItemList",
+            "name": `${city.city} Food Tour Itinerary`
+          }
+        }
+      }))
+    }
+  };
+
   return (
-    <main>
-      <section className="home-first-section">
+    <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
+      <main role="main">
+        <section className="home-first-section" aria-label="Hero section with company information">
         <div className="first-section-container">
           <div className="image-container">
-            <MainImage src={background_image.img} alt={background_image.alt} />
+            <MainImage 
+              src={background_image.img} 
+              alt={background_image.alt}
+            />
           </div>
           <div className="data-container">
             <div className="logos-container">
               <div className="logo-container">
                 <div className="img-container">
-                  <img src="/google.png" alt="Google's logo" />
+                  <img 
+                    src="/google.png" 
+                    alt="Google's logo" 
+                    loading="lazy"
+                    width="80"
+                    height="40"
+                  />
                 </div>
                 <div className="review">
                   <p>400 reviews</p>
@@ -137,9 +290,15 @@ export default async function Home() {
               </div>
               <div className="logo-container">
                 <div className="img-container">
-                  <img src="/trip.webp" />
+                  <img 
+                    src="/trip.webp" 
+                    alt="TripAdvisor logo"
+                    loading="lazy"
+                    width="80"
+                    height="40"
+                  />
                 </div>
-                <div className="review star">
+                <div className="review star" aria-label="5 star rating">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={"star-" + i} size={14} fill="#f2b203" stroke="#f2b203" />
                   ))}
@@ -147,7 +306,13 @@ export default async function Home() {
               </div>
               <div className="logo-container">
                 <div className="img-container">
-                  <img src="/tripadvisor-logo.png" />
+                  <img 
+                    src="/tripadvisor-logo.png" 
+                    alt="TripAdvisor logo"
+                    loading="lazy"
+                    width="80"
+                    height="40"
+                  />
                 </div>
                 <div className="review">
                   <p>4.649 reviews</p>
@@ -155,7 +320,7 @@ export default async function Home() {
               </div>
             </div>
             <div className="info-container">
-              <p className="info-container-kicker">{acf.kicker}</p>
+              <p className="info-container-kicker" role="banner">{acf.kicker}</p>
               <h1 className="info-container-title">{title}</h1>
               <div className="xl-container">
                 <p className="info-container-subheadline">{acf.subhedline}</p>
@@ -166,10 +331,10 @@ export default async function Home() {
         </div>
 
       </section>
-      <section className="home-second-section">
+      <section className="home-second-section" aria-label="As featured in section">
         <AsFeaturedIn asFeatureInImages={asFeatureInImages} />
       </section>
-      <section className="third-section">
+      <section className="third-section" aria-label="About our food tours">
         <div className="content" dangerouslySetInnerHTML={{ __html: content }}>
         </div>
       </section>
@@ -179,20 +344,32 @@ export default async function Home() {
           items={data_our_experiences_section.items}
         />
       }
-      <section className="home-fourth-section">
-        <div className="title-section">
+      <section className="home-fourth-section" aria-label="Available food tour destinations">
+        <header className="title-section">
           <h2>Just relax, <br /> we &apos;ve got it cover</h2>
           <p><span>Everything&apos;s included.</span> We handle the details and most dietary needs. Just show up ready to enjoy</p>
-        </div>
+        </header>
         <div className="tours-section">
-          <div className="tours-container">
+          <div className="tours-container" role="list" aria-label="List of available food tour destinations">
             {cities.reverse().map((city, i) => (
-              <Link className="tour-card" key={city.slug + i} href={`/city/${city.slug}`}>
+              <Link 
+                className="tour-card" 
+                key={city.slug + i} 
+                href={`/city/${city.slug}`}
+                role="listitem"
+                aria-label={`Food tour in ${city.city}, ${city.country}`}
+              >
                 <div className="img-container">
-                  <img src={city.image.img} alt={city.image.alt} />
+                  <img 
+                    src={city.image.img} 
+                    alt={`${city.city} food tour destination image`}
+                    loading="lazy"
+                    width="300"
+                    height="200"
+                  />
                 </div>
                 <div className="tour-data">
-                  <h4>{city.city}</h4>
+                  <h3>{city.city}</h3>
                   <p>{city.country}</p>
                 </div>
               </Link>
@@ -207,12 +384,13 @@ export default async function Home() {
         />
       }
       {memories.length > 0 &&
-        <section className="home-last-section">
+        <section className="home-last-section" aria-label="Customer memories and experiences">
           <Memories memories={memories} />
         </section>
       }
 
-    </main>
+      </main>
+    </>
   );
 
 

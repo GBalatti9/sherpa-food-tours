@@ -5,10 +5,62 @@ import MeetLocalGuides from "@/ui/components/meet-local-guides";
 import OurValues from "./components/our-values";
 import type { OurStory } from "@/types/our-story";
 import OurStoryComponent from "./components/our-story";
+import { Metadata } from "next";
 
-export const metadata = {
-    title: "About Us | Sherpa Food Tours",
-    description: "Discover the ultimate travel guide for food, drinks, and unique experiences around the world. Explore authentic flavors, hidden gems, and the best places to eat, drink, and explore with Sherpa Food Tours."
+export const metadata: Metadata = {
+    title: "About Us - Our Story & Values | Sherpa Food Tours",
+    description: "Learn about Sherpa Food Tours' mission to provide authentic culinary experiences. Meet our local guides and discover the values that drive us to create unforgettable food tours around the world.",
+    keywords: [
+        "about sherpa food tours",
+        "our story",
+        "our values",
+        "local food guides",
+        "authentic food experiences",
+        "culinary mission",
+        "food tour company",
+        "meet our guides",
+        "food tour philosophy",
+        "authentic travel experiences",
+        "local food experts",
+        "food tourism company"
+    ],
+    authors: [{ name: "Sherpa Food Tours" }],
+    openGraph: {
+        title: "About Us - Our Story & Values | Sherpa Food Tours",
+        description: "Learn about Sherpa Food Tours' mission to provide authentic culinary experiences. Meet our local guides and discover what drives us.",
+        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com'}/about-us`,
+        siteName: "Sherpa Food Tours",
+        images: [
+            {
+                url: "https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png",
+                width: 1200,
+                height: 630,
+                alt: "Sherpa Food Tours - About Us",
+            },
+        ],
+        locale: "en_US",
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "About Us - Our Story & Values | Sherpa Food Tours",
+        description: "Learn about Sherpa Food Tours' mission to provide authentic culinary experiences.",
+        images: ["https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png"],
+    },
+    alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com'}/about-us`,
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
+    },
 }
 
 export default async function AboutUsPage() {
@@ -82,20 +134,70 @@ export default async function AboutUsPage() {
 
 
 
+    // Generate structured data for SEO
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    
+    const organizationSchema = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Sherpa Food Tours",
+        "url": baseUrl,
+        "logo": "https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png",
+        "description": "Authentic food tours and culinary experiences around the world with local guides",
+        "sameAs": [
+            "https://www.facebook.com/sherpafoodtours",
+            "https://www.instagram.com/sherpafoodtours",
+            "https://www.tiktok.com/@sherpafoodtours"
+        ]
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": baseUrl
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About Us",
+                "item": `${baseUrl}/about-us`
+            }
+        ]
+    };
+
     return (
-        <main className="about-us-page">
-            <section className="about-us-page-first-section">
-                <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png" alt="Sherpa logo" /> manifesto</h1>
-                <div dangerouslySetInnerHTML={{ __html: content }} className="render-html"></div>
-            </section>
-            <OurValues items={acfData} />
-            <section className="about-us-page-third-section">
-                <div className="local-guide-container-page">
-                    <MeetLocalGuides localGuides={acfLocalGuidesCorrect} />
-                </div>
-            </section>
-            <OurStoryComponent our_story={our_story}/>
-        </main>
+        <>
+            {/* JSON-LD Structured Data for SEO */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            
+            <main className="about-us-page">
+                <article>
+                    <section className="about-us-page-first-section">
+                        <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png" alt="Sherpa Food Tours logo" width="120" height="40" /> manifesto</h1>
+                        <div dangerouslySetInnerHTML={{ __html: content }} className="render-html"></div>
+                    </section>
+                    <OurValues items={acfData} />
+                    <section className="about-us-page-third-section">
+                        <div className="local-guide-container-page">
+                            <MeetLocalGuides localGuides={acfLocalGuidesCorrect} />
+                        </div>
+                    </section>
+                    <OurStoryComponent our_story={our_story}/>
+                </article>
+            </main>
+        </>
     )
 }
 

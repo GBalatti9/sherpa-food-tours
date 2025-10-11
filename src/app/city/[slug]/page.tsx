@@ -74,7 +74,11 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     const { slug } = await params;
 
-    const { acf, featured_media, content } = await wp.getCityBySlug(slug);
+    const cityData = await wp.getCityBySlug(slug);
+    const { acf, featured_media, content } = cityData;
+    
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    const cityUrl = `${baseUrl}/city/${slug}`;
 
     const asFeatureInImagesId = [
         acf?.first_img,
@@ -242,10 +246,57 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         )
     }
 
+    // Generate structured data for SEO
+    const cityImageData = await wp.getPostImage(featured_media);
+    
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": baseUrl
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Cities",
+                "item": `${baseUrl}/city`
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": acf.title || cityData.city_name,
+                "item": cityUrl
+            }
+        ]
+    };
 
+    const cityPageSchema = {
+        "@context": "https://schema.org",
+        "@type": "TouristDestination",
+        "name": acf.title || cityData.city_name,
+        "description": acf.subheadline || extractDescription(content),
+        "url": cityUrl,
+        "image": cityImageData.img,
+        "touristType": "Food Lovers",
+    };
 
     return (
-        <main>
+        <>
+            {/* JSON-LD Structured Data for SEO */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(cityPageSchema) }}
+            />
+            
+            <main>
             <section>
                 <div className="main-section-container">
                     <div className="image-container">
@@ -372,8 +423,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 <NextAdventure />
             </section>
 
-        </main>
-
+            </main>
+        </>
     )
 }
 

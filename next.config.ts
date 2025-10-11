@@ -3,7 +3,6 @@ const nextConfig = {
   // output: "export", // 👈 genera la carpeta out
   // Agregar logging detallado
   logging: {
-
     fetches: {
       fullUrl: true,
     },
@@ -14,6 +13,16 @@ const nextConfig = {
     serverActions: {
       timeout: 300, // 5 minutos
     },
+  },
+
+  async redirects(){
+    return [
+      {
+        source: '/travels-guide',
+        destination: '/travel-guide',
+        permanent: true,
+      },
+    ]
   },
 
   // Para debugging

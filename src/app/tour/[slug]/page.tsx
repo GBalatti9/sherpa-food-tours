@@ -66,12 +66,77 @@ interface ValidStep {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    
+
     const tour = await wp.getTourBySlug(slug);
-    
+    const { acf } = tour;
+
+    const imagesId = Object.entries(acf.heading_section)
+        .filter(([key]) => key.includes("image"))
+        .map(([, value]) => value)
+        .filter((element) => element !== "");
+
+    const featuredImage = await fetchImages([imagesId[0]] as number[]).then(imgs => imgs[0]) || { img: '', alt: '' };
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    const tourUrl = `${baseUrl}/tour/${slug}`;
+
+    // Extract clean description
+    const description = tour.acf.tour_description
+        ? tour.acf.tour_description.substring(0, 160) + '...'
+        : `Book ${tour.title} with Sherpa Food Tours. Authentic culinary experience with local guides.`;
+
     return {
-        title: `${tour.title} | Sherpa Food Tours`,
-        description: tour.acf.tour_description,
+        title: `${tour.title} - Food Tour | Sherpa Food Tours`,
+        description: description,
+        keywords: [
+            tour.title,
+            'food tour',
+            'culinary experience',
+            'local food guide',
+            'authentic food tour',
+            'walking food tour',
+            'food tasting',
+            'restaurant tour',
+            'local cuisine',
+            'food adventure'
+        ],
+        authors: [{ name: "Sherpa Food Tours" }],
+        openGraph: {
+            title: `${tour.title} | Sherpa Food Tours`,
+            description: description,
+            url: tourUrl,
+            siteName: "Sherpa Food Tours",
+            images: [
+                {
+                    url: featuredImage.img || `${baseUrl}/sherpa-complete-logo.png`,
+                    width: 1200,
+                    height: 630,
+                    alt: featuredImage.alt || tour.title,
+                },
+            ],
+            locale: "en_US",
+            type: "website",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${tour.title} | Sherpa Food Tours`,
+            description: description,
+            images: [featuredImage.img || `${baseUrl}/sherpa-complete-logo.png`],
+        },
+        alternates: {
+            canonical: tourUrl,
+        },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-video-preview': -1,
+                'max-image-preview': 'large',
+                'max-snippet': -1,
+            },
+        },
     }
 }
 
@@ -97,7 +162,8 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     if (slug === "london" || slug === "amsterdam") {
         redirect("/")
     }
-    const { acf } = await wp.getTourBySlug(slug);
+    const tour = await wp.getTourBySlug(slug);
+    const { acf } = tour;
 
     if (!acf) {
         console.warn("Tour no encontrado para slug:", slug);
@@ -107,6 +173,10 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
 
     const { stars, title, reviews, price, check_availability } = acf.heading_section;
+
+    // Generate structured data for SEO
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    const tourUrl = `${baseUrl}/tour/${slug}`;
 
     const imagesId = Object.entries(acf.heading_section)
         .filter(([key]) => key.includes("image"))
@@ -118,6 +188,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     if (imagesId.length > 0) {
         images = await fetchImages(imagesId as number[]);
     }
+    const featuredImage = images[0];
 
 
     const reviewsFormatted = {
@@ -205,125 +276,189 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         );
     }
 
+    // Generate TouristTrip structured data
+    const touristTripSchema = {
+        "@context": "https://schema.org",
+        "@type": "TouristTrip",
+        "name": title,
+        "description": acf.tour_description,
+        "image": featuredImage.img,
+        "url": tourUrl,
+        "offers": {
+            "@type": "Offer",
+            "price": price,
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": tourUrl,
+            "validFrom": new Date().toISOString(),
+        },
+        "provider": {
+            "@type": "TravelAgency",
+            "name": "Sherpa Food Tours",
+            "url": baseUrl,
+        },
+        "touristType": "Food Lovers",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": stars,
+            "bestRating": "5",
+            "worstRating": "1",
+            "ratingCount": reviews.google.amount + reviews.tripadvisor.amount
+        }
+    };
 
-
-
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": baseUrl
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Tours",
+                "item": `${baseUrl}/tour`
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": title,
+                "item": tourUrl
+            }
+        ]
+    };
 
     return (
-        <main>
-            <section className="tour-hero-section">
-                <ImageGallery images={images} />
-                {/* <div className="image-gallery">
+        <>
+            {/* JSON-LD Structured Data for SEO */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(touristTripSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
+            <main>
+                <section className="tour-hero-section">
+                    <ImageGallery images={images} />
+                    {/* <div className="image-gallery">
                     {images && images.slice(0, 3).map((image, i) => (
                         <div key={image.img + i} className="image-item">
                             <img src={image.img} alt={image.alt || 'Tour Image'} />
                         </div>
                     ))}
                 </div> */}
-                <div className="header-container">
-                    <div className="titles-container">
-                        <div className="title-container">
-                            <div className="stars-container">
-                                {Array.from({ length: stars }).map((_, i) => (
-                                    <Star key={i} fill="[#E7B53F]" />
-                                ))}
-                            </div>
-                            <h1>{title}</h1>
-                        </div>
-                        <div className="reviews-container">
-                            <div className="google-container">
-                                <div className="img-container">
-                                    <img src={reviewsFormatted.google.image.img} alt={reviewsFormatted.google.image.alt} />
+                    <div className="header-container">
+                        <div className="titles-container">
+                            <div className="title-container">
+                                <div className="stars-container">
+                                    {Array.from({ length: stars }).map((_, i) => (
+                                        <Star key={i} fill="[#E7B53F]" />
+                                    ))}
                                 </div>
-                                <span>|</span>
-                                <p>{reviewsFormatted.google.amount}</p>
+                                <h1>{title}</h1>
                             </div>
-                            <div className="tripadvisor-container">
-                                <div className="img-container">
-                                    <img src={reviewsFormatted.tripadvisor.image.img} alt={reviewsFormatted.tripadvisor.image.alt} />
+                            <div className="reviews-container">
+                                <div className="google-container">
+                                    <div className="img-container">
+                                        <img src={reviewsFormatted.google.image.img} alt={reviewsFormatted.google.image.alt} />
+                                    </div>
+                                    <span>|</span>
+                                    <p>{reviewsFormatted.google.amount}</p>
                                 </div>
-                                <span>|</span>
-                                <p>{reviewsFormatted.tripadvisor.amount}</p>
+                                <div className="tripadvisor-container">
+                                    <div className="img-container">
+                                        <img src={reviewsFormatted.tripadvisor.image.img} alt={reviewsFormatted.tripadvisor.image.alt} />
+                                    </div>
+                                    <span>|</span>
+                                    <p>{reviewsFormatted.tripadvisor.amount}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="price-available">
+                        <div className="price-available">
+                            <div className="price-container">
+                                <p>From:</p>
+                                <h2>USD{price}</h2>
+                            </div>
+                            <BookNowButton
+                                link={acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
+                                data_tour={acf.fareharbor?.id ?? "627977"}
+                            />
+                        </div>
                         <div className="price-container">
                             <p>From:</p>
                             <h2>USD{price}</h2>
                         </div>
-                        <BookNowButton
-                            link={acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
-                            data_tour={acf.fareharbor?.id ?? "627977"}
-                        />
+                        {/* <div className="availability-container"> */}
+                        {check_availability && <CheckAvailabilityButton />}
+                        {/* </div> */}
                     </div>
-                    <div className="price-container">
-                        <p>From:</p>
-                        <h2>USD{price}</h2>
-                    </div>
-                    {/* <div className="availability-container"> */}
-                    {check_availability && <CheckAvailabilityButton />}
-                    {/* </div> */}
-                </div>
-            </section>
-            <div className="section-container-desktop">
-                <div className="left-side">
-                    {tourData.length > 0 && (
-                        <section className="tour-features">
-                            <div className="features-container">
-                                {tourData.map((item, i) => (
-                                    <div key={item.title + i} className="feature-item">
-                                        <div className="feature-header">
-                                            {/* <div className="icon-container">
+                </section>
+                <div className="section-container-desktop">
+                    <div className="left-side">
+                        {tourData.length > 0 && (
+                            <section className="tour-features">
+                                <div className="features-container">
+                                    {tourData.map((item, i) => (
+                                        <div key={item.title + i} className="feature-item">
+                                            <div className="feature-header">
+                                                {/* <div className="icon-container">
                                 <img src={item.icon.img} alt={item.icon.alt || 'Icon'} />
                             </div> */}
-                                            <p>{item.title}</p>
+                                                <p>{item.title}</p>
+                                            </div>
+                                            <p>{item.description}</p>
                                         </div>
-                                        <p>{item.description}</p>
-                                    </div>
-                                ))}
+                                    ))}
 
+                                </div>
+                            </section>
+                        )}
+                        <section className="tour-description-section">
+                            <div className="description-text">
+                                {acf.tour_description
+                                    .split(/\r\n/)
+                                    .map((line: string, i: number) => (
+                                        <React.Fragment key={i}>
+                                            <p key={i}>{line}</p>
+                                            <br />
+                                        </React.Fragment>
+                                    ))}
                             </div>
                         </section>
-                    )}
-                    <section className="tour-description-section">
-                        <div className="description-text">
-                            {acf.tour_description
-                                .split(/\r\n/)
-                                .map((line: string, i: number) => (
-                                    <React.Fragment key={i}>
-                                        <p key={i}>{line}</p>
-                                        <br />
-                                    </React.Fragment>
-                                ))}
-                        </div>
-                    </section>
-                </div>
-                <div className="calendar-container">
+                    </div>
+                    <div className="calendar-container">
 
-                    <Calendar />
+                        <Calendar />
+                    </div>
                 </div>
-            </div>
-            <section className="tour-conditions">
-                <div className="tour-condition-container">
-                    {tourConditions.length > 0 && tourConditions.map((condition, i) => (
-                        <div key={condition.title + i} className="condition-item">
-                            <div className="icon-container">
-                                <img src={condition.icon.img} alt={condition.icon.alt || 'Condition Icon'} />
+                <section className="tour-conditions">
+                    <div className="tour-condition-container">
+                        {tourConditions.length > 0 && tourConditions.map((condition, i) => (
+                            <div key={condition.title + i} className="condition-item">
+                                <div className="icon-container">
+                                    <img src={condition.icon.img} alt={condition.icon.alt || 'Condition Icon'} />
+                                </div>
+                                <div className="text-container">
+                                    <h3>{condition.title}</h3>
+                                </div>
                             </div>
-                            <div className="text-container">
-                                <h3>{condition.title}</h3>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-            {highlightItems.length > 0 &&
-                <TourHighlights title_highlight={title_highlight} highlightItems={highlightItems} />
-            }
+                        ))}
+                    </div>
+                </section>
+                {highlightItems.length > 0 &&
+                    <TourHighlights title_highlight={title_highlight} highlightItems={highlightItems} />
+                }
 
-            <ItineraryComponent itinerary={itinerary} desktopImgs={desktopImgs} />
-        </main>
+                <ItineraryComponent itinerary={itinerary} desktopImgs={desktopImgs} />
+            </main>
+        </>
     )
 
 }
