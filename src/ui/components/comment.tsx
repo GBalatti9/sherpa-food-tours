@@ -2,7 +2,6 @@ import { Dot, Star } from "lucide-react";
 import "./css/comment.css"
 
 interface Comment {
-    id: number;
     stars: number;
     title: string;
     content: string;

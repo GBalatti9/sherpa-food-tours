@@ -8,17 +8,15 @@ import BookNowButton from "@/ui/components/book-now";
 import MainImage from "@/ui/components/main-image";
 import JustRelax from "@/ui/components/just-relax";
 import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section";
-// import NotReadyToBook from "@/app/components/not-ready-to-book";
 import CommentElement from "@/ui/components/comment";
 import MeetLocalGuides from "@/ui/components/meet-local-guides";
 import Link from "next/link";
 import { formatFaqs } from "@/app/utils/formatFaqs";
 import FaqSection from "@/ui/components/faq-section";
 import NextAdventure from "@/ui/components/redy-next-adventure";
-//import NotReadyToBook from "@/app/components/not-ready-to-book";
-// import { slugify } from "@/app/helpers/slugify";
 import { LocalGuide, LocalGuideRaw } from "@/types/local-guide";
 import { extractDescription } from "@/app/helpers/extractDescription";
+import ShowMoreBtn from "./show-more";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }) {
@@ -72,11 +70,13 @@ export async function generateStaticParams() {
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
 
+    let showMore = false;
     const { slug } = await params;
 
     const cityData = await wp.getCityBySlug(slug);
     const { acf, featured_media, content } = cityData;
-    
+
+
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
     const cityUrl = `${baseUrl}/city/${slug}`;
 
@@ -144,11 +144,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         }))
     }
 
-    const comments = [
-        { id: 0, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month" },
-        { id: 1, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month" },
-        { id: 2, stars: 5, title: "Wonderful Tour!", content: "Our team works closely with each restaurant to choose the plates that best represent the city’s flavors, heritage, and evolution. It’s like a multi-course dinner — across the neighborhood", author: "Sarah M.", date: "Last month" },
-    ]
+    let comments = Object.entries(acf).filter(([key]) => key.includes("review")).map(([, value]) => value as { stars: number; title: string; content: string; author: string; date: string; }).filter((v) => v.title && v.title.trim().length > 0).slice(0, 6);
+
 
     const localGuidesRaw = await Promise.all(
         Object.entries(acf)
@@ -211,16 +208,23 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     //    })
     //}
 
-    const { acf: faqRaw } = await wp.getFaqById(76);
+    let faqs = null;
 
-    const faqs = formatFaqs(faqRaw);
+    if (acf.faq) {
+
+        const { acf: faqRaw } = await wp.getFaqById(acf.faq);
+
+        faqs = formatFaqs(faqRaw);
+    }
+    
+
 
     let fareharborLink = null;
 
     if (acf.fareharbor_city_link) {
         fareharborLink = acf.fareharbor_city_link;
     }
-    
+
 
 
 
@@ -248,7 +252,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     // Generate structured data for SEO
     const cityImageData = await wp.getPostImage(featured_media);
-    
+
     const breadcrumbSchema = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
@@ -295,133 +299,138 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(cityPageSchema) }}
             />
-            
-            <main>
-            <section>
-                <div className="main-section-container">
-                    <div className="image-container">
-                        <MainImage src={mainImage[0].img} alt={mainImage[0].alt} />
-                    </div>
-                    <div className="data-container">
-                        <div className="data">
-                            <div className="data-info">
-                                <h1>{acf.title}</h1>
-                                <p>{acf.subheadline}</p>
-                            </div>
-                            <div className="ctas">
-                                <BookNowButton link={fareharborLink}/>
 
-                                <Link href="#as-feature-in" className="view-the-experience">View the experience</Link>
+            <main>
+                <section>
+                    <div className="main-section-container">
+                        <div className="image-container">
+                            <MainImage src={mainImage[0].img} alt={mainImage[0].alt} />
+                        </div>
+                        <div className="data-container">
+                            <div className="data">
+                                <div className="data-info">
+                                    <h1>{acf.title}</h1>
+                                    <p>{acf.subheadline}</p>
+                                </div>
+                                <div className="ctas">
+                                    <BookNowButton link={fareharborLink} />
+
+                                    <Link href="#as-feature-in" className="view-the-experience">View the experience</Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-            <section id="as-feature-in">
-                <AsFeaturedIn asFeatureInImages={asFeatureInImages} />
-            </section>
-            <section className="third-section">
-                <div className="content" dangerouslySetInnerHTML={{ __html: content }}>
-                </div>
-            </section>
-            {data_our_experiences_section &&
-                <OurExperiencesSection
-                    title={data_our_experiences_section.title}
-                    items={data_our_experiences_section.items}
-                />
-            }
-            <section className="fourth-section">
-                <JustRelax />
-                <TravelGuideCardsSection tours={tours} />
-            </section>
-
-            <section className="city-comments-section">
-                <div className="city-comments-container">
-                    {comments.map((comment) => (
-                        <CommentElement key={comment.id} comment={comment} />
-                    ))}
-                </div>
-                <p className="show-more-comments">Show more</p>
-            </section>
-
-            {localGuides.length > 0 &&
-                <section className="local-guide-section">
-                    <div className="local-guide-container">
-                        <MeetLocalGuides localGuides={localGuides} />
                     </div>
                 </section>
-            }
+                <section id="as-feature-in">
+                    <AsFeaturedIn asFeatureInImages={asFeatureInImages} />
+                </section>
+                <section className="third-section">
+                    <div className="content" dangerouslySetInnerHTML={{ __html: content }}>
+                    </div>
+                </section>
+                {data_our_experiences_section &&
+                    <OurExperiencesSection
+                        title={data_our_experiences_section.title}
+                        items={data_our_experiences_section.items}
+                    />
+                }
+                <section className="fourth-section">
+                    <JustRelax />
+                    <TravelGuideCardsSection tours={tours} />
+                </section>
 
-            <section className="know-the-city">
-                <h2>Get to know the city</h2>
-                <div className="posts-container">
-                    {posts[0] && (
-                        <Link href={`/travel-guide/${posts[0].city.slug}/${posts[0].slug}`} key={0} className="post">
-                            <div className="img-container">
-                                <img src={posts[0].featured_media.img} alt="" />
-                            </div>
-                            <div className="data">
-                                <p className="key">{posts[0].acf.key}</p>
-                                <p className="title">{posts[0].title}</p>
-                                <div
-                                    className="description"
-                                    dangerouslySetInnerHTML={{ __html: posts[0].excerpt }}
-                                ></div>
-                                <p className="author">
-                                    Por: <span>{posts[0].author.name}</span>
-                                </p>
-                            </div>
-                        </Link>
-                    )}
-
-                    {posts.length > 2 && (
-                        <div className="group-posts">
-                            {[posts[1], posts[2]].map((post, i) => (
-                                <Link href={`/travel-guide/${post.city.slug}/${post.slug}`} key={i} className="post">
-                                    <div className="img-container">
-                                        <img src={post.featured_media.img} alt="" />
-                                    </div>
-                                    <div className="data">
-                                        <p className="key">{post.acf.key}</p>
-                                        <p className="title">{post.title}</p>
-                                        <p className="author">
-                                            Por: <span>{post.author.name}</span>
-                                        </p>
-                                    </div>
-                                </Link>
+                {(comments && comments.length > 0) &&
+                    <section className="city-comments-section">
+                        <div className="city-comments-container">
+                            {comments.slice(0, 3).map((comment, i) => (
+                                <CommentElement key={i} comment={comment} />
                             ))}
                         </div>
-                    )}
 
+                        <ShowMoreBtn comments={comments} />
+                    </section>
+                }
 
-                    {posts.slice(3).length > 0 &&
-                        <div className="remainig-posts">
-                            {posts.slice(3).map((post, i) => (
-                                <Link href={`/travel-guide/${post.city.slug}/${post.slug}`} key={i} className="post">
-                                    <div className="img-container">
-                                        <img src={post.featured_media.img} alt="" />
-                                    </div>
-                                    <div className="data">
-                                        <p className="title">{post.title}</p>
-                                        <p className="author">
-                                            Por: <span>{post.author.name}</span>
-                                        </p>
-                                    </div>
-                                </Link>
-                            ))}
+                {localGuides.length > 0 &&
+                    <section className="local-guide-section">
+                        <div className="local-guide-container">
+                            <MeetLocalGuides localGuides={localGuides} />
                         </div>
-                    }
+                    </section>
+                }
+
+                <section className="know-the-city">
+                    <h2>Get to know the city</h2>
+                    <div className="posts-container">
+                        {posts[0] && (
+                            <Link href={`/travel-guide/${posts[0].city.slug}/${posts[0].slug}`} key={0} className="post">
+                                <div className="img-container">
+                                    <img src={posts[0].featured_media.img} alt="" />
+                                </div>
+                                <div className="data">
+                                    <p className="key">{posts[0].acf.key}</p>
+                                    <p className="title">{posts[0].title}</p>
+                                    <div
+                                        className="description"
+                                        dangerouslySetInnerHTML={{ __html: posts[0].excerpt }}
+                                    ></div>
+                                    <p className="author">
+                                        Por: <span>{posts[0].author.name}</span>
+                                    </p>
+                                </div>
+                            </Link>
+                        )}
+
+                        {posts.length > 2 && (
+                            <div className="group-posts">
+                                {[posts[1], posts[2]].map((post, i) => (
+                                    <Link href={`/travel-guide/${post.city.slug}/${post.slug}`} key={i} className="post">
+                                        <div className="img-container">
+                                            <img src={post.featured_media.img} alt="" />
+                                        </div>
+                                        <div className="data">
+                                            <p className="key">{post.acf.key}</p>
+                                            <p className="title">{post.title}</p>
+                                            <p className="author">
+                                                Por: <span>{post.author.name}</span>
+                                            </p>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
 
 
-                </div>
-            </section>
-            <section className="faq-section-city">
-                <FaqSection faqs={faqs} />
-            </section>
+                        {posts.slice(3).length > 0 &&
+                            <div className="remainig-posts">
+                                {posts.slice(3).map((post, i) => (
+                                    <Link href={`/travel-guide/${post.city.slug}/${post.slug}`} key={i} className="post">
+                                        <div className="img-container">
+                                            <img src={post.featured_media.img} alt="" />
+                                        </div>
+                                        <div className="data">
+                                            <p className="title">{post.title}</p>
+                                            <p className="author">
+                                                Por: <span>{post.author.name}</span>
+                                            </p>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        }
 
-            <section className="next-adventure-section">
-                <NextAdventure />
-            </section>
+
+                    </div>
+                </section>
+                {faqs && faqs.faqs.length > 0 &&
+                    <section className="faq-section-city">
+                        <FaqSection faqs={faqs} />
+                    </section>
+                }
+
+                <section className="next-adventure-section">
+                    <NextAdventure />
+                </section>
 
             </main>
         </>

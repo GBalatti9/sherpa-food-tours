@@ -11,6 +11,7 @@ import ImageGallery from "./components/image-gallery";
 import ItineraryComponent from "./components/itinerary";
 import Calendar from "./components/calendar";
 import { redirect } from "next/navigation";
+import AskForIt from "@/ui/components/ask-for-it";
 
 interface TourCondition {
     icon: number;
@@ -188,7 +189,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     if (imagesId.length > 0) {
         images = await fetchImages(imagesId as number[]);
     }
-    
+
     const featuredImage = images.length > 0 ? images[0] : { img: '', alt: '' };
 
 
@@ -387,10 +388,15 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                                 <p>From:</p>
                                 <h2>USD{price}</h2>
                             </div>
-                            <BookNowButton
-                                link={acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
-                                data_tour={acf.fareharbor?.id ?? "627977"}
-                            />
+                            {title.includes("Private") ? (
+                                <AskForIt />
+                            ): (
+
+                                <BookNowButton
+                                link = {acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
+                            data_tour={acf.fareharbor?.id ?? "627977"}
+                                />
+                            )}
                         </div>
                         <div className="price-container">
                             <p>From:</p>

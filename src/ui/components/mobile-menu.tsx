@@ -30,6 +30,7 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [isOpen]);
+    
 
     return (
         <div className="md:hidden">
@@ -71,7 +72,7 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
                                     }`}>{item.label}</p>
                                 <div className="cities-child">
                                     {cities.map((city) => (
-                                        <Link key={city.slug} href={`/city/${city.slug}`} className="menu-link">
+                                        <Link key={city.slug} href={`/city/${city.slug}`} className="menu-link" onClick={() => setIsOpen(false)}>
                                             <img src={city.flag.img} alt={city.flag.alt}></img>
                                             {city.city}
                                         </Link>

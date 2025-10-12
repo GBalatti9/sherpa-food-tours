@@ -2,6 +2,7 @@ import { TourFormatted } from "@/types/tour";
 import BookNowButton from "@/ui/components/book-now";
 import "./css/travel-guide-cards-section.css";
 import Link from "next/link";
+import AskForIt from "./ask-for-it";
 
 
 export default function TravelGuideCardsSection({ tours }: { tours: TourFormatted[] }) {
@@ -70,7 +71,11 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                     <Link href={`/tour/${tour.slug}`}>
                                         Learn More
                                     </Link>
-                                    <BookNowButton link={tour.acf.fareharbor.link}/>
+                                    {tour.title.includes("Private")
+                                        ? <AskForIt />
+                                        : <BookNowButton link={tour.acf.fareharbor.link}
+                                        />
+                                    }
                                 </div>
                             </div>
                         </div>

@@ -2,6 +2,8 @@ import React from "react";
 
 
 export default function FaqSection({ faqs }: { faqs: { display_title: string, faqs: { question: string, answer: string }[] } }) {
+    console.log({faqs});
+    
     return (
             <div className="faq-accordion">
                 <h5 className="faq-title">{faqs.display_title}</h5>
