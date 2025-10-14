@@ -3,14 +3,17 @@ import BookNowButton from "@/ui/components/book-now";
 import "./css/travel-guide-cards-section.css";
 import Link from "next/link";
 import AskForIt from "./ask-for-it";
+import { ButtonsPropagations } from "./buttons-propagation";
 
 
 export default function TravelGuideCardsSection({ tours }: { tours: TourFormatted[] }) {
+    console.log(tours[0]);
+
     return (
         <section className="tour-cards-section">
             <div className="tour-cards">
                 {tours.map((tour) => (
-                    <div className="tour-card" key={tour.title + tour.id}>
+                    <Link className="tour-card" key={tour.title + tour.id} href={`/tour/${tour.slug}`}>
                         <div className="img-container">
                             <img src={tour.image.img} alt={tour.image.alt} />
                         </div>
@@ -71,15 +74,14 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                     <Link href={`/tour/${tour.slug}`}>
                                         Learn More
                                     </Link>
-                                    {tour.title.includes("Private")
-                                        ? <AskForIt />
-                                        : <BookNowButton link={tour.acf.fareharbor.link}
-                                        />
-                                    }
+                                    <ButtonsPropagations
+                                        is_private={tour.acf.is_private}
+                                        link={tour.acf.fareharbor.link} />
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                    </Link>
                 ))}
             </div>
         </section>

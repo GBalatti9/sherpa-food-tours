@@ -2,10 +2,10 @@
     font-family: var(--font-excelsior);
     border-bottom: 1px solid #A3A3A3;
     padding: 2rem 0;
+    height: fit-content;
 
     @media (min-width: 768px) {
         max-width: 768px;
-        margin: auto;
     }
 
     @media (min-width: 1024px) {
@@ -15,7 +15,8 @@
     }
 
     @media (min-width: 1200px) {
-        max-width: 400px;
+        max-width: none;
+        width: calc(1100px / 3);
     }
 
     .stars-container {

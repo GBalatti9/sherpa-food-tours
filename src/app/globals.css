@@ -262,7 +262,7 @@ body {
 
       .preview-author {
         margin: 0;
-        font-size: 1rem;
+        font-size: 1rem !important;
         font-style: italic;
         letter-spacing: -0.02px;
         color: var(--title-color);

@@ -262,9 +262,9 @@ export const wp = {
         }
     },
 
-    getPostsByCategory: async (id: number, limit = 10) => {
+    getPostsByCategory: async (id: number, limit = 10, offset = 0) => {
         try {
-            const url = `${apiUrl}/posts?categories=${id}&per_page=${limit}`;
+            const url = `${apiUrl}/posts?categories=${id}&per_page=${limit}&offset=${offset}`;
             const response = await fetch(url);
             const data = await response.json();
             return { ok: true, data };

@@ -43,6 +43,7 @@ export interface TourFormatted extends TourRelationship {
     group_size: string;
     what_is_included: string;
     price: string;
+    is_private: boolean;
     fareharbor: {
       link: string;
     }
@@ -51,4 +52,5 @@ export interface TourFormatted extends TourRelationship {
     img: string;
     alt: string;
   }
+  
 }

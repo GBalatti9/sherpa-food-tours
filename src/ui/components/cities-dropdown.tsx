@@ -11,19 +11,24 @@ interface CityDisplay {
     alt?: string;
     img?: string;
   }
+  
 }
 
 export default function CitiesDropdown({
   text = "Explore Our Cities",
   cities,
-  color
+  color,
+  onSelectCity
 }: {
   text?: string
   cities: CityDisplay[]
-  color?: string
+  color?: string,
+  onSelectCity?: (slug: string, value: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  console.log({cities});
+  
 
   const toggleDropdown = () => setIsOpen(!isOpen)
 
@@ -43,8 +48,6 @@ export default function CitiesDropdown({
   }, [])
 
 
-  console.log({cities});
-  
   return (
     <div className="relative inline-block" ref={dropdownRef}>
       {/* Toggle Button */}
@@ -88,21 +91,25 @@ export default function CitiesDropdown({
           <ul className="city-list">
             {cities.map((city, index) => (
               <li key={index}>
-                <Link
-                  className="city-item"
-                  href={`/city/${city.slug}`}
-                  rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)} // también se cierra al clickear una ciudad
-                >
-                  {city.flag &&
-                    <img
-                      src={city.flag.img}
-                      alt={city.flag.alt}
-                      className="city-flag"
-                    />
-                  }
-                  {city.city}
-                </Link>
+                {onSelectCity ?
+                  <button onClick={() => onSelectCity(city.slug, city.city)}>{city.city}</button>
+                  :
+                  <Link
+                    className="city-item"
+                    href={`/city/${city.slug}`}
+                    rel="noopener noreferrer"
+                    onClick={() => setIsOpen(false)} // también se cierra al clickear una ciudad
+                  >
+                    {city.flag &&
+                      <img
+                        src={city.flag.img}
+                        alt={city.flag.alt}
+                        className="city-flag"
+                      />
+                    }
+                    {city.city}
+                  </Link>
+                }
               </li>
             ))}
           </ul>

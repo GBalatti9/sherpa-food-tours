@@ -262,10 +262,11 @@
         border-bottom: 1px solid #B9B9B9;
         padding-bottom: 2rem;
         gap: 1rem;
-        
-        @media (min-width: 1200px){
+
+        @media (min-width: 1200px) {
             grid-template-columns: repeat(3, 1fr);
         }
+
         .feature-item:last-child {
             grid-column: span 2;
         }
@@ -694,6 +695,29 @@
     .section-container-desktop {
         max-width: 1200px;
         margin: 0 auto;
+    }
+}
+
+.contact-section {
+    margin: auto;
+    padding-bottom: 2rem;
+    h2 {
+        font-family: var(--font-dk-otago);
+        font-size: 1.5rem;
+        margin: auto;
+        padding: 1rem 0 2rem 0;
+
+        @media (min-width: 768px) {
+            font-size: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        max-width: 1200px;
     }
 }
 

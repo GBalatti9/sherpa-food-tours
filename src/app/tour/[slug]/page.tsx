@@ -12,6 +12,7 @@ import ItineraryComponent from "./components/itinerary";
 import Calendar from "./components/calendar";
 import { redirect } from "next/navigation";
 import AskForIt from "@/ui/components/ask-for-it";
+import { FormContact } from "@/ui/components/form-contact";
 
 interface TourCondition {
     icon: number;
@@ -165,6 +166,8 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     }
     const tour = await wp.getTourBySlug(slug);
     const { acf } = tour;
+    console.log({ acf });
+
 
     if (!acf) {
         console.warn("Tour no encontrado para slug:", slug);
@@ -390,11 +393,11 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                             </div>
                             {title.includes("Private") ? (
                                 <AskForIt />
-                            ): (
+                            ) : (
 
                                 <BookNowButton
-                                link = {acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
-                            data_tour={acf.fareharbor?.id ?? "627977"}
+                                    link={acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
+                                    data_tour={acf.fareharbor?.id ?? "627977"}
                                 />
                             )}
                         </div>
@@ -464,6 +467,11 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                 }
 
                 <ItineraryComponent itinerary={itinerary} desktopImgs={desktopImgs} />
+
+                <section className="contact-section">
+                    <h2>Got any questions? <span>Contact Us!</span></h2>
+                    <FormContact />
+                </section>
             </main>
         </>
     )

@@ -1,13 +1,17 @@
 import { wp } from "@/lib/wp";
-import FormContact from "./client-side";
+import { FormContact } from "@/ui/components/form-contact";
 
 
-export default async function ContactPage(){
-    const data = await wp.getPageInfo("contact");
-    
+
+export default async function ContactPage() {
+  const data = await wp.getPageInfo("contact");
+
   return (
-    <main className="contact-page">
-        <FormContact data={data.content as string}/>
+    <main className="contact-page" style={{ minHeight: "80vh", padding: "10rem" }}>
+      <section className="contact-section">
+        <h2>Got any questions? <span>Contact Us!</span></h2>
+        <FormContact />
+      </section>
     </main>
   );
 };

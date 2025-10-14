@@ -147,7 +147,7 @@ export default async function Home() {
 
   const citiesRaw = await wp.getAllCities();
 
-  const cities = await Promise.all(
+  let cities = await Promise.all(
     citiesRaw.map(async (data: City) => {
 
       const country_id = data.acf.pais;
@@ -160,6 +160,7 @@ export default async function Home() {
       const image = await wp.getPostImage(image_id);
 
       return {
+        id: data.id,
         city: data.title.rendered,
         slug: data.slug,
         country: countryData ? countryData.country_name : null,
@@ -167,6 +168,16 @@ export default async function Home() {
       }
     })
   )
+
+  if (acf.order_cities) {
+    const order = acf.order_cities;
+    cities = cities.sort((a, b) => {
+      const indexA = order.indexOf(a.id);
+      const indexB = order.indexOf(b.id);
+      return indexA - indexB;
+    });
+  }
+  
 
 
   const not_ready_to_book_section = await getNotReadyToBookSection();
@@ -351,7 +362,7 @@ export default async function Home() {
         </header>
         <div className="tours-section">
           <div className="tours-container" role="list" aria-label="List of available food tour destinations">
-            {cities.reverse().map((city, i) => (
+            {cities.map((city, i) => (
               <Link 
                 className="tour-card" 
                 key={city.slug + i} 

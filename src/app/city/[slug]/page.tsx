@@ -17,6 +17,7 @@ import NextAdventure from "@/ui/components/redy-next-adventure";
 import { LocalGuide, LocalGuideRaw } from "@/types/local-guide";
 import { extractDescription } from "@/app/helpers/extractDescription";
 import ShowMoreBtn from "./show-more";
+import { FormContact } from "@/ui/components/form-contact";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }) {
@@ -216,7 +217,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
         faqs = formatFaqs(faqRaw);
     }
-    
+
 
 
     let fareharborLink = null;
@@ -430,6 +431,11 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
                 <section className="next-adventure-section">
                     <NextAdventure />
+                </section>
+
+                <section className="contact-section">
+                    <h2>Got any questions? <span>Contact Us!</span></h2>
+                    <FormContact />
                 </section>
 
             </main>

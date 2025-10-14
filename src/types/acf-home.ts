@@ -19,4 +19,5 @@ export interface ACFHome {
     eighth_memory: number;
     ninth_memory: number;
     tenth_memory: number;
+    order_cities?: number[];
 }

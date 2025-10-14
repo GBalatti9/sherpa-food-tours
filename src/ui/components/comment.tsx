@@ -1,5 +1,6 @@
 import { Dot, Star } from "lucide-react";
 import "./css/comment.css"
+import TruncateP from "./truncate-p";
 
 interface Comment {
     stars: number;
@@ -19,7 +20,8 @@ export default function CommentElement({ comment }: { comment: Comment }) {
             </div>
             <div className="data-section">
                 <h4>{comment.title}</h4>
-                <p>{comment.content}</p>
+                <TruncateP text={comment.content} maxLength={200} />
+                {/* <p>{comment.content}</p> */}
             </div>
             <div className="author-section">
                 <p>{comment.author}</p>
