@@ -71,7 +71,7 @@ export async function generateStaticParams() {
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
 
-    let showMore = false;
+    const showMore = false;
     const { slug } = await params;
 
     const cityData = await wp.getCityBySlug(slug);
@@ -145,7 +145,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         }))
     }
 
-    let comments = Object.entries(acf).filter(([key]) => key.includes("review")).map(([, value]) => value as { stars: number; title: string; content: string; author: string; date: string; }).filter((v) => v.title && v.title.trim().length > 0).slice(0, 6);
+    const comments = Object.entries(acf).filter(([key]) => key.includes("review")).map(([, value]) => value as { stars: number; title: string; content: string; author: string; date: string; }).filter((v) => v.title && v.title.trim().length > 0).slice(0, 6);
 
 
     const localGuidesRaw = await Promise.all(
