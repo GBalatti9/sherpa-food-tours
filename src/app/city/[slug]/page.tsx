@@ -20,6 +20,7 @@ import ShowMoreBtn from "./show-more";
 import { FormContact } from "@/ui/components/form-contact";
 import { slugify } from "@/app/helpers/slugify";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
+import { FormattedWpPost } from "@/types/post";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }) {
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     const title = cityBySlug.acf.metadata.title.trim().length > 0 ? cityBySlug.acf.metadata.title : `${cityBySlug.city_name} | Sherpa Food Tour`;
     const image = await wp.getPostImage(cityBySlug.featured_media);
     const description = cityBySlug.acf.metadata.description.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content)
-    
+
     return {
         title,
         description,
@@ -79,8 +80,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const cityData = await wp.getCityBySlug(slug);
     const { acf, featured_media, content } = cityData;
 
-    console.log({acf});
-    
+    console.log({ acf });
+
 
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
@@ -180,21 +181,17 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         localGuides = localGuidesRaw.filter(Boolean);
     }
 
-    let posts: any[] = [];
+    let posts = [];
 
-    let getToKnowTheCity: { titles: { title: string; content?: string; featured_media?: number }; posts: any[] } = { titles: { title: "" }, posts: [] }
+    let getToKnowTheCity: { titles: { title: string; content?: string; featured_media?: number }; posts: FormattedWpPost[] } = { titles: { title: "" }, posts: [] }
 
 
     if (acf?.posts) {
-
-        console.log("estoy aca");
-
-
         const info = await Promise.all(acf.posts.map(async (id: number) => {
             const postInfo = await wp.getPostInfoById(id);
 
-            console.log({postInfo});
-            
+            console.log({ postInfo });
+
 
             const postImage = await wp.getPostImage(postInfo.featured_media);
             const author = await wp.getAuthor(postInfo.author);
