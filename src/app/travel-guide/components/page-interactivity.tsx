@@ -47,7 +47,7 @@ export default function PageInteractivity({ cities, formattedPosts, data }: Prop
             index === self.findIndex(a => a.id === article.id)
         );
         setAllArticles(uniqueArticles);
-    }, [])
+    }, [data])
 
     useEffect(() => {
         if (!allArticles) return;
@@ -76,7 +76,7 @@ export default function PageInteractivity({ cities, formattedPosts, data }: Prop
         if (selectedFilter) {
             const filterLower = selectedFilter.toLowerCase();
             results = results.filter(post => {
-                // @ts-ignore - categoryName is added dynamically
+                // @ts-expect-error - categoryName is added dynamically
                 const categoryName = post.categoryName?.toLowerCase();
                 return categoryName === filterLower;
             });
