@@ -311,7 +311,7 @@ export default async function Home() {
                     height="40"
                   />
                 </div>
-                <div className="review star" aria-label="5 star rating">
+                <div className="review star" role="img" aria-label="5 star rating">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={"star-" + i} size={14} fill="#f2b203" stroke="#f2b203" />
                   ))}
@@ -370,8 +370,6 @@ export default async function Home() {
                 className="tour-card" 
                 key={city.slug + i} 
                 href={`/city/${city.slug}`}
-                role="listitem"
-                aria-label={`Food tour in ${city.city}, ${city.country}`}
               >
                 <div className="img-container">
                   <img 
