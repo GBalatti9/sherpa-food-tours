@@ -77,6 +77,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const cityData = await wp.getCityBySlug(slug);
     const { acf, featured_media, content } = cityData;
 
+    console.log({content});
+    
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
     const cityUrl = `${baseUrl}/city/${slug}`;
@@ -94,7 +96,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
 
     let embedSectionsData = null;
-    if (acf.embed_section) {
+    if (acf?.embed_section) {
         embedSectionsData = await Promise.all(acf.embed_section.map((id: number) => wp.getEmbedSectionInfoById(id)))
     }
 
@@ -145,36 +147,45 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         }))
     }
 
-    const comments = Object.entries(acf).filter(([key]) => key.includes("review")).map(([, value]) => value as { stars: number; title: string; content: string; author: string; date: string; }).filter((v) => v.title && v.title.trim().length > 0).slice(0, 6);
+
+    let comments: { stars: number; title: string; content: string; author: string; date: string; }[] = [];
+    let localGuidesRaw = []
+    let localGuides: LocalGuide[] = [];
+
+    if (acf) {
+        comments = Object.entries(acf).filter(([key]) => key.includes("review")).map(([, value]) => value as { stars: number; title: string; content: string; author: string; date: string; }).filter((v) => v.title && v.title.trim().length > 0).slice(0, 6);
+        localGuidesRaw = await Promise.all(
+            Object.entries(acf)
+                .filter(([key]) => key.includes("local_guide"))
+                .map(([, value]) => value as LocalGuideRaw)
+                .filter(Boolean)
+                .map(async (localGuide) => {
+                    if (!localGuide.profile_picture || !localGuide.country_flag) return null;
+
+                    const profile_picture = await wp.getPostImage(localGuide.profile_picture) as { img: string; alt: string };
+
+                    const countryFlag = await wp.getPostImage(localGuide.country_flag) as { img: string; alt: string };
+
+                    return {
+                        ...localGuide,
+                        profile_picture,
+                        country_flag: countryFlag
+                    };
+                })
+        ) as LocalGuide[];
+
+        localGuides = localGuidesRaw.filter(Boolean);
+    }
 
 
-    const localGuidesRaw = await Promise.all(
-        Object.entries(acf)
-            .filter(([key]) => key.includes("local_guide"))
-            .map(([, value]) => value as LocalGuideRaw)
-            .filter(Boolean)
-            .map(async (localGuide) => {
-                if (!localGuide.profile_picture || !localGuide.country_flag) return null;
-
-                const profile_picture = await wp.getPostImage(localGuide.profile_picture) as { img: string; alt: string };
-
-                const countryFlag = await wp.getPostImage(localGuide.country_flag) as { img: string; alt: string };
-
-                return {
-                    ...localGuide,
-                    profile_picture,
-                    country_flag: countryFlag
-                };
-            })
-    ) as LocalGuide[];
 
     // saco los null/undefined
-    const localGuides = localGuidesRaw.filter(Boolean);
+    
 
 
     let posts = [];
 
-    if (acf.posts) {
+    if (acf?.posts) {
 
         const info = await Promise.all(acf.posts.map(async (id: number) => {
             const postInfo = await wp.getPostInfoById(id);
@@ -198,7 +209,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         }));
         posts = info.filter(Boolean);
     }
-    
+
 
     //const getToKnowTheCity = {
     //    titles: { title: "Get to know the city" }, posts: posts.map((post) => {
@@ -216,7 +227,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     let faqs = null;
 
-    if (acf.faq) {
+    if (acf?.faq) {
 
         const { acf: faqRaw } = await wp.getFaqById(acf.faq);
 
@@ -227,7 +238,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     let fareharborLink = null;
 
-    if (acf.fareharbor_city_link) {
+    if (acf?.fareharbor_city_link) {
         fareharborLink = acf.fareharbor_city_link;
     }
 
@@ -235,7 +246,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
 
 
-    if (acf.title === "") {
+    if (acf?.title === "") {
         return (
             <main>
                 <section className="city-not-found">
@@ -287,7 +298,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const cityPageSchema = {
         "@context": "https://schema.org",
         "@type": "TouristDestination",
-        "name": acf.title || cityData.city_name,
+        "name": acf?.title || cityData.city_name,
         "description": acf.subheadline || extractDescription(content),
         "url": cityUrl,
         "image": cityImageData.img,

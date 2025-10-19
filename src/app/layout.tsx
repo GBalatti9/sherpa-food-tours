@@ -9,6 +9,7 @@ import Footer from "../ui/components/footer";
 import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 import { wp } from "@/lib/wp";
 import FareharborScript from "@/ui/components/FareharborScript";
+import Script from "next/script";
 
 const excelsior = localFont({
   src: [
@@ -90,6 +91,23 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
         <NavBarWrapper cities={cities} />
         {children}

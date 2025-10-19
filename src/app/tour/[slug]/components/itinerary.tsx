@@ -29,7 +29,8 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
         });
 
         return () => {
-            refs.current.forEach((el) => {
+            const currentRefs = refs.current;
+            currentRefs.forEach((el) => {
                 if (el) observer.unobserve(el);
             });
         };

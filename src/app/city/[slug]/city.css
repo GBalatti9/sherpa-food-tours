@@ -350,9 +350,9 @@
                 font-size: 1.5rem;
             }
 
-            p:last-child {
+            /* p:last-child {
                 display: none;
-            }
+            } */
 
             /* max-width: 850px0px; */
             /* gap: 4rem; */

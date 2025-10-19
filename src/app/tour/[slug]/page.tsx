@@ -418,9 +418,6 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                                     {tourData.map((item, i) => (
                                         <div key={item.title + i} className="feature-item">
                                             <div className="feature-header">
-                                                {/* <div className="icon-container">
-                                <img src={item.icon.img} alt={item.icon.alt || 'Icon'} />
-                            </div> */}
                                                 <p>{item.title}</p>
                                             </div>
                                             <p>{item.description}</p>

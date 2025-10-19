@@ -20,7 +20,7 @@ export default function MeetLocalGuides({ localGuides }: { localGuides: LocalGui
                                 <p className="value-card-name">{element.name}</p>
                                 <div className="country-name">
                                     <img src={element.country_flag.img} alt={element.country_flag.alt} />
-                                    <p>{element.city}</p>
+                                    <p className="city-name">{element.city}</p>
                                 </div>
                             </div>
                         </div>

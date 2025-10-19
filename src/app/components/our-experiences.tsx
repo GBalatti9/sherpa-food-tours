@@ -54,7 +54,7 @@ export default function OurExperiencesSection({
                                 dangerouslySetInnerHTML={{ __html: item.description }}
                             ></div>
                             <div className="img-container">
-                                <img src={item.image.img} alt={item.image.alt} />
+                                <img src={item.image.img} alt={item.image.alt} loading="lazy"/>
                             </div>
                         </details>
                     </React.Fragment>
@@ -91,7 +91,7 @@ export default function OurExperiencesSection({
                     <div className="images-container">
                         {images.map((image, i) => (
                             <div className={`img-item ${openIndex === i ? 'active' : ''}`} key={image.title + i}>
-                                <img src={image.image.img} alt={image.image.alt} />
+                                <img src={image.image.img} alt={image.image.alt} loading="lazy"/>
                             </div>
                         ))}
                     </div>

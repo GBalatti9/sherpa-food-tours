@@ -7,6 +7,9 @@ export default function Memories({ memories }: { memories: { img: string; alt: s
     const refs = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
+        const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+        if (!isMobile) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -28,7 +31,8 @@ export default function Memories({ memories }: { memories: { img: string; alt: s
         });
 
         return () => {
-            refs.current.forEach((el) => {
+            const currentRefs = refs.current;
+            currentRefs.forEach((el) => {
                 if (el) observer.unobserve(el);
             });
         };
@@ -37,13 +41,13 @@ export default function Memories({ memories }: { memories: { img: string; alt: s
     return (
         <div className="items-container">
             <div className="titles">
-                <img src="/sherpa-green.png" alt="Sherpa Food Tour Logo" />
+                <img src="/sherpa-green.png" alt="Sherpa Food Tour Logo" loading="lazy"/>
                 <p className="title">memories</p>
             </div>
             <div className="memories-container">
                 {memories.map((memory, index) => (
                     <div className="memory-container" key={memory.img + index} ref={(el) => { refs.current[index] = el }}>
-                        <img src={memory.img} alt={memory.alt} />
+                        <img src={memory.img} alt={memory.alt} loading="lazy" />
                     </div>
                 ))}
             </div>

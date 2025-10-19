@@ -16,7 +16,7 @@ export default function AsFeaturedIn({ asFeatureInImages }: AsFeaturedInProps) {
       <div className="imgs-container">
         {asFeatureInImages.map((img, i) => (
           <div className="img-container" key={img.img + i}>
-            <img src={img.img} alt={img.alt} />
+            <img src={img.img} alt={img.alt} loading="eager" fetchPriority="high"/>
           </div>
         ))}
       </div>

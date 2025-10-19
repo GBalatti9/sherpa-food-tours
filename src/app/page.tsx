@@ -290,7 +290,8 @@ export default async function Home() {
                   <img 
                     src="/google.png" 
                     alt="Google's logo" 
-                    loading="lazy"
+                    loading="eager" 
+                    fetchPriority="high"
                     width="80"
                     height="40"
                   />
@@ -304,7 +305,8 @@ export default async function Home() {
                   <img 
                     src="/trip.webp" 
                     alt="TripAdvisor logo"
-                    loading="lazy"
+                    loading="eager" 
+                    fetchPriority="high"
                     width="80"
                     height="40"
                   />
@@ -320,7 +322,8 @@ export default async function Home() {
                   <img 
                     src="/tripadvisor-logo.png" 
                     alt="TripAdvisor logo"
-                    loading="lazy"
+                    loading="eager" 
+                    fetchPriority="high"
                     width="80"
                     height="40"
                   />

@@ -28,7 +28,8 @@ export default function OurStoryComponent({ our_story }: { our_story: OurStory }
         });
 
         return () => {
-            refs.current.forEach((el) => {
+            const currentRefs = refs.current;
+            currentRefs.forEach((el) => {
                 if (el) observer.unobserve(el);
             });
         };

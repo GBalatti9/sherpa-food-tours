@@ -26,7 +26,7 @@ export default function TruncateP({ text, maxLength }: { text: string; maxLength
                         fontSize: 'inherit'
                     }}
                 >
-                    {isExpanded ? 'Ver menos' : 'Ver más'}
+                    {isExpanded ? 'See less' : 'See more'}
                 </button>
             )}
         </div>

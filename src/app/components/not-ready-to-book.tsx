@@ -22,7 +22,7 @@ export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBo
                     return (
                         <Link className="preview-item" key={post.image.img + i} href={`/travel-guide/${post.city_slug}/${post.slug}`}>
                             <div className="preview-image-container">
-                                <img src={post.image.img} alt={post.image.alt} loading="eager" />
+                                <img src={post.image.img} alt={post.image.alt} loading="lazy" />
                                 <p className="preview-city">{post.city}</p>
                             </div>
                             <div className="preview-data">

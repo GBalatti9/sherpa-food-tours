@@ -36,6 +36,7 @@
         @media (min-width: 768px) {
             margin: 0;
             padding-left: 2.5rem;
+            gap: 2rem;
             flex-direction: row;
             overflow-x: scroll;
             width: 100%;
@@ -47,10 +48,11 @@
 
         .value-card {
             width: 330px;
-            margin: auto;
+            /* margin: 0 auto; */
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            align-items: self-start;
             flex-direction: column;
             background-color: var(--background);
             padding: 2rem 1.3rem;
@@ -62,12 +64,16 @@
                 align-items: center;
                 width: 100%;
                 border-bottom: 1px solid #B9B9B9;
-                justify-content: space-between;
+                /* justify-content: space-between; */
+                gap: 2rem;
                 padding-bottom: 1.5rem;
 
                 .img-container {
-                    width: 126px;
-                    height: 126px;
+                    width: 40%;
+                    /* aspect-ratio: 1 / 1; */
+                    
+                    width:  105px;
+                    height: 105px;
 
                     img {
                         height: 100%;
@@ -77,6 +83,7 @@
                 }
 
                 .value-card-titles {
+                    width: 50%;
                     .value-card-name {
                         font-family: var(--font-dk-otago);
                         font-size: 1.25rem;
@@ -89,6 +96,11 @@
                         gap: .3rem;
                         font-family: var(--font-excelsior);
                         text-transform: uppercase;
+
+                        .city-name {
+                            /* border: 1px solid; */
+                            font-size: 14px;
+                        }
 
                         img {
                             width: 10px;

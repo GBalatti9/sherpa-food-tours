@@ -1,8 +1,6 @@
 import { TourFormatted } from "@/types/tour";
-import BookNowButton from "@/ui/components/book-now";
 import "./css/travel-guide-cards-section.css";
 import Link from "next/link";
-import AskForIt from "./ask-for-it";
 import { ButtonsPropagations } from "./buttons-propagation";
 
 
@@ -71,9 +69,11 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                     <p>From: <span>USD{tour.acf.price}</span></p>
                                 </div>
                                 <div className="final">
-                                    <Link href={`/tour/${tour.slug}`}>
+                                    {/* <Link href={`/tour/${tour.slug}`}> */}
+                                    <span>
                                         Learn More
-                                    </Link>
+                                    </span>
+                                    {/* </Link> */}
                                     <ButtonsPropagations
                                         is_private={tour.acf.is_private}
                                         link={tour.acf.fareharbor.link} />
