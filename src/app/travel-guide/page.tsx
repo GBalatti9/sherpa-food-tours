@@ -2,13 +2,10 @@
 import { wp } from "@/lib/wp";
 import "./travel-guide.css";
 import Link from "next/link";
-import Image from "next/image";
 import { slugify } from "../helpers/slugify";
 import { WPPost } from "@/types/post";
 import { Category } from "@/types/category";
 import React from "react";
-import CitiesDropdown from "@/ui/components/cities-dropdown";
-import FiltersDropdown from "@/ui/components/filter-dropdown";
 import { Metadata } from "next";
 import PageInteractivity from "./components/page-interactivity";
 
@@ -128,8 +125,6 @@ export default async function TravelGuidePage() {
             posts: postsWithImage,
         }
     }))
-
-    console.log({data});
     
     let formattedPosts = await wp.getAllPost(9);
     formattedPosts = await Promise.all(formattedPosts.map(async (post: WPPost) => {

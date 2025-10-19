@@ -15,13 +15,11 @@ const filterOptions: FilterOption[] = [
 ]
 
 interface FiltersDropdownProps {
-    text?: string
     onFilterChange?: (filter: string | null) => void
     selectedFilter?: string | null
 }
 
 export default function FiltersDropdown({
-    text = "Select Filter",
     onFilterChange,
     selectedFilter = null,
 }: FiltersDropdownProps) {

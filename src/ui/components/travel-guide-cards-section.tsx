@@ -5,8 +5,6 @@ import { ButtonsPropagations } from "./buttons-propagation";
 
 
 export default function TravelGuideCardsSection({ tours }: { tours: TourFormatted[] }) {
-    console.log(tours[0]);
-
     return (
         <section className="tour-cards-section">
             <div className="tour-cards">

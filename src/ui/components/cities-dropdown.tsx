@@ -27,8 +27,6 @@ export default function CitiesDropdown({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  console.log({cities});
-  
 
   const toggleDropdown = () => setIsOpen(!isOpen)
 

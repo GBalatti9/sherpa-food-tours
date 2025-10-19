@@ -80,9 +80,6 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const cityData = await wp.getCityBySlug(slug);
     const { acf, featured_media, content } = cityData;
 
-    console.log({ acf });
-
-
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
     const cityUrl = `${baseUrl}/city/${slug}`;
@@ -189,10 +186,6 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     if (acf?.posts) {
         const info = await Promise.all(acf.posts.map(async (id: number) => {
             const postInfo = await wp.getPostInfoById(id);
-
-            console.log({ postInfo });
-
-
             const postImage = await wp.getPostImage(postInfo.featured_media);
             const author = await wp.getAuthor(postInfo.author);
 
@@ -231,10 +224,6 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         }
     }
 
-
-
-
-    console.log({ acf, getToKnowTheCity, posts }, acf.posts);
 
 
     let faqs = null;
