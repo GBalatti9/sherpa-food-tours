@@ -442,7 +442,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                     </div>
                     <div className="calendar-container">
 
-                        <Calendar />
+                        <Calendar link={acf.calendar_widget ?? null}/>
                     </div>
                 </div>
                 <section className="tour-conditions">

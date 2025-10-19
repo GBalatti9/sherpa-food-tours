@@ -50,7 +50,7 @@ export default function FiltersDropdown({
         <div className="relative inline-block">
             {/* Toggle Button */}
             <div
-                className="flex items-center justify-between gap-2 px-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-between gap-2 px-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors py-2 border"
                 onClick={toggleDropdown}
                 role="button"
                 tabIndex={0}
@@ -73,11 +73,12 @@ export default function FiltersDropdown({
                 {/* <ChevronDown
                     className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                 /> */}
+                Filtar
             </div>
 
             {/* Dropdown Menu */}
             {isOpen && (
-                <div className="absolute top-full left-[-5rem] mt-1 min-w-[140px] bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                <div className="absolute top-full left-[-5rem] mt-1 min-w-[140px] bg-white rounded-lg shadow-lg z-50">
                     <ul className="py-1">
                         {filterOptions.map((filter) => (
                             <li key={filter.value} style={{fontFamily:"var(--font-excelsior)", color: "var(--title-color)"}}>

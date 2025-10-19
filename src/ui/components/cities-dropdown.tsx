@@ -92,7 +92,7 @@ export default function CitiesDropdown({
             {cities.map((city, index) => (
               <li key={index}>
                 {onSelectCity ?
-                  <button onClick={() => onSelectCity(city.slug, city.city)}>{city.city}</button>
+                  <button onClick={() => onSelectCity(city.slug, city.city)} className="w-full text-left cursor-pointer">{city.city}</button>
                   :
                   <Link
                     className="city-item"

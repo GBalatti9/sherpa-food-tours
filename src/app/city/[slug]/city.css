@@ -155,9 +155,6 @@
     max-width: 400px;
     margin: auto;
 
-    @media (min-width: 768px) {
-        display: none;
-    }
 
     h2 {
         font-family: var(--font-dk-otago);
@@ -390,5 +387,12 @@
         @media (min-width: 1024px) {
             font-size: 2.5rem;
         }
+    }
+}
+
+.not-ready-to-book {
+    @media (min-width: 1024px) {
+        padding: 4rem 0;
+        max-width: 1024px;
     }
 }

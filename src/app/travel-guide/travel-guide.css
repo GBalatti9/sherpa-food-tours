@@ -42,6 +42,7 @@
             img {
                 width: 40%;
                 display: inline;
+
                 @media screen and (min-width: 768px) {
                     width: 25%;
                 }
@@ -59,7 +60,7 @@
                 font-size: 3rem;
                 gap: .5rem;
                 width: fit-content;
-                
+
             }
 
             @media screen and (min-width: 1024px) {
@@ -172,7 +173,7 @@
             max-width: 1024px;
         }
 
-        
+
         /* .main-searcher {
             display: flex;
             gap: 0.3rem;
@@ -229,10 +230,9 @@
                 font-size: 1.125rem;
                 gap: .3rem;
                 cursor: pointer;
-                border: 1px solid var(--main-color);
                 padding: 5px 10px;
-                border-radius: 5px;
             }
+
         }
 
         .icons {
@@ -411,6 +411,7 @@
 
         .travel-guide-third-section {
             padding: 0;
+
             .preview-wrapper {
                 .preview-item {
                     .preview-data {

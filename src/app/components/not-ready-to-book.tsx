@@ -23,11 +23,13 @@ export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBo
                         <Link className="preview-item" key={post.image.img + i} href={`/travel-guide/${post.city_slug}/${post.slug}`}>
                             <div className="preview-image-container">
                                 <img src={post.image.img} alt={post.image.alt} loading="lazy" />
-                                <p className="preview-city">{post.city}</p>
+                                {post.city &&
+                                    <p className="preview-city">{post.city}</p>
+                                }
                             </div>
                             <div className="preview-data">
                                 <span className="preview-key">{post.key}</span>
-                                <h3>{post.title.rendered}</h3>
+                                <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h3>
                                 <div className="preview-author">
                                     <span>Por:</span> {post.author_name.name}
                                 </div>

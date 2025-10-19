@@ -18,18 +18,21 @@ import { LocalGuide, LocalGuideRaw } from "@/types/local-guide";
 import { extractDescription } from "@/app/helpers/extractDescription";
 import ShowMoreBtn from "./show-more";
 import { FormContact } from "@/ui/components/form-contact";
+import { slugify } from "@/app/helpers/slugify";
+import NotReadyToBook from "@/app/components/not-ready-to-book";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }) {
     const { city, slug } = await params;
 
     const cityBySlug = await wp.getCityBySlug(slug);
-    const image = await wp.getPostImage(cityBySlug.featured_media);
-    const title = `${cityBySlug.city_name} | Sherpa Food Tour`;
 
-    const description = extractDescription(cityBySlug.content)
+    const title = cityBySlug.acf.metadata.title.trim().length > 0 ? cityBySlug.acf.metadata.title : `${cityBySlug.city_name} | Sherpa Food Tour`;
+    const image = await wp.getPostImage(cityBySlug.featured_media);
+    const description = cityBySlug.acf.metadata.description.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content)
+    
     return {
-        title: title,
+        title,
         description,
         openGraph: {
             title,
@@ -71,14 +74,14 @@ export async function generateStaticParams() {
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
 
-    const showMore = false;
     const { slug } = await params;
 
     const cityData = await wp.getCityBySlug(slug);
     const { acf, featured_media, content } = cityData;
 
-    console.log({content});
+    console.log({acf});
     
+
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
     const cityUrl = `${baseUrl}/city/${slug}`;
@@ -177,18 +180,21 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         localGuides = localGuidesRaw.filter(Boolean);
     }
 
+    let posts: any[] = [];
 
+    let getToKnowTheCity: { titles: { title: string; content?: string; featured_media?: number }; posts: any[] } = { titles: { title: "" }, posts: [] }
 
-    // saco los null/undefined
-    
-
-
-    let posts = [];
 
     if (acf?.posts) {
 
+        console.log("estoy aca");
+
+
         const info = await Promise.all(acf.posts.map(async (id: number) => {
             const postInfo = await wp.getPostInfoById(id);
+
+            console.log({postInfo});
+            
 
             const postImage = await wp.getPostImage(postInfo.featured_media);
             const author = await wp.getAuthor(postInfo.author);
@@ -208,22 +214,31 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
         }));
         posts = info.filter(Boolean);
+
+    }
+
+    if (posts.length > 0) {
+        getToKnowTheCity = {
+            titles: { title: "Get to know the city" },
+            posts: posts.map((post) => {
+                return {
+                    ...post,
+                    title: { rendered: post.title },
+                    author_name: post.author,
+                    image: post.featured_media,
+                    city: post.city_name,
+                    city_slug: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0]?.title) : null,
+                    key: post.acf.key
+                }
+            }).slice(0, 3)
+        }
     }
 
 
-    //const getToKnowTheCity = {
-    //    titles: { title: "Get to know the city" }, posts: posts.map((post) => {
-    //        return {
-    //            ...post,
-    //            title: { rendered: post.title },
-    //            author_name: post.author,
-    //            image: post.featured_media,
-    //            city: post.city_name,
-    //            city_slug: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0]?.title) : null,
-    //            key: post.acf.key
-    //        }
-    //    })
-    //}
+
+
+    console.log({ acf, getToKnowTheCity, posts }, acf.posts);
+
 
     let faqs = null;
 
@@ -376,7 +391,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                     </section>
                 }
 
-                {posts.length > 0 &&
+                {/* {posts.length > 0 &&
                     <section className="know-the-city">
                         <h2>Get to know the city</h2>
                         <div className="posts-container">
@@ -440,7 +455,12 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
                         </div>
                     </section>
-                }
+                } */}
+                {(getToKnowTheCity && getToKnowTheCity.posts.length > 0) &&
+                    <section>
+                        <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts} />
+                    </section>}
+
                 {faqs && faqs.faqs.length > 0 &&
                     <section className="faq-section-city">
                         <FaqSection faqs={faqs} />
