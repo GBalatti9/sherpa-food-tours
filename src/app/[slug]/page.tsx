@@ -20,12 +20,12 @@ const pagesToKeep = [
   "traditional-argentine-drinks",
 ];
 
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: { slug: string };
 }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   if (!pagesToKeep.includes(slug)) {
     notFound();

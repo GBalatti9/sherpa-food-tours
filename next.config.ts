@@ -70,6 +70,11 @@ const nextConfig = {
         destination: '/travel-guide/amsterdam/amsterdam-street-food',
         permanent: true,
       },
+      {
+        source: '/best-bitterballen-amsterdam',
+        destination: '/travel-guide/amsterdam/best-bitterballen-amsterdam',
+        permanent: true,
+      },
     ];
   },
 
