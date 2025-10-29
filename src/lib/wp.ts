@@ -43,8 +43,13 @@ export const wp = {
     },
     getPostInfoById: async (id: number) => {
         const response = await fetch(`${apiUrl}/posts/${id}`)
+        console.log({response});
+        
 
-        if (!response.ok) throw new Error("No se obtuvieron datos");
+        if (!response.ok){
+            console.error("No se obtuvieron datos")
+            return { title: null, content: null, excerpt: null, featured_media: null, date: null, modified: null, relaciones: null, acf: null, author: null, slug: null }
+        }
 
         const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified, relaciones, acf, author, slug } = await response.json();
 
@@ -64,6 +69,23 @@ export const wp = {
             return await response.json();
         } catch (error) {
             console.warn('getAllPost error:', error);
+            return []; // Retornar array vacío para no romper el build
+        }
+    },
+    getAllPostPaginated: async (limit: number, page: number) => {
+        try {
+            const url = `${apiUrl}/posts?per_page=${limit}&page=${page}`;
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                console.warn(`Posts API failed: ${response.status} ${response.statusText}`);
+                return []; // Retornar array vacío en lugar de fallar
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.warn('getAllPostPaginated error:', error);
             return []; // Retornar array vacío para no romper el build
         }
     },

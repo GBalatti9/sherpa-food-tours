@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import ArticleComponent from "./articles/article-component";
 
 const pagesToKeep = [
     "traditional-argentine-drinks-and-where-to-try-them",
@@ -17,20 +18,16 @@ const pagesToKeep = [
     "7-must-visit-breweries-in-buenos-aires-for-craft-beer-lovers",
     "best-restaurants-in-roma-norte-cdmx",
     "poulette-restaurants-in-paris",
-    "traditional-argentine-drinks",
 ];
 
+export default async function Page({
+    params,
+}: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
 
-    export default async function Page({
-        params,
-    }:
-        { params: Promise<{ slug: string }> }) {
-        const { slug } = await params;
-
-        if (!pagesToKeep.includes(slug)) {
-            notFound();
-        }
-
-        return null;
-        //   return <YourArticleTemplate slug={slug} />;
+    if (!pagesToKeep.includes(slug)) {
+        notFound();
     }
+
+    return <ArticleComponent params={params} />;
+}

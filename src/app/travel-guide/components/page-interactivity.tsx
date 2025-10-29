@@ -6,8 +6,8 @@ import FiltersDropdown from "@/ui/components/filter-dropdown";
 import Link from "next/link";
 import { PostWithImage } from "../page";
 import { useEffect, useState } from "react";
-import { handleNewData } from "../actions";
 import "./page-interactivity.css";
+import InfiniteScroll from "./infinite-scroll";
 
 interface Props {
     cities: {
@@ -19,16 +19,9 @@ interface Props {
         }
     }[],
     formattedPosts: PostWithImage[],
-    data: {
-        category: string;
-        id: number;
-        posts: PostWithImage[];
-    }[],
 }
 
-export default function PageInteractivity({ cities, formattedPosts, data }: Props) {
-    const [loading, setLoading] = useState<boolean>(false);
-    const [articles, setArticles] = useState(data);
+export default function PageInteractivity({ cities, formattedPosts }: Props) {
     const [citySelected, setCitySelected] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
@@ -37,17 +30,8 @@ export default function PageInteractivity({ cities, formattedPosts, data }: Prop
     const [filteredArticles, setFilteredArticles] = useState<PostWithImage[] | null>(null);
 
     useEffect(() => {
-        const articlesFromData = data.flatMap(item => 
-            item.posts.map(post => ({
-                ...post,
-                categoryName: item.category // Agregar el nombre de la categoría a cada post
-            }))
-        );
-        const uniqueArticles = articlesFromData.filter((article, index, self) =>
-            index === self.findIndex(a => a.id === article.id)
-        );
-        setAllArticles(uniqueArticles);
-    }, [data])
+        setAllArticles(formattedPosts);
+    }, [formattedPosts])
 
     useEffect(() => {
         if (!allArticles) return;
@@ -96,24 +80,6 @@ export default function PageInteractivity({ cities, formattedPosts, data }: Prop
     }, [citySelected, searchQuery, selectedFilter, allArticles])
 
 
-    const handleClick = async (category: number) => {
-        setLoading(true)
-
-        const totalArticles = (articles.find((item) => item.id === category)?.posts.length || 0) + 1;
-
-        const { success, data } = await handleNewData(category, 6, totalArticles);
-
-        if (data && success) {
-            setArticles((prevData) => {
-                return prevData.map((item) =>
-                    item.id === category
-                        ? { ...item, posts: [...item.posts, ...data] }
-                        : item
-                );
-            });
-        }
-        setLoading(false);
-    }
 
     const onSelectCity = (slug: string, value: string) => {
         setCitySelected(value);
@@ -376,187 +342,7 @@ export default function PageInteractivity({ cities, formattedPosts, data }: Prop
         <>
             {interactiveElements()}
             <section className="travel-guide-third-section-main-container">
-
-                {/* First Section */}
-                <>
-                    <div className="travel-guide-third-section">
-                        {formattedPosts.map((post: PostWithImage, i: number) => {
-                            let slug;
-
-                            if (post.relaciones.ciudades && post.relaciones.ciudades.length > 0) {
-                                slug = post.relaciones.ciudades[0]!.title;
-
-                            } else {
-                                slug = null
-                            }
-
-                            let url = null;
-
-                            if (!slug) {
-                                url = "/travel-guide"
-                            } else {
-                                url = `/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`
-                            }
-
-                            // Clean title for better SEO
-                            const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, '');
-                            const imageAlt = `${cleanTitle} - ${slug || 'Sherpa Food Tours'}`;
-
-                            // ------------------
-                            // SOLO PARA MOBILE
-                            // ------------------
-
-                            // Render del primer elemento
-                            if (i === 0) {
-                                return (
-                                    <div className={`preview-wrapper element-${i}`} key={post.id}>
-                                        <Link className="preview-item" href={url}>
-                                            <div className="preview-image-container">
-                                                <img
-                                                    decoding="async"
-                                                    src={post.image.img}
-                                                    alt={imageAlt}
-                                                    width="400"
-                                                    height="300"
-                                                    loading="eager"
-                                                />
-                                                <p className="preview-city">{slug}</p>
-                                            </div>
-                                            <div className="preview-data">
-                                                <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h3>
-                                                <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
-                                                <p className="preview-author"><span>Por: </span>{post.author_name.name}</p>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                );
-                            }
-
-                            // // Render del grupo de i === 1 y i === 2
-                            if (i === 1) {
-                                return (
-                                    <div className="preview-wrapper-group" key="group-1-2">
-                                        {[formattedPosts[1], formattedPosts[2]].map((p) => {
-                                            const s = p.relaciones?.ciudades?.[0]?.title || null;
-                                            const u = s
-                                                ? `/travel-guide/${slugify(s)}/${p.slug}`
-                                                : "/travel-guide";
-                                            const cleanTitleGroup = p.title.rendered.replace(/<[^>]*>/g, '');
-                                            const imageAltGroup = `${cleanTitleGroup} - ${s || 'Sherpa Food Tours'}`;
-
-                                            return (
-                                                <div className="preview-wrapper" key={p.id}>
-                                                    <Link className="preview-item" href={u}>
-                                                        <div className="preview-image-container">
-                                                            <img
-                                                                decoding="async"
-                                                                src={p.image.img}
-                                                                alt={imageAltGroup}
-                                                                width="400"
-                                                                height="300"
-                                                                loading="eager"
-                                                            />
-                                                            <p className="preview-city">{s}</p>
-                                                        </div>
-                                                        <div className="preview-data">
-                                                            <h3 dangerouslySetInnerHTML={{ __html: p.title.rendered }}></h3>
-                                                            <p className="preview-author"><span>Por: </span>{p.author_name.name}</p>
-                                                        </div>
-                                                    </Link>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                );
-                            }
-
-                            // // Elementos con i > 2
-                            if (i > 2) {
-                                return (
-                                    <div className="preview-wrapper list" key={post.id}>
-                                        <Link className="preview-item" href={url}>
-                                            <div className="preview-image-container">
-                                                <img
-                                                    decoding="async"
-                                                    src={post.image.img}
-                                                    alt={imageAlt}
-                                                    width="400"
-                                                    height="300"
-                                                    loading="lazy"
-                                                />
-                                                <p className="preview-city">{slug}</p>
-                                            </div>
-                                            <div className="preview-data">
-                                                <h3>{cleanTitle}</h3>
-                                                <p className="preview-author"><span>Por: </span>{post.author_name.name}</p>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                );
-                            }
-
-                            return null;
-                        })}
-                    </div>
-                    <Link href="#travel-guide" className="show-more" aria-label="Show more travel guide articles">Show more</Link>
-                </>
-
-                {/* Second Section */}
-                {articles.map((element, i) => (
-                    <div className="category-container" key={element.category + i}>
-                        <h2 className="category-title">{element.category}</h2>
-                        <div className="travel-guide-third-section">
-                            {element.posts.map((post: PostWithImage, postIndex: number) => {
-                                let slug;
-
-                                if (post.relaciones.ciudades && post.relaciones.ciudades.length > 0) {
-                                    slug = post.relaciones.ciudades[0]!.title;
-                                } else {
-                                    slug = null
-                                }
-
-                                let url = null;
-
-                                if (!slug) {
-                                    url = "/travel-guide"
-                                } else {
-                                    url = `/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`
-                                }
-
-                                const cleanTitleCategory = post.title.rendered.replace(/<[^>]*>/g, '');
-                                const imageAltCategory = `${cleanTitleCategory} - ${slug || 'Sherpa Food Tours'}`;
-
-                                return (
-                                    <div className={`preview-wrapper`} key={post.id}>
-                                        <Link className="preview-item" href={url}>
-                                            <div className="preview-image-container">
-                                                <img
-                                                    decoding="async"
-                                                    src={post.image.img}
-                                                    alt={imageAltCategory}
-                                                    width="400"
-                                                    height="300"
-                                                    loading={postIndex < 3 ? "eager" : "lazy"}
-                                                />
-                                                <p className="preview-city">{slug}</p>
-                                            </div>
-                                            <div className="preview-data">
-                                                <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h3>
-                                                <p className="preview-author"><span>Por: </span>{post.author_name.name}</p>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <button
-                            className="show-more"
-                            aria-label={`Show more ${element.category} articles`}
-                            onClick={() => handleClick(element.id)}>
-                            {loading ? "Loading..." : "Show more"}
-                        </button>
-                    </div>
-                ))}
+                <InfiniteScroll initialPosts={formattedPosts} />
             </section>
         </>
     );

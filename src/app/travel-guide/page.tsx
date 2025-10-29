@@ -4,15 +4,9 @@ import "./travel-guide.css";
 import Link from "next/link";
 import { slugify } from "../helpers/slugify";
 import { WPPost } from "@/types/post";
-import { Category } from "@/types/category";
 import React from "react";
 import { Metadata } from "next";
 import PageInteractivity from "./components/page-interactivity";
-
-interface CompletePost {
-    category: string;
-    posts: PostWithImage[]
-}
 
 export interface PostWithImage extends WPPost {
     image: {
@@ -84,49 +78,15 @@ export const metadata: Metadata = {
 
 export default async function TravelGuidePage() {
 
-    let categories = await wp.getAllCategories();
-    categories = categories.filter((category: Category) => category.name !== "Uncategorized");
-
+    // Get cities for dropdown
     let cities = await wp.getAllCities();
-    cities = cities.map((city: { slug: string; title: { rendered: string } }) => { return { slug: city.slug, city: city.title.rendered } });
+    cities = cities.map((city: { slug: string; title: { rendered: string } }) => { 
+        return { slug: city.slug, city: city.title.rendered } 
+    });
 
-    const data = await Promise.all(categories.map(async (category: Category) => {
-        const posts = await wp.getPostsByCategory(category.id, 6);
-        if (!posts.ok) {
-            return {
-                category: category.name,
-                id: category.id,
-                posts: [],
-            }
-        }
-
-        const postsWithImage = await Promise.all(
-            posts.data.map(async (post: WPPost) => {
-                const image = await wp.getPostImage(post.featured_media);
-                const author = await wp.getAuthor(post.author);
-                return {
-                    ...post,
-                    author_name: author,
-                    image,
-                };
-            })
-        ).then((results) =>
-            results.filter(
-                (post) => post.image?.img !== "https://www.sherpafoodtours.com/default-og.jpg" &&
-                    Array.isArray(post.relaciones.ciudades) &&
-                    post.relaciones.ciudades.length > 0 &&
-                    post.relaciones.ciudades[0] !== null
-            )
-        ) as PostWithImage[];
-
-        return {
-            category: category.name,
-            id: category.id,
-            posts: postsWithImage,
-        }
-    }))
+    // Get only 10 articles for initial load
+    let formattedPosts = await wp.getAllPost(10);
     
-    let formattedPosts = await wp.getAllPost(9);
     formattedPosts = await Promise.all(formattedPosts.map(async (post: WPPost) => {
         const image = await wp.getPostImage(post.featured_media);
         const author = await wp.getAuthor(post.author);
@@ -136,7 +96,18 @@ export default async function TravelGuidePage() {
             author_name: author,
         }
     }))
-
+    
+    console.log("pre filter", {formattedPosts});
+    
+    // Filter posts that have valid images and cities
+    formattedPosts = formattedPosts.filter(
+        (post: PostWithImage) => post.image?.img !== "https://www.sherpafoodtours.com/default-og.jpg" &&
+        Array.isArray(post.relaciones.ciudades) &&
+        post.relaciones.ciudades.length > 0 &&
+        post.relaciones.ciudades[0] !== null
+    ) as PostWithImage[];
+    
+    console.log({formattedPosts});
     // Generate JSON-LD structured data for SEO
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
 
@@ -227,7 +198,6 @@ export default async function TravelGuidePage() {
                 <PageInteractivity
                     cities={cities}
                     formattedPosts={formattedPosts}
-                    data={data}
                 />
             </article>
         </>

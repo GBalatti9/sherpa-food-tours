@@ -184,7 +184,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
 
     if (acf?.posts) {
-        const info = await Promise.all(acf.posts.map(async (id: number) => {
+        const info = await Promise.all(acf.posts.map(async (id: number) => {            
             const postInfo = await wp.getPostInfoById(id);
             const postImage = await wp.getPostImage(postInfo.featured_media);
             const author = await wp.getAuthor(postInfo.author);
@@ -339,7 +339,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                         </div>
                     </div>
                 </section>
-                <section id="as-feature-in">
+                <section>
                     <AsFeaturedIn asFeatureInImages={asFeatureInImages} />
                 </section>
                 <section className="third-section">
@@ -352,7 +352,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                         items={data_our_experiences_section.items}
                     />
                 }
-                <section className="fourth-section">
+                <section className="fourth-section" id="as-feature-in">
                     <JustRelax />
                     <TravelGuideCardsSection tours={tours} />
                 </section>
