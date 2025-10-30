@@ -10,6 +10,7 @@ import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 import { wp } from "@/lib/wp";
 import FareharborScript from "@/ui/components/FareharborScript";
 import Script from "next/script";
+import { Cookies } from "./Cookies";
 
 const excelsior = localFont({
   src: [
@@ -116,6 +117,7 @@ export default async function RootLayout({
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         />
+        <Cookies />
         <Script id="gtag-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
