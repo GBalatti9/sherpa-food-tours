@@ -291,6 +291,7 @@ export const wp = {
             const data = await response.json();
             return { ok: true, data };
         } catch (error) {
+            console.error(error)
             return { ok: false, data: null }
         }
     },
@@ -302,6 +303,7 @@ export const wp = {
             const data = await response.json();
             return { ok: true, data };
         } catch (error) {
+            console.error(error)
             return { ok: false, data: null }
         }
     },

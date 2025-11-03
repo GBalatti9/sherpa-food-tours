@@ -22,8 +22,6 @@ export default async function SofiaGonzalezPage() {
             [key: string]: string;
         };
         url?: string;
-        meta?: any;
-        acf?: any;
     };
 
     // Obtener los primeros 10 posts del autor
