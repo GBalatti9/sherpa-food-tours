@@ -18,9 +18,9 @@ import { Metadata } from "next";
 export async function generateMetadata(): Promise<Metadata> {
   const pageInfo = await wp.getPageInfo("home");
   const { title, content } = pageInfo;
-  
+
   // Extract description from content or use default
-  const description = content 
+  const description = content
     ? content.replace(/<[^>]*>/g, '').substring(0, 160) + '...'
     : "Experience authentic food tours around the world. Enjoy local flavors, cultural insights, and unique culinary adventures in top cities with Sherpa Food Tours.";
 
@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     keywords: [
       "food tours",
-      "culinary tours", 
+      "culinary tours",
       "authentic food experiences",
       "local food tours",
       "walking food tours",
@@ -135,14 +135,14 @@ export default async function Home() {
   ]
 
   const images = await fetchImages(imagesIds);
-  
+
   const asFeatureInImages = await fetchImages(asFeatureInImagesId);
   const memories = await fetchImages(memoriesImagesIds);
 
 
   const [background_image, ...imgs] = images;
   console.log(imgs);
-  
+
 
 
   const citiesRaw = await wp.getAllCities();
@@ -177,7 +177,7 @@ export default async function Home() {
       return indexA - indexB;
     });
   }
-  
+
 
 
   const not_ready_to_book_section = await getNotReadyToBookSection();
@@ -273,133 +273,139 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      
+
       <main role="main">
         <section className="home-first-section" aria-label="Hero section with company information">
-        <div className="first-section-container">
-          <div className="image-container">
-            <MainImage 
-              src={background_image.img} 
-              alt={background_image.alt}
-            />
-          </div>
-          <div className="data-container">
-            <div className="logos-container">
-              <div className="logo-container">
-                <div className="img-container">
-                  <img 
-                    src="/google.png" 
-                    alt="Google's logo" 
-                    loading="eager" 
-                    fetchPriority="high"
-                    width="80"
-                    height="40"
-                  />
+          <div className="first-section-container">
+            <div className="image-container">
+              <MainImage
+                src={background_image.img}
+                alt={background_image.alt}
+              />
+            </div>
+            <div className="data-container">
+              <div className="logos-container">
+                <div className="logo-container">
+                  <div className="img-container">
+                    <img
+                      src="/trip.webp"
+                      // srcSet=" 
+                      // /trip-80.webp 80w, 
+                      // /trip-160.webp 160w, 
+                      // /trip-320.webp 320w
+                      // "
+                      sizes="(max-width: 600px) 80px, 80px"
+                      alt="TripAdvisor logo"
+                      loading="eager"
+                      fetchPriority="high"
+                      width="80"
+                      height="40"
+                    />
+                  </div>
+                  <div className="review">
+                    <p>400 reviews</p>
+                  </div>
                 </div>
-                <div className="review">
-                  <p>400 reviews</p>
+                <div className="logo-container">
+                  <div className="img-container">
+                    <img
+                      src="/trip.webp"
+                      alt="TripAdvisor logo"
+                      loading="eager"
+                      fetchPriority="high"
+                      width="80"
+                      height="40"
+                    />
+                  </div>
+                  <div className="review star" role="img" aria-label="5 star rating">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={"star-" + i} size={14} fill="#f2b203" stroke="#f2b203" />
+                    ))}
+                  </div>
+                </div>
+                <div className="logo-container">
+                  <div className="img-container">
+                    <img
+                      src="/tripadvisor-logo.webp"
+                      alt="TripAdvisor logo"
+                      loading="eager"
+                      fetchPriority="high"
+                      width="80"
+                      height="40"
+                    />
+                  </div>
+                  <div className="review">
+                    <p>4.649 reviews</p>
+                  </div>
                 </div>
               </div>
-              <div className="logo-container">
-                <div className="img-container">
-                  <img 
-                    src="/trip.webp" 
-                    alt="TripAdvisor logo"
-                    loading="eager" 
-                    fetchPriority="high"
-                    width="80"
-                    height="40"
-                  />
-                </div>
-                <div className="review star" role="img" aria-label="5 star rating">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={"star-" + i} size={14} fill="#f2b203" stroke="#f2b203" />
-                  ))}
-                </div>
-              </div>
-              <div className="logo-container">
-                <div className="img-container">
-                  <img 
-                    src="/tripadvisor-logo.png" 
-                    alt="TripAdvisor logo"
-                    loading="eager" 
-                    fetchPriority="high"
-                    width="80"
-                    height="40"
-                  />
-                </div>
-                <div className="review">
-                  <p>4.649 reviews</p>
+              <div className="info-container">
+                <p className="info-container-kicker" role="banner">{acf.kicker}</p>
+                <h1 className="info-container-title">{title}</h1>
+                <div className="xl-container">
+                  <p className="info-container-subheadline">{acf.subhedline}</p>
+                  <p className="info-container-kicker xl">{acf.kicker}</p>
                 </div>
               </div>
             </div>
-            <div className="info-container">
-              <p className="info-container-kicker" role="banner">{acf.kicker}</p>
-              <h1 className="info-container-title">{title}</h1>
-              <div className="xl-container">
-                <p className="info-container-subheadline">{acf.subhedline}</p>
-                <p className="info-container-kicker xl">{acf.kicker}</p>
-              </div>
-            </div>
           </div>
-        </div>
 
-      </section>
-      <section className="home-second-section" aria-label="As featured in section">
-        <AsFeaturedIn asFeatureInImages={asFeatureInImages} />
-      </section>
-      <section className="third-section" aria-label="About our food tours">
-        <div className="content" dangerouslySetInnerHTML={{ __html: content }}>
-        </div>
-      </section>
-      {data_our_experiences_section &&
-        <OurExperiencesSection
-          title={data_our_experiences_section.title}
-          items={data_our_experiences_section.items}
-        />
-      }
-      <section className="home-fourth-section" aria-label="Available food tour destinations">
-        <header className="title-section">
-          <h2>Just relax, <br /> we &apos;ve got it cover</h2>
-          <p><span>Everything&apos;s included.</span> We handle the details and most dietary needs. Just show up ready to enjoy</p>
-        </header>
-        <div className="tours-section">
-          <div className="tours-container" role="list" aria-label="List of available food tour destinations">
-            {cities.map((city, i) => (
-              <Link 
-                className="tour-card" 
-                key={city.slug + i} 
-                href={`/city/${city.slug}`}
-              >
-                <div className="img-container">
-                  <img 
-                    src={city.image.img} 
-                    alt={`${city.city} food tour destination image`}
-                    loading="lazy"
-                    width="300"
-                    height="200"
-                  />
-                </div>
-                <div className="tour-data">
-                  <h3>{city.city}</h3>
-                  <p>{city.country}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-      {(not_ready_to_book_section.titles && not_ready_to_book_section.posts) &&
-        <NotReadyToBook
-          titles={not_ready_to_book_section.titles}
-          posts={not_ready_to_book_section.posts}
-        />
-      }
-      {memories.length > 0 &&
-        <section className="home-last-section" aria-label="Customer memories and experiences">
-          <Memories memories={memories} />
         </section>
-      }
+        <section className="home-second-section" aria-label="As featured in section">
+          <AsFeaturedIn asFeatureInImages={asFeatureInImages} />
+        </section>
+        <section className="third-section" aria-label="About our food tours">
+          <div className="content" dangerouslySetInnerHTML={{ __html: content }}>
+          </div>
+        </section>
+        {data_our_experiences_section &&
+          <OurExperiencesSection
+            title={data_our_experiences_section.title}
+            items={data_our_experiences_section.items}
+          />
+        }
+        <section className="home-fourth-section" aria-label="Available food tour destinations">
+          <header className="title-section">
+            <h2>Just relax, <br /> we &apos;ve got it cover</h2>
+            <p><span>Everything&apos;s included.</span> We handle the details and most dietary needs. Just show up ready to enjoy</p>
+          </header>
+          <div className="tours-section">
+            <div className="tours-container" role="list" aria-label="List of available food tour destinations">
+              {cities.map((city, i) => (
+                <Link
+                  className="tour-card"
+                  key={city.slug + i}
+                  href={`/city/${city.slug}`}
+                >
+                  <div className="img-container">
+                    <img
+                      src={city.image.img}
+                      alt={`${city.city} food tour destination image`}
+                      loading="lazy"
+                      width="300"
+                      height="200"
+                    />
+                  </div>
+                  <div className="tour-data">
+                    <h3>{city.city}</h3>
+                    <p>{city.country}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+        {(not_ready_to_book_section.titles && not_ready_to_book_section.posts) &&
+          <NotReadyToBook
+            titles={not_ready_to_book_section.titles}
+            posts={not_ready_to_book_section.posts}
+          />
+        }
+        {memories.length > 0 &&
+          <section className="home-last-section" aria-label="Customer memories and experiences">
+            <Memories memories={memories} />
+          </section>
+        }
 
       </main>
     </>
