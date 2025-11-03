@@ -287,20 +287,14 @@ export default async function Home() {
               <div className="logos-container">
                 <div className="logo-container">
                   <div className="img-container">
-                    <img
-                      src="/trip.webp"
-                      // srcSet=" 
-                      // /trip-80.webp 80w, 
-                      // /trip-160.webp 160w, 
-                      // /trip-320.webp 320w
-                      // "
-                      sizes="(max-width: 600px) 80px, 80px"
-                      alt="TripAdvisor logo"
-                      loading="eager"
-                      fetchPriority="high"
-                      width="80"
-                      height="40"
-                    />
+                  <img 
+                    src="/google.png" 
+                    alt="Google's logo" 
+                    loading="eager" 
+                    fetchPriority="high"
+                    width="80"
+                    height="40"
+                  />
                   </div>
                   <div className="review">
                     <p>400 reviews</p>
