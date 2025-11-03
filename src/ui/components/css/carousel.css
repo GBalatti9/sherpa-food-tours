@@ -1,12 +1,23 @@
 
-
-.swiper-wrapper {
-    gap: .6rem;
+.carousel-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
 }
 
 .carousel-wrapper .swiper {
     width: 100%;
     padding: 0;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.carousel-wrapper .swiper-wrapper {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    /* Swiper maneja el offset automáticamente con centeredSlides */
 }
 
 .carousel-wrapper .swiper-slide {
@@ -14,6 +25,8 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    box-sizing: border-box;
+    /* Dejar que Swiper calcule el ancho con slidesPerView */
 }
 
 /* Opcional: agregar transición suave */
@@ -21,7 +34,7 @@
     transform: scale(1);
 }
 
-.carousel-wrapper .swiper-slide {
+.carousel-wrapper .swiper-slide:not(.swiper-slide-active) {
     transform: scale(0.95);
     transition: transform 0.3s ease;
 }

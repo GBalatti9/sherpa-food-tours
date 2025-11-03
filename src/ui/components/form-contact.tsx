@@ -29,12 +29,18 @@ export const FormContact = () => {
         setSubmitStatus('idle');
 
         try {
+            // Obtener la URL actual automáticamente
+            const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+            
             const response = await fetch('/api/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    ...formData,
+                    sourceUrl: currentUrl // Agregar la URL de origen
+                }),
             });
 
             if (response.ok) {

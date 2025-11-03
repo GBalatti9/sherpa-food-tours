@@ -18,6 +18,8 @@ const pagesToKeep = [
     "7-must-visit-breweries-in-buenos-aires-for-craft-beer-lovers",
     "best-restaurants-in-roma-norte-cdmx",
     "poulette-restaurants-in-paris",
+    "avenue-cookery-school-london",
+    "eating-paris",
 ];
 
 export default async function Page({

@@ -293,6 +293,51 @@ export const wp = {
         } catch (error) {
             return { ok: false, data: null }
         }
+    },
+
+    getPostsByAuthorId: async (id: number, limit = 10, offset = 0) => {
+        try {
+            const url = `${apiUrl}/posts?author=${id}&per_page=${limit}&offset=${offset}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            return { ok: true, data };
+        } catch (error) {
+            return { ok: false, data: null }
+        }
+    },
+
+    getAllUsers: async () => {
+        try {
+            const url = `${apiUrl}/users`;
+            const response = await fetch(url);
+            const data = await response.json();
+            return { ok: true, data };
+        } catch (error) {
+            return { ok: false, data: null }
+        }
+    },
+
+    getUserBySlug: async (slug: string) => {
+        try {
+            const url = `${apiUrl}/users?slug=${slug}`;
+            const response = await fetch(url);
+            if (!response.ok) return { ok: false, data: null };
+            const data = await response.json();
+            return { ok: true, data: data.length > 0 ? data[0] : null };
+        } catch (error) {
+            return { ok: false, data: null };
+        }
+    },
+    getUserById: async (id: number) => {
+        try {
+            const url = `${apiUrl}/users/${id}`;
+            const response = await fetch(url);
+            if (!response.ok) return { ok: false, data: null };
+            const data = await response.json();
+            return { ok: true, data };
+        } catch (error) {
+            return { ok: false, data: null };
+        }
     }
 
 

@@ -463,7 +463,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
                 <ItineraryComponent itinerary={itinerary} desktopImgs={desktopImgs} />
 
-                <section className="contact-section">
+                <section className="contact-section px-8 md:text-center">
                     <h2>Got any questions? <span>Contact Us!</span></h2>
                     <FormContact />
                 </section>
