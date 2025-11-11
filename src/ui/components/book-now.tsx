@@ -1,6 +1,8 @@
 "use client";
 
 export default function BookNowButton({ link, data_tour }: { link?: string; data_tour?: string }) {
+  console.log({link, data_tour});
+  
   return (
     !link ? (
       <button

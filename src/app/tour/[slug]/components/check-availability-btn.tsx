@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import Calendar from "./calendar";
 
 
-export default function CheckAvailabilityButton() {
+export default function CheckAvailabilityButton({ link, data_tour }: { link?: string; data_tour?: string }) {
 
 
     const svg = useRef<SVGSVGElement | null>(null);
@@ -31,7 +31,10 @@ export default function CheckAvailabilityButton() {
                         <path d="M5.03125 13.1865L10.0313 8.18652L15.0313 13.1865" stroke="#017E80" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </button>
-                <BookNowButton />
+                <BookNowButton
+                    link={link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
+                    data_tour={data_tour ?? "627977"}
+                />
             </div>
             <div className={`calendar-availability ${open ? "active" : "inactive"}`} >
                 <Calendar />

@@ -397,6 +397,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                                     link={acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
                                     data_tour={acf.fareharbor?.id ?? "627977"}
                                 />
+                                
                             )}
                         </div>
                         <div className="price-container">
