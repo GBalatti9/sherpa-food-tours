@@ -1,6 +1,6 @@
 
 import { LocalGuide } from "@/types/local-guide"
-import "./css/meet-local-guides.css"
+// import "./css/meet-local-guides.css"
 
 
 

@@ -1,4 +1,4 @@
-import "./css/as-featured-in.css"
+// import "./css/as-featured-in.css"
 
 interface FeaturedImage {
   img: string;

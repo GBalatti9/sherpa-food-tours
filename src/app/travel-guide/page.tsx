@@ -1,6 +1,6 @@
 
 import { wp } from "@/lib/wp";
-import "./travel-guide.css";
+// import "./travel-guide.css";
 import Link from "next/link";
 import { slugify } from "../helpers/slugify";
 import { WPPost } from "@/types/post";

@@ -8,6 +8,7 @@ import { getNotReadyToBookSection } from "@/app/utils/getNotReadyToBookSection";
 import { Metadata } from "next";
 import { WPPost } from "@/types/post";
 import "../../travel-guide/[city]/[slug]/travel-guide-slug.css";
+import { decode } from "html-entities";
 
 
 // ----------------------
@@ -123,7 +124,10 @@ export async function generateStaticParams() {
 export default async function ArticleComponent({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
-    const { title, content, featured_media, excerpt, date, modified, relaciones } = await wp.getPostInfo(slug);
+    const { title: titleRaw, content, featured_media, excerpt, date, modified, relaciones } = await wp.getPostInfo(slug);
+    
+    const title = decode(titleRaw);
+    
     const { img, alt } = await wp.getPostImage(featured_media);
 
     const { tours } = relaciones;

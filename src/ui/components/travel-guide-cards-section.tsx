@@ -1,5 +1,5 @@
 import { TourFormatted } from "@/types/tour";
-import "./css/travel-guide-cards-section.css";
+// import "./css/travel-guide-cards-section.css";
 import Link from "next/link";
 import { ButtonsPropagations } from "./buttons-propagation";
 

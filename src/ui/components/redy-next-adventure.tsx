@@ -1,4 +1,4 @@
-import "./css/next-adventure.css"
+// import "./css/next-adventure.css"
 
 import BookNowButton from "./book-now";
 

@@ -4,7 +4,7 @@ import "./globals.css";
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/free-mode';
-// import NavBar from "@/ui/components/nav-bar";
+// import NavBar from "@/ui/cmponents/nav-bar";
 import Footer from "../ui/components/footer";
 import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 import { wp } from "@/lib/wp";

@@ -1,6 +1,6 @@
 
 import OurExperiencesSection from "@/app/components/our-experiences";
-import "./city.css";
+// import "./city.css";
 import { fetchImages } from "@/app/utils/fetchImages";
 import { wp } from "@/lib/wp";
 import AsFeaturedIn from "@/ui/components/as-featured-in";
@@ -377,71 +377,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                     </section>
                 }
 
-                {/* {posts.length > 0 &&
-                    <section className="know-the-city">
-                        <h2>Get to know the city</h2>
-                        <div className="posts-container">
-                            {posts[0] && (
-                                <Link href={`/travel-guide/${posts[0].city.slug}/${posts[0].slug}`} key={0} className="post">
-                                    <div className="img-container">
-                                        <img src={posts[0].featured_media.img} alt="" />
-                                    </div>
-                                    <div className="data">
-                                        <p className="key">{posts[0].acf.key}</p>
-                                        <p className="title">{posts[0].title}</p>
-                                        <div
-                                            className="description"
-                                            dangerouslySetInnerHTML={{ __html: posts[0].excerpt }}
-                                        ></div>
-                                        <p className="author">
-                                            Por: <span>{posts[0].author.name}</span>
-                                        </p>
-                                    </div>
-                                </Link>
-                            )}
-
-                            {posts.length > 2 && (
-                                <div className="group-posts">
-                                    {[posts[1], posts[2]].map((post, i) => (
-                                        <Link href={`/travel-guide/${post.city.slug}/${post.slug}`} key={i} className="post">
-                                            <div className="img-container">
-                                                <img src={post.featured_media.img} alt="" />
-                                            </div>
-                                            <div className="data">
-                                                <p className="key">{post.acf.key}</p>
-                                                <p className="title">{post.title}</p>
-                                                <p className="author">
-                                                    Por: <span>{post.author.name}</span>
-                                                </p>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
-
-
-                            {posts.slice(3).length > 0 &&
-                                <div className="remainig-posts">
-                                    {posts.slice(3).map((post, i) => (
-                                        <Link href={`/travel-guide/${post.city.slug}/${post.slug}`} key={i} className="post">
-                                            <div className="img-container">
-                                                <img src={post.featured_media.img} alt="" />
-                                            </div>
-                                            <div className="data">
-                                                <p className="title">{post.title}</p>
-                                                <p className="author">
-                                                    Por: <span>{post.author.name}</span>
-                                                </p>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                </div>
-                            }
-
-
-                        </div>
-                    </section>
-                } */}
+                
                 {(getToKnowTheCity && getToKnowTheCity.posts.length > 0) &&
                     <section>
                         <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts} />

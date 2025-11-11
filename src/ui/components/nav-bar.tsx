@@ -1,7 +1,7 @@
 import Link from "next/link";
 import BookNowButton from "./book-now";
 import MobileMenu from "./mobile-menu";
-import "./css/nav-bar.css";
+// import "./css/nav-bar.css";
 import CitiesDropdown from "./cities-dropdown";
 
 export default function NavBar({ currentPath, cities }: { currentPath: string; cities: { city: string; slug: string; flag: { img: string; alt: string } }[] }) {

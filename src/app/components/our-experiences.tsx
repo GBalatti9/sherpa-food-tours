@@ -1,6 +1,6 @@
 "use client";
 
-import "../../ui/components/css/our-experiences.css"
+// import "../../ui/components/css/our-experiences.css"
 import React, { useState } from "react";
 
 interface Item {

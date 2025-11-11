@@ -1,7 +1,7 @@
 
 import { wp } from "@/lib/wp";
 import { ACFHome } from "@/types/acf-home";
-import "./home.css";
+// import "./home.css";
 import Link from "next/link";
 import { getNotReadyToBookSection } from "./utils/getNotReadyToBookSection";
 import OurExperiencesSection from "./components/our-experiences";
