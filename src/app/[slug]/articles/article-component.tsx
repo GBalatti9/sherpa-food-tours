@@ -7,7 +7,7 @@ import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { getNotReadyToBookSection } from "@/app/utils/getNotReadyToBookSection";
 import { Metadata } from "next";
 import { WPPost } from "@/types/post";
-import "../../travel-guide/[city]/[slug]/travel-guide-slug.css";
+// import "../../travel-guide/[city]/[slug]/travel-guide-slug.css";
 import { decode } from "html-entities";
 
 

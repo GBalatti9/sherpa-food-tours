@@ -1,4 +1,4 @@
-import "./tour.css";
+// import "./tour.css";
 
 import { fetchImages } from "@/app/utils/fetchImages";
 import { wp } from "@/lib/wp";
@@ -358,7 +358,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                     ))}
                 </div> */}
                     <div className="header-container">
-                        <div className="titles-container">
+                        <div className="titles-container !pt-0">
                             <div className="title-container">
                                 <div className="stars-container">
                                     {Array.from({ length: stars }).map((_, i) => (

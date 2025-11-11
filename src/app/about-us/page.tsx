@@ -1,5 +1,5 @@
 import { wp } from "@/lib/wp";
-import "./about-us.css";
+// import "./about-us.css";
 import { AboutUsInfo, AcfData, LocalGuide, ValueItem } from "./types";
 import MeetLocalGuides from "@/ui/components/meet-local-guides";
 import OurValues from "./components/our-values";

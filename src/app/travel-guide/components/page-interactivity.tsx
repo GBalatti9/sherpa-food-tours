@@ -6,7 +6,7 @@ import FiltersDropdown from "@/ui/components/filter-dropdown";
 import Link from "next/link";
 import { PostWithImage } from "../page";
 import { useEffect, useState } from "react";
-import "./page-interactivity.css";
+// import "./page-interactivity.css";
 import InfiniteScroll from "./infinite-scroll";
 
 interface Props {

@@ -1,5 +1,5 @@
 import { FormContact } from "@/ui/components/form-contact";
-import "../contact/contact.css";
+// import "../contact/contact.css";
 
 
 export default async function ContactPage() {

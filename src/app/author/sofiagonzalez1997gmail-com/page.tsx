@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import AuthorPosts from "../[user]/components/author-posts";
 import { WPPost } from "@/types/post";
 import { PostWithImage } from "../[user]/components/author-posts";
-import "@/app/travel-guide/travel-guide.css";
+// import "@/app/travel-guide/travel-guide.css";
 
 export default async function SofiaGonzalezPage() {
     // Buscar el usuario con slug "sofia-gonzalez"

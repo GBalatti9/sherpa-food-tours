@@ -2,7 +2,7 @@
 import { slugify } from "@/app/helpers/slugify";
 import { wp } from "@/lib/wp";
 import { WPPost } from "@/types/post";
-import "./travel-guide-slug.css";
+// import "./travel-guide-slug.css";
 import { getNotReadyToBookSection } from "@/app/utils/getNotReadyToBookSection";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section";

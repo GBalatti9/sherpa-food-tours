@@ -1,6 +1,6 @@
 import { wp } from "@/lib/wp";
 import { FormContact } from "@/ui/components/form-contact";
-import "./contact.css";
+// import "./contact.css";
 
 
 

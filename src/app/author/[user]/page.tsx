@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import AuthorPosts from "./components/author-posts";
 import { WPPost } from "@/types/post";
 import { PostWithImage } from "./components/author-posts";
-import "@/app/travel-guide/travel-guide.css";
+// import "@/app/travel-guide/travel-guide.css";
 
 export async function generateStaticParams() {
     try {
