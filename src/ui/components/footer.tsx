@@ -11,23 +11,23 @@ export default function Footer({ cities }: { cities: { city: string; slug: strin
             <div className="footer-first-section">
                 <div className="first-section">
                     <div className="logo">
-                        <img src="/sherpa-complete-logo.png" alt="Shera complete logo" />
+                        <img src="/sherpa-complete-logo.webp" alt="Shera complete logo" />
                     </div>
                     <div className="social-media">
                         <div className="img-container">
-                            <img src="/instagram.png" alt="Instagram" />
+                            <img src="/instagram.webp" alt="Instagram" />
                         </div>
                         <div className="img-container">
 
-                            <img src="/tripadvisor.png" alt="Tripadvisor" />
+                            <img src="/tripadvisor.webp" alt="Tripadvisor" />
                         </div>
                         <div className="img-container">
 
-                            <img src="/facebook.png" alt="Facebook" />
+                            <img src="/facebook.webp" alt="Facebook" />
                         </div>
                         <div className="img-container">
 
-                            <img src="/tiktok.png" alt="Tiktok" />
+                            <img src="/tiktok.webp" alt="Tiktok" />
                         </div>
                     </div>
 
@@ -47,19 +47,19 @@ export default function Footer({ cities }: { cities: { city: string; slug: strin
                         </div>
                         <div className="social-media">
                             <div className="img-container">
-                                <img src="/instagram.png" alt="Instagram" />
+                                <img src="/instagram.webp" alt="Instagram" />
                             </div>
                             <div className="img-container">
 
-                                <img src="/tripadvisor.png" alt="Tripadvisor" />
+                                <img src="/tripadvisor.webp" alt="Tripadvisor" />
                             </div>
                             <div className="img-container">
 
-                                <img src="/facebook.png" alt="Facebook" />
+                                <img src="/facebook.webp" alt="Facebook" />
                             </div>
                             <div className="img-container">
 
-                                <img src="/tiktok.png" alt="Tiktok" />
+                                <img src="/tiktok.webp" alt="Tiktok" />
                             </div>
                         </div>
                     </div>

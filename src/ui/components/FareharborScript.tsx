@@ -6,7 +6,8 @@ export default function FareharborScript() {
   return (
     <Script
       src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"
-      strategy="afterInteractive"
+      strategy="lazyOnload"
+      id="fareharbor-script"
     />
   );
 }

@@ -187,7 +187,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
             "name": "Sherpa Food Tours",
             "logo": {
                 "@type": "ImageObject",
-                "url": `${baseUrl}/sherpa-complete-logo.png`
+                "url": `${baseUrl}/sherpa-complete-logo.webp`
             }
         },
         "mainEntityOfPage": {

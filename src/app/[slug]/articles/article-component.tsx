@@ -181,7 +181,7 @@ export default async function ArticleComponent({ params }: { params: Promise<{ s
             "name": "Sherpa Food Tours",
             "logo": {
                 "@type": "ImageObject",
-                "url": `${baseUrl}/sherpa-complete-logo.png`
+                "url": `${baseUrl}/sherpa-complete-logo.webp`
             }
         },
         "mainEntityOfPage": {

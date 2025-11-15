@@ -110,7 +110,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             siteName: "Sherpa Food Tours",
             images: [
                 {
-                    url: featuredImage.img || `${baseUrl}/sherpa-complete-logo.png`,
+                    url: featuredImage.img || `${baseUrl}/sherpa-complete-logo.webp`,
                     width: 1200,
                     height: 630,
                     alt: featuredImage.alt || tour.title,
@@ -123,7 +123,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             card: "summary_large_image",
             title: `${tour.title} | Sherpa Food Tours`,
             description: description,
-            images: [featuredImage.img || `${baseUrl}/sherpa-complete-logo.png`],
+            images: [featuredImage.img || `${baseUrl}/sherpa-complete-logo.webp`],
         },
         alternates: {
             canonical: tourUrl,

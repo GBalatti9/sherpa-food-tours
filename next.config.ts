@@ -13,6 +13,10 @@ const nextConfig = {
     },
   },
 
+  compress: true, // Habilitar compresión GZIP
+  poweredByHeader: false, // Remover header X-Powered-By
+  reactStrictMode: true,
+
   async redirects() {
     return [
       {
@@ -156,6 +160,105 @@ const nextConfig = {
         source: '/travel-guide/paris/poulette-restaurants-in-paris',
         destination: '/poulette-restaurants-in-paris',
         permanent: true,
+      },
+    ];
+  },
+
+  async headers() {
+    return [
+      {
+        // Headers para todas las rutas
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN'
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin'
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()'
+          },
+        ],
+      },
+      {
+        // Cache para assets estáticos (JS, CSS) - 1 año
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Cache para fuentes - 1 año
+        source: '/fonts/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Cache para imágenes estáticas en /public - 1 mes
+        source: '/:path*\\.(jpg|jpeg|png|gif|webp|avif|svg|ico)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=2592000, must-revalidate',
+          },
+        ],
+      },
+      {
+        // Cache para otros assets estáticos (SVG, etc.) - 1 mes
+        source: '/:path*\\.(svg|ico|woff|woff2|ttf|eot)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=2592000, immutable',
+          },
+        ],
+      },
+      {
+        // No cache para páginas HTML - siempre revalidar
+        source: '/:path*\\.(html|htm)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
+      {
+        // Cache corto para API routes - 5 minutos
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=300, s-maxage=300, stale-while-revalidate=60',
+          },
+        ],
       },
     ];
   },

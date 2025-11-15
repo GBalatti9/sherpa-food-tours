@@ -9,7 +9,6 @@ import Footer from "../ui/components/footer";
 import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 import { wp } from "@/lib/wp";
 import FareharborScript from "@/ui/components/FareharborScript";
-import Script from "next/script";
 import { Cookies } from "./Cookies";
 import MarketingScripts from "@/ui/components/marketing-scripts";
 
@@ -27,6 +26,9 @@ const excelsior = localFont({
     },
   ],
   variable: "--font-excelsior",
+  display: 'swap', 
+  fallback: ['system-ui', 'arial'], 
+  preload: true, 
 });
 
 const dkOtago = localFont({
@@ -34,6 +36,9 @@ const dkOtago = localFont({
   variable: "--font-dk-otago",
   weight: "400",
   style: "normal",
+  display: 'swap',
+  preload: true, 
+  fallback: ['system-ui', 'arial'], 
 });
 
 

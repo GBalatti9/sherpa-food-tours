@@ -68,7 +68,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'Sherpa Food Tours',
       images: [
         {
-          url: '/sherpa-complete-logo.png',
+          url: '/sherpa-complete-logo.webp',
           width: 1200,
           height: 630,
           alt: 'Sherpa Food Tours - Authentic Culinary Experiences',
@@ -81,7 +81,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: `${title} | Sherpa Food Tours`,
       description,
-      images: ['/sherpa-complete-logo.png'],
+      images: ['/sherpa-complete-logo.webp'],
       creator: '@sherpafoodtours',
     },
     robots: {
@@ -220,8 +220,8 @@ export default async function Home() {
     "name": "Sherpa Food Tours",
     "description": "Authentic food tours and culinary experiences around the world",
     "url": "https://sherpafoodtours.com",
-    "logo": "https://sherpafoodtours.com/sherpa-complete-logo.png",
-    "image": "https://sherpafoodtours.com/sherpa-complete-logo.png",
+    "logo": "https://sherpafoodtours.com/sherpa-complete-logo.webp",
+    "image": "https://sherpafoodtours.com/sherpa-complete-logo.webp",
     "telephone": "+1-555-123-4567", // Replace with actual phone number
     "email": "info@sherpafoodtours.com", // Replace with actual email
     "address": {
@@ -288,7 +288,7 @@ export default async function Home() {
                 <div className="logo-container">
                   <div className="img-container">
                   <img 
-                    src="/google.png" 
+                    src="/google.webp" 
                     alt="Google's logo" 
                     loading="eager" 
                     fetchPriority="high"
