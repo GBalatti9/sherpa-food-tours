@@ -82,7 +82,7 @@ export const FormContact = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     required 
-                    placeholder="LastName" 
+                    placeholder="Lastname" 
                 />
             </div>
             <div className="input-group">
