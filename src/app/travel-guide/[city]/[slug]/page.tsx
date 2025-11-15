@@ -235,35 +235,6 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
         ]
     };
 
-    // const renderContent = () => {
-    //     const parts = content.split(/(\[tours-cards-section\])/g);
-        
-    //     return parts.map(async (part: string, index: number) => {
-    //         // Detectamos [custom-cards-section]
-    //         // if (part === '[tours-cards-section]') {
-    //         //     console.log("aca");
-                
-    //         //     const toursData = await Promise.all(tours.map(async (tour: TourRelationship) => {
-    //         //         const { id } = tour;
-    //         //         const tourData = await wp.getTourById(id);
-    //         //         const tourImage = await wp.getPostImage(tourData.featured_media)
-
-    //         //         // console.log({ tourData, tourImage });
-
-    //         //         return {
-    //         //             ...tourData,
-    //         //             image: tourImage
-    //         //         }
-    //         //     }))
-
-    //         //     return <TravelGuideCardsSection key={index} tours={toursData} />;
-    //         // }
-
-    //         // Todo lo demás es HTML normal
-    //         return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />;
-    //     });
-    // }
-
 
     return (
         <>

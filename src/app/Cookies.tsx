@@ -10,7 +10,7 @@ export const Cookies = () => {
       data-cbid="729496f6-91b1-40d8-96c6-0121e2352322"
       data-blockingmode="auto"
       type="text/javascript"
-      strategy="beforeInteractive" 
+      strategy="afterInteractive" 
     />
   );
 };

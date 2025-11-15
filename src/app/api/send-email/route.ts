@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
+import { google } from 'googleapis';
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,6 +24,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+
+    // ======================
+    // 1️⃣ Guardar en Google Sheets
+    // ======================
+
     // Configurar autenticación con Service Account
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -39,7 +45,7 @@ export async function POST(request: NextRequest) {
     // Obtener la primera hoja (o la hoja especificada)
     const sheetName = process.env.GOOGLE_SHEET_NAME || 'Sheet1';
     let sheet = doc.sheetsByTitle[sheetName];
-    
+
     // Si no existe la hoja, crear una nueva
     if (!sheet) {
       sheet = await doc.addSheet({ title: sheetName });
@@ -53,7 +59,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Agregar la nueva fila con los datos del formulario
-    const timestamp = new Date().toLocaleString('es-AR', { 
+    const timestamp = new Date().toLocaleString('es-AR', {
       timeZone: 'America/Argentina/Buenos_Aires',
       year: 'numeric',
       month: '2-digit',
@@ -72,6 +78,54 @@ export async function POST(request: NextRequest) {
       'mensaje': message,
       'asunto': sourceUrl || 'N/A'
     });
+
+    // ======================
+    // 2️⃣ Enviar correo usando Gmail API
+    // ======================
+
+    const oAuth2Client = new google.auth.OAuth2(
+      process.env.GMAIL_OAUTH_CLIENT_ID,
+      process.env.GMAIL_OAUTH_CLIENT_SECRET
+    );
+    oAuth2Client.setCredentials({ refresh_token: process.env.GMAIL_OAUTH_REFRESH_TOKEN });
+
+    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+
+    // Construir mensaje en formato RFC 2822
+    let emailBody = 'Se ha agregado una nueva fila en Google Sheets:\n\n';
+    // for (const key in newRow) {
+    //   emailBody += `${key}: ${newRow[key]}\n`;
+    // }
+
+    emailBody += `Nombre: ${name}\n`;
+    emailBody += `Apellido: ${lastName}\n`;
+    emailBody += `Email: ${email}\n`;
+    emailBody += `Teléfono: ${phone}\n`;
+    emailBody += `Mensaje: ${message}\n`;
+    emailBody += `URL de origen: ${sourceUrl}\n`;
+
+    const messageStr = [
+      `From: "Formulario" <${process.env.GMAIL_USER_EMAIL}>`,
+      `To: ${process.env.GMAIL_USER_EMAIL}`,
+      `Subject: Nueva fila agregada en Sheets`,
+      `Content-Type: text/plain; charset="UTF-8"`,
+      '',
+      emailBody
+    ].join('\n');
+
+    const encodedMessage = Buffer.from(messageStr)
+      .toString('base64')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+
+    await gmail.users.messages.send({
+      userId: 'me',
+      requestBody: {
+        raw: encodedMessage
+      }
+    });
+
 
     return NextResponse.json(
       { message: 'Formulario guardado correctamente en Google Sheets' },

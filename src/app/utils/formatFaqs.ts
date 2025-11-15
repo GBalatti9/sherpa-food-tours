@@ -22,8 +22,6 @@ export interface Faq {
 export function formatFaqs(acf: Faq): FaqsResponse {
   
   const faqsArray: FaqItem[] = [];
-
-//   console.log(acf.faq);
   
 
   if (acf?.faq) {

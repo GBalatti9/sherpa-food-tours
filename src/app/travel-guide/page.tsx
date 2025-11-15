@@ -96,8 +96,7 @@ export default async function TravelGuidePage() {
             author_name: author,
         }
     }))
-    
-    console.log("pre filter", {formattedPosts});
+
     
     // Filter posts that have valid images and cities
     formattedPosts = formattedPosts.filter(
@@ -107,7 +106,6 @@ export default async function TravelGuidePage() {
         post.relaciones.ciudades[0] !== null
     ) as PostWithImage[];
     
-    console.log({formattedPosts});
     // Generate JSON-LD structured data for SEO
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
 

@@ -1,8 +1,6 @@
 const domain = process.env.NEXT_PUBLIC_WP_URL;
 const apiUrl = `${domain}/wp-json/wp/v2`
 
-// console.log({ domain, apiUrl });
-
 
 export const wp = {
     getPageInfo: async (slug: string) => {
@@ -12,7 +10,6 @@ export const wp = {
             const response = await fetch(url);
             if (!response.ok) console.error("No se pudo hacer fecth a la url: " + url);
             const [data] = await response.json();
-            //console.log({ data });
 
             if (!data) return { title: "", content: "", acf: "", featured_media: null };
 
@@ -21,7 +18,6 @@ export const wp = {
 
             return { title, content, acf, featured_media };
         } catch (error) {
-            console.log({ error });
 
             return { title: "", content: "", acf: "", featured_media: null };
         }
@@ -29,10 +25,6 @@ export const wp = {
     getPostInfo: async (slug: string) => {
         const url = `${apiUrl}/posts?slug=${slug}`;
         const response = await fetch(url);
-
-        // console.log({ url });
-        // 
-        // if (!response.ok) throw new Error("No se obtuvieron datos");
         const [data] = await response.json();
         if (!data) return { title: "", content: "", excerpt: "", featured_media: null, date: "", modified: "", relaciones: null };
 
@@ -42,9 +34,7 @@ export const wp = {
         return { title, content, excerpt, featured_media, date, modified, relaciones };
     },
     getPostInfoById: async (id: number) => {
-        const response = await fetch(`${apiUrl}/posts/${id}`)
-        console.log({response});
-        
+        const response = await fetch(`${apiUrl}/posts/${id}`)   
 
         if (!response.ok){
             console.error("No se obtuvieron datos")
@@ -62,7 +52,6 @@ export const wp = {
             const response = await fetch(url);
 
             if (!response.ok) {
-                console.warn(`Posts API failed: ${response.status} ${response.statusText}`);
                 return []; // Retornar array vacío en lugar de fallar
             }
 
@@ -127,13 +116,11 @@ export const wp = {
         return data;
     },
     getAllTours: async () => {
-        // console.log('API URL during build:', apiUrl); // Agregar este log
 
         const response = await fetch(`${apiUrl}/tours`);
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const data = await response.json();
-        // console.log({ data });
 
 
         return data;
