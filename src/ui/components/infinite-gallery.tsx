@@ -3,6 +3,9 @@
 import { useEffect, useRef } from "react";
 import "./css/infinite-gallery.css"
 import { Swiper } from "swiper";
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/free-mode';
 import { Autoplay, FreeMode } from "swiper/modules";
 
 export default function InfiniteGallery({images} : { images: string[] }) {

@@ -41,7 +41,7 @@ export default function Memories({ memories }: { memories: { img: string; alt: s
     return (
         <div className="items-container">
             <div className="titles">
-                <img src="/sherpa-green.png" alt="Sherpa Food Tour Logo" loading="lazy"/>
+                <img src="/sherpa-green.webp" alt="Sherpa Food Tour Logo" loading="lazy"/>
                 <p className="title">memories</p>
             </div>
             <div className="memories-container">

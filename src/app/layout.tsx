@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import 'swiper/css';
-import 'swiper/css/autoplay';
-import 'swiper/css/free-mode';
+// import 'swiper/css';
+// import 'swiper/css/autoplay';
+// import 'swiper/css/free-mode';
 // import NavBar from "@/ui/cmponents/nav-bar";
 import Footer from "../ui/components/footer";
 import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
@@ -26,9 +26,9 @@ const excelsior = localFont({
     },
   ],
   variable: "--font-excelsior",
-  display: 'swap', 
-  fallback: ['system-ui', 'arial'], 
-  preload: true, 
+  display: 'swap',
+  fallback: ['system-ui', 'arial'],
+  preload: true,
 });
 
 const dkOtago = localFont({
@@ -37,8 +37,8 @@ const dkOtago = localFont({
   weight: "400",
   style: "normal",
   display: 'swap',
-  preload: true, 
-  fallback: ['system-ui', 'arial'], 
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 
@@ -100,6 +100,13 @@ export default async function RootLayout({
     <html lang="en">
       <head>
         <Cookies />
+
+        <link rel="preconnect" href="https://staging.sherpafoodtours.com" />
+        <link rel="dns-prefetch" href="https://staging.sherpafoodtours.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://fareharbor.com" />
+        <link rel="dns-prefetch" href="https://consent.cookiebot.com" />
       </head>
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
 
