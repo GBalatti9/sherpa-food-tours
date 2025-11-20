@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  trailingSlash: true,
   // output: "export", // 👈 genera la carpeta out
   logging: {
     fetches: {
