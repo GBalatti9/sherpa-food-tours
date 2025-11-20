@@ -64,6 +64,10 @@ body {
 /* main { */
 /* } */
 
+main {
+    padding-top: 7rem;
+}
+
 .font-excelsior {
   font-family: var(--font-excelsior);
 }
@@ -488,7 +492,8 @@ body {
       position: relative;
       height: 100%;
       display: grid;
-      padding-top: 4rem;
+      /* padding-top: 4rem; */
+      padding-top: 1rem;
 
       .image-container {
           filter: brightness(.5);
@@ -4982,7 +4987,14 @@ body {
   overflow: hidden;
   background: linear-gradient(to right, #fca311, #fbbf24, #fca311);
   padding: 1rem 0;
-  position: relative;
+  position: fixed;
+  top: 55px; /* Altura aproximada del header en mobile */
+  left: 0;
+  z-index: 9998; /* Justo debajo del header que tiene z-index 9999 */
+
+  @media screen and (min-width: 768px) {
+    top: 70px; /* Altura aproximada del header en tablet/desktop */
+  }
 }
 
 .marquee {

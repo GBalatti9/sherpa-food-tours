@@ -305,66 +305,68 @@ const nextConfig = {
           },
         ],
       },
-      {
-        // Cache para assets estáticos (JS, CSS) - 1 año
-        source: '/_next/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        // Cache para fuentes - 1 año
-        source: '/fonts/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        // Cache para imágenes estáticas en /public - 1 mes
-        source: '/:path*\\.(jpg|jpeg|png|gif|webp|avif|svg|ico)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=2592000, must-revalidate',
-          },
-        ],
-      },
-      {
-        // Cache para otros assets estáticos (SVG, etc.) - 1 mes
-        source: '/:path*\\.(svg|ico|woff|woff2|ttf|eot)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=2592000, immutable',
-          },
-        ],
-      },
-      {
-        // No cache para páginas HTML - siempre revalidar
-        source: '/:path*\\.(html|htm)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
-          },
-        ],
-      },
-      {
-        // Cache corto para API routes - 5 minutos
-        source: '/api/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=300, s-maxage=300, stale-while-revalidate=60',
-          },
-        ],
-      },
+      // {
+      //   // Cache para assets estáticos (JS, CSS) - 1 año en producción, sin cache en desarrollo
+      //   source: '/_next/static/:path*',
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: process.env.NODE_ENV === 'production' 
+      //         ? 'public, max-age=31536000, immutable'
+      //         : 'public, max-age=0, must-revalidate',
+      //     },
+      //   ],
+      // },
+      // {
+      //   // Cache para fuentes - 1 año
+      //   source: '/fonts/:path*',
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: 'public, max-age=31536000, immutable',
+      //     },
+      //   ],
+      // },
+      // {
+      //   // Cache para imágenes estáticas en /public - 1 mes
+      //   source: '/:path*\\.(jpg|jpeg|png|gif|webp|avif|svg|ico)',
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: 'public, max-age=2592000, must-revalidate',
+      //     },
+      //   ],
+      // },
+      // {
+      //   // Cache para otros assets estáticos (SVG, etc.) - 1 mes
+      //   source: '/:path*\\.(svg|ico|woff|woff2|ttf|eot)',
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: 'public, max-age=2592000, immutable',
+      //     },
+      //   ],
+      // },
+      // {
+      //   // No cache para páginas HTML - siempre revalidar
+      //   source: '/:path*\\.(html|htm)',
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: 'public, max-age=0, must-revalidate',
+      //     },
+      //   ],
+      // },
+      // {
+      //   // Cache corto para API routes - 5 minutos
+      //   source: '/api/:path*',
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: 'public, max-age=300, s-maxage=300, stale-while-revalidate=60',
+      //     },
+      //   ],
+      // },
     ];
   },
 

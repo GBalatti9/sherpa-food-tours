@@ -11,6 +11,7 @@ import { wp } from "@/lib/wp";
 import FareharborScript from "@/ui/components/FareharborScript";
 import { Cookies } from "./Cookies";
 import MarketingScripts from "@/ui/components/marketing-scripts";
+import MarqueeBanner from "@/ui/components/marquee-banner";
 
 const excelsior = localFont({
   src: [
@@ -67,7 +68,7 @@ export const metadata: Metadata = {
     "food and wine tours",
     "food travel experiences"
   ],
-  creator: "Gastón Balatti",
+  creator: "Guillermo Borthwick",
 };
 
 
@@ -119,6 +120,8 @@ export default async function RootLayout({
           />
         </noscript> */}
         <NavBarWrapper cities={cities} />
+        
+        <MarqueeBanner />
         {children}
         <Footer cities={cities} />
         <FareharborScript />

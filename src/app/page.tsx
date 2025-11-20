@@ -287,8 +287,7 @@ export default async function Home() {
       />
 
       <main role="main">
-        {/* <DiscountBanner />
-        <MarqueeBanner /> */}
+        {/* <DiscountBanner /> */}
         <section className="home-first-section" aria-label="Hero section with company information">
           <div className="first-section-container">
             <div className="image-container">
