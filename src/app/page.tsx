@@ -13,6 +13,8 @@ import AsFeaturedIn from "@/ui/components/as-featured-in";
 import { City } from "@/types/city";
 import Memories from "./components/memories";
 import { Metadata } from "next";
+import DiscountBanner from "@/ui/components/discount-banner";
+import MarqueeBanner from "@/ui/components/marquee-banner";
 
 // Generate metadata for SEO
 export async function generateMetadata(): Promise<Metadata> {
@@ -285,6 +287,8 @@ export default async function Home() {
       />
 
       <main role="main">
+        {/* <DiscountBanner />
+        <MarqueeBanner /> */}
         <section className="home-first-section" aria-label="Hero section with company information">
           <div className="first-section-container">
             <div className="image-container">
