@@ -265,6 +265,7 @@ const nextConfig = {
       //   destination: '/poulette-restaurants-in-paris/',
       //   permanent: true,
       // },
+      
     ];
   },
 
