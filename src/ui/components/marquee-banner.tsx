@@ -1,5 +1,5 @@
 export default function MarqueeBanner({ bannerTitle }: { bannerTitle: string | null }) {
-    const marqueeText = bannerTitle ? bannerTitle : "TOURS 15% OFF - CODE: CYBERSHERPA      CYBERSALE: ALL TOURS 15% OFF - CODE: CYBERSHERPA      ";
+    const marqueeText = bannerTitle ? bannerTitle : "BLACK FRIDAY SALE! ALL TOURS 15% OFF - USE CODE: 'CYBERSHERPA' ***";
 
     return (
         <div className="marquee-wrapper">
