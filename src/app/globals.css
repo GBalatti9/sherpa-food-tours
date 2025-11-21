@@ -5011,7 +5011,7 @@ main {
 .marquee-text {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #ee6053;
+  color: black;
   white-space: nowrap;
   padding-right: 2rem;
   letter-spacing: 0.05em;
