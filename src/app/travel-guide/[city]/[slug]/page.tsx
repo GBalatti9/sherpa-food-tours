@@ -178,7 +178,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
         "datePublished": date,
         "dateModified": modified,
         "author": {
-            "@type": "Person",
+            "@type": "Guillermo Borthwick",
             "name": "Sherpa Food Tours",
             "url": baseUrl
         },

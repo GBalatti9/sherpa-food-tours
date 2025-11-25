@@ -19,7 +19,7 @@ const [banner] = await getBanner.json();
 const rawText = banner?.title?.rendered ?? null;
 const bannerTitle = rawText ? he.decode(rawText) : null;
 
-console.log({bannerTitle});
+// console.log({bannerTitle});
 
 const excelsior = localFont({
   src: [
@@ -110,8 +110,6 @@ export default async function RootLayout({
       <head>
         <Cookies />
 
-        <link rel="preconnect" href="https://staging.sherpafoodtours.com" />
-        <link rel="dns-prefetch" href="https://staging.sherpafoodtours.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="preconnect" href="https://fareharbor.com" />
@@ -140,3 +138,6 @@ export default async function RootLayout({
   );
 }
 
+
+{/* <link rel="preconnect" href="https://staging.sherpafoodtours.com" />
+<link rel="dns-prefetch" href="https://staging.sherpafoodtours.com" /> */}

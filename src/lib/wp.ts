@@ -45,9 +45,13 @@ export const wp = {
 
         return { title, content, excerpt, featured_media, date, modified, relaciones, acf, author, slug };
     },
-    getAllPost: async (limit?: number) => {
+    getAllPost: async (limit?: number, page?: number) => {
         try {
-            const url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts?v=ass`;
+            let url = limit ? `${apiUrl}/posts?per_page=${limit}` : `${apiUrl}/posts?v=ass`;
+
+            if (page) {
+                url += `&page=${page}`;
+            }
 
             const response = await fetch(url);
 

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/private/', '/admin/', '/api/'],
     },
-    sitemap: 'https://sherpafoodtours.com/sitemap.xml',
+    sitemap: 'https:www.//sherpafoodtours.com/sitemap.xml',
   }
 }
