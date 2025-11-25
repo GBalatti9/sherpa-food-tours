@@ -52,8 +52,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   });
 
-  console.log({ travelGuideUrls, tourUrls, cityUrls });
-
 
   return [
     {
