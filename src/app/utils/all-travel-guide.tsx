@@ -1,7 +1,14 @@
 import { wp } from "@/lib/wp";
 import { safeFetch } from "./safeFetch";
 
-type TravelGuide = Record<string, unknown>;
+type TravelGuide = {
+  relaciones?: {
+    ciudades?: { title: string }[];
+  };
+  slug: string;
+  modified: string;
+  [key: string]: unknown;
+};
 
 // Función para traer todos los posts de WordPress
 export async function getAllTravelGuides(): Promise<TravelGuide[]> {
