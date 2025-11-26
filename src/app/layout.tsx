@@ -13,6 +13,7 @@ import { Cookies } from "./Cookies";
 import MarketingScripts from "@/ui/components/marketing-scripts";
 import MarqueeBanner from "@/ui/components/marquee-banner";
 import he from "he";
+import { Suspense } from "react";
 
 const getBanner = await fetch(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/banner`);
 const [banner] = await getBanner.json();
@@ -132,7 +133,9 @@ export default async function RootLayout({
         <Footer cities={cities} />
         <FareharborScript />
 
-        <MarketingScripts />
+        <Suspense fallback={null}>
+          <MarketingScripts />
+        </Suspense>
       </body>
     </html>
   );
