@@ -75,7 +75,8 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                                         {/* </Link> */}
                                         <ButtonsPropagations
                                             is_private={tour.acf.is_private}
-                                            link={tour.acf.fareharbor.link} />
+                                            link={tour.acf.fareharbor.link}
+                                            isButton={true} />
                                     </div>
                                 </div>
                             </div>
@@ -84,9 +85,9 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
 
                     if (tour.acf.is_private) {
                         return (
-                            <div className="tour-card" key={tour.title + tour.id}>
+                            <Link href='#askForIt' className="tour-card" key={tour.title + tour.id}>
                                 {cardContent}
-                            </div>
+                            </Link>
                         );
                     }
 
