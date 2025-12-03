@@ -11,14 +11,8 @@ import { wp } from "@/lib/wp";
 import FareharborScript from "@/ui/components/FareharborScript";
 import { Cookies } from "./Cookies";
 import MarketingScripts from "@/ui/components/marketing-scripts";
-import MarqueeBanner from "@/ui/components/marquee-banner";
-import he from "he";
 import { Suspense } from "react";
 
-const getBanner = await fetch(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/banner`);
-const [banner] = await getBanner.json();
-const rawText = banner?.title?.rendered ?? null;
-const bannerTitle = rawText ? he.decode(rawText) : null;
 
 // console.log({bannerTitle});
 
@@ -128,7 +122,6 @@ export default async function RootLayout({
         </noscript> */}
         <NavBarWrapper cities={cities} />
 
-        <MarqueeBanner bannerTitle={bannerTitle} />
         {children}
         <Footer cities={cities} />
         <FareharborScript />
