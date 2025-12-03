@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 
 import OurExperiencesSection from "@/app/components/our-experiences";
 // import "./city.css";
@@ -184,24 +187,50 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
 
     if (acf?.posts) {
-        const info = await Promise.all(acf.posts.map(async (id: number) => {            
-            const postInfo = await wp.getPostInfoById(id);
-            const postImage = await wp.getPostImage(postInfo.featured_media);
-            const author = await wp.getAuthor(postInfo.author);
+        // const info = await Promise.all(acf.posts.map(async (id: number) => {            
+        //     const postInfo = await wp.getPostInfoById(id);
+        //     const postImage = await wp.getPostImage(postInfo.featured_media);
+        //     const author = await wp.getAuthor(postInfo.author);
 
-            if (!postInfo.acf.ciudades) {
+        //     if (!postInfo.acf.ciudades) {
+        //         return null;
+        //     }
+        //     const city_name = await wp.getCity(postInfo.acf.ciudades[0])
+
+
+        //     return {
+        //         ...postInfo,
+        //         featured_media: postImage,
+        //         author: author,
+        //         city: city_name,
+        //     }
+
+        // }));
+
+        const info = await Promise.all(acf.posts.map(async (id: number) => {  
+            try {
+                const postInfo = await wp.getPostInfoById(id);
+                if (!postInfo) return null;
+        
+                const postImage = await wp.getPostImage(postInfo.featured_media).catch(() => null);
+                const author = await wp.getAuthor(postInfo.author).catch(() => null);
+        
+                const ciudades = postInfo?.acf?.ciudades;
+                if (!Array.isArray(ciudades) || ciudades.length === 0) return null;
+        
+                const city_name = await wp.getCity(ciudades[0]).catch(() => null);
+                if (!city_name) return null;
+        
+                return {
+                    ...postInfo,
+                    featured_media: postImage,
+                    author,
+                    city: city_name,
+                };
+            } catch (e) {
+                console.warn("❗ Error cargando post", id, e);
                 return null;
             }
-            const city_name = await wp.getCity(postInfo.acf.ciudades[0])
-
-
-            return {
-                ...postInfo,
-                featured_media: postImage,
-                author: author,
-                city: city_name,
-            }
-
         }));
         posts = info.filter(Boolean);
 
@@ -403,4 +432,4 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     )
 }
 
-export const revalidate = 86400;
+// export const revalidate = 86400;
