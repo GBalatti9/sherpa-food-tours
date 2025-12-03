@@ -34,9 +34,9 @@ export const wp = {
         return { title, content, excerpt, featured_media, date, modified, relaciones };
     },
     getPostInfoById: async (id: number) => {
-        const response = await fetch(`${apiUrl}/posts/${id}`)   
+        const response = await fetch(`${apiUrl}/posts/${id}`)
 
-        if (!response.ok){
+        if (!response.ok) {
             console.error("No se obtuvieron datos")
             return { title: null, content: null, excerpt: null, featured_media: null, date: null, modified: null, relaciones: null, acf: null, author: null, slug: null }
         }
@@ -90,8 +90,8 @@ export const wp = {
                 alt: "",
             };
         }
-        const url = `${apiUrl}/media/${id}`;      
-        try {       
+        const url = `${apiUrl}/media/${id}`;
+        try {
             const response = await fetch(url);
 
             if (!response.ok) throw new Error("No se obtuvieron datos");
@@ -186,13 +186,21 @@ export const wp = {
 
     },
     getAuthor: async (id: number) => {
-        const response = await fetch(`${apiUrl}/users/${id}`)
+        try {
+            const response = await fetch(`${apiUrl}/users/${id}`);
 
-        if (!response.ok) throw new Error("No se obtuvieron datos");
+            if (!response.ok) {
+                console.warn(`⚠️ No se pudo obtener autor ID ${id}`);
+                return { name: "Autor desconocido" }; // fallback
+            }
 
-        const { name } = await response.json();
+            const { name } = await response.json();
+            return { name };
 
-        return { name };
+        } catch (e) {
+            console.warn(`⚠️ Error getAuthor(${id}):`, e);
+            return { name: "Autor desconocido" };
+        }
     },
     getTourById: async (id: number) => {
         try {
