@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
-export default function MobileMenu({ items, currentPath, cities }: { items: NavBarLink[], currentPath: string, cities: { city: string; slug: string; flag: { img: string; alt: string } }[] }) {
+export default function MobileMenu({ items, currentPath, cities }: { items: NavBarLink[], currentPath: string, cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[] }) {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 

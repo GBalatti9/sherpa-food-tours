@@ -5,7 +5,7 @@ import Link from "next/link";
 
 
 
-export default function Footer({ cities }: { cities: { city: string; slug: string; flag: { img: string; alt: string; } }[] }) {
+export default function Footer({ cities }: { cities: { id: number; city: string; slug: string; flag: { img: string; alt: string; } }[] }) {
     return (
         <footer className="footer">
             <div className="footer-first-section">

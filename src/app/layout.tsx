@@ -82,16 +82,18 @@ export default async function RootLayout({
 }>) {
 
   const citiesRaw = await wp.getAllCities(); // fetch server-side directo
-  let cities: { city: string; slug: string; flag: { img: string; alt: string } }[] = [];
+  let cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[] = [];
 
   if (citiesRaw && citiesRaw.length > 0) {
     cities = await Promise.all(
       citiesRaw.map(async (city: {
+        id: number;
         title: { rendered: string };
         slug: string;
         acf: { country_flag: number };
       }) => {
         return {
+          id: city.id,
           city: city.title.rendered,
           slug: city.slug,
           flag: await wp.getPostImage(city.acf.country_flag)
