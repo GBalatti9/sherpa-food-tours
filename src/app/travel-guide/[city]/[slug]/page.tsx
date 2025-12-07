@@ -132,6 +132,9 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
     const { title, content, featured_media, excerpt, date, modified, relaciones } = await wp.getPostInfo(slug);
     const { img, alt } = await wp.getPostImage(featured_media);
 
+    console.log({ content, excerpt, title, featured_media, date, modified, relaciones });
+    
+
     const { tours } = relaciones;
 
     const toursData = (await Promise.all(

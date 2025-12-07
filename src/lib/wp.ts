@@ -389,9 +389,16 @@ export const wp = {
         try {
           const url = `${apiUrl}/posts?search=${search}&_embed&per_page=100`;
           const response = await fetch(url);
+          
+          if (!response.ok) {
+            console.warn(`Posts by search API failed: ${response.status} ${response.statusText}`);
+            return { ok: false, data: [] };
+          }
+          
           const data = await response.json();
           return { ok: true, data };
         } catch (error) {
+          console.error("Error fetching posts by search:", error);
           return { ok: false, data: [] };
         }
       },
