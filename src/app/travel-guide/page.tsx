@@ -80,8 +80,8 @@ export default async function TravelGuidePage() {
 
     // Get cities for dropdown
     let cities = await wp.getAllCities();
-    cities = cities.map((city: { slug: string; title: { rendered: string } }) => { 
-        return { slug: city.slug, city: city.title.rendered } 
+    cities = cities.map((city: { id: number; slug: string; title: { rendered: string } }) => { 
+        return { id: city.id, slug: city.slug, city: city.title.rendered } 
     });
 
     // Get only 10 articles for initial load

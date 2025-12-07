@@ -5,13 +5,13 @@ import "./css/cities-dropdown.css"
 import { useState, useEffect, useRef } from "react"
 
 interface CityDisplay {
+  id: number
   slug: string
   city: string
   flag?: {
     alt?: string;
     img?: string;
   }
-  
 }
 
 export default function CitiesDropdown({
@@ -23,7 +23,7 @@ export default function CitiesDropdown({
   text?: string
   cities: CityDisplay[]
   color?: string,
-  onSelectCity?: (slug: string, value: string) => void;
+  onSelectCity?: (id: number, slug: string, value: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -90,7 +90,7 @@ export default function CitiesDropdown({
             {cities.map((city, index) => (
               <li key={index}>
                 {onSelectCity ?
-                  <button onClick={() => onSelectCity(city.slug, city.city)} className="w-full text-left cursor-pointer">{city.city}</button>
+                  <button onClick={() => onSelectCity(city.id, city.slug, city.city)} className="w-full text-left cursor-pointer">{city.city}</button>
                   :
                   <Link
                     className="city-item"

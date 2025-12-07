@@ -338,7 +338,47 @@ export const wp = {
         } catch (error) {
             return { ok: false, data: null };
         }
-    }
+    },
+    
+    getPostsByPostsId: async (ids: number[]) => {
+        try {
+          if (!ids.length) return { ok: true, data: [] };
+      
+          const url = `${apiUrl}/posts?include=${ids.join(",")}&_embed&per_page=100`;
+          const response = await fetch(url);
+      
+          if (!response.ok) throw new Error("Error fetching posts by ids");
+      
+          const data = await response.json();
+      
+          // ✅ Reordenamos según el orden original
+          const orderedData = ids
+            .map(id => data.find((post: any) => post.id === id))
+            .filter(Boolean);
+      
+          return { ok: true, data: orderedData };
+        } catch (error) {
+          return { ok: false, data: [] };
+        }
+      },
+    getPostsIdsByCityId: async (id: number) => {
+        try {
+          const url = `${apiUrl}/cities/${id}`;
+          console.log({ url });
+          const response = await fetch(url);
+      
+          if (!response.ok) throw new Error("Error fetching posts by city");
+      
+          const data = await response.json();
+
+          const ids = data.posts.map((p: any) => p.id);
+
+      
+          return { ok: true, data: ids };
+        } catch (error) {
+          return { ok: false, data: [] };
+        }
+      },
 
 
 
