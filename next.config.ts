@@ -187,7 +187,7 @@ const nextConfig = {
       },
       {
         source: '/what-is-asado-in-argentina/',
-        destination: '/travel-guide/argentina/what-is-asado-in-argentina/',
+        destination: '/travel-guide/buenos-aires/what-is-asado-in-argentina/',
         permanent: true,
       },
       // {
