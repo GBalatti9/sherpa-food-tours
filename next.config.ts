@@ -185,6 +185,11 @@ const nextConfig = {
         destination: '/travel-guide/paris/poulette-restaurants-in-paris/',
         permanent: true,
       },
+      {
+        source: '/what-is-asado-in-argentina/',
+        destination: '/travel-guide/argentina/what-is-asado-in-argentina/',
+        permanent: true,
+      },
       // {
       //   source: '/travel-guide/buenos-aires/traditional-argentine-drinks-and-where-to-try-them/',
       //   destination: '/traditional-argentine-drinks-and-where-to-try-them/',
