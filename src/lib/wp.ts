@@ -282,15 +282,20 @@ export const wp = {
         }
     },
 
-    getPostsByCategory: async (id: number, limit = 10, offset = 0) => {
+    getPostsByCategory: async (id: number, limit = 100, offset = 0) => {
         try {
             const url = `${apiUrl}/posts?categories=${id}&per_page=${limit}&offset=${offset}`;
+            console.log({ url });
             const response = await fetch(url);
+            if (!response.ok) {
+                console.warn(`Posts by category API failed: ${response.status} ${response.statusText}`);
+                return { ok: false, data: [] };
+            }
             const data = await response.json();
             return { ok: true, data };
         } catch (error) {
-            console.error(error)
-            return { ok: false, data: null }
+            console.error("Error fetching posts by category:", error);
+            return { ok: false, data: [] };
         }
     },
 
@@ -380,6 +385,16 @@ export const wp = {
         }
       },
 
+      getPostsBySearch: async (search: string) => {
+        try {
+          const url = `${apiUrl}/posts?search=${search}&_embed&per_page=100`;
+          const response = await fetch(url);
+          const data = await response.json();
+          return { ok: true, data };
+        } catch (error) {
+          return { ok: false, data: [] };
+        }
+      },
 
 
 }
