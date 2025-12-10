@@ -176,6 +176,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/tour/palermo-food-tour-2/',
+        destination: '/tour/buenos-aires-local-foodie-experience/',
+        permanent: true,
+      },
+      {
         source: '/best-restaurants-in-roma-norte-cdmx/',
         destination: '/travel-guide/cdmx/best-restaurants-in-roma-norte-cdmx/',
         permanent: true,
