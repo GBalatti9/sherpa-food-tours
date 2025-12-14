@@ -1,7 +1,6 @@
 
 import { wp } from "@/lib/wp";
 import { ACFHome } from "@/types/acf-home";
-// import "./home.css";
 import Link from "next/link";
 import { getNotReadyToBookSection } from "./utils/getNotReadyToBookSection";
 import OurExperiencesSection from "./components/our-experiences";
@@ -9,7 +8,6 @@ import NotReadyToBook from "./components/not-ready-to-book";
 import { fetchImages } from "./utils/fetchImages";
 import MainImage from "@/ui/components/main-image";
 import AsFeaturedIn from "@/ui/components/as-featured-in";
-// import { Star } from "lucide-react";
 import { City } from "@/types/city";
 import Memories from "./components/memories";
 import { Metadata } from "next";
@@ -142,8 +140,7 @@ export default async function Home() {
   const memories = await fetchImages(memoriesImagesIds);
 
 
-  const [background_image, ...imgs] = images;
-  console.log(imgs);
+  const [background_image] = images;
 
 
 

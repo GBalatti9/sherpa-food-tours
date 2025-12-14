@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next build && next export"
+    "export": "next build && next export",
+    "verify:optimizations": "node scripts/verify-optimizations.js",
+    "verify:optimizations:prod": "node scripts/verify-optimizations.js https://www.sherpafoodtours.com"
   },
   "dependencies": {
     "@next/third-parties": "^16.0.10",
@@ -33,7 +35,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.4.4",
+    "eslint-config-next": "^16.0.10",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

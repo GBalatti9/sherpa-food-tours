@@ -57,7 +57,7 @@ export default function ImageGallery({ images }: { images: { img: string; alt: s
         <div className="image-gallery">
             {images && images.slice(0, 4).map((image, i) => (
                 <div key={image.img + i} className="image-item" onClick={() => openGallery(i)}>
-                    <img src={image.img} alt={image.alt || 'Tour Image'} />
+                    <img src={image.img} alt={image.alt || 'Tour Image'} width="300" height="200" loading="lazy" decoding="async" />
                 </div>
             ))}
             <div className="total-images" onClick={() => openGallery(0)}>
@@ -93,7 +93,10 @@ export default function ImageGallery({ images }: { images: { img: string; alt: s
                         <img
                             src={images[currentIndex].img}
                             alt={images[currentIndex].alt || "Tour Image"}
+                            width="1200"
+                            height="800"
                             loading="lazy"
+                            decoding="async"
                         />
 
                         {/* <div className="counter-container">

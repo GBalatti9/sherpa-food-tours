@@ -49,7 +49,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                 {/* Solo para START y END */}
                                 {item.information &&
                                     <div className="itinerary-step-information">
-                                        <img src={item?.map?.img} alt="Map pin icon" />
+                                        <img src={item?.map?.img} alt="Map pin icon" width="24" height="24" />
                                         <div className="itinerary-step-data" dangerouslySetInnerHTML={{ __html: item.information }}>
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                                 <div className="stop-item-text" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
                                                 {internal_item.mobile_img &&
                                                     <div className="stop-item-img">
-                                                        <img src={internal_item.mobile_img.img} alt={internal_item.mobile_img.alt} />
+                                                        <img src={internal_item.mobile_img.img} alt={internal_item.mobile_img.alt} width="300" height="200" loading="lazy" />
                                                     </div>
                                                 }
                                             </div>
@@ -80,7 +80,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
 
                             {desktopImgs.map((element, i) => (
                                 <div className="img-container" key={element.img + i}>
-                                    <img src={element.img} alt={element.alt} />
+                                    <img src={element.img} alt={element.alt} width="600" height="400" loading="lazy" />
                                 </div>
                             ))}
                         </div>

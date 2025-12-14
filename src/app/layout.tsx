@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-// import 'swiper/css';
-// import 'swiper/css/autoplay';
-// import 'swiper/css/free-mode';
-// import NavBar from "@/ui/cmponents/nav-bar";
 import Footer from "../ui/components/footer";
 import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 import { wp } from "@/lib/wp";
@@ -13,10 +9,6 @@ import { Cookies } from "./Cookies";
 import MarketingScripts from "@/ui/components/marketing-scripts";
 import { Suspense } from "react";
 import { GoogleAnalytics } from '@next/third-parties/google'
-
-
-
-// console.log({bannerTitle});
 
 const excelsior = localFont({
   src: [
@@ -109,10 +101,15 @@ export default async function RootLayout({
       <head>
         <Cookies />
 
+        {/* Preconnect para recursos críticos de terceros */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="preconnect" href="https://fareharbor.com" />
         <link rel="dns-prefetch" href="https://consent.cookiebot.com" />
+        {/* Preconnect para imágenes de WordPress */}
+        <link rel="preconnect" href="https://staging.sherpafoodtours.com" />
+        <link rel="preconnect" href="https://www.sherpafoodtours.com" />
+        <link rel="preconnect" href="https://sherpafoodtours.com" />
       </head>
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
 

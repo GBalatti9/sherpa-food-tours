@@ -16,7 +16,15 @@ export default function AsFeaturedIn({ asFeatureInImages }: AsFeaturedInProps) {
       <div className="imgs-container">
         {asFeatureInImages.map((img, i) => (
           <div className="img-container" key={img.img + i}>
-            <img src={img.img} alt={img.alt} loading="eager" fetchPriority="high"/>
+            <img 
+              src={img.img} 
+              alt={img.alt} 
+              loading="eager" 
+              fetchPriority="high"
+              width="150"
+              height="60"
+              decoding="async"
+            />
           </div>
         ))}
       </div>

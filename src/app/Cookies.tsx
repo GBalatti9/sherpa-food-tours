@@ -11,6 +11,9 @@ export const Cookies = () => {
       data-blockingmode="auto"
       type="text/javascript"
       strategy="afterInteractive" 
+      onError={(e) => {
+        console.error('Cookiebot failed to load', e);
+      }}
     />
   );
 };

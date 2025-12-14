@@ -19,10 +19,13 @@ export default function MarketingScripts() {
 
     return (
         <>
-            {/* Facebook Pixel */}
+            {/* Facebook Pixel - Cargado con lazyOnload para no bloquear render */}
             <Script
                 id="facebook-pixel"
-                strategy="afterInteractive"
+                strategy="lazyOnload"
+                onError={(e) => {
+                    console.error('Facebook Pixel failed to load', e);
+                }}
                 dangerouslySetInnerHTML={{
                     __html: `
                     !function(f,b,e,v,n,t,s)
