@@ -12,6 +12,8 @@ import FareharborScript from "@/ui/components/FareharborScript";
 import { Cookies } from "./Cookies";
 import MarketingScripts from "@/ui/components/marketing-scripts";
 import { Suspense } from "react";
+import { GoogleAnalytics } from '@next/third-parties/google'
+
 
 
 // console.log({bannerTitle});
@@ -127,6 +129,10 @@ export default async function RootLayout({
         {children}
         <Footer cities={cities} />
         <FareharborScript />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )
+        }
 
         <Suspense fallback={null}>
           <MarketingScripts />

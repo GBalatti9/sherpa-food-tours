@@ -10,6 +10,7 @@
     "export": "next build && next export"
   },
   "dependencies": {
+    "@next/third-parties": "^16.0.10",
     "@types/nodemailer": "^7.0.2",
     "clsx": "^2.1.1",
     "google-auth-library": "^9.15.1",
@@ -18,7 +19,7 @@
     "he": "^1.2.0",
     "html-entities": "^2.6.0",
     "lucide-react": "^0.539.0",
-    "next": "^16.0.7",
+    "next": "^16.0.10",
     "nodemailer": "^7.0.9",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
