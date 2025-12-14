@@ -1,11 +1,7 @@
-import { wp } from "@/lib/wp";
+
 import { FormContact } from "@/ui/components/form-contact";
-// import "./contact.css";
-
-
 
 export default async function ContactPage() {
-  const data = await wp.getPageInfo("contact");
 
   return (
     <main className="contact-page" style={{ minHeight: "80vh" }}>

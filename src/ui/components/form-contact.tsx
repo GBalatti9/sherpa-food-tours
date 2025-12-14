@@ -2,10 +2,11 @@
 "use client";
 
 import { useState } from "react";
+import { submitFormToAPI, type FormData as FormDataType } from "@/lib/submit-form";
 // import "./css/form-contact.css";
 
 export const FormContact = () => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormDataType>({
         name: '',
         lastName: '',
         email: '',
@@ -28,39 +29,22 @@ export const FormContact = () => {
         setIsSubmitting(true);
         setSubmitStatus('idle');
 
-        try {
-            // Obtener la URL actual automáticamente
-            const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
-            
-            const response = await fetch('/api/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    sourceUrl: currentUrl // Agregar la URL de origen
-                }),
-            });
+        const result = await submitFormToAPI(formData);
 
-            if (response.ok) {
-                setSubmitStatus('success');
-                setFormData({
-                    name: '',
-                    lastName: '',
-                    email: '',
-                    phone: '',
-                    message: ''
-                });
-            } else {
-                setSubmitStatus('error');
-            }
-        } catch (error) {
-            console.error('Error enviando formulario:', error);
+        if (result.success) {
+            setSubmitStatus('success');
+            setFormData({
+                name: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                message: ''
+            });
+        } else {
             setSubmitStatus('error');
-        } finally {
-            setIsSubmitting(false);
         }
+
+        setIsSubmitting(false);
     };
 
     return (

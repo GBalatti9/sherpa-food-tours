@@ -24,6 +24,7 @@ import { FormContact } from "@/ui/components/form-contact";
 import { slugify } from "@/app/helpers/slugify";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { FormattedWpPost } from "@/types/post";
+import TallyForm from "@/ui/components/tally-form";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }) {
@@ -422,9 +423,10 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                     <NextAdventure />
                 </section>
 
-                <section className="contact-section">
-                    <h2>Got any questions? <span>Contact Us!</span></h2>
-                    <FormContact />
+                <section className="w-full max-w-3xl mx-auto py-8 font-dk-otago">
+                    <h2 className="text-[1.5rem] font-bold uppercase">Got any questions? <span className="text-primary">Contact Us!</span></h2>
+                    {/* <FormContact /> */}
+                    <TallyForm />
                 </section>
 
             </main>

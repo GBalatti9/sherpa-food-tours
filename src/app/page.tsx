@@ -11,8 +11,8 @@ import AsFeaturedIn from "@/ui/components/as-featured-in";
 import { City } from "@/types/city";
 import Memories from "./components/memories";
 import { Metadata } from "next";
-import DiscountBanner from "@/ui/components/discount-banner";
-import MarqueeBanner from "@/ui/components/marquee-banner";
+// import DiscountBanner from "@/ui/components/discount-banner";
+// import MarqueeBanner from "@/ui/components/marquee-banner";
 
 // Generate metadata for SEO
 export async function generateMetadata(): Promise<Metadata> {
@@ -267,15 +267,23 @@ export default async function Home() {
 
   return (
     <>
-      {/* Preload de imagen crítica */}
-      {background_image?.img && (
+      {/* Preload de imagen placeholder (crítica - aparece primero) */}
+      {/* <link
+        rel="preload"
+        as="image"
+        href="/sherpa-main-image.webp"
+        fetchPriority="high"
+      /> */}
+      
+      {/* Preload de imagen real de WordPress */}
+      {/* {background_image?.img && (
         <link
           rel="preload"
           as="image"
           href={background_image.img}
           fetchPriority="high"
         />
-      )}
+      )} */}
 
       {/* Structured Data */}
       <script

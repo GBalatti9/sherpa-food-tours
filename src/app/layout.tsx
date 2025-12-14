@@ -106,10 +106,6 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="preconnect" href="https://fareharbor.com" />
         <link rel="dns-prefetch" href="https://consent.cookiebot.com" />
-        {/* Preconnect para imágenes de WordPress */}
-        <link rel="preconnect" href="https://staging.sherpafoodtours.com" />
-        <link rel="preconnect" href="https://www.sherpafoodtours.com" />
-        <link rel="preconnect" href="https://sherpafoodtours.com" />
       </head>
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
 
