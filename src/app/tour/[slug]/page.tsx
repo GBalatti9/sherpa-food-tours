@@ -280,33 +280,33 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     }
 
     // Generate TouristTrip structured data
-    const touristTripSchema = {
+    const productSchema = {
         "@context": "https://schema.org",
-        "@type": "TouristTrip",
+        "@type": "Product",
         "name": title,
         "description": acf.tour_description,
         "image": featuredImage.img,
         "url": tourUrl,
+        "brand": {
+            "@type": "Brand",
+            "name": "Sherpa Food Tours"
+        },
         "offers": {
             "@type": "Offer",
-            "price": price,
+            "price": Number(price),
             "priceCurrency": "USD",
             "availability": "https://schema.org/InStock",
             "url": tourUrl,
-            "validFrom": new Date().toISOString(),
+            "validFrom": new Date().toISOString()
         },
-        "provider": {
-            "@type": "TravelAgency",
-            "name": "Sherpa Food Tours",
-            "url": baseUrl,
-        },
-        "touristType": "Food Lovers",
         "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": stars,
-            "bestRating": "5",
-            "worstRating": "1",
-            "ratingCount": reviews.google.amount + reviews.tripadvisor.amount
+            "ratingValue": Number(stars),
+            "bestRating": 5,
+            "worstRating": 1,
+            "ratingCount":
+                Number(reviews.google.amount || 0) +
+                Number(reviews.tripadvisor.amount || 0)
         }
     };
 
@@ -340,7 +340,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             {/* JSON-LD Structured Data for SEO */}
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(touristTripSchema) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
             />
             <script
                 type="application/ld+json"
@@ -397,7 +397,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                                     link={acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
                                     data_tour={acf.fareharbor?.id ?? "627977"}
                                 />
-                                
+
                             )}
                         </div>
                         <div className="price-container">
@@ -441,7 +441,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                     </div>
                     <div className="calendar-container">
 
-                        <Calendar link={acf.calendar_widget ?? null}/>
+                        <Calendar link={acf.calendar_widget ?? null} />
                     </div>
                 </div>
                 <section className="tour-conditions">
