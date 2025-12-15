@@ -195,6 +195,32 @@ const nextConfig = {
         destination: '/travel-guide/buenos-aires/what-is-asado-in-argentina/',
         permanent: true,
       },
+      {
+        source: '/6-best-places-to-enjoy-empanadas-in-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/6-best-places-to-enjoy-empanadas-in-buenos-aires/',
+        permanent: true,
+      },
+      {
+        source: '/buenos-aires-food-what-to-eat-and-where/',
+        destination: '/travel-guide/buenos-aires/buenos-aires-food-what-to-eat-and-where/',
+        permanent: true,
+      },
+      {
+        source: '/mexican-fruit-juices/',
+        destination: '/travel-guide/mexico-city/mexican-fruit-juices/',
+        permanent: true,
+      },
+      {
+        source: '/best-wine-bars-in-amsterdam/',
+        destination: '/travel-guide/amsterdam/best-wine-bars-in-amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/travel-guide/argentina/',
+        destination: '/travel-guide/buenos-aires/best-food-buenos-aires/',
+        permanent: true,
+      },
+      
       // {
       //   source: '/travel-guide/buenos-aires/traditional-argentine-drinks-and-where-to-try-them/',
       //   destination: '/traditional-argentine-drinks-and-where-to-try-them/',
