@@ -34,14 +34,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const travelGuideUrls = travelGuides.flatMap((guide) => {
     // Obtenemos las ciudades de forma segura
     const cities = guide.relaciones?.ciudades?.filter(Boolean) || [{ title: "default-city" }];
-  
-    console.log({ guide: cities });
-  
+    
     return cities.map((city: { title: string }) => {
       const citySlug = slugify(city.title || "default-city");
       const url = `${baseUrl}/travel-guide/${citySlug}/${guide.slug}/`;
-  
-      console.log({ url });
   
       return {
         url,

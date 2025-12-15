@@ -8,7 +8,8 @@ import FareharborScript from "@/ui/components/FareharborScript";
 import { Cookies } from "./Cookies";
 import MarketingScripts from "@/ui/components/marketing-scripts";
 import { Suspense } from "react";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from "next/script";
+// import { GoogleAnalytics } from '@next/third-parties/google'
 
 const excelsior = localFont({
   src: [
@@ -109,32 +110,41 @@ export default async function RootLayout({
       </head>
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
 
-        {/* <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=572272225503800&ev=PageView&noscript=1"
-          />
-        </noscript> */}
         <NavBarWrapper cities={cities} />
 
         {children}
         <Footer cities={cities} />
         <FareharborScript />
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-        )
-        }
 
         <Suspense fallback={null}>
           <MarketingScripts />
         </Suspense>
+
+        <Script
+          id="ga-loader"
+          type="text/plain"
+          data-cookieconsent="statistics"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        />
+
+        <Script
+          id="ga-config"
+          type="text/plain"
+          data-cookieconsent="statistics"
+        >
+          {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+      anonymize_ip: true
+    });
+  `}
+        </Script>
+
+
+
       </body>
     </html>
   );
 }
-
-
-{/* <link rel="preconnect" href="https://staging.sherpafoodtours.com" />
-<link rel="dns-prefetch" href="https://staging.sherpafoodtours.com" /> */}
