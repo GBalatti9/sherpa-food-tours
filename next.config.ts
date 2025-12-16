@@ -610,6 +610,11 @@ const nextConfig = {
         destination: '/_next/image/?url=%2Fsherpa-main-image.webp&w=1920&q=75/',
         permanent: true,
       },
+      {
+        source: '/avenue-cookery-school-london',
+        destination: '/travel-guide/london/avenue-cookery-school-london/',
+        permanent: true,
+      },
 
       
       // {

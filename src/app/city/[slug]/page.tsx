@@ -27,8 +27,8 @@ import { FormattedWpPost } from "@/types/post";
 import TallyForm from "@/ui/components/tally-form";
 
 
-export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }) {
-    const { city, slug } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
 
     const cityBySlug = await wp.getCityBySlug(slug);
 
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
         openGraph: {
             title,
             description,
-            url: `https://www.sherpafoodtours.com/travel-guide/${city}/${slug}`,
+            url: `https://www.sherpafoodtours.com/city/${slug}`,
             type: "article",
             images: [
                 {
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
             images: [image.img],
         },
         alternates: {
-            canonical: `https://www.sherpafoodtours.com/travel-guide/${city}/${slug}`,
+            canonical: `https://www.sherpafoodtours.com/city/${slug}`,
         },
     }
 
