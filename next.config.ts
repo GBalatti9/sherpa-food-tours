@@ -610,6 +610,7 @@ const nextConfig = {
         destination: '/_next/image/?url=%2Fsherpa-main-image.webp&w=1920&q=75/',
         permanent: true,
       },
+
       
       // {
       //   source: '/travel-guide/buenos-aires/traditional-argentine-drinks-and-where-to-try-them/',

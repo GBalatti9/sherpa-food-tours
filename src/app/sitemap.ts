@@ -14,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Get all cities for dynamic routes
   const cities = await safeFetch(() => wp.getAllCities(), [], 'getAllCities');
   const cityUrls = cities.map((city: { slug: string }) => ({
-    url: `${baseUrl}/city/${city.slug}`,
+    url: `${baseUrl}/city/${city.slug}/`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Get all tours for dynamic routes
   const tours = await safeFetch(() => wp.getAllTours(), [], 'getAllTours');
   const tourUrls = tours.map((tour: { slug: string }) => ({
-    url: `${baseUrl}/tour/${tour.slug}`,
+    url: `${baseUrl}/tour/${tour.slug}/`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
@@ -48,28 +48,59 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   });
 
+  // Get all authors for dynamic routes
+  const authors = await safeFetch(() => wp.getAllUsers(), { ok: false, data: [] }, 'getAllUsers');
+  const authorUrls = authors.ok && authors.data 
+    ? authors.data
+        .filter((author: { name: string; slug?: string; description?: string }) => 
+          author.name?.toLowerCase() !== "admin" && author.description
+        )
+        .map((author: { slug?: string; name?: string }) => {
+          const userSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, '-') || "user";
+          return {
+            url: `${baseUrl}/author/${userSlug}/`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.5,
+          };
+        })
+    : [];
+
 
   return [
     {
-      url: baseUrl,
+      url: `${baseUrl}/`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
     },
     {
-      url: `${baseUrl}/about-us`,
+      url: `${baseUrl}/about-us/`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/travel-guide`,
+      url: `${baseUrl}/travel-guide/`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/contact/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/contacto/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
     ...cityUrls,
     ...tourUrls,
     ...travelGuideUrls,
+    ...authorUrls,
   ];
 }
