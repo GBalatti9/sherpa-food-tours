@@ -285,11 +285,12 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         "@type": "Product",
         "name": title,
         "description": acf.tour_description,
-        "image": featuredImage.img,
+        "image": [featuredImage.img],
         "url": tourUrl,
         "brand": {
-            "@type": "Brand",
-            "name": "Sherpa Food Tours"
+            "@type": "Organization",
+            "name": "Sherpa Food Tours",
+            "url": baseUrl
         },
         "offers": {
             "@type": "Offer",
@@ -301,12 +302,16 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         },
         "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": Number(stars),
+            "ratingValue": Math.min(
+                5,
+                Math.max(1, Number(stars) || 5)
+            ),
             "bestRating": 5,
             "worstRating": 1,
-            "ratingCount":
+            "ratingCount": Math.floor(
                 Number(reviews.google.amount || 0) +
                 Number(reviews.tripadvisor.amount || 0)
+            )
         }
     };
 
