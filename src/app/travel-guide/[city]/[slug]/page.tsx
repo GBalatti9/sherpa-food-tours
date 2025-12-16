@@ -270,7 +270,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 </header>
                 
                 <div className="article-content" itemProp="articleBody">
-                    <h1 itemProp="name">{title}</h1>
+                    <h1 itemProp="name" dangerouslySetInnerHTML={{ __html: title }}></h1>
                     <div dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
                 

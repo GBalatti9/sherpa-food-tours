@@ -311,6 +311,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/argentinian-cookies-explained-the-gluttons-guide-to-alfajores/',
+        destination: '/travel-guide/buenos-aires/argentinian-cookies-alfajores/',
+        permanent: true,
+      },
+      {
         source: '/best-affordable-restaurants-in-paris/',
         destination: '/travel-guide/paris/best-affordable-restaurants-in-paris/',
         permanent: true,
