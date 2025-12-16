@@ -322,20 +322,18 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             {
                 "@type": "ListItem",
                 "position": 1,
-                "name": "Home",
-                "item": baseUrl
+                "item": {
+                    "@id": `${baseUrl}/tour`,
+                    "name": "Sherpa Food Tours"
+                }
             },
             {
                 "@type": "ListItem",
                 "position": 2,
-                "name": "Tours",
-                "item": `${baseUrl}/tour`
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": title,
-                "item": tourUrl
+                "item": {
+                    "@id": tourUrl,
+                    "name": title
+                }
             }
         ]
     };
