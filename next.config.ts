@@ -49,6 +49,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/travels-guide/:path*',
+        destination: '/travel-guide/',
+        permanent: true,
+      },
+      {
         source: '/argentinian-cookies-alfajores/',
         destination: '/travel-guide/buenos-aires/argentinian-cookies-alfajores/',
         permanent: true,
@@ -616,7 +621,7 @@ const nextConfig = {
         permanent: true,
       },
 
-      
+
       // {
       //   source: '/travel-guide/buenos-aires/traditional-argentine-drinks-and-where-to-try-them/',
       //   destination: '/traditional-argentine-drinks-and-where-to-try-them/',
@@ -697,7 +702,7 @@ const nextConfig = {
       //   destination: '/poulette-restaurants-in-paris/',
       //   permanent: true,
       // },
-      
+
     ];
   },
 
@@ -743,7 +748,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: process.env.NODE_ENV === 'production' 
+            value: process.env.NODE_ENV === 'production'
               ? 'public, max-age=31536000, immutable'
               : 'public, max-age=0, must-revalidate',
           },

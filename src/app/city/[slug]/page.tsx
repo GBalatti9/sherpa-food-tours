@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         openGraph: {
             title,
             description,
-            url: `https://www.sherpafoodtours.com/city/${slug}`,
+            url: `https://www.sherpafoodtours.com/city/${slug}/`,
             type: "article",
             images: [
                 {
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             images: [image.img],
         },
         alternates: {
-            canonical: `https://www.sherpafoodtours.com/city/${slug}`,
+            canonical: `https://www.sherpafoodtours.com/city/${slug}/`,
         },
     }
 

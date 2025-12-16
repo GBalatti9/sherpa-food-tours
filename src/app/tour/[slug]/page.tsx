@@ -126,7 +126,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             images: [featuredImage.img || `${baseUrl}/sherpa-complete-logo.webp`],
         },
         alternates: {
-            canonical: tourUrl,
+            canonical: tourUrl + '/',
         },
         robots: {
             index: true,

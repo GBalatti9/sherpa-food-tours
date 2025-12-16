@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const imageUrl = img || "https://www.sherpafoodtours.com/default-og.jpg";
     const title = post.title;
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
-    const articleUrl = `${baseUrl}/${slug}`;
+    const articleUrl = `${baseUrl}/${slug}/`;
 
     // Get city name for keywords
     const cityName = post.relaciones?.ciudades?.[0]?.title || "Travel Guide";

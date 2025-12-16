@@ -89,7 +89,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
             creator: "@sherpafoodtours",
         },
         alternates: {
-            canonical: articleUrl,
+            canonical: articleUrl + '/',
         },
         robots: {
             index: true,
