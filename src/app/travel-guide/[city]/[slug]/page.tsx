@@ -9,6 +9,7 @@ import TravelGuideCardsSection from "@/ui/components/travel-guide-cards-section"
 import { TourRelationship } from "@/types/tour";
 import { cleanExcerpt } from "@/app/helpers/cleanExcerpt";
 import { Metadata } from "next";
+import he from "he";
 
 
 // ----------------------
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     const description = cleanExcerpt(rawDescription);
     
     const imageUrl = img || "https://www.sherpafoodtours.com/default-og.jpg";
-    const title = post.title;
+    const title = he.decode(post.title);
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
     const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}`;
 
@@ -270,7 +271,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 </header>
                 
                 <div className="article-content" itemProp="articleBody">
-                    <h1 itemProp="name" dangerouslySetInnerHTML={{ __html: title }}></h1>
+                    <h1 itemProp="name">{he.decode(title)}</h1>
                     <div dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
                 

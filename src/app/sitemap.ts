@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // se regenera cada hora
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://sherpafoodtours.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
 
   // Get all cities for dynamic routes
   const cities = await safeFetch(() => wp.getAllCities(), [], 'getAllCities');

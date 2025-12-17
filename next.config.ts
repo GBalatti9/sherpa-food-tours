@@ -620,6 +620,11 @@ const nextConfig = {
         destination: '/travel-guide/london/avenue-cookery-school-london/',
         permanent: true,
       },
+      {
+        source: '/eating-paris',
+        destination: '/travel-guide/paris/eating-paris/',
+        permanent: true,
+      },
 
 
       // {

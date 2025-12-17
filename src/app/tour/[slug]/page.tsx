@@ -278,27 +278,34 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             element.items.flatMap((e) => (e.mobile_img ? [e.mobile_img] : []))
         );
     }
-
+    const priceValidUntil = new Date();
+    priceValidUntil.setFullYear(priceValidUntil.getFullYear() + 1);
+    
     // Generate TouristTrip structured data
     const productSchema = {
         "@context": "https://schema.org",
-        "@type": "Product",
+        "@type": "TouristTrip",
         "name": title,
         "description": acf.tour_description,
         "image": [featuredImage.img],
         "url": tourUrl,
-        "brand": {
+        // CORRECCIÓN 1: Cambiamos 'brand' por 'provider'
+        // 'provider' es el término correcto para servicios y tours.
+        "provider": { 
             "@type": "Organization",
             "name": "Sherpa Food Tours",
             "url": baseUrl
         },
         "offers": {
             "@type": "Offer",
-            "price": Number(price),
+            "price": price.toString(),
             "priceCurrency": "USD",
             "availability": "https://schema.org/InStock",
             "url": tourUrl,
-            "validFrom": new Date().toISOString()
+            "validFrom": new Date().toISOString(),
+            "priceValidUntil": priceValidUntil.toISOString(),
+            // OPCIONAL: Esto ayuda a definir que vendes un servicio/experiencia
+            "category": "Tours & Experiences" 
         },
         "aggregateRating": {
             "@type": "AggregateRating",
