@@ -131,6 +131,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/traditional-argentine-drinks/',
+        destination: '/travel-guide/buenos-aires/traditional-argentine-drinks-and-where-to-try-them/',
+        permanent: true,
+      },
+      {
         source: '/tour/londres-food-tour/',
         destination: '/tour/london-food-tour/',
         permanent: true,
@@ -276,6 +281,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/best-restaurants-in-mexico-city/',
+        destination: '/travel-guide/cdmx/best-restaurants-in-roma-norte-cdmx/',
+        permanent: true,
+      },
+      {
         source: '/poulette-restaurants-in-paris/',
         destination: '/travel-guide/paris/poulette-restaurants-in-paris/',
         permanent: true,
@@ -337,7 +347,7 @@ const nextConfig = {
       },
       {
         source: '/mexico-city-vegan-food-tour/',
-        destination: '/travel-guide/mexico-city/mexico-city-vegan-food-tour/',
+        destination: '/travel-guide/mexico-city/vegan-restaurants-mexico-city/',
         permanent: true,
       },
       {
@@ -1043,6 +1053,11 @@ const nextConfig = {
       {
         source: '/best-italian-restaurants-london/',
         destination: '/travel-guide/london/best-italian-restaurants-london/',
+        permanent: true,
+      },
+      {
+        source: '/secret-food-tour-london/',
+        destination: '/travel-guide/london/private-food-tour-in-london/',
         permanent: true,
       },
 
