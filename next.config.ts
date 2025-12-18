@@ -146,6 +146,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/best-cooking-classes-in-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/best-cooking-classes-in-buenos-aires/',
+        permanent: true,
+      },
+      {
         source: '/argentinian-desserts-list/',
         destination: '/travel-guide/argentina/argentinian-desserts-list/',
         permanent: true,
@@ -256,6 +261,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/paris-chocolate-tour/',
+        destination: '/travel-guide/paris/paris-chocolate-tour/',
+        permanent: true,
+      },
+      {
+        source: '/famous-restaurants-in-paris/',
+        destination: '/travel-guide/paris/famous-restaurants-in-paris/',
+        permanent: true,
+      },
+      {
         source: '/what-is-asado-in-argentina/',
         destination: '/travel-guide/buenos-aires/what-is-asado-in-argentina/',
         permanent: true,
@@ -293,6 +308,16 @@ const nextConfig = {
       {
         source: '/mexican-fruit-juices/',
         destination: '/travel-guide/mexico-city/mexican-fruit-juices/',
+        permanent: true,
+      },
+      {
+        source: '/mexico-city-restaurants-with-a-view/',
+        destination: '/travel-guide/mexico-city/mexico-city-restaurants-with-a-view/',
+        permanent: true,
+      },
+      {
+        source: '/mexico-city-vegan-food-tour/',
+        destination: '/travel-guide/mexico-city/mexico-city-vegan-food-tour/',
         permanent: true,
       },
       {
@@ -371,6 +396,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/london-food-scene/',
+        destination: '/travel-guide/london/london-food-scene/',
+        permanent: true,
+      },
+      {
         source: '/a-taste-of-india-in-the-heart-of-london-the-10-best-indian-restaurants-to-try/',
         destination: '/travel-guide/london/a-taste-of-india-in-the-heart-of-london-the-10-best-indian-restaurants-to-try/',
         permanent: true,
@@ -388,6 +418,11 @@ const nextConfig = {
       {
         source: '/a-complete-guide-to-the-20-best-restaurants-in-amsterdam/',
         destination: '/travel-guide/amsterdam/a-complete-guide-to-the-20-best-restaurants-in-amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/best-dutch-restaurants-amsterdam/',
+        destination: '/travel-guide/amsterdam/best-dutch-restaurants-amsterdam/',
         permanent: true,
       },
       {
@@ -438,6 +473,16 @@ const nextConfig = {
       {
         source: '/popular-restaurants-in-mexico-city/',
         destination: '/travel-guide/mexico-city/popular-restaurants-in-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/top-10-restaurants-in-mexico-city/',
+        destination: '/travel-guide/mexico-city/top-10-restaurants-in-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/spicy-mexican-dishes-for-heat-lovers/',
+        destination: '/travel-guide/mexico-city/spicy-mexican-dishes-for-heat-lovers/',
         permanent: true,
       },
       {
@@ -508,6 +553,11 @@ const nextConfig = {
       {
         source: '/3-day-buenos-aires-itinerary/',
         destination: '/travel-guide/buenos-aires/3-day-buenos-aires-itinerary/',
+        permanent: true,
+      },
+      {
+        source: '/5-things-to-know-before-visiting-argentina/',
+        destination: '/travel-guide/buenos-aires/5-things-to-know-before-visiting-argentina/',
         permanent: true,
       },
       {
@@ -623,6 +673,181 @@ const nextConfig = {
       {
         source: '/eating-paris',
         destination: '/travel-guide/paris/eating-paris/',
+        permanent: true,
+      },
+      {
+        source: '/best-pizza-in-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/best-pizza-in-buenos-aires/',
+        permanent: true,
+      },
+      {
+        source: '/where-to-stay-in-buenos-aires-neighborhood-guide-for-every-traveler/',
+        destination: '/travel-guide/buenos-aires/where-to-stay-in-buenos-aires-neighborhood-guide-for-every-traveler/',
+        permanent: true,
+      },
+      {
+        source: '/beyond-the-city-best-day-trips-from-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/beyond-the-city-best-day-trips-from-buenos-aires/',
+        permanent: true,
+      },
+      {
+        source: '/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires/',
+        permanent: true,
+      },
+      {
+        source: '/what-to-do-in-buenos-aires-discover-7-must-visit-places/',
+        destination: '/travel-guide/buenos-aires/what-to-do-in-buenos-aires-discover-7-must-visit-places/',
+        permanent: true,
+      },
+      {
+        source: '/explore-the-best-bookshops-in-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/explore-the-best-bookshops-in-buenos-aires/',
+        permanent: true,
+      },
+      {
+        source: '/dutch-food-in-amsterdam-a-journey-through-tradition/',
+        destination: '/travel-guide/amsterdam/dutch-food-in-amsterdam-a-journey-through-tradition/',
+        permanent: true,
+      },
+      {
+        source: '/best-snack-bars-amsterdam/',
+        destination: '/travel-guide/amsterdam/best-snack-bars-amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/top-restaurants-in-amsterdam/',
+        destination: '/travel-guide/amsterdam/top-restaurants-in-amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/walking-food-tours-amsterdam/',
+        destination: '/travel-guide/amsterdam/walking-food-tours-amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/best-places-to-eat-in-amsterdam/',
+        destination: '/travel-guide/amsterdam/best-places-to-eat-in-amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/best-places-for-brunch-in-amsterdam/',
+        destination: '/travel-guide/amsterdam/best-places-for-brunch-in-amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/secret-food-tour-amsterdam/',
+        destination: '/travel-guide/amsterdam/secret-food-tour-amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/best-taquerias-mexico-city/',
+        destination: '/travel-guide/mexico-city/best-taquerias-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/best-cocktails-in-mexico-city/',
+        destination: '/travel-guide/mexico-city/best-cocktails-in-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/vegan-restaurants-mexico-city/',
+        destination: '/travel-guide/mexico-city/vegan-restaurants-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/best-casual-restaurants-mexico-city/',
+        destination: '/travel-guide/mexico-city/best-casual-restaurants-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/best-speakeasy-in-mexico-city/',
+        destination: '/travel-guide/mexico-city/best-speakeasy-in-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/tamales-in-mexico-city/',
+        destination: '/travel-guide/mexico-city/tamales-in-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/mexico-city-market-tours/',
+        destination: '/travel-guide/mexico-city/mexico-city-market-tours/',
+        permanent: true,
+      },
+      {
+        source: '/eating-london/',
+        destination: '/travel-guide/london/eating-london/',
+        permanent: true,
+      },
+      {
+        source: '/best-steak-in-london/',
+        destination: '/travel-guide/london/best-steak-in-london/',
+        permanent: true,
+      },
+      {
+        source: '/brunch-in-london/',
+        destination: '/travel-guide/london/brunch-in-london/',
+        permanent: true,
+      },
+      {
+        source: '/gin-tours-london/',
+        destination: '/travel-guide/london/gin-tours-london/',
+        permanent: true,
+      },
+      {
+        source: '/top-cooking-classes-in-london/',
+        destination: '/travel-guide/london/top-cooking-classes-in-london/',
+        permanent: true,
+      },
+      {
+        source: '/east-end-food-tour-london/',
+        destination: '/travel-guide/london/east-end-food-tour-london/',
+        permanent: true,
+      },
+      {
+        source: '/hidden-gem-restaurants-mexico-city/',
+        destination: '/travel-guide/mexico-city/hidden-gem-restaurants-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/best-places-to-eat-in-mexico-city/',
+        destination: '/travel-guide/mexico-city/best-places-to-eat-in-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/best-coffee-in-mexico/',
+        destination: '/travel-guide/mexico-city/best-coffee-in-mexico/',
+        permanent: true,
+      },
+      {
+        source: '/pastry-tour-paris/',
+        destination: '/travel-guide/paris/pastry-tour-paris/',
+        permanent: true,
+      },
+      {
+        source: '/vegan-restaurants-paris/',
+        destination: '/travel-guide/paris/vegan-restaurants-paris/',
+        permanent: true,
+      },
+      {
+        source: '/walking-food-tour-paris/',
+        destination: '/travel-guide/paris/walking-food-tour-paris/',
+        permanent: true,
+      },
+      {
+        source: '/best-restaurants-in-paris/',
+        destination: '/travel-guide/paris/best-restaurants-in-paris/',
+        permanent: true,
+      },
+      {
+        source: '/where-to-eat-in-paris/',
+        destination: '/travel-guide/paris/where-to-eat-in-paris/',
+        permanent: true,
+      },
+      {
+        source: '/tea-houses-in-london/',
+        destination: '/travel-guide/london/tea-houses-in-london/',
         permanent: true,
       },
 
