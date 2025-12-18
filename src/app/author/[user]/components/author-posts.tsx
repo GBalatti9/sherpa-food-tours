@@ -102,7 +102,7 @@ export default function AuthorPosts({ initialPosts, authorId }: AuthorPostsProps
                     if (!slug) {
                         url = "/travel-guide";
                     } else {
-                        url = `/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`;
+                        url = `/travel-guide/${slugify(slug)}/${post.slug}`;
                     }
 
                     const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, '');

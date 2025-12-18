@@ -86,7 +86,7 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                     if (!slug) {
                         url = "/travel-guide";
                     } else {
-                        url = `/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`;
+                        url = `/travel-guide/${slugify(slug)}/${post.slug}`;
                     }
 
                     const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, '');

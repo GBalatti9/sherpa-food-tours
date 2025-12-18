@@ -19,8 +19,12 @@ export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBo
             </div>
             <div className="preview-wrapper">
                 {posts.map((post, i) => {
+                    // Validar city_slug antes de generar la URL
+                    const citySlug = post.city_slug && post.city_slug !== 'undefined' ? post.city_slug : null;
+                    const href = citySlug ? `/travel-guide/${citySlug}/${post.slug}` : `/travel-guide`;
+                    
                     return (
-                        <Link className="preview-item" key={post.image.img + i} href={`/travel-guide/${post.city_slug}/${post.slug}`}>
+                        <Link className="preview-item" key={post.image.img + i} href={href}>
                             <div className="preview-image-container">
                                 <img src={post.image.img} alt={post.image.alt} loading="lazy" />
                                 {post.city &&

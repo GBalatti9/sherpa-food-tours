@@ -25,6 +25,7 @@ import { slugify } from "@/app/helpers/slugify";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { FormattedWpPost } from "@/types/post";
 import TallyForm from "@/ui/components/tally-form";
+import { redirect } from "next/navigation";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -32,9 +33,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     const cityBySlug = await wp.getCityBySlug(slug);
 
-    const title = cityBySlug.acf.metadata.title.trim().length > 0 ? cityBySlug.acf.metadata.title : `${cityBySlug.city_name} | Sherpa Food Tour`;
+    // Si no hay datos válidos, retornar metadata por defecto
+    if (!cityBySlug.acf || !cityBySlug.city_name || cityBySlug.city_name.trim() === "") {
+        return {
+            title: "City Not Found | Sherpa Food Tours",
+            description: "City page not found",
+        };
+    }
+
+    const title = cityBySlug.acf.metadata?.title?.trim().length > 0 ? cityBySlug.acf.metadata.title : `${cityBySlug.city_name} | Sherpa Food Tour`;
     const image = await wp.getPostImage(cityBySlug.featured_media);
-    const description = cityBySlug.acf.metadata.description.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content)
+    const description = cityBySlug.acf.metadata?.description?.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content)
 
     return {
         title,
@@ -83,6 +92,11 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     const cityData = await wp.getCityBySlug(slug);
     const { acf, featured_media, content } = cityData;
+
+    // Si no hay datos válidos, redirigir a home
+    if (!acf || !cityData.city_name || cityData.city_name.trim() === "") {
+        redirect('/');
+    }
 
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
@@ -247,7 +261,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                     author_name: post.author,
                     image: post.featured_media,
                     city: post.city_name,
-                    city_slug: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0]?.title) : null,
+                    city_slug: post.relaciones.ciudades[0]?.title ? slugify(post.relaciones.ciudades[0]?.title) : "sin-ciudad",
                     key: post.acf.key
                 }
             }).slice(0, 3)

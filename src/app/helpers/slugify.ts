@@ -1,5 +1,5 @@
 export function slugify(text: string) {
-    if (!text) return;
+    if (!text) return "";
     
     return text
         .toLowerCase()                 // minusculas

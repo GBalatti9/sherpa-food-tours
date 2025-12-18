@@ -10,6 +10,7 @@ import { TourRelationship } from "@/types/tour";
 import { cleanExcerpt } from "@/app/helpers/cleanExcerpt";
 import { Metadata } from "next";
 import he from "he";
+import { redirect } from "next/navigation";
 
 
 // ----------------------
@@ -18,6 +19,15 @@ import he from "he";
 export async function generateMetadata({ params }: { params: Promise<{ city: string; slug: string }> }): Promise<Metadata> {
     const { city, slug } = await params;  
     const post = await wp.getPostInfo(slug);
+    
+    // Si no hay datos válidos, retornar metadata por defecto
+    if (!post || !post.title || post.title.trim() === "" || !post.content) {
+        return {
+            title: "Article Not Found | Sherpa Food Tours",
+            description: "Article not found",
+        };
+    }
+
     const { img, alt } = await wp.getPostImage(post.featured_media);
 
     const rawDescription = post.excerpt?.replace(/<[^>]+>/g, "") || post.content.replace(/<[^>]+>/g, "").slice(0, 150);
@@ -130,7 +140,14 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     const { city, slug } = await params;
 
-    const { title, content, featured_media, excerpt, date, modified, relaciones } = await wp.getPostInfo(slug);
+    const postData = await wp.getPostInfo(slug);
+    
+    // Si no hay datos válidos, redirigir a home
+    if (!postData || !postData.title || postData.title.trim() === "" || !postData.content) {
+        redirect('/');
+    }
+
+    const { title, content, featured_media, excerpt, date, modified, relaciones } = postData;
     const { img, alt } = await wp.getPostImage(featured_media);
 
     console.log({ content, excerpt, title, featured_media, date, modified, relaciones });
