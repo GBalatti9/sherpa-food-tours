@@ -9,7 +9,13 @@ import { Cookies } from "./Cookies";
 import MarketingScripts from "@/ui/components/marketing-scripts";
 import { Suspense } from "react";
 import Script from "next/script";
+import MarqueeBanner from "@/ui/components/marquee-banner";
 // import { GoogleAnalytics } from '@next/third-parties/google'
+
+const marqueeBanner = await wp.getMarqueeBanner();
+console.log({marqueeBanner: marqueeBanner.data[0]});
+
+
 
 const excelsior = localFont({
   src: [
@@ -109,6 +115,9 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://consent.cookiebot.com" />
       </head>
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
+        {marqueeBanner.ok && marqueeBanner.data && marqueeBanner.data.length > 0 && (
+          <MarqueeBanner bannerTitle={marqueeBanner.data[0].title.rendered} bannerLink={marqueeBanner.data[0].acf?.redirect_to} />
+        )}
 
         <NavBarWrapper cities={cities} />
 

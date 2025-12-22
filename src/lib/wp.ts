@@ -403,5 +403,16 @@ export const wp = {
         }
       },
 
+      getMarqueeBanner: async () => {
+        try {
+          const url = `${apiUrl}/banner`;
+          const response = await fetch(url);
+          const data = await response.json();
+          return { ok: true, data };
+        } catch (error) {
+          return { ok: false, data: null };
+        }
+      }
+
 
 }

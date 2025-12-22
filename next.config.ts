@@ -622,7 +622,7 @@ const nextConfig = {
       },
       {
         source: '/5-things-to-know-before-visiting-argentina/',
-        destination: '/travel-guide/buenos-aires/5-things-to-know-before-visiting-argentina/',
+        destination: '/travel-guide/buenos-aires/things-to-know-when-visiting-argentina/',
         permanent: true,
       },
       {
@@ -926,6 +926,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/secret-food-tours-mexico-city',
+        destination: '/travel-guide/mexico-city/secret-food-tours-mexico-city/',
+        permanent: true,
+      },
+      {
         source: '/tamales-in-mexico-city/',
         destination: '/travel-guide/mexico-city/tamales-in-mexico-city/',
         permanent: true,
@@ -947,6 +952,11 @@ const nextConfig = {
       },
       {
         source: '/walking-food-tour-london/',
+        destination: '/travel-guide/london/walking-food-tour-london/',
+        permanent: true,
+      },
+      {
+        source: '/best-walking-food-tour-in-london/',
         destination: '/travel-guide/london/walking-food-tour-london/',
         permanent: true,
       },
