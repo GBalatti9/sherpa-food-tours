@@ -57,14 +57,14 @@ export async function generateMetadata(): Promise<Metadata> {
       address: false,
       telephone: false,
     },
-    metadataBase: new URL('https://sherpafoodtours.com'),
+    metadataBase: new URL('https://www.sherpafoodtours.com/'),
     alternates: {
       canonical: '/',
     },
     openGraph: {
       title: `${title} | Sherpa Food Tours`,
       description,
-      url: 'https://sherpafoodtours.com',
+      url: 'https://www.sherpafoodtours.com/',
       siteName: 'Sherpa Food Tours',
       images: [
         {
@@ -94,9 +94,6 @@ export async function generateMetadata(): Promise<Metadata> {
         'max-image-preview': 'large',
         'max-snippet': -1,
       },
-    },
-    verification: {
-      google: 'your-google-verification-code', // Replace with actual verification code
     },
   };
 }
@@ -218,9 +215,9 @@ export default async function Home() {
     "@type": "TravelAgency",
     "name": "Sherpa Food Tours",
     "description": "Authentic food tours and culinary experiences around the world",
-    "url": "https://sherpafoodtours.com",
-    "logo": "https://sherpafoodtours.com/sherpa-complete-logo.webp",
-    "image": "https://sherpafoodtours.com/sherpa-complete-logo.webp",
+    "url": "https://www.sherpafoodtours.com/",
+    "logo": "https://www.sherpafoodtours.com/sherpa-complete-logo.webp",
+    "image": "https://www.sherpafoodtours.com/sherpa-complete-logo.webp",
     "telephone": "+1-555-123-4567", // Replace with actual phone number
     "email": "info@sherpafoodtours.com", // Replace with actual email
     "address": {

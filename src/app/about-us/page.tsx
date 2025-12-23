@@ -48,7 +48,7 @@ export const metadata: Metadata = {
         images: ["https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png"],
     },
     alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com'}/about-us/`,
+        canonical: `https://www.sherpafoodtours.com/about-us/`,
     },
     robots: {
         index: true,

@@ -3,7 +3,83 @@ import { redirect } from "next/navigation";
 import AuthorPosts from "./components/author-posts";
 import { WPPost } from "@/types/post";
 import { PostWithImage } from "./components/author-posts";
+import { Metadata } from "next";
 // import "@/app/travel-guide/travel-guide.css";
+
+export async function generateMetadata({ params }: { params: Promise<{ user: string }> }): Promise<Metadata> {
+    const { user } = await params;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    
+    const allUsers = await wp.getAllUsers();
+    const currentUser = allUsers.ok && allUsers.data.length 
+        ? allUsers.data.find((author: { slug?: string; name: string }) => {
+            const authorSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, '-');
+            return authorSlug === user && author.name?.toLowerCase() !== "admin";
+        })
+        : null;
+
+    if (!currentUser) {
+        return {
+            title: "Author Not Found | Sherpa Food Tours",
+            description: "Author page not found",
+        };
+    }
+
+    const authorName = currentUser.name || 'Author';
+    const authorDescription = currentUser.description 
+        ? currentUser.description.replace(/<[^>]+>/g, '').substring(0, 160) + '...'
+        : `Read articles and travel guides by ${authorName} on Sherpa Food Tours.`;
+
+    return {
+        title: `${authorName} - Author | Sherpa Food Tours`,
+        description: authorDescription,
+        keywords: [
+            authorName,
+            `${authorName} author`,
+            'travel guide author',
+            'food tour writer',
+            'culinary guide author',
+            'Sherpa Food Tours author'
+        ],
+        authors: [{ name: authorName }],
+        openGraph: {
+            title: `${authorName} - Author | Sherpa Food Tours`,
+            description: authorDescription,
+            url: `${baseUrl}/author/${user}`,
+            siteName: "Sherpa Food Tours",
+            type: "profile",
+            images: [
+                {
+                    url: "/sherpa-complete-logo.webp",
+                    width: 1200,
+                    height: 630,
+                    alt: `${authorName} - Sherpa Food Tours Author`,
+                },
+            ],
+            locale: "en_US",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${authorName} - Author | Sherpa Food Tours`,
+            description: authorDescription,
+            images: ["/sherpa-complete-logo.webp"],
+        },
+        alternates: {
+            canonical: `${baseUrl}/author/${user}/`,
+        },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-video-preview': -1,
+                'max-image-preview': 'large',
+                'max-snippet': -1,
+            },
+        },
+    };
+}
 
 export async function generateStaticParams() {
     try {
