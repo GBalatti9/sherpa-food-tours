@@ -438,9 +438,11 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 </section>
 
                 <section className="w-full max-w-3xl mx-auto py-8 font-dk-otago">
-                    <h2 className="text-[1.5rem] font-bold uppercase">Got any questions? <span className="text-primary">Contact Us!</span></h2>
+                    <h2 className="text-[1.5rem] font-bold uppercase text-center py-6">Got any questions? <span className="text-primary">Contact Us!</span></h2>
                     {/* <FormContact /> */}
-                    <TallyForm />
+                    <div className="max-w-[700px] mx-auto">
+                        <TallyForm />
+                    </div>
                 </section>
 
             </main>

@@ -31,6 +31,8 @@ export const FormContact = () => {
 
         const result = await submitFormToAPI(formData);
 
+        return console.log(result);
+
         if (result.success) {
             setSubmitStatus('success');
             setFormData({

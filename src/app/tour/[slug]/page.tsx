@@ -13,6 +13,7 @@ import Calendar from "./components/calendar";
 import { redirect } from "next/navigation";
 import AskForIt from "@/ui/components/ask-for-it";
 import { FormContact } from "@/ui/components/form-contact";
+import TallyForm from "@/ui/components/tally-form";
 
 interface TourCondition {
     icon: number;
@@ -474,9 +475,12 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
                 <ItineraryComponent itinerary={itinerary} desktopImgs={desktopImgs} />
 
-                <section className="contact-section px-8 md:text-center">
+                <section className="contact-section px-8 md:text-center mx-auto">
                     <h2>Got any questions? <span>Contact Us!</span></h2>
-                    <FormContact />
+                    {/* <FormContact /> */}
+                    <div className="max-w-[700px] mx-auto">
+                        <TallyForm />
+                    </div>
                 </section>
             </main>
         </>
