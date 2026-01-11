@@ -438,7 +438,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                 const citySlug = post.city_slug && post.city_slug !== 'undefined' && post.city_slug !== 'sin-ciudad' 
                                     ? post.city_slug 
                                     : null;
-                                const href = citySlug ? `/travel-guide/${citySlug}/${post.slug}` : `/travel-guide`;
+                                // const href = citySlug ? `/travel-guide/${citySlug}/${post.slug}` : `/travel-guide`;
+                                const href = `${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${slug}/${post.slug}`
 
                                 return (
                                     <Link 
