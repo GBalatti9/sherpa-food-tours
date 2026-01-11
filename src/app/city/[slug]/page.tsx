@@ -163,7 +163,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             }
 
 
-        }))        
+        }))
     }
 
 
@@ -222,20 +222,20 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
         // }));
 
-        const info = await Promise.all(acf.posts.map(async (id: number) => {  
+        const info = await Promise.all(acf.posts.map(async (id: number) => {
             try {
                 const postInfo = await wp.getPostInfoById(id);
                 if (!postInfo) return null;
-        
+
                 const postImage = await wp.getPostImage(postInfo.featured_media).catch(() => null);
                 const author = await wp.getAuthor(postInfo.author).catch(() => null);
-        
+
                 const ciudades = postInfo?.acf?.ciudades;
                 if (!Array.isArray(ciudades) || ciudades.length === 0) return null;
-        
+
                 const city_name = await wp.getCity(ciudades[0]).catch(() => null);
                 if (!city_name) return null;
-        
+
                 return {
                     ...postInfo,
                     featured_media: postImage,
@@ -421,11 +421,52 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                     </section>
                 }
 
-                
+
                 {(getToKnowTheCity && getToKnowTheCity.posts.length > 0) &&
-                    <section>
-                        <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts} />
-                    </section>}
+                    <section className="home-fifth-section not-ready-to-book">
+                        {/* <NotReadyToBook titles={getToKnowTheCity.titles} posts={getToKnowTheCity.posts} /> */}
+                        {/* <section className="home-fifth-section not-ready-to-book" > */}
+                        <div className="title-section">
+                            <h4>{getToKnowTheCity.titles.title}</h4>
+                            {getToKnowTheCity.titles.content &&
+                                <div className="subtitle" dangerouslySetInnerHTML={{ __html: getToKnowTheCity.titles.content }}></div>
+                            }
+                        </div>
+                        <div className="preview-wrapper">
+                            {getToKnowTheCity.posts.map((post, i) => {
+                                // Usar city_slug del post en lugar del slug de la ciudad actual
+                                const citySlug = post.city_slug && post.city_slug !== 'undefined' && post.city_slug !== 'sin-ciudad' 
+                                    ? post.city_slug 
+                                    : null;
+                                const href = citySlug ? `/travel-guide/${citySlug}/${post.slug}` : `/travel-guide`;
+
+                                return (
+                                    <Link 
+                                        className="preview-item" 
+                                        key={post.image.img + i} 
+                                        href={href}
+                                        >
+                                        <div className="preview-image-container">
+                                            <img src={post.image.img} alt={post.image.alt} loading="lazy" />
+                                            {post.city &&
+                                                <p className="preview-city">{post.city}</p>
+                                            }
+                                        </div>
+                                        <div className="preview-data">
+                                            <span className="preview-key">{post.key}</span>
+                                            <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h3>
+                                            <div className="preview-author">
+                                                <span>Por:</span> {post.author_name.name}
+                                            </div>
+                                        </div>
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                        <Link href="/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
+                    </section>
+                    // </section>
+                }
 
                 {faqs && faqs.faqs.length > 0 &&
                     <section className="faq-section-city">

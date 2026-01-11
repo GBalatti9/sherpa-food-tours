@@ -9,6 +9,7 @@ interface NotReadyToBookTitles {
 
 
 export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBookTitles, posts: FormattedWpPost[] }) {
+    console.log({ citySlugs: posts.map(post => post.city_slug) })
     return (
         <section className="home-fifth-section not-ready-to-book" >
             <div className="title-section">
@@ -22,7 +23,9 @@ export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBo
                     // Validar city_slug antes de generar la URL
                     const citySlug = post.city_slug && post.city_slug !== 'undefined' ? post.city_slug : null;
                     const href = citySlug ? `/travel-guide/${citySlug}/${post.slug}` : `/travel-guide`;
+                    console.log({ href });
                     
+
                     return (
                         <Link className="preview-item" key={post.image.img + i} href={href}>
                             <div className="preview-image-container">
