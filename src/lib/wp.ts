@@ -5,9 +5,11 @@ const apiUrl = `${domain}/wp-json/wp/v2`
 export const wp = {
     getPageInfo: async (slug: string) => {
         try {
-
+            // Optimizado: agregar cache para reducir llamadas a WordPress
             const url = `${apiUrl}/pages?slug=${slug}`;
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                next: { revalidate: 3600 } // cachea por 1 hora
+            });
             if (!response.ok) console.error("No se pudo hacer fecth a la url: " + url);
             const [data] = await response.json();
 
@@ -23,8 +25,11 @@ export const wp = {
         }
     },
     getPostInfo: async (slug: string) => {
+        // Optimizado: agregar cache para reducir llamadas a WordPress
         const url = `${apiUrl}/posts?slug=${slug}`;
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            next: { revalidate: 3600 } // cachea por 1 hora
+        });
         const [data] = await response.json();
         if (!data) return { title: "", content: "", excerpt: "", featured_media: null, date: "", modified: "", relaciones: null };
 
@@ -53,7 +58,10 @@ export const wp = {
                 url += `&page=${page}`;
             }
 
-            const response = await fetch(url);
+            // Optimizado: agregar cache para reducir llamadas a WordPress
+            const response = await fetch(url, {
+                next: { revalidate: 3600 } // cachea por 1 hora
+            });
 
             if (!response.ok) {
                 return []; // Retornar array vacío en lugar de fallar
@@ -92,7 +100,10 @@ export const wp = {
         }
         const url = `${apiUrl}/media/${id}`;
         try {
-            const response = await fetch(url);
+            // Optimizado: agregar cache para imágenes (muy usado, reduce CPU significativamente)
+            const response = await fetch(url, {
+                next: { revalidate: 7200 } // cachea por 2 horas (las imágenes cambian menos)
+            });
 
             if (!response.ok) throw new Error("No se obtuvieron datos");
 
@@ -119,12 +130,13 @@ export const wp = {
         return data;
     },
     getAllTours: async () => {
-
-        const response = await fetch(`${apiUrl}/tours`);
+        // Optimizado: agregar cache para reducir llamadas a WordPress
+        const response = await fetch(`${apiUrl}/tours`, {
+            next: { revalidate: 3600 } // cachea por 1 hora
+        });
 
         if (!response.ok) throw new Error("No se obtuvieron datos");
         const data = await response.json();
-
 
         return data;
     },
@@ -223,9 +235,11 @@ export const wp = {
     },
     getCityBySlug: async (slug: string) => {
         try {
-
+            // Optimizado: agregar cache para reducir llamadas a WordPress
             const url = `${apiUrl}/cities?slug=${slug}`;
-            const response = await fetch(url)
+            const response = await fetch(url, {
+                next: { revalidate: 3600 } // cachea por 1 hora
+            })
 
             if (!response.ok) throw new Error(`No se obtuvieron datos ${url}}`);
             const [data] = await response.json();
@@ -247,10 +261,13 @@ export const wp = {
 
     getTourBySlug: async (slug: string) => {
         try {
+            // Optimizado: agregar cache para reducir llamadas a WordPress
             const url = `${apiUrl}/tours?slug=${slug}`;
             // console.log({ url });
 
-            const response = await fetch(url)
+            const response = await fetch(url, {
+                next: { revalidate: 3600 } // cachea por 1 hora
+            })
             if (!response.ok) throw new Error(`No se obtuvieron datos: ${url}`);
             const [data] = await response.json();
 
@@ -313,8 +330,11 @@ export const wp = {
 
     getAllUsers: async () => {
         try {
+            // Optimizado: agregar cache para reducir llamadas a WordPress
             const url = `${apiUrl}/users`;
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                next: { revalidate: 3600 } // cachea por 1 hora
+            });
             const data = await response.json();
             return { ok: true, data };
         } catch (error) {

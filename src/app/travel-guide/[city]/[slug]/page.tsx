@@ -57,10 +57,14 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
         title: `${title} | Sherpa Food Tours`,
         description,
         keywords: [
-            cityName,
+            cityName, // "Buenos Aires"
+            `${cityName} food tours`, // "Buenos Aires food tours" ⭐
+            `food tours ${cityName}`, // "food tours Buenos Aires" ⭐
             `${cityName} guide`,
             `${cityName} food`,
             `${cityName} travel`,
+            `${cityName} culinary tours`,
+            `best food tours ${cityName}`,
             'travel guide',
             'food guide',
             'culinary guide',
@@ -68,7 +72,9 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
             ...foodRelatedKeywords,
             'authentic experiences',
             'local recommendations',
-            'travel tips'
+            'travel tips',
+            'food tours',
+            'culinary tours'
         ].filter(Boolean),
         authors: [{ name: "Sherpa Food Tours" }],
         openGraph: {

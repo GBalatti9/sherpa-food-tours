@@ -5,7 +5,8 @@ import { slugify } from './helpers/slugify';
 import { getAllTravelGuides } from './utils/all-travel-guide';
 
 
-export const dynamic = 'force-dynamic';
+// Optimizado: remover force-dynamic para permitir cache estático
+// El sitemap se regenerará cada hora automáticamente
 export const revalidate = 3600; // se regenera cada hora
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

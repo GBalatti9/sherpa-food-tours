@@ -77,7 +77,7 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
                                     {cities.map((city) => (
                                         <Link
                                             key={city.slug}
-                                            href={`/city/${city.slug}`}
+                                            href={`https://www.sherpafoodtours.com/city/${city.slug}`}
                                             onClick={() => setIsOpen(false)}
                                             className="menu-link"
                                             role="menuitem"

@@ -29,6 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     keywords: [
       "food tours",
+      "Buenos Aires food tours", // ⭐ Focus keyword
+      "food tours Buenos Aires", // ⭐ Focus keyword
       "culinary tours",
       "authentic food experiences",
       "local food tours",
@@ -400,7 +402,7 @@ export default async function Home() {
                 <Link
                   className="tour-card"
                   key={city.slug + i}
-                  href={`/city/${city.slug}`}
+                  href={`https://www.sherpafoodtours.com/city/${city.slug}`}
                 >
                   <div className="img-container">
                     <img

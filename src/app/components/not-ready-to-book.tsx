@@ -22,7 +22,7 @@ export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBo
                 {posts.map((post, i) => {
                     // Validar city_slug antes de generar la URL
                     const citySlug = post.city_slug && post.city_slug !== 'undefined' ? post.city_slug : null;
-                    const href = citySlug ? `/travel-guide/${citySlug}/${post.slug}` : `/travel-guide`;
+                    const href = citySlug ? `https://www.sherpafoodtours.com/travel-guide/${citySlug}/${post.slug}` : `https://www.sherpafoodtours.com/travel-guide`;
                     console.log({ href });
                     
 
@@ -45,7 +45,7 @@ export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBo
                     )
                 })}
             </div>
-            <Link href="/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
+            <Link href="https://www.sherpafoodtours.com/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
         </section>
     )
 }

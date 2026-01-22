@@ -634,9 +634,9 @@ export default function PageInteractivity({ cities, formattedPosts }: Props) {
                                     let url = null;
 
                                     if (!slug) {
-                                        url = "/travel-guide"
+                                        url = "https://www.sherpafoodtours.com/travel-guide"
                                     } else {
-                                        url = `/travel-guide/${slugify(slug)}/${post.slug}`
+                                        url = `https://www.sherpafoodtours.com/travel-guide/${slugify(slug)}/${post.slug}`
                                     }
 
                                     const cleanTitleCategory = post.title.rendered.replace(/<[^>]*>/g, '');
@@ -729,9 +729,9 @@ export default function PageInteractivity({ cities, formattedPosts }: Props) {
                                         let url = null;
 
                                         if (!slug) {
-                                            url = "/travel-guide"
+                                            url = "https://www.sherpafoodtours.com/travel-guide"
                                         } else {
-                                            url = `/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`
+                                            url = `https://www.sherpafoodtours.com/travel-guide/${slugify(post.relaciones.ciudades[0]!.title)}/${post.slug}`
                                         }
 
                                         const cleanTitleCategory = post.title.rendered.replace(/<[^>]*>/g, '');

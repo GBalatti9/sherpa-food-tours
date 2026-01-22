@@ -1,5 +1,6 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Optimizado: usar ISR (Incremental Static Regeneration) en lugar de force-dynamic
+// Esto reduce significativamente el uso de CPU al cachear las páginas
+export const revalidate = 3600; // Revalidar cada hora (1 hora = 3600 segundos)
 
 
 import OurExperiencesSection from "@/app/components/our-experiences";
@@ -44,10 +45,33 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const title = cityBySlug.acf.metadata?.title?.trim().length > 0 ? cityBySlug.acf.metadata.title : `${cityBySlug.city_name} | Sherpa Food Tour`;
     const image = await wp.getPostImage(cityBySlug.featured_media);
     const description = cityBySlug.acf.metadata?.description?.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content)
+    
+    // Generate SEO keywords with focus on city name + food tours
+    const cityName = cityBySlug.city_name;
+    const keywords = [
+        cityName, // "Buenos Aires"
+        `${cityName} food tours`, // "Buenos Aires food tours" ⭐
+        `food tours ${cityName}`, // "food tours Buenos Aires" ⭐
+        `${cityName} culinary tours`,
+        `best food tours ${cityName}`,
+        `walking food tours ${cityName}`,
+        `${cityName} local food`,
+        `${cityName} street food`,
+        `authentic food experiences ${cityName}`,
+        `${cityName} food guide`,
+        "food tours",
+        "culinary tours",
+        "local food tours",
+        "authentic food experiences",
+        "walking food tours",
+        "street food tours",
+        "food and culture tours"
+    ];
 
     return {
         title,
         description,
+        keywords,
         openGraph: {
             title,
             description,
@@ -464,7 +488,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                 )
                             })}
                         </div>
-                        <Link href="/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
+                        <Link href="https://www.sherpafoodtours.com/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
                     </section>
                     // </section>
                 }

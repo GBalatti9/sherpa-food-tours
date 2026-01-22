@@ -7,10 +7,10 @@ import CitiesDropdown from "./cities-dropdown";
 export default function NavBar({ currentPath, cities }: { currentPath: string; cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[] }) {
 
     const items = [
-        { label: 'Cities', href: '/' },
-        { label: 'Travel Guide', href: '/travel-guide' },
-        { label: 'About us', href: '/about-us' },
-        { label: 'Contact', href: '/contact' }
+        { label: 'Cities', href: 'https://www.sherpafoodtours.com/' },
+        { label: 'Travel Guide', href: 'https://www.sherpafoodtours.com/travel-guide' },
+        { label: 'About us', href: 'https://www.sherpafoodtours.com/about-us' },
+        { label: 'Contact', href: 'https://www.sherpafoodtours.com/contact' }
     ];
     return (
         <header role="banner" className="sherpa-header" style={{ backgroundColor: currentPath.includes("travel-guide") ? 'var(--background)' : 'var(--second-green)' }}>
@@ -20,7 +20,7 @@ export default function NavBar({ currentPath, cities }: { currentPath: string; c
                     <div className="md:hidden h-8 mr-2">
                         <MobileMenu items={items} currentPath={currentPath} cities={cities} />
                     </div>
-                    <Link href="/" aria-label="Go to homepage" className="logo-container">
+                    <Link href="https://www.sherpafoodtours.com/" aria-label="Go to homepage" className="logo-container">
 
                         <svg xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 79 31"

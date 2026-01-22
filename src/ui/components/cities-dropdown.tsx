@@ -94,7 +94,7 @@ export default function CitiesDropdown({
                   :
                   <Link
                     className="city-item"
-                    href={`/city/${city.slug}`}
+                    href={`https://www.sherpafoodtours.com/city/${city.slug}`}
                     rel="noopener noreferrer"
                     onClick={() => setIsOpen(false)} // también se cierra al clickear una ciudad
                   >

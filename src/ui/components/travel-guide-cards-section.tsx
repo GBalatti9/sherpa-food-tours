@@ -92,7 +92,7 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                     }
 
                     return (
-                        <Link className="tour-card" key={tour.title + tour.id} href={`/tour/${tour.slug}`}>
+                        <Link className="tour-card" key={tour.title + tour.id} href={`https://www.sherpafoodtours.com/tour/${tour.slug}`}>
                             {cardContent}
                         </Link>
                     );

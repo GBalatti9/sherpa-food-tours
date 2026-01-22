@@ -84,9 +84,9 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                     let url = null;
 
                     if (!slug) {
-                        url = "/travel-guide";
+                        url = "https://www.sherpafoodtours.com/travel-guide";
                     } else {
-                        url = `/travel-guide/${slugify(slug)}/${post.slug}`;
+                        url = `https://www.sherpafoodtours.com/travel-guide/${slugify(slug)}/${post.slug}`;
                     }
 
                     const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, '');

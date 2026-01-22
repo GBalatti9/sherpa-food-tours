@@ -62,15 +62,15 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
                         <h6>EXPLORE OUR CITIES</h6>
                         <div className="cities-links">
                             {cities.map((city) => (
-                                <Link key={city.slug} href={`/city/${city.slug}`}>{city.city}</Link>
+                                <Link key={city.slug} href={`https://www.sherpafoodtours.com/city/${city.slug}`}>{city.city}</Link>
                             ))}
                         </div>
                     </div>
 
                     <div className="positions-desktop">
                         <div className="positions">
-                            <Link href="/contact" >Partner With Us</Link>
-                            <Link href="/contact" >Careers</Link>
+                            <Link href="https://www.sherpafoodtours.com/contact" >Partner With Us</Link>
+                            <Link href="https://www.sherpafoodtours.com/contact" >Careers</Link>
                         </div>
                         <div className="social-media">
                             <div className="img-container">
@@ -108,8 +108,8 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
                 <div className="second-section">
                     {/* <Link href="/travel-guide"> Explore Our Cities</Link> */}
                     <CitiesDropdown text="Explore Our Cities" cities={cities} color="#fff" />
-                    <Link href="/contact" >Partner With Us</Link>
-                    <Link href="/contact" >Careers</Link>
+                    <Link href="https://www.sherpafoodtours.com/contact" >Partner With Us</Link>
+                    <Link href="https://www.sherpafoodtours.com/contact" >Careers</Link>
                 </div>
             </div>
 
