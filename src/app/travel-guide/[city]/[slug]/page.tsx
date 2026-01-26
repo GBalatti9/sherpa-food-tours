@@ -11,6 +11,7 @@ import { cleanExcerpt } from "@/app/helpers/cleanExcerpt";
 import { Metadata } from "next";
 import he from "he";
 import { redirect } from "next/navigation";
+import ContentWithGalleries from "./components/content-with-galleries";
 
 
 // ----------------------
@@ -295,7 +296,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 
                 <div className="article-content" itemProp="articleBody">
                     <h1 itemProp="name">{he.decode(title)}</h1>
-                    <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                    <ContentWithGalleries htmlContent={content} />
                 </div>
                 
                 {(toursData && toursData.length > 0) && (
