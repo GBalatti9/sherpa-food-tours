@@ -416,9 +416,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                             <p>From:</p>
                             <h2>USD{price}</h2>
                         </div>
-                        {/* <div className="availability-container"> */}
                         {check_availability && <CheckAvailabilityButton link={acf.fareharbor?.link} data_tour={acf.fareharbor?.id} />}
-                        {/* </div> */}
                     </div>
                 </section>
                 <div className="section-container-desktop">
