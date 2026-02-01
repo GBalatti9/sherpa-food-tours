@@ -73,6 +73,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const tour = await wp.getTourBySlug(slug);
     const { acf } = tour;
 
+
     const imagesId = Object.entries(acf.heading_section)
         .filter(([key]) => key.includes("image"))
         .map(([, value]) => value)
@@ -281,7 +282,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     }
     const priceValidUntil = new Date();
     priceValidUntil.setFullYear(priceValidUntil.getFullYear() + 1);
-    
+
     // Generate TouristTrip structured data
     const productSchema = {
         "@context": "https://schema.org",
@@ -292,7 +293,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         "url": tourUrl,
         // CORRECCIÓN 1: Cambiamos 'brand' por 'provider'
         // 'provider' es el término correcto para servicios y tours.
-        "provider": { 
+        "provider": {
             "@type": "Organization",
             "name": "Sherpa Food Tours",
             "url": baseUrl
@@ -306,7 +307,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             "validFrom": new Date().toISOString(),
             "priceValidUntil": priceValidUntil.toISOString(),
             // OPCIONAL: Esto ayuda a definir que vendes un servicio/experiencia
-            "category": "Tours & Experiences" 
+            "category": "Tours & Experiences"
         },
         "aggregateRating": {
             "@type": "AggregateRating",
@@ -405,8 +406,8 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                             ) : (
 
                                 <BookNowButton
-                                    link={acf.fareharbor?.link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
-                                    data_tour={acf.fareharbor?.id ?? "627977"}
+                                    link={acf.fareharbor?.link}
+                                    data_tour={acf.fareharbor?.id}
                                 />
 
                             )}
@@ -416,7 +417,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                             <h2>USD{price}</h2>
                         </div>
                         {/* <div className="availability-container"> */}
-                        {check_availability && <CheckAvailabilityButton />}
+                        {check_availability && <CheckAvailabilityButton link={acf.fareharbor?.link} data_tour={acf.fareharbor?.id} />}
                         {/* </div> */}
                     </div>
                 </section>

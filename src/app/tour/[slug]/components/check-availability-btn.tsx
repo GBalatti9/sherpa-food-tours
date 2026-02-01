@@ -32,8 +32,8 @@ export default function CheckAvailabilityButton({ link, data_tour }: { link?: st
                     </svg>
                 </button>
                 <BookNowButton
-                    link={link ?? "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/items/627977/?full-items=yes&flow=1385081"}
-                    data_tour={data_tour ?? "627977"}
+                    link={link}
+                    data_tour={data_tour}
                 />
             </div>
             <div className={`calendar-availability ${open ? "active" : "inactive"}`} >
