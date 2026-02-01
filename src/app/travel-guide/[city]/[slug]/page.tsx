@@ -11,7 +11,7 @@ import { cleanExcerpt } from "@/app/helpers/cleanExcerpt";
 import { Metadata } from "next";
 import he from "he";
 import { redirect } from "next/navigation";
-import ContentWithGalleries from "./components/content-with-galleries";
+import ContentWithGalleries from "@/app/travel-guide/[city]/[slug]/components/content-with-galleries";
 
 
 // ----------------------
