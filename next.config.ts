@@ -781,11 +781,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires/',
-        destination: '/travel-guide/buenos-aires/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires/',
-        permanent: true,
-      },
-      {
         source: '/what-to-do-in-buenos-aires-discover-7-must-visit-places/',
         destination: '/travel-guide/buenos-aires/what-to-do-in-buenos-aires-discover-7-must-visit-places/',
         permanent: true,
@@ -1068,6 +1063,26 @@ const nextConfig = {
       {
         source: '/secret-food-tour-london/',
         destination: '/travel-guide/london/private-food-tour-in-london/',
+        permanent: true,
+      },
+      {
+
+        destination: '/travel-guide/buenos-aires/raise-a-glass-discover-the-10-best-bars-in-buenos-aires/',
+        permanent: true,
+      },
+      {
+        source: '/travel-guide/buenos-aires/best-food-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/buenos-aires-food-what-to-eat-and-where/',
+        permanent: true,
+      },
+      {
+        source: '/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/what-to-do-in-buenos-aires-discover-7-must-visit-places/',
+        permanent: true,
+      },
+      {
+        source: '/travel-guide/buenos-aires/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/what-to-do-in-buenos-aires-discover-7-must-visit-places/',
         permanent: true,
       },
 
