@@ -5,17 +5,16 @@ import Footer from "../ui/components/footer";
 import NavBarWrapper from "@/ui/components/nav-bar-wrapper";
 import { wp } from "@/lib/wp";
 import FareharborScript from "@/ui/components/FareharborScript";
+import { FareHarborProvider } from "@/context/fareharbor-context";
 import { Cookies } from "./Cookies";
 import MarketingScripts from "@/ui/components/marketing-scripts";
 import { Suspense } from "react";
 import Script from "next/script";
 import MarqueeBanner from "@/ui/components/marquee-banner";
+import WhatsAppButtonWrapper from "@/ui/components/whatsapp-button-wrapper";
 // import { GoogleAnalytics } from '@next/third-parties/google'
 
 const marqueeBanner = await wp.getMarqueeBanner();
-console.log({marqueeBanner: marqueeBanner.data[0]});
-
-
 
 const excelsior = localFont({
   src: [
@@ -82,8 +81,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const citiesRaw = await wp.getAllCities(); // fetch server-side directo
-  let cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[] = [];
+  const [citiesRaw, toursRaw] = await Promise.all([
+    wp.getAllCities(),
+    wp.getAllTours().catch(() => []),
+  ]);
+  let cities: { id: number; city: string; slug: string; flag: { img: string; alt: string }; fareharborLink: string | null }[] = [];
 
   if (citiesRaw && citiesRaw.length > 0) {
     cities = await Promise.all(
@@ -91,17 +93,25 @@ export default async function RootLayout({
         id: number;
         title: { rendered: string };
         slug: string;
-        acf: { country_flag: number };
+        acf: { country_flag: number; fareharbor_city_link?: string };
       }) => {
         return {
           id: city.id,
           city: city.title.rendered,
           slug: city.slug,
-          flag: await wp.getPostImage(city.acf.country_flag)
+          flag: await wp.getPostImage(city.acf.country_flag),
+          fareharborLink: city.acf?.fareharbor_city_link ?? null
         };
       })
     );
   }
+
+  const tours: { slug: string; fareharborLink: string | null }[] = (toursRaw ?? []).map(
+    (tour: { slug: string; acf?: { fareharbor?: { link?: string } } }) => ({
+      slug: tour.slug,
+      fareharborLink: tour.acf?.fareharbor?.link ?? null,
+    })
+  );
 
   return (
     <html lang="en">
@@ -115,14 +125,18 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://consent.cookiebot.com" />
       </head>
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
+        <FareHarborProvider>
         {marqueeBanner.ok && marqueeBanner.data && marqueeBanner.data.length > 0 && (
           <MarqueeBanner bannerTitle={marqueeBanner.data[0].title.rendered} bannerLink={marqueeBanner.data[0].acf?.redirect_to} />
         )}
 
-        <NavBarWrapper cities={cities} />
+        <NavBarWrapper cities={cities} tours={tours} />
 
         {children}
         <Footer cities={cities} />
+        <Suspense fallback={null}>
+          <WhatsAppButtonWrapper />
+        </Suspense>
         <FareharborScript />
 
         <Suspense fallback={null}>
@@ -152,7 +166,7 @@ export default async function RootLayout({
         </Script>
 
 
-
+        </FareHarborProvider>
       </body>
     </html>
   );

@@ -206,6 +206,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/travel-guide/buenos-aires/food-in-buenos-aires-culture/',
+        destination: '/travel-guide/buenos-aires/ultimate-guide-to-argentinas-food-culture/',
+        permanent: true,
+      },
+      {
         source: '/tour/san-telmo-food-tour/',
         destination: '/tour/san-telmo-tour-2/',
         permanent: true,
@@ -651,6 +656,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/buenos-aires-best-cocktail-bars-a-neighbourhood-guide/',
+        destination: '/travel-guide/buenos-aires/raise-a-glass-discover-the-10-best-bars-in-buenos-aires/',
+        permanent: true,
+      },
+      {
         source: '/what-to-do-in-palermo-buenos-aires/',
         destination: '/travel-guide/buenos-aires/what-to-do-in-palermo-buenos-aires/',
         permanent: true,
@@ -670,16 +680,11 @@ const nextConfig = {
         destination: '/travel-guide/buenos-aires/things-to-do-in-san-telmo-buenos-aires/',
         permanent: true,
       },
-      {
-        source: '/buenos-aires-best-cocktail-bars-a-neighbourhood-guide/',
-        destination: '/travel-guide/buenos-aires/buenos-aires-best-cocktail-bars-a-neighbourhood-guide/',
-        permanent: true,
-      },
-      {
-        source: '/es/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires-3/',
-        destination: '/travel-guide/buenos-aires/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires/',
-        permanent: true,
-      },
+      // {
+      //   source: '/buenos-aires-best-cocktail-bars-a-neighbourhood-guide/',
+      //   destination: '/travel-guide/buenos-aires/buenos-aires-best-cocktail-bars-a-neighbourhood-guide/',
+      //   permanent: true,
+      // },
       {
         source: '/3-day-buenos-aires-itinerary/',
         destination: '/travel-guide/buenos-aires/3-day-buenos-aires-itinerary/',
@@ -1066,11 +1071,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-
-        destination: '/travel-guide/buenos-aires/raise-a-glass-discover-the-10-best-bars-in-buenos-aires/',
-        permanent: true,
-      },
-      {
         source: '/travel-guide/buenos-aires/best-food-buenos-aires/',
         destination: '/travel-guide/buenos-aires/buenos-aires-food-what-to-eat-and-where/',
         permanent: true,
@@ -1081,8 +1081,18 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/es/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires-3/',
+        destination: '/travel-guide/buenos-aires/what-to-do-in-buenos-aires-discover-7-must-visit-places/',
+        permanent: true,
+      },
+      {
         source: '/travel-guide/buenos-aires/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires/',
         destination: '/travel-guide/buenos-aires/what-to-do-in-buenos-aires-discover-7-must-visit-places/',
+        permanent: true,
+      },
+      {
+        source: '/travel-guide/buenos-aires/best-food-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/buenos-aires-food-what-to-eat-and-where/',
         permanent: true,
       },
 

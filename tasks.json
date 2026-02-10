@@ -1,0 +1,138 @@
+{
+    "execution_mode": {
+      "type": "sequential",
+      "rules": [
+        "Work on one task at a time",
+        "Do not mix tasks",
+        "If requirements are ambiguous or WordPress data is missing, stop",
+        "After each task, perform self-QA before moving on"
+      ],
+      "per_task_steps": [
+        "Propose solution and architecture",
+        "List files to modify",
+        "State assumptions about WordPress data",
+        "Implement solution",
+        "Run self-QA",
+        "Decide whether to continue or stop"
+      ]
+    },
+    "tasks": [
+      {
+        "id": 1,
+        "name": "Floating WhatsApp Button",
+        "goal": "Add a fixed WhatsApp button visible only when phone number exists",
+        "requirements": [
+          "Fixed bottom-right position",
+          "Visible only if phone number exists in WordPress",
+          "Never render if phone number is missing",
+          "Available globally across the site",
+          "Mobile-friendly UX"
+        ],
+        "blocking_conditions": [
+          "If WordPress does not expose phone number data"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Performance Improvements for /travel-guide",
+        "goal": "Significantly improve loading performance of /travel-guide",
+        "requirements": [
+          "Identify root causes of slowness",
+          "Optimize data fetching",
+          "Reduce blocking rendering",
+          "Preserve SEO"
+        ],
+        "blocking_conditions": [
+          "If performance issues require backend changes"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Video Testimonials Section",
+        "goal": "Add a reusable video testimonials section from WordPress",
+        "requirements": [
+          "Videos loaded lazily",
+          "Graceful handling of missing data",
+          "Reusable component design"
+        ],
+        "placement": [
+          "End of City pages",
+          "End of Tour pages"
+        ],
+        "blocking_conditions": [
+          "If WordPress does not provide video testimonial data"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Instagram Feed Integration",
+        "goal": "Integrate Instagram feed to strengthen brand and community",
+        "instagram_url": "https://www.instagram.com/sherpafoodtour",
+        "placement": [
+          "Home",
+          "About Us",
+          "Tours"
+        ],
+        "requirements": [
+          "Optimized for performance",
+          "Graceful failure if Instagram data is unavailable"
+        ],
+        "blocking_conditions": [
+          "If Instagram API or WordPress integration is not possible"
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Urgency & Conversion Triggers",
+        "goal": "Increase conversion using truthful urgency signals",
+        "possible_triggers": [
+          "People currently viewing",
+          "Immediate availability",
+          "Low availability alerts",
+          "Offer expiration dates"
+        ],
+        "rules": [
+          "Never fake urgency",
+          "Only show data-driven signals",
+          "Graceful fallback if data is missing"
+        ],
+        "blocking_conditions": [
+          "If required data is not available from WordPress or backend"
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Corporate Events Section",
+        "goal": "Create Corporate Events landing and navigation entry",
+        "requirements": [
+          "Dedicated landing page",
+          "Linked from City pages",
+          "Evaluate nav-bar inclusion"
+        ],
+        "blocking_conditions": [
+          "If content structure is undefined"
+        ]
+      },
+      {
+        "id": 7,
+        "name": "Travel Agencies Section",
+        "goal": "Create B2B-focused Travel Agencies section",
+        "requirements": [
+          "Dedicated landing page",
+          "Clear differentiation from Corporate Events",
+          "Optimized for agency conversion"
+        ],
+        "blocking_conditions": [
+          "If agency content or requirements are unclear"
+        ]
+      }
+    ],
+    "final_output": {
+      "summary_table": [
+        "task_id",
+        "status",
+        "confidence_level",
+        "notes"
+      ]
+    }
+  }

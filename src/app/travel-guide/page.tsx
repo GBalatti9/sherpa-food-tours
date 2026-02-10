@@ -3,20 +3,12 @@ import { wp } from "@/lib/wp";
 // import "./travel-guide.css";
 import Link from "next/link";
 import { slugify } from "../helpers/slugify";
-import { WPPost } from "@/types/post";
 import React from "react";
 import { Metadata } from "next";
 import PageInteractivity from "./components/page-interactivity";
+import { formatPostFromEmbed, filterValidPosts, type PostWithImageData } from "../utils/formatPostWithEmbed";
 
-export interface PostWithImage extends WPPost {
-    image: {
-        img: string;
-        alt: string;
-    }
-    author_name: {
-        name: string
-    }
-}
+export type PostWithImage = PostWithImageData;
 
 export const metadata: Metadata = {
     title: "Travel Guide - Food, Drinks & Experiences | Sherpa Food Tours",
@@ -84,27 +76,13 @@ export default async function TravelGuidePage() {
         return { id: city.id, slug: city.slug, city: city.title.rendered } 
     });
 
-    // Get only 10 articles for initial load
-    let formattedPosts = await wp.getAllPost(10);
-    
-    formattedPosts = await Promise.all(formattedPosts.map(async (post: WPPost) => {
-        const image = await wp.getPostImage(post.featured_media);
-        const author = await wp.getAuthor(post.author);
-        return {
-            ...post,
-            image,
-            author_name: author,
-        }
-    }))
-
-    
-    // Filter posts that have valid images and cities
-    formattedPosts = formattedPosts.filter(
-        (post: PostWithImage) => post.image?.img !== "https://www.sherpafoodtours.com/default-og.jpg" &&
-        Array.isArray(post.relaciones.ciudades) &&
-        post.relaciones.ciudades.length > 0 &&
-        post.relaciones.ciudades[0] !== null
-    ) as PostWithImage[];
+    // Get 10 articles with _embed (single API call includes image + author data)
+    const apiUrl = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2`;
+    const postsRes = await fetch(`${apiUrl}/posts?per_page=10&_embed`, {
+        next: { revalidate: 3600 }
+    });
+    const rawPosts = postsRes.ok ? await postsRes.json() : [];
+    const formattedPosts = filterValidPosts(rawPosts.map(formatPostFromEmbed));
     
     // Generate JSON-LD structured data for SEO
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';

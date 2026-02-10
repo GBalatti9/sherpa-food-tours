@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { PostWithImage } from "../page";
-import { wp } from "@/lib/wp";
 import { slugify } from "@/app/helpers/slugify";
 import Link from "next/link";
-import { WPPost } from "@/types/post";
 
 interface InfiniteScrollProps {
     initialPosts: PostWithImage[];
@@ -23,41 +21,21 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
         setLoading(true);
         try {
             const nextPage = page + 1;
-            const newPosts = await wp.getAllPostPaginated(10, nextPage);
-            
+            const res = await fetch(`/api/travel-guide/posts?page=${nextPage}&limit=10`);
+            if (!res.ok) {
+                setHasMore(false);
+                return;
+            }
+
+            const json = await res.json();
+            const newPosts: PostWithImage[] = json.data ?? [];
+
             if (newPosts.length === 0) {
                 setHasMore(false);
-                setLoading(false);
                 return;
             }
 
-            const postsWithImage = await Promise.all(
-                newPosts.map(async (post: WPPost) => {
-                    const image = await wp.getPostImage(post.featured_media);
-                    const author = await wp.getAuthor(post.author);
-                    return {
-                        ...post,
-                        image,
-                        author_name: author,
-                    };
-                })
-            );
-
-            const filteredPosts = postsWithImage.filter(
-                (post) => post.image?.img !== "https://www.sherpafoodtours.com/default-og.jpg" &&
-                    Array.isArray(post.relaciones.ciudades) &&
-                    post.relaciones.ciudades.length > 0 &&
-                    post.relaciones.ciudades[0] !== null
-            ) as PostWithImage[];
-
-            if (filteredPosts.length === 0) {
-                // Si no hay posts válidos, intentar la siguiente página
-                setPage(nextPage);
-                setLoading(false);
-                return;
-            }
-
-            setPosts(prev => [...prev, ...filteredPosts]);
+            setPosts(prev => [...prev, ...newPosts]);
             setPage(nextPage);
         } catch (error) {
             console.error("Error loading more posts:", error);
@@ -66,8 +44,6 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
             setLoading(false);
         }
     }, [loading, hasMore, page]);
-
-    // Removed automatic scroll detection - now using manual "Show More" button
 
     return (
         <>
@@ -126,8 +102,8 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                     if (!p) return null;
                                     const s = p.relaciones?.ciudades?.[0]?.title || null;
                                     const u = s
-                                        ? `/travel-guide/${slugify(s)}/${p.slug}`
-                                        : "/travel-guide";
+                                        ? `https://www.sherpafoodtours.com/travel-guide/${slugify(s)}/${p.slug}`
+                                        : "https://www.sherpafoodtours.com/travel-guide";
                                     const cleanTitleGroup = p.title.rendered.replace(/<[^>]*>/g, '');
                                     const imageAltGroup = `${cleanTitleGroup} - ${s || 'Sherpa Food Tours'}`;
 
@@ -185,11 +161,11 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                     return null;
                 })}
             </div>
-            
+
             {hasMore && (
-                <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'center', 
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
                     padding: '2rem'
                 }}>
                     <button
@@ -214,11 +190,11 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                     </button>
                 </div>
             )}
-            
+
             {!hasMore && posts.length > 10 && (
-                <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'center', 
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
                     padding: '2rem',
                     fontSize: '1rem',
                     color: '#666'
