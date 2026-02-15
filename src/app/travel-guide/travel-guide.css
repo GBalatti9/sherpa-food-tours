@@ -307,6 +307,15 @@
                         .preview-author {
                             font-size: 0.75rem;
                         }
+
+                        .preview-author-link {
+                            color: inherit;
+                            text-decoration: none;
+                        }
+
+                        .preview-author-link:hover {
+                            text-decoration: underline;
+                        }
                     }
                 }
             }
@@ -369,6 +378,15 @@
 
                     .preview-author {
                         font-size: 0.75rem;
+                    }
+
+                    .preview-author-link {
+                        color: inherit;
+                        text-decoration: none;
+                    }
+
+                    .preview-author-link:hover {
+                        text-decoration: underline;
                     }
                 }
             }

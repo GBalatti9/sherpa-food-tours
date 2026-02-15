@@ -25,18 +25,20 @@ export const wp = {
         }
     },
     getPostInfo: async (slug: string) => {
-        // Optimizado: agregar cache para reducir llamadas a WordPress
-        const url = `${apiUrl}/posts?slug=${slug}`;
+        // Optimizado: agregar cache para reducir llamadas a WordPress; _embed incluye autor
+        const url = `${apiUrl}/posts?slug=${slug}&_embed`;
         const response = await fetch(url, {
             next: { revalidate: 3600 } // cachea por 1 hora
         });
         const [data] = await response.json();
-        if (!data) return { title: "", content: "", excerpt: "", featured_media: null, date: "", modified: "", relaciones: null };
+        if (!data) return { title: "", content: "", excerpt: "", featured_media: null, date: "", modified: "", relaciones: null, author: null };
 
 
-        const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified, relaciones } = data;
+        const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified, relaciones, _embedded } = data;
+        const authorData = _embedded?.author?.[0];
+        const author = authorData ? { name: authorData.name, slug: authorData.slug ?? null } : null;
 
-        return { title, content, excerpt, featured_media, date, modified, relaciones };
+        return { title, content, excerpt, featured_media, date, modified, relaciones, author };
     },
     getPostInfoById: async (id: number) => {
         const response = await fetch(`${apiUrl}/posts/${id}`)

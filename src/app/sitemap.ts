@@ -57,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           author.name?.toLowerCase() !== "admin" && author.description
         )
         .map((author: { slug?: string; name?: string }) => {
-          const userSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, '-') || "user";
+          const userSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, "") || "user";
           return {
             url: `${baseUrl}/author/${userSlug}/`,
             lastModified: new Date(),
