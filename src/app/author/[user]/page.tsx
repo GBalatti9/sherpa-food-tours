@@ -7,13 +7,14 @@ import { Metadata } from "next";
 // import "@/app/travel-guide/travel-guide.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ user: string }> }): Promise<Metadata> {
-    const { user } = await params;
+    const { user: userParam } = await params;
+    const user = (userParam ?? "").replace(/\/$/, ""); // quitar trailing slash (ej. anarodriguez/ → anarodriguez)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
-    
     const allUsers = await wp.getAllUsers();
+
     const currentUser = allUsers.ok && allUsers.data.length 
         ? allUsers.data.find((author: { slug?: string; name: string }) => {
-            const authorSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, '-');
+            const authorSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, "");
             return authorSlug === user && author.name?.toLowerCase() !== "admin";
         })
         : null;
@@ -92,7 +93,7 @@ export async function generateStaticParams() {
         );
 
         return nonAdminUsers.map((author: { slug?: string; name?: string }) => ({
-            user: author.slug || author.name?.toLowerCase().replace(/\s+/g, '-') || "user"
+            user: author.slug || author.name?.toLowerCase().replace(/\s+/g, "") || "user"
         }));
     } catch (err) {
         console.warn("No se pudo obtener author para static params:", err);
@@ -101,7 +102,8 @@ export async function generateStaticParams() {
 }
 
 export default async function AuthorPage({ params }: { params: Promise<{ user: string }> }) {
-    const { user } = await params;
+    const { user: userParam } = await params;
+    const user = (userParam ?? "").replace(/\/$/, ""); // quitar trailing slash (ej. anarodriguez/ → anarodriguez)
 
     const allUsers = await wp.getAllUsers();
 
@@ -110,11 +112,11 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
     }
 
     const currentUser = allUsers.data.find((author: { slug?: string; name: string }) => {
-        const authorSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, '-');
+        const authorSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, "");
         return authorSlug === user && author.name?.toLowerCase() !== "admin";
     });
 
-    if (!currentUser || currentUser.name?.toLowerCase() === "admin" || !currentUser.description.length) {
+    if (!currentUser || currentUser.name?.toLowerCase() === "admin") {
         redirect('/');
     }
 
@@ -142,6 +144,8 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
         })
     ) as PostWithImage[];
 
+    const avatarUrl = currentUser.avatar_urls?.["96"] || currentUser.avatar_urls?.["48"] || currentUser.avatar_urls?.["24"];
+
     return (
         <article>
             <section style={{ padding: '2rem', textAlign: 'center' }}>
@@ -153,6 +157,18 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
                     className="pt-20">
                     {currentUser.name || 'Sofia Gonzalez'}
                 </h1>
+                {avatarUrl && (
+                    <div style={{ marginBottom: '1rem' }} className="mx-auto max-w-fit">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={avatarUrl}
+                            alt={currentUser.name || "Author"}
+                            width={96}
+                            height={96}
+                            style={{ borderRadius: '50%', objectFit: 'cover' }}
+                        />
+                    </div>
+                )}
                 {currentUser.description && (
                     <div
                         style={{

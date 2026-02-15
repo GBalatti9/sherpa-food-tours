@@ -27,6 +27,7 @@ import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { FormattedWpPost } from "@/types/post";
 import TallyForm from "@/ui/components/tally-form";
 import { redirect } from "next/navigation";
+import FareHarborSetter from "@/context/fareharbor-setter";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -376,6 +377,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     return (
         <>
+            <FareHarborSetter link={fareharborLink} />
             {/* JSON-LD Structured Data for SEO */}
             <script
                 type="application/ld+json"

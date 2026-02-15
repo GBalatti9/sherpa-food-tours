@@ -4,7 +4,7 @@ import MobileMenu from "./mobile-menu";
 // import "./css/nav-bar.css";
 import CitiesDropdown from "./cities-dropdown";
 
-export default function NavBar({ currentPath, cities }: { currentPath: string; cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[] }) {
+export default function NavBar({ currentPath, cities, fareharborLink }: { currentPath: string; cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[]; fareharborLink?: string | null }) {
 
     const items = [
         { label: 'Cities', href: 'https://www.sherpafoodtours.com/' },
@@ -80,7 +80,7 @@ export default function NavBar({ currentPath, cities }: { currentPath: string; c
 
                     ))}
                     <li role="none">
-                        <BookNowButton link="https://fareharbor.com/embeds/book/sherpafoodtours_argentina/?flow=1413860&ga4t=G-KJV962ZQ3V,1083513053.1749557566__1758810037;AW-16551382136,undefined__undefined;&language=en-us&full-items=yes&back=https://www.sherpafoodtours.com/&g4=yes" />
+                        <BookNowButton link={fareharborLink ?? process.env.NEXT_PUBLIC_DEFAULT_FAREHARBOR_LINK} />
                     </li>
                 </ul>
             </nav>

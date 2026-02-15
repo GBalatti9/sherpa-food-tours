@@ -14,6 +14,7 @@ import { redirect } from "next/navigation";
 import AskForIt from "@/ui/components/ask-for-it";
 import { FormContact } from "@/ui/components/form-contact";
 import TallyForm from "@/ui/components/tally-form";
+import FareHarborSetter from "@/context/fareharbor-setter";
 
 interface TourCondition {
     icon: number;
@@ -349,6 +350,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
     return (
         <>
+            <FareHarborSetter link={acf.fareharbor?.link} />
             {/* JSON-LD Structured Data for SEO */}
             <script
                 type="application/ld+json"

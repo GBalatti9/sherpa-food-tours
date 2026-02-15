@@ -10,8 +10,9 @@ import { TourRelationship } from "@/types/tour";
 import { cleanExcerpt } from "@/app/helpers/cleanExcerpt";
 import { Metadata } from "next";
 import he from "he";
-import { redirect } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 import ContentWithGalleries from "@/app/travel-guide/[city]/[slug]/components/content-with-galleries";
+import Link from "next/link";
 
 
 // ----------------------
@@ -149,15 +150,14 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     const postData = await wp.getPostInfo(slug);
     
-    // Si no hay datos válidos, redirigir a home
+    // Si no hay datos válidos (artículo borrado o inexistente), 404
     if (!postData || !postData.title || postData.title.trim() === "" || !postData.content) {
-        redirect('/');
+        notFound();
     }
 
-    const { title, content, featured_media, excerpt, date, modified, relaciones } = postData;
+    const { title, content, featured_media, excerpt, date, modified, relaciones, author } = postData;
     const { img, alt } = await wp.getPostImage(featured_media);
 
-    console.log({ content, excerpt, title, featured_media, date, modified, relaciones });
     
 
     const { tours } = relaciones;
@@ -206,9 +206,9 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
         "datePublished": date,
         "dateModified": modified,
         "author": {
-            "@type": "Guillermo Borthwick",
-            "name": "Sherpa Food Tours",
-            "url": baseUrl
+            "@type": "Person",
+            "name": author?.name ?? "Sherpa Food Tours",
+            "url": author?.name ? `${baseUrl}/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}` : baseUrl
         },
         "publisher": {
             "@type": "Organization",
@@ -281,7 +281,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 <meta itemProp="headline" content={title} />
                 <meta itemProp="datePublished" content={date} />
                 <meta itemProp="dateModified" content={modified} />
-                <meta itemProp="author" content="Sherpa Food Tours" />
+                <meta itemProp="author" content={author?.name || "Sherpa Food Tours"} />
                 
                 <header className="main-img-container">
                     <img 
@@ -297,6 +297,17 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 <div className="article-content" itemProp="articleBody">
                     <h1 itemProp="name">{he.decode(title)}</h1>
                     <ContentWithGalleries htmlContent={content} />
+                    {author?.name && (
+                        <p className="article-author">
+                            Por:{" "}
+                            <Link
+                                href={`/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}`}
+                                className="article-author-link"
+                            >
+                                {author.name}
+                            </Link>
+                        </p>
+                    )}
                 </div>
                 
                 {(toursData && toursData.length > 0) && (

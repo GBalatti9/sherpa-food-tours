@@ -3293,6 +3293,21 @@ main {
           max-width: 800px;
       }
 
+      .article-author {
+          font-size: 1rem;
+          color: inherit;
+          margin-top: 1.5rem;
+      }
+
+      .article-author-link {
+          color: inherit;
+          text-decoration: underline;
+      }
+
+      .article-author-link:hover {
+          opacity: 0.85;
+      }
+
       /* div {
           padding-left: 1.3rem;
           padding-right: 1.3rem;

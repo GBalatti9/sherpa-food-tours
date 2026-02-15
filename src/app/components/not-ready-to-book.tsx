@@ -9,7 +9,8 @@ interface NotReadyToBookTitles {
 
 
 export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBookTitles, posts: FormattedWpPost[] }) {
-    console.log({ citySlugs: posts.map(post => post.city_slug) })
+    // console.log({ citySlugs: posts.map(post => post.city_slug) })
+    
     return (
         <section className="home-fifth-section not-ready-to-book" >
             <div className="title-section">
