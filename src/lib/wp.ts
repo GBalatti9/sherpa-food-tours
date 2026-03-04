@@ -110,7 +110,7 @@ export const wp = {
         if (!id || id === 0) {
             // Si no hay media, devolver imagen por defecto
             return {
-                img: "https://www.sherpafoodtours.com/Imagen-de-portada.webp",
+                img: "https://www.sherpafoodtours.com/imagen-de-portada.webp",
                 alt: "",
             };
         }
@@ -125,13 +125,13 @@ export const wp = {
 
             const data = await response.json();
             return {
-                img: normalizeWpImageUrl(data.source_url) || "https://www.sherpafoodtours.com/Imagen-de-portada.webp",
+                img: normalizeWpImageUrl(data.source_url) || "https://www.sherpafoodtours.com/imagen-de-portada.webp",
                 alt: data.alt_text || "",
             };
         } catch (e) {
             console.warn("No se pudo obtener la imagen del post:", e, url);
             return {
-                img: "https://www.sherpafoodtours.com/Imagen-de-portada.webp",
+                img: "https://www.sherpafoodtours.com/imagen-de-portada.webp",
                 alt: "",
             };
         }

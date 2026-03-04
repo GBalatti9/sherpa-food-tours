@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     const rawDescription = post.excerpt?.replace(/<[^>]+>/g, "") || post.content.replace(/<[^>]+>/g, "").slice(0, 150);
     const description = cleanExcerpt(rawDescription);
     
-    const imageUrl = img || "https://www.sherpafoodtours.com/Imagen-de-portada.webp";
+    const imageUrl = img || "https://www.sherpafoodtours.com/imagen-de-portada.webp";
     const title = he.decode(post.title);
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
     const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}`;
@@ -188,7 +188,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
 
 
-    const imageUrl = img || "https://www.sherpafoodtours.com/Imagen-de-portada.webp";
+    const imageUrl = img || "https://www.sherpafoodtours.com/imagen-de-portada.webp";
     const description = excerpt?.replace(/<[^>]+>/g, "") || postData.content.replace(/<[^>]+>/g, "").slice(0, 150);
     const cleanDescription = cleanExcerpt(description);
 

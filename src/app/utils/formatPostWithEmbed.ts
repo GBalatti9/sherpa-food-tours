@@ -5,7 +5,7 @@ export interface PostWithImageData extends WPPost {
   author_name: { name: string };
 }
 
-const DEFAULT_IMAGE = "https://www.sherpafoodtours.com/Imagen-de-portada.webp";
+const DEFAULT_IMAGE = "https://www.sherpafoodtours.com/imagen-de-portada.webp";
 const wpDomain = process.env.NEXT_PUBLIC_WP_URL;
 
 function normalizeWpImageUrl(url: string): string {

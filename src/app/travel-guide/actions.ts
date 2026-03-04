@@ -11,7 +11,7 @@ export const handleNewData = async (category: number, limit: number, offset: num
         
         const formattedData = await Promise.all(newData.data.map(postsWithImages)).then((results) =>
             results.filter(
-                (post) => post.image?.img !== "https://www.sherpafoodtours.com/Imagen-de-portada.webp" &&
+                (post) => post.image?.img !== "https://www.sherpafoodtours.com/imagen-de-portada.webp" &&
                     Array.isArray(post.relaciones.ciudades) &&
                     post.relaciones.ciudades.length > 0 &&
                     post.relaciones.ciudades[0] !== null
