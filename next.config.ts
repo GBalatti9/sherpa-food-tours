@@ -720,21 +720,21 @@ const nextConfig = {
         destination: '/tour/buenos-aires-local-foodie-experience/',
         permanent: true,
       },
-      {
-        source: '/default-og.jpg1',
-        destination: '/_next/image/?url=%2Fsherpa-main-image.webp&w=1920&q=75/',
-        permanent: true,
-      },
-      {
-        source: '/default-og.jpg0',
-        destination: '/_next/image/?url=%2Fsherpa-main-image.webp&w=1920&q=75/',
-        permanent: true,
-      },
-      {
-        source: '/default-og.jpg2',
-        destination: '/_next/image/?url=%2Fsherpa-main-image.webp&w=1920&q=75/',
-        permanent: true,
-      },
+      // {
+      //   source: '/default-og.jpg1',
+      //   destination: '/_next/image/?url=%2Fsherpa-main-image.webp&w=1920&q=75/',
+      //   permanent: true,
+      // },
+      // {
+      //   source: '/default-og.jpg0',
+      //   destination: '/_next/image/?url=%2Fsherpa-main-image.webp&w=1920&q=75/',
+      //   permanent: true,
+      // },
+      // {
+      //   source: '/default-og.jpg2',
+      //   destination: '/_next/image/?url=%2Fsherpa-main-image.webp&w=1920&q=75/',
+      //   permanent: true,
+      // },
       // {
       //   source: '/avenue-cookery-school-london',
       //   destination: '/travel-guide/london/avenue-cookery-school-london/',

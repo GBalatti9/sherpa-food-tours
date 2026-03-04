@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { wp } from "@/lib/wp";
 import { slugify } from "@/app/helpers/slugify";
 import Link from "next/link";
-import { WPPost } from "@/types/post";
 
 export interface PostWithImage {
     id: number;
@@ -49,25 +47,16 @@ export default function AuthorPosts({ initialPosts, authorId }: AuthorPostsProps
         try {
             const nextPage = page + 1;
             const offset = (nextPage - 1) * 10;
-            const result = await wp.getPostsByAuthorId(authorId, 10, offset);
-            
+            const res = await fetch(`/api/author/posts?authorId=${authorId}&limit=10&offset=${offset}`);
+            const result = await res.json();
+
             if (!result.ok || !result.data || result.data.length === 0) {
                 setHasMore(false);
                 setLoading(false);
                 return;
             }
 
-            const postsWithImage = await Promise.all(
-                result.data.map(async (post: WPPost) => {
-                    const image = await wp.getPostImage(post.featured_media);
-                    const author = await wp.getAuthor(post.author);
-                    return {
-                        ...post,
-                        image,
-                        author_name: author,
-                    };
-                })
-            ) as PostWithImage[];
+            const postsWithImage = result.data as PostWithImage[];
 
             if (postsWithImage.length === 0) {
                 setHasMore(false);

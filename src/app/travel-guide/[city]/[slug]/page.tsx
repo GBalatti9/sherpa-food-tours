@@ -12,6 +12,8 @@ import { Metadata } from "next";
 import he from "he";
 import { redirect, notFound } from "next/navigation";
 import ContentWithGalleries from "@/app/travel-guide/[city]/[slug]/components/content-with-galleries";
+import TableOfContents from "@/app/travel-guide/[city]/[slug]/components/table-of-contents";
+import { extractHeadings } from "@/app/helpers/extractHeadings";
 import Link from "next/link";
 
 
@@ -35,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     const rawDescription = post.excerpt?.replace(/<[^>]+>/g, "") || post.content.replace(/<[^>]+>/g, "").slice(0, 150);
     const description = cleanExcerpt(rawDescription);
     
-    const imageUrl = img || "https://www.sherpafoodtours.com/default-og.jpg";
+    const imageUrl = img || "https://www.sherpafoodtours.com/Imagen-de-portada.webp";
     const title = he.decode(post.title);
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
     const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}`;
@@ -155,7 +157,8 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
         notFound();
     }
 
-    const { title, content, featured_media, excerpt, date, modified, relaciones, author } = postData;
+    const { title, featured_media, excerpt, date, modified, relaciones, author } = postData;
+    const { headings, htmlWithIds } = extractHeadings(postData.content);
     const { img, alt } = await wp.getPostImage(featured_media);
 
     
@@ -185,8 +188,8 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
 
 
-    const imageUrl = img || "https://www.sherpafoodtours.com/default-og.jpg";
-    const description = excerpt?.replace(/<[^>]+>/g, "") || content.replace(/<[^>]+>/g, "").slice(0, 150);
+    const imageUrl = img || "https://www.sherpafoodtours.com/Imagen-de-portada.webp";
+    const description = excerpt?.replace(/<[^>]+>/g, "") || postData.content.replace(/<[^>]+>/g, "").slice(0, 150);
     const cleanDescription = cleanExcerpt(description);
 
     const not_ready_to_book_section = await getNotReadyToBookSection();
@@ -296,7 +299,8 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 
                 <div className="article-content" itemProp="articleBody">
                     <h1 itemProp="name">{he.decode(title)}</h1>
-                    <ContentWithGalleries htmlContent={content} />
+                    <TableOfContents headings={headings} />
+                    <ContentWithGalleries htmlContent={htmlWithIds} />
                     {author?.name && (
                         <p className="article-author">
                             Por:{" "}

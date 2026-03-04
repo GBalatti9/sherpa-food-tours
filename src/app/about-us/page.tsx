@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         siteName: "Sherpa Food Tours",
         images: [
             {
-                url: "https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png",
+                url: "https://www.sherpafoodtours.com/sherpa-complete-logo.webp",
                 width: 1200,
                 height: 630,
                 alt: "Sherpa Food Tours - About Us",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "About Us - Our Story & Values | Sherpa Food Tours",
         description: "Learn about Sherpa Food Tours' mission to provide authentic culinary experiences.",
-        images: ["https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png"],
+        images: ["https://www.sherpafoodtours.com/sherpa-complete-logo.webp"],
     },
     alternates: {
         canonical: `https://www.sherpafoodtours.com/about-us/`,
@@ -142,7 +142,7 @@ export default async function AboutUsPage() {
         "@type": "Organization",
         "name": "Sherpa Food Tours",
         "url": baseUrl,
-        "logo": "https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png",
+        "logo": "https://www.sherpafoodtours.com/sherpa-complete-logo.webp",
         "description": "Authentic food tours and culinary experiences around the world with local guides",
         "sameAs": [
             "https://www.facebook.com/sherpafoodtours",
@@ -185,7 +185,7 @@ export default async function AboutUsPage() {
             <main className="about-us-page">
                 <article>
                     <section className="about-us-page-first-section">
-                        <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1.png" alt="Sherpa Food Tours logo" width="120" height="40" /> manifesto</h1>
+                        <h1>The <img src="/sherpa.webp" alt="Sherpa Food Tours logo" width="120" height="40" /> manifesto</h1>
                         <div dangerouslySetInnerHTML={{ __html: content }} className="render-html"></div>
                     </section>
                     <OurValues items={acfData} />

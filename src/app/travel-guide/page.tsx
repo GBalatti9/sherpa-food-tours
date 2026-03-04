@@ -37,7 +37,7 @@ export const metadata: Metadata = {
         siteName: "Sherpa Food Tours",
         images: [
             {
-                url: "https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Imagen-de-portada.png",
+                url: "/imagen-de-portada.webp",
                 width: 1200,
                 height: 630,
                 alt: "Sherpa Food Tours Travel Guide",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Travel Guide - Food, Drinks & Experiences | Sherpa Food Tours",
         description: "Discover the ultimate travel guide for food, drinks, and unique experiences around the world.",
-        images: ["https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Imagen-de-portada.png"],
+        images: ["/imagen-de-portada.webp"],
     },
     alternates: {
         canonical: `https://www.sherpafoodtours.com/travel-guide/`,
@@ -117,7 +117,7 @@ export default async function TravelGuidePage() {
             "name": "Sherpa Food Tours",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1-1.png"
+                "url": "/sherpa-complete-logo.webp"
             }
         },
         "mainEntity": {
@@ -157,7 +157,7 @@ export default async function TravelGuidePage() {
                     <div
                         className="imgs-galleries"
                         style={{
-                            backgroundImage: "url('https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Imagen-de-portada.png')",
+                            backgroundImage: "url('/imagen-de-portada.webp')",
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "cover",
                         }}
@@ -166,7 +166,7 @@ export default async function TravelGuidePage() {
                     >
                     </div>
                     <div className="titles-container">
-                        <h1>The <img src="https://hotpink-whale-908624.hostingersite.com/wp-content/uploads/2025/09/Layer_1-1.png" alt="Sherpa Food Tours logo" width="120" height="40" /> <br /> travel guide</h1>
+                        <h1>The <img src="/sherpa-white.webp" alt="Sherpa Food Tours logo" width="120" height="40" /> <br /> travel guide</h1>
                         <h2>Experiences made to be remembered</h2>
                         <Link href="#travel-guide" className="btn-cta" aria-label="Explore the Sherpa Food Tours travel guide">Explore The Guide</Link>
                     </div>

@@ -3399,6 +3399,59 @@ main {
       font-family: var(--font-dk-otago);
   }
 
+  .toc-container {
+      border: 1.5px solid #333;
+      margin: 1.5rem 0 2.5rem 0;
+
+      .toc-title {
+          font-family: var(--font-dk-otago);
+          text-transform: uppercase;
+          font-size: 1.1rem;
+          letter-spacing: 0.05em;
+          padding: 1rem 1.5rem;
+          border-bottom: 1.5px solid #333;
+          margin: 0;
+          color: var(--title-color);
+      }
+
+      .toc-list {
+          list-style: none;
+          padding: 1rem 1.5rem;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.45rem;
+      }
+
+      .toc-item {
+          a {
+              display: flex;
+              gap: 0.5rem;
+              text-decoration: none;
+              color: black;
+              font-size: 0.9rem;
+              line-height: 1.4;
+
+              &:hover .toc-text {
+                  text-decoration: underline;
+              }
+          }
+
+          .toc-number {
+              flex-shrink: 0;
+          }
+
+          .toc-text {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+          }
+      }
+
+      .toc-h3 {
+          padding-left: 1.5rem;
+      }
+  }
 
 }
 

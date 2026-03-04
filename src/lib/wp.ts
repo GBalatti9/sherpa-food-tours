@@ -1,6 +1,20 @@
 const domain = process.env.NEXT_PUBLIC_WP_URL;
 const apiUrl = `${domain}/wp-json/wp/v2`
 
+function normalizeWpImageUrl(url: string): string {
+    if (!url || !url.includes('/wp-content/uploads/') || !domain) return url;
+    try {
+        const imgUrl = new URL(url);
+        const wpUrl = new URL(domain);
+        imgUrl.hostname = wpUrl.hostname;
+        imgUrl.protocol = wpUrl.protocol;
+        imgUrl.port = wpUrl.port;
+        return imgUrl.toString();
+    } catch {
+        return url;
+    }
+}
+
 
 export const wp = {
     getPageInfo: async (slug: string) => {
@@ -96,7 +110,7 @@ export const wp = {
         if (!id || id === 0) {
             // Si no hay media, devolver imagen por defecto
             return {
-                img: "https://www.sherpafoodtours.com/default-og.jpg",
+                img: "https://www.sherpafoodtours.com/Imagen-de-portada.webp",
                 alt: "",
             };
         }
@@ -111,13 +125,13 @@ export const wp = {
 
             const data = await response.json();
             return {
-                img: `${data.source_url}` || "https://www.sherpafoodtours.com/default-og.jpg",
+                img: normalizeWpImageUrl(data.source_url) || "https://www.sherpafoodtours.com/Imagen-de-portada.webp",
                 alt: data.alt_text || "",
             };
         } catch (e) {
             console.warn("No se pudo obtener la imagen del post:", e, url);
             return {
-                img: "https://www.sherpafoodtours.com/default-og.jpg",
+                img: "https://www.sherpafoodtours.com/Imagen-de-portada.webp",
                 alt: "",
             };
         }
