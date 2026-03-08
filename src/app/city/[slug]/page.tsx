@@ -43,10 +43,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         };
     }
 
-    const title = cityBySlug.acf.metadata?.title?.trim().length > 0 ? cityBySlug.acf.metadata.title : `${cityBySlug.city_name} | Sherpa Food Tour`;
+    const title = cityBySlug.acf.metadata?.title?.trim().length > 0 ? cityBySlug.acf.metadata.title : `${cityBySlug.city_name} | Sherpa Food Tours`;
     const image = await wp.getPostImage(cityBySlug.featured_media);
     const description = cityBySlug.acf.metadata?.description?.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content)
-    
+
+    console.log({ title });
+
     // Generate SEO keywords with focus on city name + food tours
     const cityName = cityBySlug.city_name;
     const keywords = [
@@ -322,7 +324,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 <section className="city-not-found">
                     <div className="main-section-container">
                         <div className="image-container">
-                            <MainImage src={mainImage[0].img} alt={mainImage[0].alt} />
+                            <MainImage src={mainImage[0].img} alt={mainImage[0].alt || `${cityData.city_name} Food Tours - Sherpa Food Tours`} />
                         </div>
                     </div>
                     <div className="data-container">
@@ -392,7 +394,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 <section>
                     <div className="main-section-container">
                         <div className="image-container">
-                            <MainImage src={mainImage[0].img} alt={mainImage[0].alt} />
+                            <MainImage src={mainImage[0].img} alt={mainImage[0].alt || `${cityData.city_name} Food Tours - Sherpa Food Tours`} />
                         </div>
                         <div className="data-container">
                             <div className="data">
@@ -461,18 +463,18 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                         <div className="preview-wrapper">
                             {getToKnowTheCity.posts.map((post, i) => {
                                 // Usar city_slug del post en lugar del slug de la ciudad actual
-                                const citySlug = post.city_slug && post.city_slug !== 'undefined' && post.city_slug !== 'sin-ciudad' 
-                                    ? post.city_slug 
+                                const citySlug = post.city_slug && post.city_slug !== 'undefined' && post.city_slug !== 'sin-ciudad'
+                                    ? post.city_slug
                                     : null;
                                 // const href = citySlug ? `/travel-guide/${citySlug}/${post.slug}` : `/travel-guide`;
                                 const href = `${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${slug}/${post.slug}`
 
                                 return (
-                                    <Link 
-                                        className="preview-item" 
-                                        key={post.image.img + i} 
+                                    <Link
+                                        className="preview-item"
+                                        key={post.image.img + i}
                                         href={href}
-                                        >
+                                    >
                                         <div className="preview-image-container">
                                             <img src={post.image.img} alt={post.image.alt} loading="lazy" />
                                             {post.city &&

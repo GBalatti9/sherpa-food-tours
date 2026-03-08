@@ -68,12 +68,63 @@ interface ValidStep {
     items: StepItem[];
 }
 
+// generateMetadata anterior (hardcodeado) - reemplazado por versión estandarizada con acf.metadata
+// export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+//     const { slug } = await params;
+//     const tour = await wp.getTourBySlug(slug);
+//     const { acf } = tour;
+//     const imagesId = Object.entries(acf.heading_section)
+//         .filter(([key]) => key.includes("image"))
+//         .map(([, value]) => value)
+//         .filter((element) => element !== "");
+//     const featuredImage = await fetchImages([imagesId[0]] as number[]).then(imgs => imgs[0]) || { img: '', alt: '' };
+//     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+//     const tourUrl = `${baseUrl}/tour/${slug}`;
+//     const description = tour.acf.tour_description
+//         ? tour.acf.tour_description.substring(0, 160) + '...'
+//         : `Book ${tour.title} with Sherpa Food Tours. Authentic culinary experience with local guides.`;
+//     console.log({ title: tour.title, description })
+//     return {
+//         title: `${tour.title} - Food Tour | Sherpa Food Tours`,
+//         description: description,
+//         keywords: [tour.title, 'food tour', 'culinary experience', 'local food guide', 'authentic food tour',
+//             'walking food tour', 'food tasting', 'restaurant tour', 'local cuisine', 'food adventure'],
+//         authors: [{ name: "Sherpa Food Tours" }],
+//         openGraph: {
+//             title: `${tour.title} | Sherpa Food Tours`,
+//             description: description, url: tourUrl, siteName: "Sherpa Food Tours",
+//             images: [{ url: featuredImage.img || `${baseUrl}/sherpa-complete-logo.webp`, width: 1200, height: 630, alt: featuredImage.alt || tour.title }],
+//             locale: "en_US", type: "website",
+//         },
+//         twitter: { card: "summary_large_image", title: `${tour.title} | Sherpa Food Tours`, description: description,
+//             images: [featuredImage.img || `${baseUrl}/sherpa-complete-logo.webp`] },
+//         alternates: { canonical: tourUrl + '/' },
+//         robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } },
+//     }
+// }
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
     const tour = await wp.getTourBySlug(slug);
     const { acf } = tour;
 
+    if (!acf) {
+        return {
+            title: "Tour Not Found | Sherpa Food Tours",
+            description: "Tour page not found",
+        };
+    }
+
+    const title = acf.metadata?.title?.trim().length > 0
+        ? acf.metadata.title
+        : `${tour.title} | Sherpa Food Tours`;
+
+    const description = acf.metadata?.description?.trim().length > 0
+        ? acf.metadata.description
+        : acf.tour_description
+            ? acf.tour_description.substring(0, 160)
+            : `Book ${tour.title} with Sherpa Food Tours. Authentic culinary experience with local guides.`;
 
     const imagesId = Object.entries(acf.heading_section)
         .filter(([key]) => key.includes("image"))
@@ -82,65 +133,49 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     const featuredImage = await fetchImages([imagesId[0]] as number[]).then(imgs => imgs[0]) || { img: '', alt: '' };
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
-    const tourUrl = `${baseUrl}/tour/${slug}`;
+    const tourName = tour.title;
+    const keywords = [
+        tourName,
+        `${tourName} food tour`,
+        `best ${tourName}`,
+        `${tourName} culinary experience`,
+        `${tourName} local food`,
+        'food tour',
+        'culinary experience',
+        'local food guide',
+        'authentic food tour',
+        'walking food tour',
+        'street food tour',
+        'food and culture tour'
+    ];
 
-    // Extract clean description
-    const description = tour.acf.tour_description
-        ? tour.acf.tour_description.substring(0, 160) + '...'
-        : `Book ${tour.title} with Sherpa Food Tours. Authentic culinary experience with local guides.`;
 
     return {
-        title: `${tour.title} - Food Tour | Sherpa Food Tours`,
-        description: description,
-        keywords: [
-            tour.title,
-            'food tour',
-            'culinary experience',
-            'local food guide',
-            'authentic food tour',
-            'walking food tour',
-            'food tasting',
-            'restaurant tour',
-            'local cuisine',
-            'food adventure'
-        ],
-        authors: [{ name: "Sherpa Food Tours" }],
+        title,
+        description,
+        keywords,
         openGraph: {
-            title: `${tour.title} | Sherpa Food Tours`,
-            description: description,
-            url: tourUrl,
-            siteName: "Sherpa Food Tours",
+            title,
+            description,
+            url: `https://www.sherpafoodtours.com/tour/${slug}/`,
+            type: "article",
             images: [
                 {
-                    url: featuredImage.img || `${baseUrl}/sherpa-complete-logo.webp`,
+                    url: featuredImage.img || `https://www.sherpafoodtours.com/sherpa-complete-logo.webp`,
                     width: 1200,
                     height: 630,
-                    alt: featuredImage.alt || tour.title,
+                    alt: featuredImage.alt?.trim().length > 0 ? featuredImage.alt : `${tour.title} - Food Tour | Sherpa Food Tours`,
                 },
             ],
-            locale: "en_US",
-            type: "website",
         },
         twitter: {
             card: "summary_large_image",
-            title: `${tour.title} | Sherpa Food Tours`,
-            description: description,
-            images: [featuredImage.img || `${baseUrl}/sherpa-complete-logo.webp`],
+            title,
+            description,
+            images: [featuredImage.img || `https://www.sherpafoodtours.com/sherpa-complete-logo.webp`],
         },
         alternates: {
-            canonical: tourUrl + '/',
-        },
-        robots: {
-            index: true,
-            follow: true,
-            googleBot: {
-                index: true,
-                follow: true,
-                'max-video-preview': -1,
-                'max-image-preview': 'large',
-                'max-snippet': -1,
-            },
+            canonical: `https://www.sherpafoodtours.com/tour/${slug}/`,
         },
     }
 }
