@@ -47,8 +47,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const image = await wp.getPostImage(cityBySlug.featured_media);
     const description = cityBySlug.acf.metadata?.description?.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content)
 
-    console.log({ title });
-
     // Generate SEO keywords with focus on city name + food tours
     const cityName = cityBySlug.city_name;
     const keywords = [

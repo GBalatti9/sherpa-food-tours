@@ -396,29 +396,45 @@ export default async function Home() {
             <h2>Just relax, <br /> we&apos;ve got it covered</h2>
             <p><span>Everything&apos;s included.</span> We handle the details and most dietary needs. Just show up ready to enjoy</p>
           </header>
-          <div className="tours-section">
-            <div className="tours-container" role="list" aria-label="List of available food tour destinations">
+          <div className="mt-10 bg-[var(--main-color)] py-10">
+            <div className="mx-auto w-full max-w-[1280px] px-5 py-8 md:px-8 lg:px-10">
+            <div className="mb-8 text-center">
+              <h2 className="font-dk-otago text-[2rem] leading-none text-white md:text-[2.5rem] lg:text-[3rem]">
+                Our Cities
+              </h2>
+            </div>
+            <div
+              className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7"
+              role="list"
+              aria-label="List of available food tour destinations"
+            >
               {cities.map((city, i) => (
                 <Link
-                  className="tour-card"
+                  className="group block bg-white p-3 shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition-transform duration-300 ease-out hover:-translate-y-1 md:p-4"
                   key={city.slug + i}
                   href={`https://www.sherpafoodtours.com/city/${city.slug}`}
                 >
-                  <div className="img-container">
+                  <div className="aspect-[4/3] overflow-hidden bg-[#f3f3ef]">
                     <img
                       src={city.image.img}
                       alt={`${city.city} food tour destination image`}
                       loading="lazy"
                       width="300"
                       height="200"
+                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                     />
                   </div>
-                  <div className="tour-data">
-                    <h3>{city.city}</h3>
-                    <p>{city.country}</p>
+                  <div className="bg-white px-5 pb-4 pt-5 text-center md:px-6 md:pb-5">
+                    <h3 className="font-dk-otago text-[1.9rem] leading-tight text-[var(--title-color)] md:text-[2.15rem]">
+                      {city.city}
+                    </h3>
+                    <p className="mt-1 font-excelsior text-[1rem] uppercase tracking-[0.08em] text-[#4B4B4B] md:text-[1.05rem]">
+                      {city.country}
+                    </p>
                   </div>
                 </Link>
               ))}
+            </div>
             </div>
           </div>
         </section>

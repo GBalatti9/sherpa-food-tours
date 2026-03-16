@@ -2,12 +2,13 @@
 
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
     Cookiebot?: {
       consent?: {
+        preferences?: boolean;
         statistics?: boolean;
         marketing?: boolean;
       };
@@ -18,18 +19,16 @@ declare global {
 export default function MarketingScripts() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const hasMounted = useRef(false);
 
-  // --------------------------------------------------
-  // GA4 – Track pageviews SOLO si hay consentimiento
-  // --------------------------------------------------
+  // Consent Mode maneja el nivel de recoleccion; nosotros solo informamos los cambios de ruta.
   useEffect(() => {
-    if (
-      typeof window === "undefined" ||
-      !window.gtag ||
-      !window.Cookiebot?.consent?.statistics
-    ) {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
       return;
     }
+
+    if (typeof window === "undefined" || !window.gtag) return;
 
     const url =
       pathname + (searchParams.toString() ? `?${searchParams}` : "");

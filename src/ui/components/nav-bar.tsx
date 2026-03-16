@@ -5,13 +5,38 @@ import MobileMenu from "./mobile-menu";
 import CitiesDropdown from "./cities-dropdown";
 
 export default function NavBar({ currentPath, cities, fareharborLink }: { currentPath: string; cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[]; fareharborLink?: string | null }) {
+    console.log("NAVBAR");
 
     const items = [
-        { label: 'Cities', href: 'https://www.sherpafoodtours.com/' },
-        { label: 'Travel Guide', href: 'https://www.sherpafoodtours.com/travel-guide' },
-        { label: 'About us', href: 'https://www.sherpafoodtours.com/about-us' },
-        { label: 'Contact', href: 'https://www.sherpafoodtours.com/contact' }
+        { label: 'Cities', href: 'https://www.sherpafoodtours.com/', path: '/city/*', activeColor: 'white' },
+        { label: 'Travel Guide', href: 'https://www.sherpafoodtours.com/travel-guide', path: '/travel-guide/*', activeColor: 'var(--title-color)' },
+        { label: 'About us', href: 'https://www.sherpafoodtours.com/about-us', path: '/about-us/', activeColor: 'white' },
+        { label: 'Contact', href: 'https://www.sherpafoodtours.com/contact', path: '/contact/', activeColor: 'white' }
     ];
+
+    const normalizePath = (path: string) => {
+        if (path === "/") return path;
+        return path.replace(/\/+$/, "");
+    };
+
+    const isActive = (path: string) => {
+        const normalizedCurrentPath = normalizePath(currentPath);
+
+        if (normalizedCurrentPath === '/') return false;
+
+        if (path.endsWith("/*")) {
+            const basePath = normalizePath(path.slice(0, -2));
+            return normalizedCurrentPath === basePath || normalizedCurrentPath.startsWith(`${basePath}/`);
+        }
+
+        return normalizedCurrentPath === normalizePath(path);
+    };
+
+    const getItemColor = (item: (typeof items)[number]) => {
+        if (isActive(item.path)) return item.activeColor;
+        return currentPath.includes("travel-guide") ? "#333" : "var(--background)";
+    };
+
     return (
         <header role="banner" className="sherpa-header" style={{ backgroundColor: currentPath.includes("travel-guide") ? 'var(--background)' : 'var(--second-green)' }}>
             <nav className="sherpa-navbar" aria-label="Main navigation">
@@ -56,23 +81,24 @@ export default function NavBar({ currentPath, cities, fareharborLink }: { curren
                         >
                             {item.label.toLowerCase() === "cities" ?
                                 <div className="relative container">
-                                    <CitiesDropdown text={item.label} cities={cities} color={currentPath.includes("travel-guide") ? "#333" : "var(--background)"} />
+                                    <CitiesDropdown text={item.label} cities={cities} color={getItemColor(item)} />
                                     <span
-                                        className="absolute bottom-0 left-0 w-0 h-[1px] transition-all duration-300 ease-out group-hover:w-full"
-                                        style={{ backgroundColor: currentPath.includes("travel-guide") ? "var(--title-color)" : "white" }}
+                                        className={`absolute bottom-0 left-0 h-[1px] transition-all duration-300 ease-out ${isActive(item.path) ? "w-full" : "w-0 group-hover:w-full"}`}
+                                        style={{ backgroundColor: isActive(item.path) ? item.activeColor : currentPath.includes("travel-guide") ? "var(--title-color)" : "white" }}
                                     />
                                 </div>
                                 :
                                 <Link
                                     href={item.href}
                                     className="relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                                    style={{ color: getItemColor(item) }}
                                     role="menuitem"
                                     tabIndex={0}
                                 >
                                     {item.label}
                                     <span
-                                        className="absolute bottom-0 left-0 w-0 h-[1px] transition-all duration-300 ease-out group-hover:w-full"
-                                        style={{ backgroundColor: currentPath.includes("travel-guide") ? "var(--title-color)" : "white" }}
+                                        className={`absolute bottom-0 left-0 h-[1px] transition-all duration-300 ease-out ${isActive(item.path) ? "w-full" : "w-0 group-hover:w-full"}`}
+                                        style={{ backgroundColor: isActive(item.path) ? item.activeColor : currentPath.includes("travel-guide") ? "var(--title-color)" : "white" }}
                                     />
                                 </Link>
                             }

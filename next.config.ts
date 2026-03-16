@@ -1075,6 +1075,21 @@ const nextConfig = {
         destination: '/travel-guide/buenos-aires/buenos-aires-food-what-to-eat-and-where/',
         permanent: true,
       },
+      {
+        source: '/travel-guide/buenos-aires/what-to-eat-in-buenos-aires-where/',
+        destination: '/travel-guide/buenos-aires/buenos-aires-food-what-to-eat-and-where/',
+        permanent: true,
+      },
+      {
+        source: '/travel-guide/amsterdam/best-brown-cafes-in-amsterdam/',
+        destination: '/travel-guide/amsterdam/best-brown-cafe-in-amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/the-insiders-guide-to-the-best-steakhouses-in-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/best-steakhouses-in-buenos-aires/',
+        permanent: true,
+      },
       // {
       //   source: '/locals-pick-of-the-10-best-places-to-visit-in-buenos-aires/',
       //   destination: '/travel-guide/buenos-aires/what-to-do-in-buenos-aires-discover-7-must-visit-places/',

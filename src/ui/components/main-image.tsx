@@ -46,6 +46,16 @@ export default function MainImage({ src, alt }: { src: string; alt: string }) {
                     onError={() => setImageError(true)}
                 />
             )}
+
+            <div
+                aria-hidden="true"
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'rgba(0, 0, 0, 0.40)',
+                    pointerEvents: 'none',
+                }}
+            />
         </div>
     );
 }

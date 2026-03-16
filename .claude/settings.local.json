@@ -5,7 +5,12 @@
       "Bash(npx tsc:*)",
       "mcp__ide__getDiagnostics",
       "Bash(grep:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git mv:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(npm run:*)",
+      "Bash(git push:*)"
     ]
   }
 }

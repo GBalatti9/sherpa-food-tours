@@ -104,13 +104,13 @@ export default async function AboutUsPage() {
         title: "",
         items: []
     }
-    
+
     if (acf.our_story) {
         our_story.title = acf.our_story.title;
 
         const formattedYears = Object.entries(acf.our_story.years).map(([, value]) => value);
         const completeYears = await Promise.all(formattedYears.map(async (element) => {
-            if (!element.image_2019) return {...element, image: null};
+            if (!element.image_2019) return { ...element, image: null };
             const img = await wp.getPostImage(element.image_2019);
             return {
                 ...element,
@@ -136,7 +136,7 @@ export default async function AboutUsPage() {
 
     // Generate structured data for SEO
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
-    
+
     const organizationSchema = {
         "@context": "https://schema.org",
         "@type": "Organization",
@@ -181,11 +181,16 @@ export default async function AboutUsPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
-            
+
             <main className="about-us-page">
                 <article>
                     <section className="about-us-page-first-section">
-                        <h1>The <img src="/sherpa.webp" alt="Sherpa Food Tours logo" width="120" height="40" /> manifesto</h1>
+                        <h1>The
+                            <div className="px-3">
+                                <img src="/sherpa.webp" alt="Sherpa Food Tours logo" width="120" height="40" />
+                            </div>
+                            manifesto
+                        </h1>
                         <div dangerouslySetInnerHTML={{ __html: content }} className="render-html"></div>
                     </section>
                     <OurValues items={acfData} />
@@ -194,7 +199,7 @@ export default async function AboutUsPage() {
                             <MeetLocalGuides localGuides={acfLocalGuidesCorrect} />
                         </div>
                     </section>
-                    <OurStoryComponent our_story={our_story}/>
+                    <OurStoryComponent our_story={our_story} />
                 </article>
             </main>
         </>

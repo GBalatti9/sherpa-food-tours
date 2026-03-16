@@ -61,7 +61,7 @@ export default function CitiesDropdown({
           }
         }}
       >
-        <p className="searcher" style={{ color: color }}>
+        <p className="searcher text-2xl" style={{ color: color }}>
           {text}
         </p>
         <svg

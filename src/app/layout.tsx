@@ -116,6 +116,28 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
+        <Script
+          id="consent-default"
+          strategy="beforeInteractive"
+          data-cookieconsent="ignore"
+        >
+          {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_personalization: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+  `}
+        </Script>
+
         <Cookies />
 
         {/* Preconnect para recursos críticos de terceros */}
@@ -144,16 +166,48 @@ export default async function RootLayout({
         </Suspense>
 
         <Script
+          id="consent-update"
+          strategy="afterInteractive"
+        >
+          {`
+    (function() {
+      function updateConsent() {
+        if (!window.Cookiebot || typeof window.gtag !== 'function') return;
+
+        const preferencesGranted = !!window.Cookiebot.consent?.preferences;
+        const statisticsGranted = !!window.Cookiebot.consent?.statistics;
+        const marketingGranted = !!window.Cookiebot.consent?.marketing;
+
+        window.gtag('consent', 'update', {
+          analytics_storage: statisticsGranted ? 'granted' : 'denied',
+          ad_storage: marketingGranted ? 'granted' : 'denied',
+          ad_user_data: marketingGranted ? 'granted' : 'denied',
+          ad_personalization: marketingGranted ? 'granted' : 'denied',
+          functionality_storage: preferencesGranted ? 'granted' : 'denied',
+          personalization_storage: preferencesGranted ? 'granted' : 'denied',
+        });
+      }
+
+      window.addEventListener('CookiebotOnConsentReady', updateConsent, false);
+      window.addEventListener('CookiebotOnAccept', updateConsent, false);
+      window.addEventListener('CookiebotOnDecline', updateConsent, false);
+
+      updateConsent();
+    })();
+  `}
+        </Script>
+
+        <Script
           id="ga-loader"
-          type="text/plain"
-          data-cookieconsent="statistics"
+          strategy="afterInteractive"
+          data-cookieconsent="ignore"
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         />
 
         <Script
           id="ga-config"
-          type="text/plain"
-          data-cookieconsent="statistics"
+          strategy="afterInteractive"
+          data-cookieconsent="ignore"
         >
           {`
     window.dataLayer = window.dataLayer || [];

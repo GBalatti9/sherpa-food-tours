@@ -50,15 +50,43 @@ body {
     padding: 8px 15px;
     font-family: var(--font-excelsior);
     font-size: 1rem;
-    cursor: pointer;
+    cursor: pointer !important;
     transition: all .3s ease-in-out;
     text-decoration: none !important;
+    transform-origin: center;
+    will-change: transform;
 
     &:hover {
-      transform: scale(1.05);
+      animation: book-now-heart-pulse 1.4s ease-in-out infinite;
     }
   }
 
+}
+
+@keyframes book-now-heart-pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(1.02);
+  }
+
+  28% {
+    transform: scale(1);
+  }
+
+  42% {
+    transform: scale(1.035);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* main { */
@@ -438,7 +466,7 @@ main {
           .searcher {
               color: white;
               text-decoration: none;
-              font-size: 14px;
+              /* font-size: 14px; */
           }
 
           svg {
@@ -1748,7 +1776,6 @@ main {
       height: 700px;
 
       .our-experiences-section-desktop {
-
           .info-section {
               padding-top: 0rem;
               padding-left: 3rem;
@@ -2914,7 +2941,7 @@ main {
       }
   }
 
-  .btn-cta {
+  /* .btn-cta {
       background-color: white;
       color: var(--subtitle-color);
       padding: 0.4rem 1rem;
@@ -2927,7 +2954,7 @@ main {
           font-size: 1.25rem;
           padding: 0.5rem 1.25rem;
       }
-  }
+  } */
 
 
 }
@@ -5101,4 +5128,3 @@ main {
 }
 
 /* MARQUEE BANNER END */
-

@@ -6,6 +6,11 @@ import { useEffect, useRef } from "react";
 export default function ItineraryComponent({ itinerary, desktopImgs }: { itinerary: Itinerary; desktopImgs: { img: string; alt: string }[] }) {
 
     const refs = useRef<(HTMLDivElement | null)[]>([]);
+    const desktopImageLayouts = [
+        { top: "1%", left: "11%", rotate: "-8deg", width: "52%" },
+        { top: "26%", right: "6%", rotate: "11deg", width: "26%" },
+        { top: "54%", left: "16%", rotate: "-5deg", width: "46%" },
+    ] as const;
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -38,7 +43,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
 
     return (
         <section className="itinerary-section">
-            <div className="itinerary-container">
+            <div className="itinerary-container md:!overflow-visible">
                 <h2 className="itinerary-title"> {itinerary.title}</h2>
                 <div className="itinerary-container-elements">
                     <div className="itinerary-steps-container">
@@ -75,14 +80,35 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                             </div>
                         ))}
                     </div>
-                    <div className="desktop-images">
-                        <div className="images-container">
+                    <div className="relative hidden md:block md:w-1/2 md:min-h-[620px] md:overflow-visible lg:min-h-[680px]">
+                        <div className="relative h-full w-full overflow-visible">
+                            {desktopImgs.map((element, i) => {
+                                const layout = desktopImageLayouts[i % desktopImageLayouts.length];
 
-                            {desktopImgs.map((element, i) => (
-                                <div className="img-container" key={element.img + i}>
-                                    <img src={element.img} alt={element.alt} width="600" height="400" loading="lazy" />
-                                </div>
-                            ))}
+                                return (
+                                    <div
+                                        className="absolute shadow-[0_18px_40px_rgba(0,0,0,0.14)]"
+                                        key={element.img + i}
+                                        style={{
+                                            top: layout.top,
+                                            left: "left" in layout ? layout.left : undefined,
+                                            right: "right" in layout ? layout.right : undefined,
+                                            width: layout.width,
+                                            transform: `rotate(${layout.rotate})`,
+                                            zIndex: i + 1,
+                                        }}
+                                    >
+                                        <img
+                                            src={element.img}
+                                            alt={element.alt}
+                                            width="600"
+                                            height="400"
+                                            loading="lazy"
+                                            className="block h-auto w-full object-cover"
+                                        />
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

@@ -72,8 +72,8 @@ export default async function TravelGuidePage() {
 
     // Get cities for dropdown
     let cities = await wp.getAllCities();
-    cities = cities.map((city: { id: number; slug: string; title: { rendered: string } }) => { 
-        return { id: city.id, slug: city.slug, city: city.title.rendered } 
+    cities = cities.map((city: { id: number; slug: string; title: { rendered: string } }) => {
+        return { id: city.id, slug: city.slug, city: city.title.rendered }
     });
 
     // Get 10 articles with _embed (single API call includes image + author data)
@@ -83,7 +83,7 @@ export default async function TravelGuidePage() {
     });
     const rawPosts = postsRes.ok ? await postsRes.json() : [];
     const formattedPosts = filterValidPosts(rawPosts.map(formatPostFromEmbed));
-    
+
     // Generate JSON-LD structured data for SEO
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
 
@@ -166,9 +166,21 @@ export default async function TravelGuidePage() {
                     >
                     </div>
                     <div className="titles-container">
-                        <h1>The <img src="/sherpa-white.webp" alt="Sherpa Food Tours logo" width="120" height="40" /> <br /> travel guide</h1>
+                        <h1>
+                            The
+                            <span className="inline-flex px-3 w-[140px] shrink-0 items-center md:w-[180px] lg:w-[220px]">
+                                <img src="/sherpa-white.webp" alt="Sherpa Food Tours logo" className="block !w-full h-auto object-contain" />
+                            </span>
+                            travel guide
+                        </h1>
                         <h2>Experiences made to be remembered</h2>
-                        <Link href="#travel-guide" className="btn-cta" aria-label="Explore the Sherpa Food Tours travel guide">Explore The Guide</Link>
+                        <Link
+                            href="#travel-guide"
+                            className="inline-block w-fit rounded-[3.5px] bg-white px-4 py-[0.4rem] font-excelsior text-[var(--subtitle-color)] transition-transform duration-300 ease-out hover:-translate-y-0.5 hover:scale-[1.02] !cursor-pointer md:mx-auto md:px-5 md:py-[0.5rem] md:text-xl"
+                            aria-label="Explore the Sherpa Food Tours travel guide"
+                        >
+                            Explore The Guide
+                        </Link>
                     </div>
                 </section>
                 <PageInteractivity

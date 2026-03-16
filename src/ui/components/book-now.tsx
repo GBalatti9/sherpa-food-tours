@@ -8,7 +8,7 @@ export default function BookNowButton({ link, data_tour }: { link?: string; data
 
   return (
     <button
-      className="book-now-button"
+      className="book-now-button cursor-pointer"
       type="button"
       data-fareharbor-lightframe={data_tour}
       onClick={(e) => {
