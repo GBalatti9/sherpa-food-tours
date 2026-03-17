@@ -14,7 +14,13 @@ const scrollToAskForIt = (event: MouseEvent<HTMLElement>) => {
   if (typeof document === "undefined") return;
 
   const section = document.getElementById("askForIt");
-  section?.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (!section) return;
+
+  const navbar = document.querySelector("nav");
+  const offset = navbar ? navbar.getBoundingClientRect().height + 16 : 0;
+  const top = section.getBoundingClientRect().top + window.scrollY - offset;
+
+  window.scrollTo({ top, behavior: "smooth" });
 };
 
 export default function AskForIt({
