@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ user: str
         openGraph: {
             title: `${authorName} - Author | Sherpa Food Tours`,
             description: authorDescription,
-            url: `${baseUrl}/author/${user}`,
+            url: `${baseUrl}/author/${user}/`,
             siteName: "Sherpa Food Tours",
             type: "profile",
             images: [

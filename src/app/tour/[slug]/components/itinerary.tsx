@@ -5,6 +5,8 @@ import { useEffect, useRef } from "react";
 
 export default function ItineraryComponent({ itinerary, desktopImgs }: { itinerary: Itinerary; desktopImgs: { img: string; alt: string }[] }) {
 
+    console.log({ itinerary, desktopImgs });
+
     const refs = useRef<(HTMLDivElement | null)[]>([]);
     const desktopImageLayouts = [
         { top: "1%", left: "11%", rotate: "-8deg", width: "52%" },
@@ -54,7 +56,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                 {/* Solo para START y END */}
                                 {item.information &&
                                     <div className="itinerary-step-information">
-                                        <img src={item?.map?.img} alt="Map pin icon" width="24" height="24" />
+                                        <img src={item?.map?.img || "http://staging.sherpafoodtours.com/wp-content/uploads/2025/08/Local-two-本地.png"} alt={item?.map?.alt || "Map pin icon"} width="24" height="24" className="object-contain"/>
                                         <div className="itinerary-step-data" dangerouslySetInnerHTML={{ __html: item.information }}>
                                         </div>
                                     </div>
@@ -80,7 +82,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                             </div>
                         ))}
                     </div>
-                    <div className="relative hidden md:block md:w-1/2 md:min-h-[620px] md:overflow-visible lg:min-h-[680px]">
+                    <div className="relative hidden md:block md:w-1/2 md:overflow-visible">
                         <div className="relative h-full w-full overflow-visible">
                             {desktopImgs.map((element, i) => {
                                 const layout = desktopImageLayouts[i % desktopImageLayouts.length];

@@ -280,8 +280,8 @@ export default function PageInteractivity({ cities, formattedPosts }: Props) {
         }
 
         const url = slug
-            ? `https://www.sherpafoodtours.com/travel-guide/${slugify(slug)}/${post.slug}`
-            : "https://www.sherpafoodtours.com/travel-guide";
+            ? `https://www.sherpafoodtours.com/travel-guide/${slugify(slug)}/${post.slug}/`
+            : "https://www.sherpafoodtours.com/travel-guide/";
 
         const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, '');
         const imageAlt = `${cleanTitle} - ${slug || 'Sherpa Food Tours'}`;

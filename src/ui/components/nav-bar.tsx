@@ -9,9 +9,9 @@ export default function NavBar({ currentPath, cities, fareharborLink }: { curren
 
     const items = [
         { label: 'Cities', href: 'https://www.sherpafoodtours.com/', path: '/city/*', activeColor: 'white' },
-        { label: 'Travel Guide', href: 'https://www.sherpafoodtours.com/travel-guide', path: '/travel-guide/*', activeColor: 'var(--title-color)' },
-        { label: 'About us', href: 'https://www.sherpafoodtours.com/about-us', path: '/about-us/', activeColor: 'white' },
-        { label: 'Contact', href: 'https://www.sherpafoodtours.com/contact', path: '/contact/', activeColor: 'white' }
+        { label: 'Travel Guide', href: 'https://www.sherpafoodtours.com/travel-guide/', path: '/travel-guide/*', activeColor: 'var(--title-color)' },
+        { label: 'About us', href: 'https://www.sherpafoodtours.com/about-us/', path: '/about-us/', activeColor: 'white' },
+        { label: 'Contact', href: 'https://www.sherpafoodtours.com/contact/', path: '/contact/', activeColor: 'white' }
     ];
 
     const normalizePath = (path: string) => {

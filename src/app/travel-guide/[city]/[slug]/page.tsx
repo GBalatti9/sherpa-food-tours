@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     const imageUrl = img || "https://www.sherpafoodtours.com/imagen-de-portada.webp";
     const title = he.decode(post.title);
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
-    const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}`;
+    const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}/`;
 
     // Get city name for keywords
     const cityName = post.relaciones?.ciudades?.[0]?.title || city;
@@ -196,7 +196,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     // Generate structured data for SEO
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
-    const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}`;
+    const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}/`;
     const cityDisplayName = relaciones?.ciudades?.[0]?.title || city.replace(/-/g, ' ');
 
     // Enhanced Article Schema with more details
@@ -243,25 +243,25 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": baseUrl
+                "item": baseUrl + "/"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Travel Guide",
-                "item": `${baseUrl}/travel-guide`
+                "item": `${baseUrl}/travel-guide/`
             },
             {
                 "@type": "ListItem",
                 "position": 3,
                 "name": cityDisplayName,
-                "item": `${baseUrl}/travel-guide/${city}`
+                "item": `${baseUrl}/travel-guide/${city}/`
             },
             {
                 "@type": "ListItem",
                 "position": 4,
                 "name": title,
-                "item": articleUrl
+                "item": articleUrl + "/"
             }
         ]
     };

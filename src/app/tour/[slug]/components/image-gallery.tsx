@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 
 export default function ImageGallery({ images }: { images: { img: string; alt: string }[] }) {
 
+    console.log({ images });
+
     const [isOpen, setIsOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 

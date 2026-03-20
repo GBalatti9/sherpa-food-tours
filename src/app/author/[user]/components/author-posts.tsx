@@ -89,9 +89,9 @@ export default function AuthorPosts({ initialPosts, authorId }: AuthorPostsProps
                     let url = null;
 
                     if (!slug) {
-                        url = "https://www.sherpafoodtours.com/travel-guide";
+                        url = "https://www.sherpafoodtours.com/travel-guide/";
                     } else {
-                        url = `https://www.sherpafoodtours.com/travel-guide/${slugify(slug)}/${post.slug}`;
+                        url = `https://www.sherpafoodtours.com/travel-guide/${slugify(slug)}/${post.slug}/`;
                     }
 
                     const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, '');

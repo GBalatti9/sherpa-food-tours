@@ -571,15 +571,11 @@
                     content: "";
                     position: absolute;
                     left: .45rem;
-                    /* Centrada con los círculos principales */
                     top: 1.7rem;
-                    /* Empieza después del primer círculo */
-                    bottom: 6rem;
-                    /* Termina antes del último círculo */
+                    bottom: 1.5rem;
                     width: 2px;
                     background-color: var(--title-color);
                     z-index: -1;
-                    /* Detrás de los círculos */
                 }
 
 
@@ -620,6 +616,7 @@
                         display: flex;
                         flex-direction: column;
                         gap: .6rem;
+                        padding-left: 1rem;
 
                         .stop-item {
                             font-family: var(--font-excelsior);
@@ -632,9 +629,11 @@
 
 
                             .stop-item-img {
-                                aspect-ratio: 3 / 4;
-                                max-height: 300px;
+                                aspect-ratio: 4 / 3;
+                                max-height: 250px;
                                 overflow: hidden;
+                                border-radius: 4px;
+                                margin-top: .4rem;
 
                                 img {
                                     width: 100%;

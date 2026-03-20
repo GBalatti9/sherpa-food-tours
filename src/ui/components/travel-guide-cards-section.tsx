@@ -83,16 +83,16 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                         </>
                     );
 
-                    if (tour.acf.is_private) {
-                        return (
-                            <Link href='#askForIt' className="tour-card" key={tour.title + tour.id}>
-                                {cardContent}
-                            </Link>
-                        );
-                    }
+                    // if (tour.acf.is_private) {
+                    //     return (
+                    //         <Link href='#askForIt' className="tour-card" key={tour.title + tour.id}>
+                    //             {cardContent}
+                    //         </Link>
+                    //     );
+                    // }
 
                     return (
-                        <Link className="tour-card" key={tour.title + tour.id} href={`https://www.sherpafoodtours.com/tour/${tour.slug}`}>
+                        <Link className="tour-card" key={tour.title + tour.id} href={`https://www.sherpafoodtours.com/tour/${tour.slug}/`}>
                             {cardContent}
                         </Link>
                     );

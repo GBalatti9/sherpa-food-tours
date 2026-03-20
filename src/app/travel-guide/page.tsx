@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Travel Guide - Food, Drinks & Experiences | Sherpa Food Tours",
         description: "Discover the ultimate travel guide for food, drinks, and unique experiences around the world. Explore authentic flavors, hidden gems, and the best places to eat, drink, and explore.",
-        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com'}/travel-guide`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com'}/travel-guide/`,
         siteName: "Sherpa Food Tours",
         images: [
             {
@@ -95,13 +95,13 @@ export default async function TravelGuidePage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": baseUrl
+                "item": baseUrl + "/"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Travel Guide",
-                "item": `${baseUrl}/travel-guide`
+                "item": `${baseUrl}/travel-guide/`
             }
         ]
     };
@@ -111,7 +111,7 @@ export default async function TravelGuidePage() {
         "@type": "CollectionPage",
         "name": "Travel Guide - Food, Drinks & Experiences",
         "description": "Discover the ultimate travel guide for food, drinks, and unique experiences around the world.",
-        "url": `${baseUrl}/travel-guide`,
+        "url": `${baseUrl}/travel-guide/`,
         "publisher": {
             "@type": "Organization",
             "name": "Sherpa Food Tours",
@@ -124,7 +124,7 @@ export default async function TravelGuidePage() {
             "@type": "ItemList",
             "itemListElement": formattedPosts.slice(0, 9).map((post: PostWithImage, index: number) => {
                 const citySlug = post.relaciones?.ciudades?.[0]?.title ? slugify(post.relaciones.ciudades[0].title) : null;
-                const postUrl = citySlug ? `${baseUrl}/travel-guide/${citySlug}/${post.slug}` : `${baseUrl}/travel-guide`;
+                const postUrl = citySlug ? `${baseUrl}/travel-guide/${citySlug}/${post.slug}/` : `${baseUrl}/travel-guide/`;
 
                 return {
                     "@type": "ListItem",

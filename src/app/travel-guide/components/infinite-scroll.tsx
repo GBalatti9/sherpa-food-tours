@@ -60,9 +60,9 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                     let url = null;
 
                     if (!slug) {
-                        url = "https://www.sherpafoodtours.com/travel-guide";
+                        url = "https://www.sherpafoodtours.com/travel-guide/";
                     } else {
-                        url = `https://www.sherpafoodtours.com/travel-guide/${slugify(slug)}/${post.slug}`;
+                        url = `https://www.sherpafoodtours.com/travel-guide/${slugify(slug)}/${post.slug}/`;
                     }
 
                     const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, '');
@@ -104,8 +104,8 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                     if (!p) return null;
                                     const s = p.relaciones?.ciudades?.[0]?.title || null;
                                     const u = s
-                                        ? `https://www.sherpafoodtours.com/travel-guide/${slugify(s)}/${p.slug}`
-                                        : "https://www.sherpafoodtours.com/travel-guide";
+                                        ? `https://www.sherpafoodtours.com/travel-guide/${slugify(s)}/${p.slug}/`
+                                        : "https://www.sherpafoodtours.com/travel-guide/";
                                     const cleanTitleGroup = p.title.rendered.replace(/<[^>]*>/g, '');
                                     const imageAltGroup = `${cleanTitleGroup} - ${s || 'Sherpa Food Tours'}`;
                                     const pAuthorSlug = (p.author_name?.name || "").toLowerCase().replace(/\s+/g, "") || "author";

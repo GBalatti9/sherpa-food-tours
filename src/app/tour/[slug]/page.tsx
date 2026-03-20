@@ -214,6 +214,9 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
     const { stars, title, reviews, price, check_availability } = acf.heading_section;
 
+    console.log({ title });
+
+    const ACF_PRICE = price || acf.price;
     // Generate structured data for SEO
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
     const tourUrl = `${baseUrl}/tour/${slug}`;
@@ -234,12 +237,12 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
     const reviewsFormatted = {
         google: {
-            image: await wp.getPostImage(reviews.google.image),
-            amount: reviews.google.amount ?? 0
+            image: reviews.google.image ? await wp.getPostImage(reviews.google.image) : null,
+            amount: reviews.google.image ? reviews.google.amount ?? 0 : null
         },
         tripadvisor: {
-            image: await wp.getPostImage(reviews.tripadvisor.image),
-            amount: reviews.tripadvisor.amount ?? 0
+            image: reviews.tripadvisor.image ? await wp.getPostImage(reviews.tripadvisor.image) : null,
+            amount: reviews.tripadvisor.image ? reviews.tripadvisor.amount ?? 0 : null
         }
     }
 
@@ -416,43 +419,47 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                                 </div>
                                 <h1>{title}</h1>
                             </div>
-                            <div className="reviews-container">
-                                <div className="google-container">
-                                    <div className="img-container">
-                                        <img src={reviewsFormatted.google.image.img} alt={reviewsFormatted.google.image.alt} />
+                            {reviewsFormatted.google.image && reviewsFormatted.tripadvisor.image && (
+                                <div className="reviews-container">
+                                    <div className="google-container">
+                                        <div className="img-container">
+                                            <img src={reviewsFormatted.google.image.img} alt={reviewsFormatted.google.image.alt} />
+                                        </div>
+                                        <span>|</span>
+                                        <p>{reviewsFormatted.google.amount}</p>
                                     </div>
-                                    <span>|</span>
-                                    <p>{reviewsFormatted.google.amount}</p>
-                                </div>
-                                <div className="tripadvisor-container">
-                                    <div className="img-container">
-                                        <img src={reviewsFormatted.tripadvisor.image.img} alt={reviewsFormatted.tripadvisor.image.alt} />
+                                    <div className="tripadvisor-container">
+                                        <div className="img-container">
+                                            <img src={reviewsFormatted.tripadvisor.image.img} alt={reviewsFormatted.tripadvisor.image.alt} />
+                                        </div>
+                                        <span>|</span>
+                                        <p>{reviewsFormatted.tripadvisor.amount}</p>
                                     </div>
-                                    <span>|</span>
-                                    <p>{reviewsFormatted.tripadvisor.amount}</p>
                                 </div>
-                            </div>
+                            )}
                         </div>
                         <div className="price-available">
-                            <div className="price-container">
-                                <p>From:</p>
-                                <h2>USD{price}</h2>
-                            </div>
-                            {title.includes("Private") ? (
+                            {ACF_PRICE &&
+                                <div className="price-container">
+                                    <p>From:</p>
+                                    <h2>USD{ACF_PRICE}</h2>
+                                </div>
+                            }
+                            {acf.is_private ? (
                                 <AskForIt />
                             ) : (
-
                                 <BookNowButton
                                     link={acf.fareharbor?.link}
                                     data_tour={acf.fareharbor?.id}
                                 />
-
                             )}
                         </div>
-                        <div className="price-container">
-                            <p>From:</p>
-                            <h2>USD{price}</h2>
-                        </div>
+                        {ACF_PRICE &&
+                            <div className="price-container">
+                                <p>From:</p>
+                                <h2>USD{ACF_PRICE}</h2>
+                            </div>
+                        }
                         {check_availability && <CheckAvailabilityButton link={acf.fareharbor?.link} data_tour={acf.fareharbor?.id} />}
                     </div>
                 </section>

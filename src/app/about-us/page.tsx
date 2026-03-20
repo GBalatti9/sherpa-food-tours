@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "About Us - Our Story & Values | Sherpa Food Tours",
         description: "Learn about Sherpa Food Tours' mission to provide authentic culinary experiences. Meet our local guides and discover what drives us.",
-        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com'}/about-us`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com'}/about-us/`,
         siteName: "Sherpa Food Tours",
         images: [
             {
@@ -141,8 +141,8 @@ export default async function AboutUsPage() {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Sherpa Food Tours",
-        "url": baseUrl,
-        "logo": "https://www.sherpafoodtours.com/sherpa-complete-logo.webp",
+        "url": baseUrl + "/about-us/",
+        "logo": baseUrl + "/sherpa-complete-logo.webp",
         "description": "Authentic food tours and culinary experiences around the world with local guides",
         "sameAs": [
             "https://www.facebook.com/sherpafoodtours",
@@ -159,13 +159,13 @@ export default async function AboutUsPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": baseUrl
+                "item": baseUrl + "/"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "About Us",
-                "item": `${baseUrl}/about-us`
+                "item": `${baseUrl}/about-us/`
             }
         ]
     };

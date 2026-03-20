@@ -125,7 +125,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
-    const cityUrl = `${baseUrl}/city/${slug}`;
+    const cityUrl = `${baseUrl}/city/${slug}/`;
 
     const asFeatureInImagesId = [
         acf?.first_img,
@@ -348,13 +348,13 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": baseUrl
+                "item": baseUrl + "/"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Cities",
-                "item": `${baseUrl}/city`
+                "item": `${baseUrl}/city/`
             },
             {
                 "@type": "ListItem",
@@ -490,7 +490,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                 )
                             })}
                         </div>
-                        <Link href="https://www.sherpafoodtours.com/travel-guide" className="preview-read-all">Read The Travel Guide</Link>
+                        <Link href="https://www.sherpafoodtours.com/travel-guide/" className="preview-read-all">Read The Travel Guide</Link>
                     </section>
                     // </section>
                 }
