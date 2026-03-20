@@ -27,33 +27,33 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
                         <div className="img-container">
                             {instagram ? (
                                 <Link href={instagram} target="_blank">
-                                    <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/instagram.png/" alt="Instagram" />
+                                    <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/instagram.png" alt="Instagram" />
                                 </Link>
-                            ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/instagram.png/" alt="Instagram" />}
+                            ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/instagram.png" alt="Instagram" />}
                         </div>
                         
                         <div className="img-container">
                             {tripadvisor ? (
                                 <Link href={tripadvisor} target="_blank">
-                                    <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tripadvisor.png/" alt="Tripadvisor" />
+                                    <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tripadvisor.png" alt="Tripadvisor" />
                                 </Link>
-                            ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tripadvisor.png/" alt="Tripadvisor" />}
+                            ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tripadvisor.png" alt="Tripadvisor" />}
                         </div>
                         
                         <div className="img-container">
                             {facebook ? (
                                 <Link href={facebook} target="_blank">
-                                    <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/facebook.png/" alt="Facebook" />
+                                    <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/facebook.png" alt="Facebook" />
                                 </Link>
-                            ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/facebook.png/" alt="Facebook" />}
+                            ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/facebook.png" alt="Facebook" />}
                         </div>
                         
                         <div className="img-container">
                             {tiktok ? (
                                 <Link href={tiktok} target="_blank">
-                                    <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tiktok.png/" alt="Tiktok" />
+                                    <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tiktok.png" alt="Tiktok" />
                                 </Link>
-                            ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tiktok.png/" alt="Tiktok" />}
+                            ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tiktok.png" alt="Tiktok" />}
                         </div>
                         
                     </div>
@@ -76,30 +76,30 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
                             <div className="img-container">
                                 {instagram ? (
                                     <Link href={instagram} target="_blank">
-                                        <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/instagram.png/" alt="Instagram" />
+                                        <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/instagram.png" alt="Instagram" />
                                     </Link>
-                                ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/instagram.png/" alt="Instagram" />}
+                                ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/instagram.png" alt="Instagram" />}
                             </div>
                             <div className="img-container">
                                 {tripadvisor ? (
                                     <Link href={tripadvisor} target="_blank">
-                                        <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tripadvisor.png/" alt="Tripadvisor" />
+                                        <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tripadvisor.png" alt="Tripadvisor" />
                                     </Link>
-                                ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tripadvisor.png/" alt="Tripadvisor" />}
+                                ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tripadvisor.png" alt="Tripadvisor" />}
                             </div>
                             <div className="img-container">
                                 {facebook ? (
                                     <Link href={facebook} target="_blank">
-                                        <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/facebook.png/" alt="Facebook" />
+                                        <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/facebook.png" alt="Facebook" />
                                     </Link>
-                                ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/facebook.png/" alt="Facebook" />}
+                                ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/facebook.png" alt="Facebook" />}
                             </div>
                             <div className="img-container">
                                 {tiktok ? (
                                     <Link href={tiktok} target="_blank">
-                                        <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tiktok.png/" alt="Tiktok" />
+                                        <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tiktok.png" alt="Tiktok" />
                                     </Link>
-                                ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tiktok.png/" alt="Tiktok" />}
+                                ) : <img src="https://staging.sherpafoodtours.com/wp-content/uploads/2026/03/tiktok.png" alt="Tiktok" />}
                             </div>
                         </div>
                     </div>
