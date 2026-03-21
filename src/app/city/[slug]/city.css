@@ -319,7 +319,7 @@
                 padding-top: 0;
             }
 
-            h3 {
+            h2 {
                 max-width: 290px;
             }
         }
@@ -337,7 +337,7 @@
             max-width: 1200px !important;
             justify-content: center;
 
-            h3 {
+            h2 {
                 font-size: 2.5rem;
                 max-width: 470px;
             }

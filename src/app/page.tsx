@@ -412,7 +412,7 @@ export default async function Home() {
                 <Link
                   className="group block bg-white p-3 shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition-transform duration-300 ease-out hover:-translate-y-1 md:p-4"
                   key={city.slug + i}
-                  href={`https://www.sherpafoodtours.com/city/${city.slug}`}
+                  href={`https://www.sherpafoodtours.com/city/${city.slug}/`}
                 >
                   <div className="aspect-[4/3] overflow-hidden bg-[#f3f3ef]">
                     <img
