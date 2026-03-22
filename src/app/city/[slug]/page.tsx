@@ -179,6 +179,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
         tours = await Promise.all(acf.tour.map((tour_id: number) => wp.getTourById(tour_id)))
 
+        // Filtrar tours privados o que no se pudieron obtener
+        tours = tours.filter((tour) => tour.title && tour.slug)
+
         tours = await Promise.all(tours.map(async (tour) => {
             const tour_image = tour.featured_media;
             const tour_image_data = await wp.getPostImage(tour_image);

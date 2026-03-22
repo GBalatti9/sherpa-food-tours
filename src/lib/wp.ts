@@ -233,8 +233,6 @@ export const wp = {
     getTourById: async (id: number) => {
         try {
 
-            // console.log({ id });
-
             const url = `${apiUrl}/tours/${id}`
             const response = await fetch(url)
 
