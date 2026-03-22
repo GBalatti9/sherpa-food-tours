@@ -376,7 +376,24 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         "url": cityUrl,
         "image": cityImageData.img,
         "touristType": "Food Lovers",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": cityUrl
+        }
     };
+
+    const faqSchema = faqs && faqs.faqs.length > 0 ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.faqs.map((faq: { question: string; answer: string }) => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    } : null;
 
     return (
         <>
@@ -390,6 +407,12 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(cityPageSchema) }}
             />
+            {faqSchema &&
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                />
+            }
 
             <main>
                 <section>

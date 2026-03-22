@@ -562,12 +562,12 @@ const nextConfig = {
       },
       {
         source: '/pt/city/buenos-aires-3/',
-        destination: '/city/buenos-aires/',
+        destination: '/city/buenos-aires-2/',
         permanent: true,
       },
       {
         source: '/es/city/buenos-aires-2/',
-        destination: '/city/buenos-aires/',
+        destination: '/city/buenos-aires-2/',
         permanent: true,
       },
       {
@@ -750,12 +750,12 @@ const nextConfig = {
 
       {
         source: '/5-things-to-know-before-visiting-argentina/',
-        destination: '/city/buenos-aires/',
+        destination: '/city/buenos-aires-2/',
         permanent: true,
       },
       {
         source: '/beyond-the-city-best-day-trips-from-buenos-aires/',
-        destination: '/city/buenos-aires/',
+        destination: '/city/buenos-aires-2/',
         permanent: true,
       },
       {
