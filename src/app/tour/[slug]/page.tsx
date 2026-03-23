@@ -204,6 +204,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     }
     const tour = await wp.getTourBySlug(slug);
     const { acf } = tour;
+    console.log({ acf })
 
     if (!acf) {
         console.warn("Tour no encontrado para slug:", slug);

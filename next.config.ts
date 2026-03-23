@@ -802,11 +802,12 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fareharbor.com",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https://staging.sherpafoodtours.com https://www.sherpafoodtours.com",
               "font-src 'self'",
-              "connect-src 'self' https://staging.sherpafoodtours.com",
+              "connect-src 'self' https://staging.sherpafoodtours.com https://fareharbor.com",
+              "frame-src https://fareharbor.com",
               "frame-ancestors 'none'",
             ].join('; ')
           }
