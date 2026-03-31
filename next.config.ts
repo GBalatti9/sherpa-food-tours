@@ -1286,7 +1286,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/es/tour/palermo-food-tour-3//',
+        source: '/es/tour/palermo-food-tour-3/',
         destination: 'https://www.sherpafoodtours.com/tour/buenos-aires-local-foodie-experience/',
         permanent: true,
       },
@@ -1492,12 +1492,12 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fareharbor.com https://consent.cookiebot.com https://www.googletagmanager.com https://www.google-analytics.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fareharbor.com https://consent.cookiebot.com https://www.googletagmanager.com https://www.google-analytics.com https://tally.so",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https://staging.sherpafoodtours.com https://www.sherpafoodtours.com",
               "font-src 'self'",
               "connect-src 'self' https://staging.sherpafoodtours.com https://fareharbor.com https://www.google-analytics.com https://analytics.google.com https://consent.cookiebot.com",
-              "frame-src https://fareharbor.com",
+              "frame-src https://fareharbor.com https://tally.so",
               "frame-ancestors 'none'",
             ].join('; ')
           }
