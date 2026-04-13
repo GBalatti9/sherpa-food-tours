@@ -26,7 +26,7 @@ import { slugify } from "@/app/helpers/slugify";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { FormattedWpPost } from "@/types/post";
 import TallyForm from "@/ui/components/tally-form";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import FareHarborSetter from "@/context/fareharbor-setter";
 
 
@@ -118,13 +118,13 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     const cityData = await wp.getCityBySlug(slug);
     const { acf, featured_media, content } = cityData;
 
-    // Si no hay datos válidos, redirigir a home
+    // Si no hay datos válidos, 404
     if (!acf || !cityData.city_name || cityData.city_name.trim() === "") {
-        redirect('/');
+        notFound();
     }
 
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
     const cityUrl = `${baseUrl}/city/${slug}/`;
 
     const asFeatureInImagesId = [
@@ -491,7 +491,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                     ? post.city_slug
                                     : null;
                                 // const href = citySlug ? `/travel-guide/${citySlug}/${post.slug}` : `/travel-guide`;
-                                const href = `${process.env.NEXT_PUBLIC_BASE_URL}/travel-guide/${slug}/${post.slug}`
+                                const href = `/travel-guide/${slug}/${post.slug}/`
 
                                 return (
                                     <Link

@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     
     const imageUrl = img || "https://www.sherpafoodtours.com/imagen-de-portada.webp";
     const title = he.decode(post.title);
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
     const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}/`;
 
     // Get city name for keywords
@@ -110,7 +110,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
             creator: "@sherpafoodtours",
         },
         alternates: {
-            canonical: articleUrl + '/',
+            canonical: articleUrl,
         },
         robots: {
             index: true,
@@ -195,7 +195,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
     const not_ready_to_book_section = await getNotReadyToBookSection();
 
     // Generate structured data for SEO
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
     const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}/`;
     const cityDisplayName = relaciones?.ciudades?.[0]?.title || city.replace(/-/g, ' ');
 
@@ -261,7 +261,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 "@type": "ListItem",
                 "position": 4,
                 "name": title,
-                "item": articleUrl + "/"
+                "item": articleUrl
             }
         ]
     };

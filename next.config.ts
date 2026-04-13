@@ -771,6 +771,66 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/city/buenos-aires',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        permanent: true,
+      },
+      {
+        source: '/city/buenos-aires/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        permanent: true,
+      },
+      {
+        source: '/tour/paris-private-tour',
+        destination: 'https://www.sherpafoodtours.com/tour/paris-private-experience/',
+        permanent: true,
+      },
+      {
+        source: '/tour/paris-private-tour/',
+        destination: 'https://www.sherpafoodtours.com/tour/paris-private-experience/',
+        permanent: true,
+      },
+      {
+        source: '/travels-guide/city-buenos-aires/:path*',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        permanent: true,
+      },
+      {
+        source: '/travels-guide/city-buenos-aires',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        permanent: true,
+      },
+      {
+        source: '/travels-guide/city-amsterdam/:path*',
+        destination: 'https://www.sherpafoodtours.com/city/amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/travels-guide/city-amsterdam',
+        destination: 'https://www.sherpafoodtours.com/city/amsterdam/',
+        permanent: true,
+      },
+      {
+        source: '/travels-guide/city-london/:path*',
+        destination: 'https://www.sherpafoodtours.com/city/london/',
+        permanent: true,
+      },
+      {
+        source: '/travels-guide/city-london',
+        destination: 'https://www.sherpafoodtours.com/city/london/',
+        permanent: true,
+      },
+      {
+        source: '/travels-guide/city-mexico-city/:path*',
+        destination: 'https://www.sherpafoodtours.com/city/mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/travels-guide/city-mexico-city',
+        destination: 'https://www.sherpafoodtours.com/city/mexico-city/',
+        permanent: true,
+      },
+      {
         source: '/travels-guide/',
         destination: 'https://www.sherpafoodtours.com/travel-guide/',
         permanent: true,
@@ -1494,10 +1554,10 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fareharbor.com https://consent.cookiebot.com https://www.googletagmanager.com https://www.google-analytics.com https://tally.so",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://staging.sherpafoodtours.com https://www.sherpafoodtours.com",
+              "img-src 'self' data: blob: https:",
               "font-src 'self'",
-              "connect-src 'self' https://staging.sherpafoodtours.com https://fareharbor.com https://www.google-analytics.com https://analytics.google.com https://consent.cookiebot.com",
-              "frame-src https://fareharbor.com https://tally.so",
+              "connect-src 'self' https:",
+              "frame-src https:",
               "frame-ancestors 'none'",
             ].join('; ')
           }

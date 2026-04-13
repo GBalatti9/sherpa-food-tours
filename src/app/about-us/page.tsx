@@ -135,7 +135,7 @@ export default async function AboutUsPage() {
 
 
     // Generate structured data for SEO
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
 
     const organizationSchema = {
         "@context": "https://schema.org",

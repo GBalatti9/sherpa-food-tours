@@ -10,7 +10,7 @@ import TourHighlights from "./components/tour-highlights";
 import ImageGallery from "./components/image-gallery";
 import ItineraryComponent from "./components/itinerary";
 import Calendar from "./components/calendar";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import AskForIt from "@/ui/components/ask-for-it";
 import { FormContact } from "@/ui/components/form-contact";
 import TallyForm from "@/ui/components/tally-form";
@@ -200,7 +200,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     const { slug } = await params;
 
     if (slug === "london" || slug === "amsterdam") {
-        redirect("/")
+        notFound();
     }
     const tour = await wp.getTourBySlug(slug);
     const { acf } = tour;
@@ -208,8 +208,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
     if (!acf) {
         console.warn("Tour no encontrado para slug:", slug);
-
-        redirect("/")
+        notFound();
     }
 
 
