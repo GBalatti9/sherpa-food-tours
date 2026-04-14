@@ -151,10 +151,18 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
     const { city, slug } = await params;
 
     const postData = await wp.getPostInfo(slug);
-    
+
     // Si no hay datos válidos (artículo borrado o inexistente), 404
     if (!postData || !postData.title || postData.title.trim() === "" || !postData.content) {
         notFound();
+    }
+
+    // Redirigir si el city param es "undefined" (URLs viejas indexadas por buscadores)
+    if (city === 'undefined') {
+        const correctCity = postData.relaciones?.ciudades?.[0]?.title
+            ? slugify(postData.relaciones.ciudades[0].title)
+            : null;
+        redirect(correctCity ? `/travel-guide/${correctCity}/${slug}/` : '/travel-guide/');
     }
 
     const { title, featured_media, excerpt, date, modified, relaciones, author } = postData;

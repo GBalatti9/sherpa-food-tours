@@ -14,8 +14,11 @@ interface ProcessedNode {
 }
 
 export default function ContentWithGalleries({ htmlContent }: ContentWithGalleriesProps) {
+    // Eliminar los <script> de Instagram del HTML de WordPress (no se ejecutan via innerHTML)
+    const cleanedHtml = htmlContent.replace(/<script[^>]*instagram\.com\/embed\.js[^>]*><\/script>/gi, '');
+
     const [processedNodes, setProcessedNodes] = useState<ProcessedNode[]>([
-        { type: 'html', content: htmlContent }
+        { type: 'html', content: cleanedHtml }
     ]);
 
     useEffect(() => {
@@ -27,20 +30,20 @@ export default function ContentWithGalleries({ htmlContent }: ContentWithGalleri
         // Crear un parser temporal para procesar el HTML
         const parser = new DOMParser();
         // Envolver el contenido en un div para poder procesarlo correctamente
-        const wrappedContent = `<div>${htmlContent}</div>`;
+        const wrappedContent = `<div>${cleanedHtml}</div>`;
         const doc = parser.parseFromString(wrappedContent, 'text/html');
         const container = doc.querySelector('div');
         
         if (!container) {
-            setProcessedNodes([{ type: 'html', content: htmlContent }]);
+            setProcessedNodes([{ type: 'html', content: cleanedHtml }]);
             return;
         }
-        
+
         // Buscar todos los elementos con clase wp-block-gallery
         const galleryElements = Array.from(container.querySelectorAll('figure.wp-block-gallery'));
         
         if (galleryElements.length === 0) {
-            setProcessedNodes([{ type: 'html', content: htmlContent }]);
+            setProcessedNodes([{ type: 'html', content: cleanedHtml }]);
             return;
         }
 
@@ -100,11 +103,35 @@ export default function ContentWithGalleries({ htmlContent }: ContentWithGalleri
 
         // Si no se procesó correctamente, retornar el contenido original
         if (finalNodes.length === 0) {
-            setProcessedNodes([{ type: 'html', content: htmlContent }]);
+            setProcessedNodes([{ type: 'html', content: cleanedHtml }]);
         } else {
             setProcessedNodes(finalNodes);
         }
-    }, [htmlContent]);
+    }, [cleanedHtml]);
+
+    // Cargar y ejecutar el script de Instagram después de que los blockquotes estén en el DOM
+    useEffect(() => {
+        if (!htmlContent.includes('instagram-media')) return;
+
+        const processEmbeds = () => {
+            if ((window as any).instgrm) {
+                (window as any).instgrm.Embeds.process();
+            }
+        };
+
+        // Si el script ya está cargado, solo procesar
+        if ((window as any).instgrm) {
+            processEmbeds();
+            return;
+        }
+
+        // Inyectar nuestro script (ignorar el muerto de WordPress que no se ejecutó)
+        const script = document.createElement('script');
+        script.src = 'https://www.instagram.com/embed.js';
+        script.async = true;
+        script.onload = processEmbeds;
+        document.body.appendChild(script);
+    }, [processedNodes, htmlContent]);
 
     return (
         <div>

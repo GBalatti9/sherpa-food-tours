@@ -771,6 +771,26 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/travel-guide/buenos-aires/buenos-aires-best-cocktail-bars-a-neighbourhood-guide',
+        destination: '/travel-guide/buenos-aires/best-bars-in-buenos-aires/',
+        permanent: true,
+      },
+      {
+        source: '/travel-guide/buenos-aires/buenos-aires-best-cocktail-bars-a-neighbourhood-guide/',
+        destination: '/travel-guide/buenos-aires/best-bars-in-buenos-aires/',
+        permanent: true,
+      },
+      {
+        source: '/travel-guide/buenos-aires/raise-a-glass-discover-the-10-best-bars-in-buenos-aires',
+        destination: '/travel-guide/buenos-aires/best-bars-in-buenos-aires/',
+        permanent: true,
+      },
+      {
+        source: '/travel-guide/buenos-aires/raise-a-glass-discover-the-10-best-bars-in-buenos-aires/',
+        destination: '/travel-guide/buenos-aires/best-bars-in-buenos-aires/',
+        permanent: true,
+      },
+      {
         source: '/city/buenos-aires',
         destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
         permanent: true,
@@ -863,11 +883,6 @@ const nextConfig = {
       {
         source: '/the-best-bars-in-amsterdam-top-15-drinking-spots/',
         destination: 'https://www.sherpafoodtours.com/travel-guide/amsterdam/the-best-bars-in-amsterdam/',
-        permanent: true,
-      },
-      {
-        source: '/amsterdam-dining-experience/',
-        destination: 'https://www.sherpafoodtours.com/city/amsterdam/',
         permanent: true,
       },
       {
@@ -1196,16 +1211,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/a-taste-of-india-in-the-heart-of-london-the-10-best-indian-restaurants-to-try/',
-        destination: 'https://www.sherpafoodtours.com/city/london/',
-        permanent: true,
-      },
-      {
-        source: '/london-street-food/',
-        destination: 'https://www.sherpafoodtours.com/city/london/',
-        permanent: true,
-      },
-      {
         source: '/mercado-de-san-telmo-get-to-know-the-buenos-aires-historic-flea-market/',
         destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
         permanent: true,
@@ -1213,11 +1218,6 @@ const nextConfig = {
       {
         source: '/coffee-shops-in-amsterdam/',
         destination: 'https://www.sherpafoodtours.com/travel-guide/amsterdam/coffee-shops-in-amsterdam/',
-        permanent: true,
-      },
-      {
-        source: '/a-complete-guide-to-the-20-best-restaurants-in-amsterdam/',
-        destination: 'https://www.sherpafoodtours.com/city/amsterdam/',
         permanent: true,
       },
       {
@@ -1356,11 +1356,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/the-best-day-trips-from-london-history-culture-and-seaside-escapes/',
-        destination: 'https://www.sherpafoodtours.com/city/london/',
-        permanent: true,
-      },
-      {
         source: '/best-pizza-in-buenos-aires/',
         destination: 'https://www.sherpafoodtours.com/travel-guide/buenos-aires/best-pizza-in-buenos-aires/',
         permanent: true,
@@ -1373,11 +1368,6 @@ const nextConfig = {
       {
         source: '/explore-the-best-bookshops-in-buenos-aires/',
         destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
-        permanent: true,
-      },
-      {
-        source: '/discover-the-ultimate-london-food-tour-with-sherpa/',
-        destination: 'https://www.sherpafoodtours.com/city/london/',
         permanent: true,
       },
       {
@@ -1436,17 +1426,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/indian-food-tour-london/',
-        destination: 'https://www.sherpafoodtours.com/city/london/',
-        permanent: true,
-      },
-      {
         source: '/the-best-food-markets-in-london-from-street-eats-to-gourmet-treats/',
-        destination: 'https://www.sherpafoodtours.com/city/london/',
-        permanent: true,
-      },
-      {
-        source: '/the-best-coffee-shops-in-london-a-guide-for-true-caffeine-connoisseurs/',
         destination: 'https://www.sherpafoodtours.com/city/london/',
         permanent: true,
       },
@@ -1466,22 +1446,17 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/best-places-to-eat-in-mexico-city/',
-        destination: 'https://www.sherpafoodtours.com/travel-guide/mexico-city/best-places-to-eat-in-mexico-city/',
-        permanent: true,
-      },
-      {
-        source: '/best-restaurants-in-paris/',
-        destination: 'https://www.sherpafoodtours.com/travel-guide/paris/best-restaurants-in-paris/',
-        permanent: true,
-      },
-      {
         source: '/secret-food-tour-london/',
         destination: 'https://www.sherpafoodtours.com/city/london/',
         permanent: true,
       },
       {
         source: '/travel-guide/buenos-aires/best-food-buenos-aires/',
+        destination: 'https://www.sherpafoodtours.com/travel-guide/buenos-aires/buenos-aires-food-what-to-eat-and-where/',
+        permanent: true,
+      },
+      {
+        source: '/travel-guide/buenos-aires/what-to-eat-in-buenos-aires-where',
         destination: 'https://www.sherpafoodtours.com/travel-guide/buenos-aires/buenos-aires-food-what-to-eat-and-where/',
         permanent: true,
       },
@@ -1552,7 +1527,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fareharbor.com https://consent.cookiebot.com https://www.googletagmanager.com https://www.google-analytics.com https://tally.so",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fareharbor.com https://consent.cookiebot.com https://www.googletagmanager.com https://www.google-analytics.com https://tally.so https://www.instagram.com",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https:",
               "font-src 'self'",
