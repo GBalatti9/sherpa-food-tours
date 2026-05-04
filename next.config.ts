@@ -1527,10 +1527,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fareharbor.com https://consent.cookiebot.com https://www.googletagmanager.com https://www.google-analytics.com https://tally.so https://www.instagram.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fareharbor.com https://consent.cookiebot.com https://www.googletagmanager.com https://www.google-analytics.com https://tally.so https://www.instagram.com https://platform.twitter.com https://platform.x.com https://cdn.syndication.twimg.com https://syndication.twitter.com https://www.redditstatic.com https://alb.reddit.com https://analytics.tiktok.com",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https:",
               "font-src 'self'",
+              "media-src 'self' https://staging.sherpafoodtours.com https://www.sherpafoodtours.com https://sherpafoodtours.com",
               "connect-src 'self' https:",
               "frame-src https:",
               "frame-ancestors 'none'",

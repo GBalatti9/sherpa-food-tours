@@ -3426,6 +3426,34 @@ main {
       font-family: var(--font-dk-otago);
   }
 
+  .wp-block-buttons {
+      margin: 2rem 0;
+      text-align: center;
+  }
+
+  .wp-block-button {
+      margin: 2rem 0;
+      text-align: center;
+  }
+
+  .wp-block-button a.wp-block-button__link {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none !important;
+      font-size: 1.125rem;
+      line-height: 1.4;
+      font-weight: 500;
+      color: white !important;
+      border: 2px solid;
+      transition: opacity 0.2s ease;
+      cursor: pointer;
+  }
+
+  .wp-block-button a.wp-block-button__link:hover {
+      opacity: 0.85;
+  }
+
   .toc-container {
       border: 1.5px solid #333;
       margin: 1.5rem 0 2.5rem 0;

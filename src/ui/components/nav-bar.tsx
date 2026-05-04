@@ -4,7 +4,7 @@ import MobileMenu from "./mobile-menu";
 // import "./css/nav-bar.css";
 import CitiesDropdown from "./cities-dropdown";
 
-export default function NavBar({ currentPath, cities, fareharborLink }: { currentPath: string; cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[]; fareharborLink?: string | null }) {
+export default function NavBar({ currentPath, cities, fareharborLink }: { currentPath: string; cities: { id: number; city: string; slug: string; flag: { img: string; alt: string }; tourCount?: number }[]; fareharborLink?: string | null }) {
     console.log("NAVBAR");
 
     const items = [
@@ -81,7 +81,7 @@ export default function NavBar({ currentPath, cities, fareharborLink }: { curren
                         >
                             {item.label.toLowerCase() === "cities" ?
                                 <div className="relative container">
-                                    <CitiesDropdown text={item.label} cities={cities} color={getItemColor(item)} />
+                                    <CitiesDropdown text={item.label} cities={cities} color={getItemColor(item)} currentPath={currentPath} />
                                     <span
                                         className={`absolute bottom-0 left-0 h-[1px] transition-all duration-300 ease-out ${isActive(item.path) ? "w-full" : "w-0 group-hover:w-full"}`}
                                         style={{ backgroundColor: isActive(item.path) ? item.activeColor : currentPath.includes("travel-guide") ? "var(--title-color)" : "white" }}

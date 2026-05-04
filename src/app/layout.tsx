@@ -85,7 +85,7 @@ export default async function RootLayout({
     wp.getAllCities(),
     wp.getAllTours().catch(() => []),
   ]);
-  let cities: { id: number; city: string; slug: string; flag: { img: string; alt: string }; fareharborLink: string | null }[] = [];
+  let cities: { id: number; city: string; slug: string; flag: { img: string; alt: string }; fareharborLink: string | null; tourCount: number }[] = [];
 
   if (citiesRaw && citiesRaw.length > 0) {
     cities = await Promise.all(
@@ -93,14 +93,15 @@ export default async function RootLayout({
         id: number;
         title: { rendered: string };
         slug: string;
-        acf: { country_flag: number; fareharbor_city_link?: string };
+        acf: { country_flag: number; fareharbor_city_link?: string; tour?: number[] };
       }) => {
         return {
           id: city.id,
           city: city.title.rendered,
           slug: city.slug,
           flag: await wp.getPostImage(city.acf.country_flag),
-          fareharborLink: city.acf?.fareharbor_city_link ?? null
+          fareharborLink: city.acf?.fareharbor_city_link ?? null,
+          tourCount: Array.isArray(city.acf?.tour) ? city.acf.tour.length : 0
         };
       })
     );
@@ -145,6 +146,8 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="preconnect" href="https://fareharbor.com" />
         <link rel="dns-prefetch" href="https://consent.cookiebot.com" />
+        <link rel="dns-prefetch" href="https://www.redditstatic.com" />
+        <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
       </head>
       <body className={`${excelsior.variable} ${dkOtago.variable} antialiased`}>
         <FareHarborProvider>

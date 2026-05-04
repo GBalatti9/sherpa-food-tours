@@ -13,6 +13,7 @@
     "test:410": "node scripts/test-410.js"
   },
   "dependencies": {
+    "@next/swc-darwin-arm64": "^16.2.4",
     "@next/third-parties": "^16.0.10",
     "@types/nodemailer": "^7.0.2",
     "clsx": "^2.1.1",

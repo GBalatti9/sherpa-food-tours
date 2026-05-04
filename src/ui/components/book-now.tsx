@@ -13,6 +13,12 @@ export default function BookNowButton({ link, data_tour }: { link?: string; data
       data-fareharbor-lightframe={data_tour}
       onClick={(e) => {
         e.preventDefault();
+        if (typeof window.rdt === "function") {
+          window.rdt("track", "AddToCart");
+        }
+        if (typeof window.ttq?.track === "function") {
+          window.ttq.track("AddToCart");
+        }
         const tempAnchor = document.createElement("a");
         tempAnchor.href = href;
         if (data_tour) {

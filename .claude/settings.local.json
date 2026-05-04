@@ -13,7 +13,9 @@
       "Bash(git push:*)",
       "Bash(npx next:*)",
       "Bash(find /Users/gastonbalatti/Desktop/Proyectos/sherpa-food-tours/src -type f \\\\\\(-name *.js -o -name *.jsx -o -name *.ts -o -name *.tsx \\\\\\))",
-      "Bash(kill:*)"
+      "Bash(kill:*)",
+      "Bash(npm i:*)",
+      "Bash(curl -sI \"https://staging.sherpafoodtours.com/wp-content/uploads/2024/06/copy_40B95BAE-28F9-45D0-AF23-E70098E0EA06.mov\")"
     ]
   }
 }

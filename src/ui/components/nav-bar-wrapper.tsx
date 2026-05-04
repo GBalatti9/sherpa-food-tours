@@ -6,7 +6,7 @@ import { useFareHarbor } from "@/context/fareharbor-context";
 import NavBar from "./nav-bar";
 
 
-export default function NavBarWrapper({ cities, tours }: { cities: { id: number; city: string; slug: string; flag: { img: string; alt: string }; fareharborLink?: string | null }[]; tours?: { slug: string; fareharborLink: string | null }[] }) {
+export default function NavBarWrapper({ cities, tours }: { cities: { id: number; city: string; slug: string; flag: { img: string; alt: string }; fareharborLink?: string | null; tourCount?: number }[]; tours?: { slug: string; fareharborLink: string | null }[] }) {
   const pathname = usePathname();
   const { fareharborLink: contextLink } = useFareHarbor();
 

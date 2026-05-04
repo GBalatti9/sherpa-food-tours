@@ -14,8 +14,12 @@ interface ProcessedNode {
 }
 
 export default function ContentWithGalleries({ htmlContent }: ContentWithGalleriesProps) {
-    // Eliminar los <script> de Instagram del HTML de WordPress (no se ejecutan via innerHTML)
-    const cleanedHtml = htmlContent.replace(/<script[^>]*instagram\.com\/embed\.js[^>]*><\/script>/gi, '');
+    // Eliminar los <script> de Instagram y Twitter del HTML de WordPress (no se ejecutan via innerHTML)
+    const cleanedHtml = htmlContent
+        .replace(/<script[^>]*instagram\.com\/embed\.js[^>]*><\/script>/gi, '')
+        .replace(/<script[^>]*platform\.twitter\.com\/widgets\.js[^>]*><\/script>/gi, '')
+        .replace(/<script[^>]*platform\.x\.com\/widgets\.js[^>]*><\/script>/gi, '')
+        .replace(/http:\/\/staging\.sherpafoodtours\.com/gi, 'https://staging.sherpafoodtours.com');
 
     const [processedNodes, setProcessedNodes] = useState<ProcessedNode[]>([
         { type: 'html', content: cleanedHtml }
@@ -128,6 +132,42 @@ export default function ContentWithGalleries({ htmlContent }: ContentWithGalleri
         // Inyectar nuestro script (ignorar el muerto de WordPress que no se ejecutó)
         const script = document.createElement('script');
         script.src = 'https://www.instagram.com/embed.js';
+        script.async = true;
+        script.onload = processEmbeds;
+        document.body.appendChild(script);
+    }, [processedNodes, htmlContent]);
+
+    // Forzar autoplay en videos inyectados via dangerouslySetInnerHTML
+    useEffect(() => {
+        if (!htmlContent.includes('<video')) return;
+
+        const videos = document.querySelectorAll('.wp-block-video video, article video');
+        videos.forEach((video) => {
+            const el = video as HTMLVideoElement;
+            el.setAttribute('playsinline', '');
+            if (el.hasAttribute('autoplay')) {
+                el.play().catch(() => {});
+            }
+        });
+    }, [processedNodes, htmlContent]);
+
+    // Cargar y ejecutar el script de Twitter/X después de que los blockquotes estén en el DOM
+    useEffect(() => {
+        if (!htmlContent.includes('twitter-tweet')) return;
+
+        const processEmbeds = () => {
+            if ((window as any).twttr?.widgets) {
+                (window as any).twttr.widgets.load();
+            }
+        };
+
+        if ((window as any).twttr?.widgets) {
+            processEmbeds();
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://platform.twitter.com/widgets.js';
         script.async = true;
         script.onload = processEmbeds;
         document.body.appendChild(script);

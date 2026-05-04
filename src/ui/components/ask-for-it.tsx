@@ -13,6 +13,13 @@ const scrollToAskForIt = (event: MouseEvent<HTMLElement>) => {
 
   if (typeof document === "undefined") return;
 
+  if (typeof window.rdt === "function") {
+    window.rdt("track", "Lead");
+  }
+  if (typeof window.ttq?.track === "function") {
+    window.ttq.track("SubmitForm");
+  }
+
   const section = document.getElementById("askForIt");
   if (!section) return;
 
