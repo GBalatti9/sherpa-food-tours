@@ -380,6 +380,34 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         }
     };
 
+    // LocalBusiness schema for local SEO (per-city tour operator)
+    const localBusinessSchema = {
+        "@context": "https://schema.org",
+        "@type": "TourOperator",
+        "name": `Sherpa Food Tours - ${acf?.title || cityData.city_name}`,
+        "description": acf.subheadline || `Authentic food tours in ${cityData.city_name}`,
+        "url": cityUrl,
+        "image": cityImageData.img,
+        "parentOrganization": {
+            "@type": "Organization",
+            "@id": "https://www.sherpafoodtours.com/#organization"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": cityData.city_name
+        },
+        ...(tours.length > 0 ? {
+            "makesOffer": tours.map((tour: { title: string; slug: string; acf?: { price?: number } }) => ({
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "TouristTrip",
+                    "name": tour.title,
+                    "url": `${baseUrl}/tour/${tour.slug}/`
+                }
+            }))
+        } : {})
+    };
+
     const faqSchema = faqs && faqs.faqs.length > 0 ? {
         "@context": "https://schema.org",
         "@type": "FAQPage",
@@ -404,6 +432,10 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(cityPageSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
             />
             {faqSchema &&
                 <script

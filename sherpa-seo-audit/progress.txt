@@ -212,3 +212,29 @@ New files created: 1 (public/llms.txt)
 ### [PENDING - CMS] Fix /tour/san-telmo-tour-2/ slug
 - Impact: HIGH - Same WordPress slug collision issue
 - Status: Redirect from old URLs already in next.config.ts. Fix requires WP slug change.
+
+================================================================================
+## SPRINT 3: Local SEO Foundation
+================================================================================
+
+### [DONE] Fix #26 - Add TourOperator (LocalBusiness) schema to city pages
+- Impact: HIGH - City pages had no local business entity; only TouristDestination
+- File: src/app/city/[slug]/page.tsx
+- Change: Added TourOperator JSON-LD with name, description, addressLocality, parentOrganization @id, and makesOffer listing tours
+- Result: Each city page now declares a local business entity linked to the parent org
+
+### [PENDING - External Platform] Create GBP listings for 8 cities
+- Impact: CRITICAL - #1 local ranking factor, currently zero GBP presence
+- Status: Manual setup required on Google Business Profile for each city
+
+### [PENDING - External Platform] Register on Viator and GetYourGuide
+- Impact: HIGH - Dominate "food tour [city]" SERPs
+- Status: Manual operator registration on both platforms
+
+### [PENDING - CMS] Add Google Maps embeds to city pages
+- Impact: HIGH - Zero Maps integrations site-wide
+- Status: Requires adding map embed fields in WordPress ACF for each city
+
+### [PENDING - Manual] Establish visible NAP on contact page and footer
+- Impact: MEDIUM - Contact page contains no contact information
+- Status: Business decision needed on which address/phone to display publicly
