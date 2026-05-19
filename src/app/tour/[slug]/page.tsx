@@ -323,45 +323,45 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     priceValidUntil.setFullYear(priceValidUntil.getFullYear() + 1);
 
     // Generate TouristTrip structured data
-    const productSchema = {
+    const googleReviewCount = Number(reviews.google.amount || 0);
+    const tripadvisorReviewCount = Number(reviews.tripadvisor.amount || 0);
+    const totalReviewCount = Math.floor(googleReviewCount + tripadvisorReviewCount);
+
+    const productSchema: Record<string, unknown> = {
         "@context": "https://schema.org",
         "@type": "TouristTrip",
         "name": title,
         "description": acf.tour_description,
         "image": [featuredImage.img],
-        "url": tourUrl,
-        // CORRECCIÓN 1: Cambiamos 'brand' por 'provider'
-        // 'provider' es el término correcto para servicios y tours.
+        "url": tourUrl + "/",
         "provider": {
             "@type": "Organization",
+            "@id": "https://www.sherpafoodtours.com/#organization",
             "name": "Sherpa Food Tours",
             "url": baseUrl
         },
         "offers": {
             "@type": "Offer",
-            "price": price.toString(),
+            "price": Number(price),
             "priceCurrency": "USD",
             "availability": "https://schema.org/InStock",
-            "url": tourUrl,
+            "url": tourUrl + "/",
             "validFrom": new Date().toISOString(),
             "priceValidUntil": priceValidUntil.toISOString(),
-            // OPCIONAL: Esto ayuda a definir que vendes un servicio/experiencia
             "category": "Tours & Experiences"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": Math.min(
-                5,
-                Math.max(1, Number(stars) || 5)
-            ),
-            "bestRating": 5,
-            "worstRating": 1,
-            "ratingCount": Math.floor(
-                Number(reviews.google.amount || 0) +
-                Number(reviews.tripadvisor.amount || 0)
-            )
         }
     };
+
+    // Only add aggregateRating if we have real review data
+    if (totalReviewCount > 0) {
+        productSchema["aggregateRating"] = {
+            "@type": "AggregateRating",
+            "ratingValue": Math.min(5, Math.max(1, Number(stars) || 4.8)),
+            "bestRating": 5,
+            "worstRating": 1,
+            "ratingCount": totalReviewCount
+        };
+    }
 
     const breadcrumbSchema = {
         "@context": "https://schema.org",
@@ -370,18 +370,14 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             {
                 "@type": "ListItem",
                 "position": 1,
-                "item": {
-                    "@id": `${baseUrl}/tour`,
-                    "name": "Sherpa Food Tours"
-                }
+                "name": "Home",
+                "item": baseUrl + "/"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
-                "item": {
-                    "@id": tourUrl,
-                    "name": title
-                }
+                "name": title,
+                "item": tourUrl + "/"
             }
         ]
     };

@@ -1,0 +1,186 @@
+# SEO Audit Implementation Progress
+# Branch: fix/seo-audit-improvements
+# Started: May 19, 2026
+
+================================================================================
+## SPRINT 1: Emergency Fixes (Critical + Quick Wins)
+================================================================================
+
+### [DONE] Fix #1 - Remove placeholder phone number from schema
+- Impact: CRITICAL - Fabricated contact data corrupts all scraped citations
+- File: src/app/page.tsx (line ~224)
+- Change: Removed `"telephone": "+1-555-123-4567"` entirely from TravelAgency schema
+- Before: `"telephone": "+1-555-123-4567"`
+- After: Field removed (no real phone number available)
+
+### [DONE] Fix #2 - Fix address in homepage schema
+- Impact: CRITICAL - NAP conflict (NY schema vs UK registration vs BA operations)
+- File: src/app/page.tsx (line ~226)
+- Change: Updated address from "New York, NY, US" to "GB" (matches UK registration)
+- Before: `"addressCountry": "US", "addressLocality": "New York", "addressRegion": "NY"`
+- After: `"addressCountry": "GB"`
+
+### [DONE] Fix #3 - Fix AggregateRating data types (strings -> numbers)
+- Impact: CRITICAL - Star ratings won't render in SERPs with string values
+- File: src/app/page.tsx (line ~237)
+- Change: Converted ratingValue and reviewCount from strings to numbers
+- Before: `"ratingValue": "4.8", "reviewCount": "4649", "bestRating": "5", "worstRating": "1"`
+- After: `"ratingValue": 4.8, "reviewCount": 4649, "bestRating": 5, "worstRating": 1`
+
+### [DONE] Fix #4 - Fix "Cartagena, null" in OfferCatalog description
+- Impact: CRITICAL - Literal "null" string visible to search engines
+- File: src/app/page.tsx (line ~256)
+- Change: Added conditional to handle null country gracefully
+- Before: `"description": \`Authentic food tour experience in ${city.city}, ${city.country}\``
+- After: `"description": \`Authentic food tour experience in ${city.city}${city.country ? \`, ${city.country}\` : ''}\``
+
+### [DONE] Fix #5 - Remove empty "offers" block from homepage
+- Impact: CRITICAL - Semantically empty Offer coexists with OfferCatalog
+- File: src/app/page.tsx (line ~244)
+- Change: Removed the standalone `"offers"` block, kept `"hasOfferCatalog"`
+- Before: Both `offers` and `hasOfferCatalog` present
+- After: Only `hasOfferCatalog` remains
+
+### [DONE] Fix #6 - Fix homepage meta description (HTML entities + line breaks)
+- Impact: CRITICAL - Every SERP snippet for homepage is garbled
+- File: src/app/page.tsx (line ~23)
+- Change: Enhanced content stripping to remove HTML entities, special chars, and normalize whitespace
+- Before: `content.replace(/<[^>]*>/g, '').substring(0, 160) + '...'`
+- After: Added `.replace(/&#\d+;/g, '')`, `.replace(/&[a-zA-Z]+;/g, '')`, `.replace(/\s+/g, ' ')`, `.trim()`, `.substring(0, 155)`
+
+### [DONE] Fix #7 - Fix image and logo pointing to same file
+- Impact: CRITICAL - image should be representative photo, not logo
+- File: src/app/page.tsx (line ~222)
+- Change: Changed `image` from logo to main hero image
+- Before: `"image": "https://www.sherpafoodtours.com/sherpa-complete-logo.webp"`
+- After: `"image": "https://www.sherpafoodtours.com/sherpa-main-image.webp"`
+
+### [DONE] Fix #8 - Fix tour page aggregateRating (ratingCount: null)
+- Impact: CRITICAL - Breaks star rating rich results on all tour pages
+- File: src/app/tour/[slug]/page.tsx (line ~326)
+- Change: Only include aggregateRating when totalReviewCount > 0; prevents null values
+- Before: Always included with potential `ratingCount: null` or `ratingCount: 0`
+- After: Conditionally included only when real review data exists
+
+### [DONE] Fix #9 - Fix tour page breadcrumb (pointed to /tour redirect chain)
+- Impact: HIGH - Position 1 pointed to /tour which redirects to random tour page
+- File: src/app/tour/[slug]/page.tsx (line ~367)
+- Change: Breadcrumb position 1 now points to homepage, not /tour
+- Before: Position 1 = `/tour` with name "Sherpa Food Tours"
+- After: Position 1 = homepage `/`, Position 2 = tour page
+
+### [DONE] Fix #10 - Fix tour URL missing trailing slash in schema
+- Impact: LOW - Mismatch between schema URL and canonical
+- File: src/app/tour/[slug]/page.tsx
+- Change: Added trailing slash to `url` in TouristTrip and Offer schemas
+- Before: `"url": tourUrl` (no trailing slash)
+- After: `"url": tourUrl + "/"`
+
+### [DONE] Fix #11 - Add @id entity linking across schema declarations
+- Impact: HIGH - Google can't resolve TravelAgency + Organization as same entity
+- Files: src/app/page.tsx, src/app/about-us/page.tsx, src/app/tour/[slug]/page.tsx, src/app/travel-guide/[city]/[slug]/page.tsx, src/app/city/[slug]/page.tsx
+- Change: Added `"@id": "https://www.sherpafoodtours.com/#organization"` to TravelAgency and Organization blocks. Added `"@id"` reference in publisher fields across Article and TouristTrip schemas.
+
+### [DONE] Fix #12 - Fix Organization url on About Us page
+- Impact: MEDIUM - Pointed to /about-us/ instead of root domain
+- File: src/app/about-us/page.tsx (line ~144)
+- Change: Fixed Organization `url` to point to root domain
+- Before: `"url": baseUrl + "/about-us/"`
+- After: `"url": baseUrl + "/"`
+
+### [DONE] Fix #13 - Add distinct image to Organization (not logo)
+- Impact: MEDIUM - Google uses image for Knowledge Panel
+- File: src/app/about-us/page.tsx
+- Change: Added `"image"` field with hero image URL separate from logo
+
+### [DONE] Fix #14 - Add WebSite schema with SearchAction
+- Impact: HIGH - Missing sitelinks searchbox eligibility
+- File: src/app/page.tsx
+- Change: Added new WebSite JSON-LD block on homepage with publisher reference
+
+### [DONE] Fix #15 - Add timezone offsets to Article dates
+- Impact: CRITICAL - datePublished/dateModified ambiguous without timezone
+- File: src/app/travel-guide/[city]/[slug]/page.tsx
+- Change: Added `ensureTimezone()` helper that appends `+00:00` if no timezone present
+- Before: `"datePublished": "2026-05-11T14:23:51"` (no timezone)
+- After: `"datePublished": "2026-05-11T14:23:51+00:00"`
+
+### [DONE] Fix #16 - Remove templated keywords from Article schema
+- Impact: MEDIUM - Boilerplate keywords identical across all articles
+- File: src/app/travel-guide/[city]/[slug]/page.tsx
+- Change: Removed `"keywords"` field from Article JSON-LD (was same on every article)
+
+### [DONE] Fix #17 - Add TripAdvisor to sameAs in Organization schemas
+- Impact: MEDIUM - Strengthens authority signals
+- Files: src/app/page.tsx, src/app/about-us/page.tsx
+- Change: Added TripAdvisor listing URL to sameAs arrays
+
+### [DONE] Fix #18 - Add OfferCatalog item URLs
+- Impact: MEDIUM - Catalog items weren't linked to individual city pages
+- File: src/app/page.tsx
+- Change: Added `"url"` field to each TouristTrip in OfferCatalog
+
+### [DONE] Fix #19 - Implement hreflang for /contact/ and /contacto/
+- Impact: HIGH - Google can't determine which page to serve which locale
+- Files: src/app/contact/page.tsx, src/app/contacto/page.tsx
+- Change: Added `alternates.languages` with en, es, and x-default declarations
+- Result: Proper hreflang tags for English and Spanish contact pages
+
+### [DONE] Fix #20 - Create llms.txt for AI crawler guidance
+- Impact: HIGH - AI systems must guess what to cite without this file
+- File: public/llms.txt (NEW FILE)
+- Change: Created machine-readable content manifest with company info, city pages, top articles, key facts, and content permissions
+
+### [DONE] Fix #21 - Fix city page breadcrumb (dead /city/ link)
+- Impact: MEDIUM - Breadcrumb position 2 pointed to /city/ which has no page
+- File: src/app/city/[slug]/page.tsx
+- Change: Removed "Cities" breadcrumb item (no /city/ index exists); now Home > City Name
+
+### [DONE] Fix #22 - Add provider @id reference to city pages
+- Impact: MEDIUM - Entity graph incomplete on city pages
+- File: src/app/city/[slug]/page.tsx
+- Change: Added `"provider": { "@type": "Organization", "@id": "..." }` to TouristDestination
+
+### [DONE] Fix #23 - Fix tour price type in schema
+- Impact: MEDIUM - price was string, should be number
+- File: src/app/tour/[slug]/page.tsx
+- Change: Changed `"price": price.toString()` to `"price": Number(price)`
+
+================================================================================
+## Summary of Changes
+================================================================================
+
+Total fixes implemented: 23
+Files modified: 7
+New files created: 1 (public/llms.txt)
+
+| Severity  | Count |
+|-----------|-------|
+| CRITICAL  | 8     |
+| HIGH      | 7     |
+| MEDIUM    | 7     |
+| LOW       | 1     |
+
+### Files Changed:
+1. src/app/page.tsx - Homepage schema (TravelAgency, WebSite, meta description)
+2. src/app/tour/[slug]/page.tsx - Tour schema (TouristTrip, BreadcrumbList)
+3. src/app/about-us/page.tsx - About Us schema (Organization)
+4. src/app/travel-guide/[city]/[slug]/page.tsx - Article schema (dates, publisher)
+5. src/app/city/[slug]/page.tsx - City schema (TouristDestination, BreadcrumbList)
+6. src/app/contact/page.tsx - Hreflang for English contact
+7. src/app/contacto/page.tsx - Hreflang for Spanish contact
+8. public/llms.txt - NEW: AI crawler manifest
+
+================================================================================
+## PENDING (Requires Manual/CMS Action - Not Code Changes)
+================================================================================
+
+- [ ] Migrate images from staging.sherpafoodtours.com to production CDN (CMS/infra)
+- [ ] Fix /city/buenos-aires-2/ slug in WordPress (CMS slug change + 301 redirect)
+- [ ] Create GBP listings for 8 cities (Google Business Profile setup)
+- [ ] Add Google Maps embeds to city pages (CMS content)
+- [ ] Register on Viator and GetYourGuide (external platforms)
+- [ ] Add real phone number to schema once decided (code change after business decision)
+- [ ] Publish Barcelona and Cartagena editorial content (content creation)
+- [ ] Fix alt text on images loaded from WordPress (CMS media library)
+- [ ] Add ProfilePage/Person schema to author pages (Sprint 2 code change)

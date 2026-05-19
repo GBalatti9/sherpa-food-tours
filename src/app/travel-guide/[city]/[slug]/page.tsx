@@ -207,6 +207,13 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
     const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}/`;
     const cityDisplayName = relaciones?.ciudades?.[0]?.title || city.replace(/-/g, ' ');
 
+    // Ensure dates have timezone offset (append Z if no timezone present)
+    const ensureTimezone = (dateStr: string) => {
+        if (!dateStr) return dateStr;
+        if (/[Zz]$/.test(dateStr) || /[+-]\d{2}:\d{2}$/.test(dateStr)) return dateStr;
+        return dateStr + '+00:00';
+    };
+
     // Enhanced Article Schema with more details
     const articleSchema = {
         "@context": "https://schema.org",
@@ -214,15 +221,16 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
         "headline": title,
         "description": cleanDescription,
         "image": [imageUrl],
-        "datePublished": date,
-        "dateModified": modified,
+        "datePublished": ensureTimezone(date),
+        "dateModified": ensureTimezone(modified),
         "author": {
             "@type": "Person",
             "name": author?.name ?? "Sherpa Food Tours",
-            "url": author?.name ? `${baseUrl}/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}` : baseUrl
+            "url": author?.name ? `${baseUrl}/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}/` : baseUrl
         },
         "publisher": {
             "@type": "Organization",
+            "@id": "https://www.sherpafoodtours.com/#organization",
             "name": "Sherpa Food Tours",
             "logo": {
                 "@type": "ImageObject",
@@ -234,7 +242,6 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
             "@id": articleUrl,
         },
         "articleSection": "Travel Guide",
-        "keywords": `${cityDisplayName}, food guide, travel guide, restaurants, local experiences`,
         "about": {
             "@type": "Place",
             "name": cityDisplayName,

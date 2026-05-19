@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     },
     alternates: {
         canonical: `https://www.sherpafoodtours.com/contact/`,
+        languages: {
+            'en': 'https://www.sherpafoodtours.com/contact/',
+            'es': 'https://www.sherpafoodtours.com/contacto/',
+            'x-default': 'https://www.sherpafoodtours.com/contact/',
+        },
     },
     robots: {
         index: true,

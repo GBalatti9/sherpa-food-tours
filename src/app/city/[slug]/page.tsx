@@ -356,12 +356,6 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             {
                 "@type": "ListItem",
                 "position": 2,
-                "name": "Cities",
-                "item": `${baseUrl}/city/`
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
                 "name": acf.title || cityData.city_name,
                 "item": cityUrl
             }
@@ -379,6 +373,10 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": cityUrl
+        },
+        "provider": {
+            "@type": "Organization",
+            "@id": "https://www.sherpafoodtours.com/#organization"
         }
     };
 

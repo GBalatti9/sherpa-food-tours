@@ -21,7 +21,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
   // Extract description from content or use default
   const description = content
-    ? content.replace(/<[^>]*>/g, '').substring(0, 160) + '...'
+    ? content
+        .replace(/<[^>]*>/g, '')
+        .replace(/&#\d+;/g, '')
+        .replace(/&[a-zA-Z]+;/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .substring(0, 155)
     : "Experience authentic food tours around the world. Enjoy local flavors, cultural insights, and unique culinary adventures in top cities with Sherpa Food Tours.";
 
   return {
@@ -215,52 +221,60 @@ export default async function Home() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
+    "@id": "https://www.sherpafoodtours.com/#organization",
     "name": "Sherpa Food Tours",
     "description": "Authentic food tours and culinary experiences around the world",
     "url": "https://www.sherpafoodtours.com/",
     "logo": "https://www.sherpafoodtours.com/sherpa-complete-logo.webp",
-    "image": "https://www.sherpafoodtours.com/sherpa-complete-logo.webp",
-    "telephone": "+1-555-123-4567", // Replace with actual phone number
-    "email": "info@sherpafoodtours.com", // Replace with actual email
+    "image": "https://www.sherpafoodtours.com/sherpa-main-image.webp",
+    "email": "info@sherpafoodtours.com",
     "address": {
       "@type": "PostalAddress",
-      "addressCountry": "US",
-      "addressLocality": "New York",
-      "addressRegion": "NY"
+      "addressCountry": "GB"
     },
     "sameAs": [
       "https://www.facebook.com/sherpafoodtours",
       "https://www.instagram.com/sherpafoodtours",
-      "https://www.tiktok.com/@sherpafoodtours"
+      "https://www.tiktok.com/@sherpafoodtours",
+      "https://www.tripadvisor.com/Attraction_Review-g312741-d23715647-Reviews-Sherpa_Food_Tours-Buenos_Aires_Capital_Federal_District.html"
     ],
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "4649",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "offers": {
-      "@type": "Offer",
-      "category": "Food Tours",
-      "description": "Authentic culinary experiences and food tours in major cities worldwide"
+      "ratingValue": 4.8,
+      "reviewCount": 4649,
+      "bestRating": 5,
+      "worstRating": 1
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Food Tours",
-      "itemListElement": cities.map((city, index) => ({
+      "itemListElement": cities.map((city) => ({
         "@type": "Offer",
         "itemOffered": {
           "@type": "TouristTrip",
           "name": `${city.city} Food Tour`,
-          "description": `Authentic food tour experience in ${city.city}, ${city.country}`,
+          "description": `Authentic food tour experience in ${city.city}${city.country ? `, ${city.country}` : ''}`,
           "touristType": "Food Lovers",
+          "url": `https://www.sherpafoodtours.com/city/${city.slug}/`,
           "itinerary": {
             "@type": "ItemList",
             "name": `${city.city} Food Tour Itinerary`
           }
         }
       }))
+    }
+  };
+
+  // WebSite schema with SearchAction
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://www.sherpafoodtours.com/#website",
+    "url": "https://www.sherpafoodtours.com/",
+    "name": "Sherpa Food Tours",
+    "description": "Authentic food tours and culinary experiences around the world",
+    "publisher": {
+      "@id": "https://www.sherpafoodtours.com/#organization"
     }
   };
 
@@ -288,6 +302,10 @@ export default async function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
 
       <main role="main">

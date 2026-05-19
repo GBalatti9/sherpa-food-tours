@@ -140,14 +140,17 @@ export default async function AboutUsPage() {
     const organizationSchema = {
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": "https://www.sherpafoodtours.com/#organization",
         "name": "Sherpa Food Tours",
-        "url": baseUrl + "/about-us/",
+        "url": baseUrl + "/",
         "logo": baseUrl + "/sherpa-complete-logo.webp",
+        "image": baseUrl + "/sherpa-main-image.webp",
         "description": "Authentic food tours and culinary experiences around the world with local guides",
         "sameAs": [
             "https://www.facebook.com/sherpafoodtours",
             "https://www.instagram.com/sherpafoodtours",
-            "https://www.tiktok.com/@sherpafoodtours"
+            "https://www.tiktok.com/@sherpafoodtours",
+            "https://www.tripadvisor.com/Attraction_Review-g312741-d23715647-Reviews-Sherpa_Food_Tours-Buenos_Aires_Capital_Federal_District.html"
         ]
     };
 

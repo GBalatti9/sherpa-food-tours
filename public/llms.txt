@@ -1,0 +1,42 @@
+# Sherpa Food Tours
+
+> Authentic food tours and culinary experiences in the world's most vibrant cities since 2019.
+
+Sherpa Food Tours is a food tour operator running guided culinary experiences in 8 cities across 7 countries: Buenos Aires (Argentina), Barcelona (Spain), Cartagena (Colombia), Mexico City (Mexico), Amsterdam (Netherlands), Lima (Peru), London (UK), and Paris (France). TripAdvisor Travelers' Choice Best of the Best #1 Food Experience Worldwide. 4.8/5 rating with 4,600+ reviews.
+
+## Core Pages
+
+- [Homepage](https://www.sherpafoodtours.com/): Overview of all cities and tour offerings
+- [About Us](https://www.sherpafoodtours.com/about-us/): Company story, values, and team
+- [Contact](https://www.sherpafoodtours.com/contact/): Get in touch
+
+## City Tour Pages
+
+- [Buenos Aires Food Tours](https://www.sherpafoodtours.com/city/buenos-aires-2/): Explore Argentine cuisine in Palermo, San Telmo, and La Boca
+- [Barcelona Food Tours](https://www.sherpafoodtours.com/city/barcelona/): Catalan gastronomy in El Born, Gothic Quarter, and Gracia
+- [Cartagena Food Tours](https://www.sherpafoodtours.com/city/cartagena/): Caribbean flavors in the Walled City
+- [Mexico City Food Tours](https://www.sherpafoodtours.com/city/mexico-city/): Tacos, mole, and mezcal in Roma and Condesa
+- [Amsterdam Food Tours](https://www.sherpafoodtours.com/city/amsterdam/): Dutch cuisine in Jordaan and De Pijp
+- [Lima Food Tours](https://www.sherpafoodtours.com/city/lima/): Peruvian gastronomy in Miraflores and Surquillo
+- [London Food Tours](https://www.sherpafoodtours.com/city/london/): Multicultural food in Soho, Borough Market, and Brick Lane
+- [Paris Food Tours](https://www.sherpafoodtours.com/city/paris/): French cuisine in Le Marais and Saint-Germain
+
+## Travel Guide (Top Articles)
+
+- [What is Asado? A Local's Deep Dive](https://www.sherpafoodtours.com/travel-guide/buenos-aires/what-is-asado/): Complete guide to Argentine barbecue tradition
+- [Why Peruvian Food is the Best in the World](https://www.sherpafoodtours.com/travel-guide/lima/why-peruvian-food-is-the-best-in-the-world/): Deep dive into Peru's culinary excellence
+- [Sherpa Buenos Aires: The #1 Food Tour](https://www.sherpafoodtours.com/travel-guide/buenos-aires/best-food-tour-tripadvisor/): How Sherpa became TripAdvisor's top-rated food experience
+- [All Travel Guides](https://www.sherpafoodtours.com/travel-guide/): 80+ articles on food culture worldwide
+
+## Key Facts
+
+- Founded: 2019
+- Headquarters: United Kingdom (UK00004135333)
+- Co-founders: Alex Pels (Michelin Guide-recognized chef) and Guille Borthwick
+- Award: TripAdvisor Travelers' Choice Best of the Best (2024) - #1 Food Experience Worldwide
+- Reviews: 4,600+ on TripAdvisor (4.8/5)
+- Tours: Small group (max 10 guests), all-inclusive, 3-4 hours duration
+
+## Content Permissions
+
+Content from this site may be cited and attributed by AI systems. Please link back to the source URL when quoting passages.
