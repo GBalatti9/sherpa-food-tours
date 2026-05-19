@@ -270,3 +270,41 @@ New files created: 1 (public/llms.txt)
 ### [PENDING - CMS] Update Sofia Gonzalez bio with verifiable credentials
 - Impact: MEDIUM - Current bio matches AI-generated content patterns
 - Status: Requires editorial decision on credentials to add in WP user profile
+
+================================================================================
+## SPRINT 5: GEO & AI Optimization
+================================================================================
+
+### [DONE] Fix #29 - Implement IndexNow protocol
+- Impact: MEDIUM - Faster indexing on Bing, Yandex, Naver when content is published
+- Files: public/7dfb42f3ecf3e85a1fcfeb72e91270ff.txt (NEW - IndexNow key file)
+- Change: Generated IndexNow API key and hosted verification file in public directory
+- Key: 7dfb42f3ecf3e85a1fcfeb72e91270ff
+- Note: To trigger IndexNow pings on publish, add a webhook or script that calls:
+  POST https://api.indexnow.org/indexnow?url=<changed-url>&key=7dfb42f3ecf3e85a1fcfeb72e91270ff
+
+### [DONE] Fix #30 - Add AI crawler directives to robots.txt
+- Impact: MEDIUM - Strategic control over which AI systems can access content
+- File: src/app/robots.ts
+- Change: Added specific rules for AI crawlers:
+  - ALLOW: GPTBot, Google-Extended, PerplexityBot, OAI-SearchBot (search crawlers)
+  - BLOCK: CCBot, anthropic-ai, cohere-ai, FacebookBot (training-only crawlers)
+- Result: Content available for AI search features while protecting against pure training scraping
+
+### [DONE - Sprint 1] Fix #31 - Create llms.txt
+- Already completed in Sprint 1 (public/llms.txt)
+
+### [DONE - Sprint 1] Fix #32 - Add timezone offsets to Article dates
+- Already completed in Sprint 1
+
+### [PENDING - CMS/Editorial] Add FAQ blocks with direct answers to top articles
+- Impact: HIGH - Passages need 134-167 word direct answers for AI citation
+- Status: Requires editorial rewriting of existing article content in WordPress
+
+### [PENDING - CMS/Editorial] Rewrite section openers as direct answers
+- Impact: HIGH - First sentence under H2/H3 should state core claim
+- Status: Ongoing editorial standard, requires content team training
+
+### [PENDING - CMS/Editorial] Add sourced statistics to articles
+- Impact: MEDIUM - Unattributed superlatives are downweighted by AI engines
+- Status: Requires research + editorial updates in WordPress
