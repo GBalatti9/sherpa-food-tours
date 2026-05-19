@@ -125,10 +125,14 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
 
     if (!postsResult.ok || !postsResult.data || postsResult.data.length === 0) {
         return (
-            <div style={{ padding: '2rem', textAlign: 'center' }}>
-                <h1>Posts by {currentUser.name}</h1>
-                <p>No posts found.</p>
-            </div>
+            <>
+                {/* noindex empty author pages to prevent thin content indexing */}
+                <meta name="robots" content="noindex, follow" />
+                <div style={{ padding: '2rem', textAlign: 'center' }}>
+                    <h1>Posts by {currentUser.name}</h1>
+                    <p>No posts found.</p>
+                </div>
+            </>
         );
     }
 

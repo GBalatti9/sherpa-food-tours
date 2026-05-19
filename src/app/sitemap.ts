@@ -51,10 +51,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Get all authors for dynamic routes
   const authors = await safeFetch(() => wp.getAllUsers(), { ok: false, data: [] }, 'getAllUsers');
-  const authorUrls = authors.ok && authors.data 
+  // Filter out authors with no description (likely empty/thin pages like Gaston Balatti)
+  // and verify they have posts before including in sitemap
+  const authorUrls = authors.ok && authors.data
     ? authors.data
-        .filter((author: { name: string; slug?: string; description?: string }) => 
-          author.name?.toLowerCase() !== "admin" && author.description
+        .filter((author: { name: string; slug?: string; description?: string }) =>
+          author.name?.toLowerCase() !== "admin" && author.description && author.description.trim().length > 0
         )
         .map((author: { slug?: string; name?: string }) => {
           const userSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, "") || "user";

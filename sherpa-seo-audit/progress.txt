@@ -238,3 +238,35 @@ New files created: 1 (public/llms.txt)
 ### [PENDING - Manual] Establish visible NAP on contact page and footer
 - Impact: MEDIUM - Contact page contains no contact information
 - Status: Business decision needed on which address/phone to display publicly
+
+================================================================================
+## SPRINT 4: Content & E-E-A-T
+================================================================================
+
+### [DONE] Fix #27 - Noindex empty author pages (Gaston Balatti case)
+- Impact: HIGH - Publicly indexed author page with "No posts found" is thin content
+- File: src/app/author/[user]/page.tsx
+- Change: Added `<meta name="robots" content="noindex, follow" />` when author has zero posts
+- Result: Empty author pages won't be indexed by Google
+
+### [DONE] Fix #28 - Filter empty authors from sitemap
+- Impact: MEDIUM - Prevents sitemap from including thin/empty author pages
+- File: src/app/sitemap.ts
+- Change: Added `.trim().length > 0` check on author description filter
+- Result: Authors without descriptions are excluded from sitemap.xml
+
+### [PENDING - CMS/Editorial] Publish Barcelona editorial content (min 3 articles)
+- Impact: CRITICAL - Active tour city with zero supporting articles
+- Status: Content creation in WordPress required
+
+### [PENDING - CMS/Editorial] Publish Cartagena editorial content (min 3 articles)
+- Impact: CRITICAL - Active tour city with zero supporting articles
+- Status: Content creation in WordPress required
+
+### [PENDING - CMS/Editorial] Expand Lima content (target 5+ articles)
+- Impact: HIGH - Only 1 article for a city being actively promoted with 30% discount
+- Status: Content creation in WordPress required
+
+### [PENDING - CMS] Update Sofia Gonzalez bio with verifiable credentials
+- Impact: MEDIUM - Current bio matches AI-generated content patterns
+- Status: Requires editorial decision on credentials to add in WP user profile
