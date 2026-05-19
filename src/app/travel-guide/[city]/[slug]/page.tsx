@@ -225,6 +225,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
         "dateModified": ensureTimezone(modified),
         "author": {
             "@type": "Person",
+            "@id": author?.name ? `${baseUrl}/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}/#person` : undefined,
             "name": author?.name ?? "Sherpa Food Tours",
             "url": author?.name ? `${baseUrl}/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}/` : baseUrl
         },

@@ -184,3 +184,31 @@ New files created: 1 (public/llms.txt)
 - [ ] Publish Barcelona and Cartagena editorial content (content creation)
 - [ ] Fix alt text on images loaded from WordPress (CMS media library)
 - [ ] Add ProfilePage/Person schema to author pages (Sprint 2 code change)
+
+================================================================================
+## SPRINT 2: Structural Fixes
+================================================================================
+
+### [DONE] Fix #24 - Add ProfilePage + Person schema to author pages
+- Impact: HIGH - E-E-A-T entity graph was incomplete; articles referenced authors with no Person schema
+- File: src/app/author/[user]/page.tsx
+- Change: Added ProfilePage JSON-LD with Person mainEntity (@id, name, description, image, worksFor) and BreadcrumbList schema
+- Result: Author entity graph now complete - Article -> Person @id -> ProfilePage chain
+
+### [DONE] Fix #25 - Link Article author schema to ProfilePage via @id
+- Impact: HIGH - Articles now reference author Person entity for Knowledge Graph resolution
+- File: src/app/travel-guide/[city]/[slug]/page.tsx
+- Change: Added `"@id": "${baseUrl}/author/${slug}/#person"` to Article author field
+- Result: Google can connect Article authorship to ProfilePage entity
+
+### [PENDING - CMS/Infra] Migrate images from staging.sherpafoodtours.com
+- Impact: CRITICAL - All images load from staging subdomain
+- Status: Requires WordPress media library URL migration and CDN setup. Cannot be done via code alone.
+
+### [PENDING - CMS] Fix Buenos Aires URL slug (/city/buenos-aires-2/)
+- Impact: HIGH - WordPress CMS slug collision artifact
+- Status: Redirect from /city/buenos-aires/ to /city/buenos-aires-2/ already exists in next.config.ts (line ~794). Fix requires changing the WP slug and updating the redirect direction.
+
+### [PENDING - CMS] Fix /tour/san-telmo-tour-2/ slug
+- Impact: HIGH - Same WordPress slug collision issue
+- Status: Redirect from old URLs already in next.config.ts. Fix requires WP slug change.

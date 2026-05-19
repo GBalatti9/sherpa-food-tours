@@ -146,8 +146,58 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
 
     const avatarUrl = currentUser.avatar_urls?.["96"] || currentUser.avatar_urls?.["48"] || currentUser.avatar_urls?.["24"];
 
+    // ProfilePage + Person schema for E-E-A-T
+    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
+    const authorUrl = `${baseUrl}/author/${user}/`;
+
+    const profilePageSchema = {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "mainEntity": {
+            "@type": "Person",
+            "@id": `${authorUrl}#person`,
+            "name": currentUser.name,
+            "url": authorUrl,
+            ...(currentUser.description ? { "description": currentUser.description.replace(/<[^>]+>/g, '').substring(0, 200) } : {}),
+            ...(avatarUrl ? { "image": avatarUrl } : {}),
+            "worksFor": {
+                "@type": "Organization",
+                "@id": "https://www.sherpafoodtours.com/#organization",
+                "name": "Sherpa Food Tours"
+            }
+        }
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": baseUrl + "/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": currentUser.name,
+                "item": authorUrl
+            }
+        ]
+    };
+
     return (
         <article>
+            {/* JSON-LD Structured Data for SEO */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
             <section style={{ padding: '2rem', textAlign: 'center' }}>
                 <h1 style={{
                     fontFamily: 'var(--font-dk-otago)',
