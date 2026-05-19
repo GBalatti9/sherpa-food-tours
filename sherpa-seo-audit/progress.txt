@@ -308,3 +308,79 @@ New files created: 1 (public/llms.txt)
 ### [PENDING - CMS/Editorial] Add sourced statistics to articles
 - Impact: MEDIUM - Unattributed superlatives are downweighted by AI engines
 - Status: Requires research + editorial updates in WordPress
+
+================================================================================
+## SPRINT 6: Conversion & SXO
+================================================================================
+
+### [DONE] Fix #33 - Fix og:image across all pages (logo -> hero image)
+- Impact: MEDIUM - Logo renders poorly as social share card (small with whitespace)
+- Files: src/app/page.tsx, src/app/about-us/page.tsx, src/app/contact/page.tsx, src/app/contacto/page.tsx, src/app/author/[user]/page.tsx, src/app/tour/[slug]/page.tsx
+- Change: Replaced `/sherpa-complete-logo.webp` with `/sherpa-main-image.webp` in all og:image and twitter:image fields
+- Result: Social share previews will show food tour photography instead of small logo
+- Note: For optimal results, create a dedicated 1200x630px OG image. The hero image is a good interim improvement.
+
+### [PENDING - CMS/Code] Geo-target Lima promotional marquee
+- Impact: MEDIUM - Lima discount shows on all city pages (irrelevant noise)
+- Status: The marquee banner is loaded from WordPress ACF in layout.tsx and rendered globally. 
+  Options: (a) Add city-specific marquee fields in WP, or (b) pass current page context to MarqueeBanner component.
+  Requires architectural decision.
+
+### [PENDING - Code/Design] Embed FareHarbor booking inline
+- Impact: HIGH - External redirect breaks trust flow at point of highest intent
+- Status: FareHarbor already has an inline widget option. Requires integration changes in booking components.
+
+### [PENDING - Code/Design] Surface pricing, availability, and group size above the fold
+- Impact: HIGH - Most common pre-click questions not visible before scroll
+- Status: Requires city page layout changes and pulling tour data above the fold
+
+### [PENDING - Code/Design] Add email capture for non-converting visitors
+- Impact: MEDIUM - No lead generation path for researchers not ready to book
+- Status: Requires form component + email service integration
+
+### [PENDING - Production] Create tour walkthrough video (60-90s)
+- Impact: MEDIUM - Video is growing differentiator in food tour SERPs
+- Status: Requires video production
+
+================================================================================
+## FINAL SUMMARY
+================================================================================
+
+### Implementation Stats
+- Total sprints: 6
+- Total code fixes implemented: 33
+- Total commits: 6 (1 per sprint)
+- Branch: fix/seo-audit-improvements
+
+### Files Modified (across all sprints):
+1.  src/app/page.tsx - Homepage (schema, meta description, og:image)
+2.  src/app/tour/[slug]/page.tsx - Tour pages (schema, breadcrumb, og:image)
+3.  src/app/about-us/page.tsx - About Us (Organization schema, og:image)
+4.  src/app/travel-guide/[city]/[slug]/page.tsx - Articles (dates, publisher, author @id)
+5.  src/app/city/[slug]/page.tsx - City pages (TouristDestination, TourOperator, breadcrumb)
+6.  src/app/contact/page.tsx - Contact (hreflang, og:image)
+7.  src/app/contacto/page.tsx - Contacto (hreflang, og:image)
+8.  src/app/author/[user]/page.tsx - Author (ProfilePage/Person schema, noindex empty, og:image)
+9.  src/app/sitemap.ts - Sitemap (filter empty authors)
+10. src/app/robots.ts - Robots (AI crawler directives)
+
+### New Files Created:
+1. public/llms.txt - AI crawler content manifest
+2. public/7dfb42f3ecf3e85a1fcfeb72e91270ff.txt - IndexNow API key
+3. sherpa-seo-audit/FULL-AUDIT-REPORT.md - Full audit report
+4. sherpa-seo-audit/ACTION-PLAN.md - Prioritized action plan
+5. sherpa-seo-audit/progress.txt - This file
+
+### Severity Breakdown of Implemented Fixes:
+| Severity  | Implemented | Pending (CMS/Manual) |
+|-----------|-------------|----------------------|
+| CRITICAL  | 8           | 3                    |
+| HIGH      | 11          | 8                    |
+| MEDIUM    | 12          | 5                    |
+| LOW       | 2           | 0                    |
+| TOTAL     | 33          | 16                   |
+
+### Estimated Score Impact:
+| Before | After Code Fixes | After All Fixes (incl. CMS/manual) |
+|--------|-----------------|-------------------------------------|
+| 55/100 | ~70/100         | ~83/100                             |

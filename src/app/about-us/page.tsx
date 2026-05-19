@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         siteName: "Sherpa Food Tours",
         images: [
             {
-                url: "https://www.sherpafoodtours.com/sherpa-complete-logo.webp",
+                url: "https://www.sherpafoodtours.com/sherpa-main-image.webp",
                 width: 1200,
                 height: 630,
                 alt: "Sherpa Food Tours - About Us",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "About Us - Our Story & Values | Sherpa Food Tours",
         description: "Learn about Sherpa Food Tours' mission to provide authentic culinary experiences.",
-        images: ["https://www.sherpafoodtours.com/sherpa-complete-logo.webp"],
+        images: ["https://www.sherpafoodtours.com/sherpa-main-image.webp"],
     },
     alternates: {
         canonical: `https://www.sherpafoodtours.com/about-us/`,

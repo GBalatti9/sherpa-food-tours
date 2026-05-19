@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ user: str
             type: "profile",
             images: [
                 {
-                    url: "/sherpa-complete-logo.webp",
+                    url: "/sherpa-main-image.webp",
                     width: 1200,
                     height: 630,
                     alt: `${authorName} - Sherpa Food Tours Author`,
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: { params: Promise<{ user: str
             card: "summary_large_image",
             title: `${authorName} - Author | Sherpa Food Tours`,
             description: authorDescription,
-            images: ["/sherpa-complete-logo.webp"],
+            images: ["/sherpa-main-image.webp"],
         },
         alternates: {
             canonical: `${baseUrl}/author/${user}/`,

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         siteName: "Sherpa Food Tours",
         images: [
             {
-                url: "/sherpa-complete-logo.webp",
+                url: "/sherpa-main-image.webp",
                 width: 1200,
                 height: 630,
                 alt: "Sherpa Food Tours - Contact Us",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Contact Us - Get in Touch | Sherpa Food Tours",
         description: "Have questions about our food tours? Contact Sherpa Food Tours today.",
-        images: ["/sherpa-complete-logo.webp"],
+        images: ["/sherpa-main-image.webp"],
     },
     alternates: {
         canonical: `https://www.sherpafoodtours.com/contact/`,

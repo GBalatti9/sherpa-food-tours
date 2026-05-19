@@ -76,10 +76,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'Sherpa Food Tours',
       images: [
         {
-          url: '/sherpa-complete-logo.webp',
+          url: '/sherpa-main-image.webp',
           width: 1200,
           height: 630,
-          alt: 'Sherpa Food Tours - Authentic Culinary Experiences',
+          alt: 'Sherpa Food Tours - Authentic Culinary Experiences Worldwide',
         },
       ],
       locale: 'en_US',
@@ -89,7 +89,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: `${title} | Sherpa Food Tours`,
       description,
-      images: ['/sherpa-complete-logo.webp'],
+      images: ['/sherpa-main-image.webp'],
       creator: '@sherpafoodtours',
     },
     robots: {

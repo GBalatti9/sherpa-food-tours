@@ -161,7 +161,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             type: "article",
             images: [
                 {
-                    url: featuredImage.img || `https://www.sherpafoodtours.com/sherpa-complete-logo.webp`,
+                    url: featuredImage.img || `https://www.sherpafoodtours.com/sherpa-main-image.webp`,
                     width: 1200,
                     height: 630,
                     alt: featuredImage.alt?.trim().length > 0 ? featuredImage.alt : `${tour.title} - Food Tour | Sherpa Food Tours`,
@@ -172,7 +172,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             card: "summary_large_image",
             title,
             description,
-            images: [featuredImage.img || `https://www.sherpafoodtours.com/sherpa-complete-logo.webp`],
+            images: [featuredImage.img || `https://www.sherpafoodtours.com/sherpa-main-image.webp`],
         },
         alternates: {
             canonical: `https://www.sherpafoodtours.com/tour/${slug}/`,
