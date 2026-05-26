@@ -9,10 +9,10 @@ import Link from "next/link";
 export default async function Footer({ cities }: { cities: { id: number; city: string; slug: string; flag: { img: string; alt: string; } }[] }) {
 
     const socialMedia = await wp.getEmbedSectionInfo('footer');
-    const instagram = socialMedia.acf.instagram;
-    const tripadvisor = socialMedia.acf.tripadvisor;
-    const facebook = socialMedia.acf.facebook;
-    const tiktok = socialMedia.acf.tiktok;
+    const instagram = socialMedia?.acf?.instagram ?? 'https://www.instagram.com/sherpafoodtour';
+    const tripadvisor = socialMedia?.acf?.tripadvisor ?? 'https://www.tripadvisor.com/Attraction_Review-g312741-d23715647-Reviews-Sherpa_Food_Tours-Buenos_Aires_Capital_Federal_District.html';
+    const facebook = socialMedia?.acf?.facebook ?? 'https://www.facebook.com/sherpafoodtours';
+    const tiktok = socialMedia?.acf?.tiktok ?? 'https://www.tiktok.com/@sherpafoodtours';
 
 
 
