@@ -750,12 +750,12 @@ const nextConfig = {
 
   //     {
   //       source: '/5-things-to-know-before-visiting-argentina/',
-  //       destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+  //       destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
   //       permanent: true,
   //     },
   //     {
   //       source: '/beyond-the-city-best-day-trips-from-buenos-aires/',
-  //       destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+  //       destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
   //       permanent: true,
   //     },
   //     {
@@ -791,13 +791,13 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/city/buenos-aires',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        source: '/city/buenos-aires-2',
+        destination: '/city/buenos-aires/',
         permanent: true,
       },
       {
-        source: '/city/buenos-aires/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        source: '/city/buenos-aires-2/',
+        destination: '/city/buenos-aires/',
         permanent: true,
       },
       {
@@ -812,12 +812,12 @@ const nextConfig = {
       },
       {
         source: '/travels-guide/city-buenos-aires/:path*',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
         source: '/travels-guide/city-buenos-aires',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
@@ -1001,13 +1001,23 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/tour/san-telmo-tour-2',
+        destination: '/tour/san-telmo-tour/',
+        permanent: true,
+      },
+      {
+        source: '/tour/san-telmo-tour-2/',
+        destination: '/tour/san-telmo-tour/',
+        permanent: true,
+      },
+      {
         source: '/tour/san-telmo-food-tour/',
-        destination: 'https://www.sherpafoodtours.com/tour/san-telmo-tour-2/',
+        destination: 'https://www.sherpafoodtours.com/tour/san-telmo-tour/',
         permanent: true,
       },
       {
         source: '/tour/san-telmo-food-tour-4/',
-        destination: 'https://www.sherpafoodtours.com/tour/san-telmo-tour-2/',
+        destination: 'https://www.sherpafoodtours.com/tour/san-telmo-tour/',
         permanent: true,
       },
       {
@@ -1147,12 +1157,12 @@ const nextConfig = {
       },
       {
         source: '/explore-buenos-aires-top-museums-and-their-finest-on-site-restaurants/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
         source: '/green-escapes-top-parks-to-visit-in-buenos-aires/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
@@ -1212,7 +1222,7 @@ const nextConfig = {
       },
       {
         source: '/mercado-de-san-telmo-get-to-know-the-buenos-aires-historic-flea-market/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
@@ -1287,7 +1297,7 @@ const nextConfig = {
       },
       {
         source: '/3-day-buenos-aires-itinerary/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
@@ -1332,17 +1342,17 @@ const nextConfig = {
       },
       {
         source: '/green-escapes-top-parks-to-visit-in-buenos-aires/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
         source: '/pt/city/buenos-aires-3/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
         source: '/es/city/buenos-aires-2/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
@@ -1367,7 +1377,7 @@ const nextConfig = {
       },
       {
         source: '/explore-the-best-bookshops-in-buenos-aires/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
@@ -1377,7 +1387,7 @@ const nextConfig = {
       },
       {
         source: '/best-argentinian-restaurants-in-buenos-aires/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
@@ -1477,12 +1487,12 @@ const nextConfig = {
       },
       {
         source: '/5-things-to-know-before-visiting-argentina/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {
         source: '/beyond-the-city-best-day-trips-from-buenos-aires/',
-        destination: 'https://www.sherpafoodtours.com/city/buenos-aires-2/',
+        destination: 'https://www.sherpafoodtours.com/city/buenos-aires/',
         permanent: true,
       },
       {

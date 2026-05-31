@@ -56,7 +56,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                 {/* Solo para START y END */}
                                 {item.information &&
                                     <div className="itinerary-step-information">
-                                        <img src={item?.map?.img || "http://staging.sherpafoodtours.com/wp-content/uploads/2025/08/Local-two-本地.png"} alt={item?.map?.alt || "Map pin icon"} width="24" height="24" className="object-contain"/>
+                                        <img src={item?.map?.img || "/icons/map-pin.png"} alt={item?.map?.alt || "Map pin icon"} width="24" height="24" className="object-contain"/>
                                         <div className="itinerary-step-data" dangerouslySetInnerHTML={{ __html: item.information }}>
                                         </div>
                                     </div>
