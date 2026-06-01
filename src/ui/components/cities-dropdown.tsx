@@ -195,11 +195,6 @@ export default function CitiesDropdown({
                     <span className={`cities-row-name${isCurrent ? " is-current" : ""}`}>
                       {city.city}
                     </span>
-                    {city.tourCount != null && city.tourCount > 0 && (
-                      <span className="cities-row-tours">
-                        {city.tourCount} {city.tourCount === 1 ? "tour" : "tours"}
-                      </span>
-                    )}
                     {isCurrent && (
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E55A2B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 4, flexShrink: 0 }}>
                         <polyline points="20 6 9 17 4 12" />
