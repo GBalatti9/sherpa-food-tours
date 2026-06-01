@@ -296,30 +296,25 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
             />
 
             {/* ARTICLE */}
-            <article className="sherpa-article" itemScope itemType="https://schema.org/Article">
-                <meta itemProp="headline" content={title} />
-                <meta itemProp="datePublished" content={date} />
-                <meta itemProp="dateModified" content={modified} />
-                <meta itemProp="author" content={author?.name || "Sherpa Food Tours"} />
-                
+            <article className="sherpa-article">
+
                 <header className="main-img-container">
-                    <img 
-                        src={img} 
+                    <img
+                        src={img}
                         alt={alt || `${title} - ${cityDisplayName}`}
                         loading="eager"
                         width="1200"
                         height="600"
-                        itemProp="image"
                     />
                 </header>
-                
-                <div className="article-content" itemProp="articleBody">
-                    <h1 itemProp="name">{he.decode(title)}</h1>
+
+                <div className="article-content">
+                    <h1>{he.decode(title)}</h1>
                     <TableOfContents headings={headings} />
                     <ContentWithGalleries htmlContent={htmlWithIds} />
                     {author?.name && (
                         <p className="article-author">
-                            Por:{" "}
+                            By:{" "}
                             <Link
                                 href={`/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}`}
                                 className="article-author-link"

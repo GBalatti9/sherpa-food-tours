@@ -12,7 +12,7 @@ Sherpa Food Tours is a food tour operator running guided culinary experiences in
 
 ## City Tour Pages
 
-- [Buenos Aires Food Tours](https://www.sherpafoodtours.com/city/buenos-aires-2/): Explore Argentine cuisine in Palermo, San Telmo, and La Boca
+- [Buenos Aires Food Tours](https://www.sherpafoodtours.com/city/buenos-aires/): Explore Argentine cuisine in Palermo, San Telmo, and La Boca
 - [Barcelona Food Tours](https://www.sherpafoodtours.com/city/barcelona/): Catalan gastronomy in El Born, Gothic Quarter, and Gracia
 - [Cartagena Food Tours](https://www.sherpafoodtours.com/city/cartagena/): Caribbean flavors in the Walled City
 - [Mexico City Food Tours](https://www.sherpafoodtours.com/city/mexico-city/): Tacos, mole, and mezcal in Roma and Condesa
@@ -34,8 +34,12 @@ Sherpa Food Tours is a food tour operator running guided culinary experiences in
 - Headquarters: United Kingdom (UK00004135333)
 - Co-founders: Alex Pels (Michelin Guide-recognized chef) and Guille Borthwick
 - Award: TripAdvisor Travelers' Choice Best of the Best (2024) - #1 Food Experience Worldwide
-- Reviews: 4,600+ on TripAdvisor (4.8/5)
+- Reviews: 17,000+ combined (2,000 Google + 15,000 TripAdvisor) at 4.8/5
 - Tours: Small group (max 10 guests), all-inclusive, 3-4 hours duration
+
+## Full Content Inventory
+
+For a complete list of all 70+ travel guide articles, 10 tour pages, and author profiles, see [llms-full.txt](https://www.sherpafoodtours.com/llms-full.txt).
 
 ## Content Permissions
 

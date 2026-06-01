@@ -19,8 +19,7 @@ export default function AsFeaturedIn({ asFeatureInImages }: AsFeaturedInProps) {
             <img 
               src={img.img} 
               alt={img.alt} 
-              loading="eager" 
-              fetchPriority="high"
+              loading="lazy"
               width="150"
               height="60"
               decoding="async"

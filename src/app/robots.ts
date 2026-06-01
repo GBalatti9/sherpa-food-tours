@@ -15,8 +15,20 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/private/', '/admin/', '/api/'],
       },
       {
+        // Allow FacebookBot (Meta link preview crawler - NOT a training bot)
+        userAgent: ['FacebookBot'],
+        allow: '/',
+        disallow: ['/private/', '/admin/', '/api/'],
+      },
+      {
+        // Allow ClaudeBot (Anthropic's live browsing agent)
+        userAgent: ['ClaudeBot'],
+        allow: '/',
+        disallow: ['/private/', '/admin/', '/api/'],
+      },
+      {
         // Block AI training-only crawlers (not search)
-        userAgent: ['CCBot', 'anthropic-ai', 'cohere-ai', 'FacebookBot'],
+        userAgent: ['CCBot', 'anthropic-ai', 'cohere-ai'],
         disallow: ['/'],
       },
     ],

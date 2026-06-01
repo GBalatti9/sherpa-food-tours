@@ -79,7 +79,7 @@ interface ValidStep {
 //         .filter((element) => element !== "");
 //     const featuredImage = await fetchImages([imagesId[0]] as number[]).then(imgs => imgs[0]) || { img: '', alt: '' };
 //     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
-//     const tourUrl = `${baseUrl}/tour/${slug}`;
+//     const tourUrl = `${baseUrl}/tour/${slug}/`;
 //     const description = tour.acf.tour_description
 //         ? tour.acf.tour_description.substring(0, 160) + '...'
 //         : `Book ${tour.title} with Sherpa Food Tours. Authentic culinary experience with local guides.`;
@@ -158,7 +158,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             title,
             description,
             url: `https://www.sherpafoodtours.com/tour/${slug}/`,
-            type: "article",
+            type: "website",
             images: [
                 {
                     url: featuredImage.img || `https://www.sherpafoodtours.com/sherpa-main-image.webp`,
@@ -204,7 +204,6 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     }
     const tour = await wp.getTourBySlug(slug);
     const { acf } = tour;
-    console.log({ acf })
 
     if (!acf) {
         console.warn("Tour no encontrado para slug:", slug);
@@ -214,12 +213,11 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
     const { stars, title, reviews, price, check_availability } = acf.heading_section;
 
-    console.log({ title });
 
     const ACF_PRICE = price || acf.price;
     // Generate structured data for SEO
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
-    const tourUrl = `${baseUrl}/tour/${slug}`;
+    const tourUrl = `${baseUrl}/tour/${slug}/`;
 
     const imagesId = Object.entries(acf.heading_section)
         .filter(([key]) => key.includes("image"))
@@ -340,16 +338,18 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             "name": "Sherpa Food Tours",
             "url": baseUrl
         },
-        "offers": {
-            "@type": "Offer",
-            "price": Number(price),
-            "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock",
-            "url": tourUrl + "/",
-            "validFrom": new Date().toISOString(),
-            "priceValidUntil": priceValidUntil.toISOString(),
-            "category": "Tours & Experiences"
-        }
+        ...(price && price !== "" && !isNaN(Number(price)) ? {
+            "offers": {
+                "@type": "Offer",
+                "price": Number(price),
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "url": tourUrl,
+                "validFrom": new Date().toISOString(),
+                "priceValidUntil": priceValidUntil.toISOString(),
+                "category": "Tours & Experiences"
+            }
+        } : {})
     };
 
     // Only add aggregateRating if we have real review data
@@ -359,7 +359,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             "ratingValue": Math.min(5, Math.max(1, Number(stars) || 4.8)),
             "bestRating": 5,
             "worstRating": 1,
-            "ratingCount": totalReviewCount
+            "reviewCount": totalReviewCount
         };
     }
 

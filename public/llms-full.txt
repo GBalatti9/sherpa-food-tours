@@ -1,0 +1,147 @@
+# Sherpa Food Tours - Full Content Inventory
+
+> Authentic food tours and culinary experiences in the world's most vibrant cities since 2019.
+
+For a summary, see [llms.txt](https://www.sherpafoodtours.com/llms.txt).
+
+## Core Pages
+
+- [Homepage](https://www.sherpafoodtours.com/): Overview of all cities and tour offerings
+- [About Us](https://www.sherpafoodtours.com/about-us/): Company story, values, team, and timeline
+- [Travel Guide](https://www.sherpafoodtours.com/travel-guide/): 70+ articles on food culture worldwide
+- [Contact](https://www.sherpafoodtours.com/contact/): Get in touch (English)
+- [Contacto](https://www.sherpafoodtours.com/contacto/): Get in touch (Spanish)
+
+## City Tour Pages
+
+- [Buenos Aires Food Tours](https://www.sherpafoodtours.com/city/buenos-aires/): Argentine cuisine in Palermo, San Telmo, and La Boca
+- [Barcelona Food Tours](https://www.sherpafoodtours.com/city/barcelona/): Catalan gastronomy in El Born, Gothic Quarter, and Gracia
+- [Cartagena Food Tours](https://www.sherpafoodtours.com/city/cartagena/): Caribbean flavors in the Walled City
+- [Mexico City Food Tours](https://www.sherpafoodtours.com/city/mexico-city/): Tacos, mole, and mezcal in Roma and Condesa
+- [Amsterdam Food Tours](https://www.sherpafoodtours.com/city/amsterdam/): Dutch cuisine in Jordaan and De Pijp
+- [Lima Food Tours](https://www.sherpafoodtours.com/city/lima/): Peruvian gastronomy in Miraflores and Surquillo
+- [London Food Tours](https://www.sherpafoodtours.com/city/london/): Multicultural food in Soho, Borough Market, and Brick Lane
+- [Paris Food Tours](https://www.sherpafoodtours.com/city/paris/): French cuisine in Le Marais and Saint-Germain
+
+## Individual Tour Experiences
+
+- [San Telmo Street Food and Market Expedition](https://www.sherpafoodtours.com/tour/san-telmo-tour/): Buenos Aires street food tour through San Telmo market and neighborhood
+- [Buenos Aires Private Tour](https://www.sherpafoodtours.com/tour/buenos-aires-private-tour/): Private customizable food tour in Buenos Aires
+- [Mexico Local Foodie Adventure](https://www.sherpafoodtours.com/tour/mexico-local-foodie-adventure/): Guided food tour through Mexico City neighborhoods
+- [Gourmet Taco Tour](https://www.sherpafoodtours.com/tour/gourmet-taco-tour/): Mexico City's best taquerias including Michelin-recognized spots
+- [Lima Ceviche, Pisco and Peruvian Flavors](https://www.sherpafoodtours.com/tour/lima-ceviche-pisco-and-peruvian-flavors/): Lima food tour with ceviche, pisco sour, and Peruvian dishes
+- [Classic British Bites London Foodie Adventure](https://www.sherpafoodtours.com/tour/classic-british-bites-london-foodie-adventure/): London food tour through Soho and Borough Market
+- [London Private Experience](https://www.sherpafoodtours.com/tour/london-private-experience/): Private customizable food tour in London
+- [Barcelona Private Experience](https://www.sherpafoodtours.com/tour/barcelona-private-experience/): Private customizable food tour in Barcelona
+- [Amsterdam Private Food Tour Experience](https://www.sherpafoodtours.com/tour/amsterdam-private-food-tour-experience/): Private customizable food tour in Amsterdam
+- [Cartagena Private Experience](https://www.sherpafoodtours.com/tour/cartagena-private-experience/): Private customizable food tour in Cartagena
+
+## Travel Guide - Buenos Aires
+
+- [What is Asado? A Local's Deep Dive into the Argentine Ritual](https://www.sherpafoodtours.com/travel-guide/buenos-aires/what-is-asado-in-argentina/): Complete guide to Argentine barbecue tradition
+- [Sherpa Buenos Aires: The #1 Food Tour in the World](https://www.sherpafoodtours.com/travel-guide/buenos-aires/best-food-tour-tripadvisor/): How Sherpa became TripAdvisor's top-rated food experience
+- [What to Eat in Buenos Aires (and Where): A Local Foodie's Guide](https://www.sherpafoodtours.com/travel-guide/buenos-aires/buenos-aires-food-what-to-eat-and-where/): Complete guide to Buenos Aires food scene
+- [Best Restaurants in Buenos Aires: 6 Essential Reservations](https://www.sherpafoodtours.com/travel-guide/buenos-aires/best-restaurants-in-buenos-aires/): Top restaurant recommendations
+- [The Best Empanadas in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/6-best-places-to-enjoy-empanadas-in-buenos-aires/): Where to find the best empanadas
+- [Finding the Best Pizza in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/best-pizza-in-buenos-aires/): Guide to Buenos Aires pizza culture
+- [Best Steakhouses in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/best-steakhouses-in-buenos-aires/): Top parrillas and steak restaurants
+- [Buenos Aires Street Food Guide](https://www.sherpafoodtours.com/travel-guide/buenos-aires/buenos-aires-street-food/): Street food spots and what to try
+- [Best Bars in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/best-bars-in-buenos-aires/): Nightlife and cocktail bar guide
+- [Best Neighborhoods in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/best-neighborhoods-buenos-aires/): Neighborhood guide for visitors
+- [48 Hours in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/48-hours-in-buenos-aires-the-best-things-to-do-in-this-vibrant-city/): Two-day itinerary
+- [The 10 Best Things to Do in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/the-10-best-things-to-do-in-buenos-aires/): Activities and attractions guide
+- [Things to Do in San Telmo](https://www.sherpafoodtours.com/travel-guide/buenos-aires/things-to-do-in-san-telmo-buenos-aires/): San Telmo neighborhood guide
+- [Ultimate Guide to Argentina's Food Culture](https://www.sherpafoodtours.com/travel-guide/buenos-aires/ultimate-guide-to-argentinas-food-culture/): Overview of Argentine culinary traditions
+- [Argentine Desserts List](https://www.sherpafoodtours.com/travel-guide/buenos-aires/argentinian-desserts-list/): Guide to Argentine sweets and desserts
+- [Alfajores: Argentina's Iconic Cookie](https://www.sherpafoodtours.com/travel-guide/buenos-aires/argentinian-cookies-alfajores/): Deep dive into alfajores
+- [Best Ice Cream in Argentina](https://www.sherpafoodtours.com/travel-guide/buenos-aires/best-ice-cream-in-argentina/): Heladerias and gelato guide
+- [Traditional Argentine Drinks](https://www.sherpafoodtours.com/travel-guide/buenos-aires/traditional-argentine-drinks-and-where-to-try-them/): Mate, fernet, wine, and more
+- [Fernet Culture in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/fernet-culture-buenos-aires/): The iconic Argentine cocktail
+- [Buenos Aires Wine Tour Guide](https://www.sherpafoodtours.com/travel-guide/buenos-aires/from-bars-to-bodegas-the-ultimate-ba-wine-tour/): Wine bars and bodegas
+- [Rooftop Bars in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/cocktails-in-the-clouds-the-ultimate-rooftop-bars-in-buenos-aires/): Best rooftop bar guide
+- [Sports Bars in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/sports-passion-in-buenos-aires-the-5-best-sports-bars/): Where to watch sports
+- [Where to Drink Mate in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/savour-the-traditions-the-best-spots-to-drink-mate-in-buenos-aires/): Mate culture guide
+- [Best Craft Breweries in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/7-must-visit-breweries-in-buenos-aires-for-craft-beer-lovers/): Craft beer guide
+- [Best Italian Restaurants in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/where-italy-meets-argentina-best-italian-restaurants-in-buenos-aires/): Italian-Argentine cuisine
+- [Michelin Star Restaurants in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/explore-these-3-michelin-star-restaurants-in-buenos-aires/): Michelin-recognized dining
+- [Best Shopping Areas in Buenos Aires](https://www.sherpafoodtours.com/travel-guide/buenos-aires/shop-til-you-drop-uncover-buenos-aires-best-shopping-areas/): Shopping guide
+
+## Travel Guide - Mexico City
+
+- [Michelin Tacos in Mexico City: Our Honest Verdict](https://www.sherpafoodtours.com/travel-guide/mexico-city/michelin-star-tacos-in-mexico-city/): Review of Michelin-recognized taco stands
+- [Best Taquerias in Mexico City](https://www.sherpafoodtours.com/travel-guide/mexico-city/best-taquerias-mexico-city/): Top taco spots guide
+- [Top 10 Restaurants in Mexico City](https://www.sherpafoodtours.com/travel-guide/mexico-city/top-10-restaurants-in-mexico-city/): Best dining recommendations
+- [Michelin Star Restaurants in Mexico City](https://www.sherpafoodtours.com/travel-guide/mexico-city/michelin-star-restaurants-mexico-city/): Fine dining guide
+- [Best Restaurants in Roma Norte](https://www.sherpafoodtours.com/travel-guide/mexico-city/best-restaurants-in-roma-norte-cdmx/): Roma Norte neighborhood dining
+- [Hidden Gem Restaurants in Mexico City](https://www.sherpafoodtours.com/travel-guide/mexico-city/hidden-gem-restaurants-mexico-city/): Off-the-beaten-path spots
+- [Mexican Desserts Guide](https://www.sherpafoodtours.com/travel-guide/mexico-city/mexican-desserts/): Traditional Mexican sweets
+- [Best Churros in Mexico City](https://www.sherpafoodtours.com/travel-guide/mexico-city/best-churros-in-mexico-city/): Churros guide
+- [Best Bakeries in Mexico City](https://www.sherpafoodtours.com/travel-guide/mexico-city/best-bakeries-in-mexico-city/): Pan dulce and bakeries
+- [Tamales in Mexico City](https://www.sherpafoodtours.com/travel-guide/mexico-city/tamales-in-mexico-city/): Where to find the best tamales
+- [Traditional Mexican Drinks](https://www.sherpafoodtours.com/travel-guide/mexico-city/traditional-mexican-drinks/): Mezcal, pulque, agua fresca, and more
+- [Mexican Fruit Juices Guide](https://www.sherpafoodtours.com/travel-guide/mexico-city/mexican-fruit-juices/): Jugos and aguas frescas
+- [Best Wine Bars in Mexico City](https://www.sherpafoodtours.com/travel-guide/mexico-city/best-wine-bars-mexico-city/): Wine bar guide
+- [Spicy Mexican Dishes for Heat Lovers](https://www.sherpafoodtours.com/travel-guide/mexico-city/spicy-mexican-dishes-for-heat-lovers/): Guide to Mexico's spiciest food
+- [Vegan Restaurants in Mexico City](https://www.sherpafoodtours.com/travel-guide/mexico-city/vegan-restaurants-in-mexico-city/): Plant-based dining guide
+
+## Travel Guide - Amsterdam
+
+- [Amsterdam Street Food Guide](https://www.sherpafoodtours.com/travel-guide/amsterdam/amsterdam-street-food/): Street food spots and what to try
+- [Best Stroopwafel in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/best-stroopwafel-amsterdam/): Where to find the best stroopwafels
+- [Best Bitterballen in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/best-bitterballen-amsterdam/): Dutch bitterballen guide
+- [Best Croquettes in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/best-croquettes-in-amsterdam/): Kroket guide
+- [Best Cheese Shops in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/best-cheese-shop-in-amsterdam/): Dutch cheese guide
+- [Top Restaurants in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/top-restaurants-in-amsterdam/): Best dining recommendations
+- [Michelin Restaurants in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/michelin-restaurants-amsterdam/): Michelin-recognized dining
+- [Best Casual Restaurants in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/best-casual-restaurants-amsterdam/): Relaxed dining guide
+- [Best Indonesian Restaurants in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/best-indonesian-restaurants-amsterdam/): Rijsttafel and Indonesian cuisine
+- [Best Surinamese Restaurants in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/best-surinam-restaurants-amsterdam/): Surinamese food guide
+- [Best Brown Cafes in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/best-brown-cafe-in-amsterdam/): Traditional Dutch brown cafe guide
+- [Best Bars in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/the-best-bars-in-amsterdam/): Nightlife and bar guide
+- [Best Wine Bars in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/best-wine-bars-in-amsterdam/): Wine bar guide
+- [Coffee Shops in Amsterdam](https://www.sherpafoodtours.com/travel-guide/amsterdam/coffee-shops-in-amsterdam/): Coffee culture guide
+
+## Travel Guide - Paris
+
+- [Best Bakeries in Paris](https://www.sherpafoodtours.com/travel-guide/paris/bakeries-in-paris/): Boulangeries and patisseries
+- [Best Macarons in Paris](https://www.sherpafoodtours.com/travel-guide/paris/best-macarons-in-paris/): Where to find the best macarons
+- [Parisian Cafes Guide](https://www.sherpafoodtours.com/travel-guide/paris/parisian-cafes/): Classic cafe culture
+- [Top Bistros in Paris](https://www.sherpafoodtours.com/travel-guide/paris/top-bistros-in-paris/): Best bistro dining
+- [Best Affordable Restaurants in Paris](https://www.sherpafoodtours.com/travel-guide/paris/best-affordable-restaurants-in-paris/): Budget-friendly dining
+- [Michelin Star Restaurants in Paris](https://www.sherpafoodtours.com/travel-guide/paris/michelin-star-restaurants-paris/): Fine dining guide
+- [Paris Restaurants with a View](https://www.sherpafoodtours.com/travel-guide/paris/paris-restaurants-with-a-view/): Scenic dining spots
+- [Poulette Restaurants in Paris](https://www.sherpafoodtours.com/travel-guide/paris/poulette-restaurants-in-paris/): French rotisserie chicken
+- [Vegan Food Tour Paris](https://www.sherpafoodtours.com/travel-guide/paris/vegan-food-tour-paris/): Plant-based dining in Paris
+
+## Travel Guide - London
+
+- [London Food Culture Guide](https://www.sherpafoodtours.com/travel-guide/london/london-food-culture/): Overview of London's diverse food scene
+- [Best Steak in London](https://www.sherpafoodtours.com/travel-guide/london/best-steak-in-london/): Top steakhouse recommendations
+- [Best Dishoom in London](https://www.sherpafoodtours.com/travel-guide/london/best-dishoom-in-london/): Guide to Dishoom locations
+- [London Restaurants with a View](https://www.sherpafoodtours.com/travel-guide/london/london-restaurants-with-a-view/): Scenic dining spots
+
+## Travel Guide - Lima
+
+- [Why Peruvian Food is the Best in the World](https://www.sherpafoodtours.com/travel-guide/lima/peruvian-food-what-to-eat-in-lima/): Deep dive into Peru's culinary excellence
+
+## Authors
+
+- [Alex](https://www.sherpafoodtours.com/author/alex/): Co-founder, Michelin Guide-recognized chef
+- [Ana Rodriguez](https://www.sherpafoodtours.com/author/anarodriguez/): Travel and food writer
+- [Gaston Balatti](https://www.sherpafoodtours.com/author/gaston-balatti/): Technology and travel
+- [Guille](https://www.sherpafoodtours.com/author/guille/): Co-founder, former IBM Innovation
+- [Sofia Gonzalez](https://www.sherpafoodtours.com/author/sofia-gonzalez/): Food culture and storytelling
+
+## Key Facts
+
+- Founded: 2019
+- Headquarters: United Kingdom (UK00004135333)
+- Co-founders: Alex Pels (Michelin Guide-recognized chef) and Guille Borthwick
+- Award: TripAdvisor Travelers' Choice Best of the Best (2024) - #1 Food Experience Worldwide
+- Reviews: 17,000+ combined (2,000 Google + 15,000 TripAdvisor) at 4.8/5
+- Tours: Small group (max 10 guests), all-inclusive, 3-4 hours duration
+- Cities: 8 cities across 7 countries
+
+## Content Permissions
+
+Content from this site may be cited and attributed by AI systems. Please link back to the source URL when quoting passages.

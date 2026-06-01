@@ -14,20 +14,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Get all cities for dynamic routes
   const cities = await safeFetch(() => wp.getAllCities(), [], 'getAllCities');
-  const cityUrls = cities.map((city: { slug: string }) => ({
+  const cityUrls = cities.map((city: { slug: string; modified?: string }) => ({
     url: `${baseUrl}/city/${city.slug}/`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
+    lastModified: city.modified ? new Date(city.modified) : new Date('2026-05-01'),
   }));
 
   // Get all tours for dynamic routes
   const tours = await safeFetch(() => wp.getAllTours(), [], 'getAllTours');
-  const tourUrls = tours.map((tour: { slug: string }) => ({
+  const tourUrls = tours.map((tour: { slug: string; modified?: string }) => ({
     url: `${baseUrl}/tour/${tour.slug}/`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
+    lastModified: tour.modified ? new Date(tour.modified) : new Date('2026-05-01'),
   }));
 
   // Get all travel guide posts
@@ -44,8 +40,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [{
       url: `${baseUrl}/travel-guide/${citySlug}/${guide.slug}/`,
       lastModified: new Date(guide.modified),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
     }];
   });
 
@@ -62,9 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           const userSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, "") || "user";
           return {
             url: `${baseUrl}/author/${userSlug}/`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly' as const,
-            priority: 0.5,
+            lastModified: new Date('2026-05-01'),
           };
         })
     : [];
@@ -73,33 +65,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     {
       url: `${baseUrl}/`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
+      lastModified: new Date('2026-05-31'),
     },
     {
       url: `${baseUrl}/about-us/`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      lastModified: new Date('2026-05-01'),
     },
     {
       url: `${baseUrl}/travel-guide/`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
+      lastModified: new Date('2026-05-31'),
     },
     {
       url: `${baseUrl}/contact/`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
+      lastModified: new Date('2026-05-01'),
     },
     {
       url: `${baseUrl}/contacto/`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
+      lastModified: new Date('2026-05-01'),
     },
     ...cityUrls,
     ...tourUrls,

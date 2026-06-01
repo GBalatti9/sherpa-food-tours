@@ -191,3 +191,177 @@
 ---
 
 *Action plan generated from full SEO audit, May 19, 2026*
+
+---
+---
+
+# SEGUNDA AUDITORIA - Pendientes Manuales (31 de mayo 2026)
+
+Los siguientes items fueron detectados en la segunda auditoria (analisis profundo del codigo fuente con 8 subagentes especializados). Los fixes de codigo ya fueron implementados. Estos son los pendientes que requieren accion manual, CMS, o decisiones de negocio.
+
+**Nota:** Los slugs de Buenos Aires (`/city/buenos-aires-2/`) y San Telmo (`/tour/san-telmo-tour-2/`) ya fueron corregidos.
+
+---
+
+## YA IMPLEMENTADO (codigo) - Segunda Auditoria
+
+| # | Fix | Archivo |
+|---|---|---|
+| 1 | Desbloquear FacebookBot en robots.txt (estaba agrupado con training crawlers) | `robots.ts` |
+| 2 | Agregar ClaudeBot explicitamente a robots.txt | `robots.ts` |
+| 3 | Fix typo footer logo "Shera" -> "Sherpa Food Tours logo" + agregar width/height | `footer.tsx` |
+| 4 | Agregar H1 a contact page (era H2) | `contact/page.tsx` |
+| 5 | Agregar schema ContactPage + BreadcrumbList a contact page | `contact/page.tsx` |
+| 6 | Mostrar email info@sherpafoodtours.com en contact page | `contact/page.tsx` |
+| 7 | Eliminar console.log de produccion en tour page | `tour/[slug]/page.tsx` |
+| 8 | Fix "Por:" -> "By:" en articulos en ingles | `travel-guide/[city]/[slug]/page.tsx` |
+| 9 | Eliminar Microdata duplicada de articulos (itemScope/itemProp) | `travel-guide/[city]/[slug]/page.tsx` |
+| 10 | Fix H1 de About Us - cambiar `<div>` a `<span>` dentro del heading | `about-us/page.tsx` |
+| 11 | Fix URL relativa del logo en CollectionPage schema | `travel-guide/page.tsx` |
+| 12 | Agregar @id de org al publisher de CollectionPage | `travel-guide/page.tsx` |
+| 13 | Cambiar TravelAgency -> TourOperator en homepage schema | `page.tsx` |
+| 14 | Agregar LinkedIn a sameAs del Organization schema | `page.tsx` |
+| 15 | Fix offers.price NaN risk (guardia condicional) | `tour/[slug]/page.tsx` |
+| 16 | Cambiar ratingCount -> reviewCount en tour schema | `tour/[slug]/page.tsx` |
+| 17 | Fix og:type de "article" a "website" en tour pages | `tour/[slug]/page.tsx` |
+| 18 | Fix tourUrl trailing slash | `tour/[slug]/page.tsx` |
+| 19 | Fix fetchPriority en As Featured In logos (de "high" a lazy) | `as-featured-in.tsx` |
+| 20 | Fix URLs absolutas hardcodeadas en footer -> relativas | `footer.tsx` |
+| 21 | Fix llms.txt URL stale (buenos-aires-2 -> buenos-aires) | `public/llms.txt` |
+| 22 | Sitemap: eliminar priority/changefreq, usar lastModified real | `sitemap.ts` |
+
+---
+
+## PENDIENTES MANUALES - Segunda Auditoria
+
+### INFRAESTRUCTURA (Vercel / CMS)
+
+#### ~~P1. Cambiar variable de entorno NEXT_PUBLIC_WP_URL en produccion~~ DESCARTADO
+- **Nota:** `staging.sherpafoodtours.com` es en realidad el CMS WordPress de produccion (nombre legacy, no es un servidor de staging). Las imagenes se sirven correctamente desde el CMS real. No hay riesgo de caida ni de dominio temporal. El unico impacto menor es estetico (la palabra "staging" en las URLs de imagenes) y un DNS lookup adicional al subdominio, pero no es critico.
+- **Accion:** No requiere cambio. Considerar renombrar el subdominio a `cms.sherpafoodtours.com` o `wp.sherpafoodtours.com` en el futuro para mayor claridad, pero no es urgente.
+
+#### P2. Fix patron dual de imagen LCP en MainImage
+- **Impacto:** CRITICO (performance)
+- **Que:** `main-image.tsx` renderiza DOS imagenes apiladas (placeholder + WordPress), ambas con `priority`. El preload del hero esta comentado en `page.tsx` lineas 283-299.
+- **Accion:** Rediseñar el componente para usar una sola imagen con CSS background-color como placeholder. Descomentar y corregir el preload link.
+- **Esfuerzo:** 3 horas (requiere testing cuidadoso)
+- **Score impact:** +4 puntos de CWV
+
+#### P3. Migrar imagenes de `<img>` crudo a Next.js `<Image>`
+- **Impacto:** ALTO (performance)
+- **Que:** Solo el hero usa `<Image>`. Todas las demas imagenes (city cards, gallery, logos, experience section) usan `<img>` crudo, perdiendo srcset, AVIF, y lazy loading automatico.
+- **Accion:** Migrar progresivamente empezando por city cards en homepage.
+- **Esfuerzo:** 4-6 horas
+- **Score impact:** +2 puntos
+
+### CONTENIDO (WordPress CMS)
+
+#### P4. Agregar alt text a 18+ imagenes en WordPress
+- **Impacto:** ALTO
+- **Que:** 52% de las imagenes del homepage no tienen alt text. Incluye: 8 banderas de paises, 6 imagenes del gallery, 2 imagenes de "experience section", 2 logos de "featured in".
+- **Accion:** Entrar a WordPress > Media Library y agregar alt text descriptivo a cada imagen.
+- **Esfuerzo:** 1 hora
+- **Score impact:** +2 puntos
+
+#### ~~P5. Reconciliar numeros de reviews en homepage~~ COMPLETADO
+- **Resuelto:** Schema actualizado a `reviewCount: 17000` (2,000 Google + 15,000 TripAdvisor). llms.txt actualizado a "17,000+ combined". Ahora los 3 valores (HTML, schema, llms.txt) son consistentes.
+
+#### P6. Agregar width/height a imagenes del gallery (Memories)
+- **Impacto:** MEDIO (CLS)
+- **Que:** Las imagenes en `memories.tsx` no tienen atributos de dimension, causando layout shift.
+- **Accion:** Agregar `width` y `height` en el componente Memories.
+- **Esfuerzo:** 20 minutos
+
+### SCHEMA Y E-E-A-T
+
+#### P7. Agregar Person schema para co-founders en About page
+- **Impacto:** ALTO
+- **Que:** Guille Borthwick (ex-IBM) y Alex Pels (Michelin) tienen credenciales fuertes pero no tienen schema Person.
+- **Accion:** Agregar JSON-LD Person con jobTitle, description, sameAs (LinkedIn) y worksFor en `about-us/page.tsx`.
+- **Esfuerzo:** 1-2 horas
+- **Requiere:** URLs de LinkedIn de ambos co-founders
+
+#### P8. Mejorar Person schema en author pages
+- **Impacto:** MEDIO
+- **Que:** ProfilePage schema actual no tiene `knowsAbout`, `jobTitle`, ni `sameAs`. AI no puede determinar expertise.
+- **Accion:** Agregar estas propiedades en `author/[user]/page.tsx`. Puede requerir nuevos campos ACF en WordPress.
+- **Esfuerzo:** 1-2 horas
+
+#### P9. Agregar geo coordinates a TourOperator schema en city pages
+- **Impacto:** ALTO (local SEO)
+- **Que:** Ningun city page tiene coordenadas geograficas en el schema. Para un SAB sin direccion, las coords son la señal principal.
+- **Accion:** Agregar campo ACF para lat/lng por ciudad, o hardcodear coordenadas centrales. Agregar `geo: { @type: GeoCoordinates, latitude, longitude }` al TourOperator schema.
+- **Esfuerzo:** 2 horas
+- **Datos necesarios:** Coordenadas de meeting point o centro de cada ciudad
+
+#### P10. Agregar addressCountry al TourOperator schema en city pages
+- **Impacto:** MEDIO
+- **Que:** Solo tiene `addressLocality` sin `addressCountry`. Google necesita ambos.
+- **Accion:** Agregar un mapping ciudad->pais ISO o un campo ACF.
+- **Esfuerzo:** 30 minutos
+
+### LEGAL Y TRUST
+
+#### P11. Crear Privacy Policy y Terms of Service
+- **Impacto:** ALTO (E-E-A-T trust)
+- **Que:** No existen links a Privacy Policy ni Terms en ninguna parte del sitio. Requerimiento basico de trust.
+- **Accion:** Crear las paginas con contenido legal y agregar links en el footer.
+- **Esfuerzo:** 4-6 horas (contenido + implementacion)
+
+### SXO Y CONVERSION
+
+#### P12. Crear pagina /groups o /corporate
+- **Impacto:** MEDIO
+- **Que:** La persona "corporate planner" score 25/100. Cero contenido B2B. "Partner With Us" y "Careers" apuntan a la misma pagina de contacto.
+- **Accion:** Crear pagina dedicada con formulario de grupo, pricing, y testimonios corporativos.
+- **Esfuerzo:** 4-8 horas
+
+#### P13. Transformar Travel Guide hub en pillar page
+- **Impacto:** MEDIO
+- **Que:** Actualmente es un index de tarjetas (SXO score: 40/100). SERP premia pillar pages de 1500+ palabras.
+- **Accion:** Agregar 800-1200 palabras de copy editorial original como intro, antes del listado de articulos.
+- **Esfuerzo:** 3-4 horas
+
+#### P14. Fix CTA "View the experience" en city pages
+- **Impacto:** MEDIO
+- **Que:** El boton apunta al anchor `#as-feature-in` (seccion de logos), no a la seccion de tours.
+- **Accion:** Cambiar el anchor target a la seccion correcta de tour listings.
+- **Esfuerzo:** 15 minutos
+- **Requiere:** Verificar el ID del anchor en el componente de city pages
+
+### GEO Y AI
+
+#### P15. Expandir llms.txt con inventario completo
+- **Impacto:** MEDIO
+- **Que:** Solo lista 3 de 72 articulos. AI systems que usan llms.txt solo descubren esas 3 guias.
+- **Accion:** Crear `llms-full.txt` con todos los articulos, tours, y author pages. Agregar link desde llms.txt.
+- **Esfuerzo:** 2-3 horas
+
+#### P16. Crear canal de YouTube
+- **Impacto:** ALTO (GEO)
+- **Que:** YouTube tiene 0.737 de correlacion con frecuencia de citacion AI. Es la señal mas fuerte de brand para GEO. Sherpa no tiene presencia en YouTube.
+- **Accion:** Crear canal, subir 10-20 videos (tour recaps, "que comer en X"), agregar URL a sameAs del schema.
+- **Esfuerzo:** Alto (ongoing - produccion de video)
+
+#### P17. Agregar `speakable` schema a city y tour pages
+- **Impacto:** MEDIO
+- **Que:** Señal directa a Google AI Overviews para identificar contenido quoteable.
+- **Accion:** Identificar 2-3 oraciones factuales por pagina y marcarlas con speakable.
+- **Esfuerzo:** 2-3 horas
+
+---
+
+## Proyeccion de Score Actualizada (Segunda Auditoria)
+
+| Fase | Score | Cambio |
+|---|---|---|
+| Post primera auditoria (33 fixes) | 62/100 | - |
+| + Fixes de codigo segunda auditoria (22 items) | 72/100 | +10 |
+| + P1 (staging env var) + P5 (reviews) | 77/100 | +5 |
+| + P2 (LCP image) + P4 (alt text) + P6 (gallery dims) | 82/100 | +5 |
+| + P7-P10 (schema/E-E-A-T) + P11 (legal) | 87/100 | +5 |
+| + Pendientes originales (GBP, contenido editorial, NAP) | 90+/100 | +3 |
+
+---
+
+*Pendientes agregados de la segunda auditoria, 31 de mayo 2026*

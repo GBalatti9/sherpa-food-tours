@@ -189,9 +189,9 @@ export default async function AboutUsPage() {
                 <article>
                     <section className="about-us-page-first-section">
                         <h1>The
-                            <div className="px-3">
+                            <span className="px-3 inline-block">
                                 <img src="/sherpa.webp" alt="Sherpa Food Tours logo" width="120" height="40" />
-                            </div>
+                            </span>
                             manifesto
                         </h1>
                         <div dangerouslySetInnerHTML={{ __html: content }} className="render-html"></div>

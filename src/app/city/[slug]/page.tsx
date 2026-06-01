@@ -459,7 +459,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                 <div className="ctas">
                                     <BookNowButton link={fareharborLink} />
 
-                                    <Link href="#as-feature-in" className="view-the-experience">View the experience</Link>
+                                    <Link href="#tour-experiences" className="view-the-experience">View the experience</Link>
                                 </div>
                             </div>
                         </div>
@@ -478,7 +478,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                         items={data_our_experiences_section.items}
                     />
                 }
-                <section className="fourth-section" id="as-feature-in">
+                <section className="fourth-section" id="tour-experiences">
                     <JustRelax />
                     <TravelGuideCardsSection tours={tours} />
                 </section>

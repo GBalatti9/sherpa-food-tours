@@ -114,10 +114,11 @@ export default async function TravelGuidePage() {
         "url": `${baseUrl}/travel-guide/`,
         "publisher": {
             "@type": "Organization",
+            "@id": "https://www.sherpafoodtours.com/#organization",
             "name": "Sherpa Food Tours",
             "logo": {
                 "@type": "ImageObject",
-                "url": "/sherpa-complete-logo.webp"
+                "url": `${baseUrl}/sherpa-complete-logo.webp`
             }
         },
         "mainEntity": {

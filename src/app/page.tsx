@@ -220,7 +220,7 @@ export default async function Home() {
   // Generate structured data for SEO
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "TravelAgency",
+    "@type": "TourOperator",
     "@id": "https://www.sherpafoodtours.com/#organization",
     "name": "Sherpa Food Tours",
     "description": "Authentic food tours and culinary experiences around the world",
@@ -236,12 +236,13 @@ export default async function Home() {
       "https://www.facebook.com/sherpafoodtours",
       "https://www.instagram.com/sherpafoodtours",
       "https://www.tiktok.com/@sherpafoodtours",
-      "https://www.tripadvisor.com/Attraction_Review-g312741-d23715647-Reviews-Sherpa_Food_Tours-Buenos_Aires_Capital_Federal_District.html"
+      "https://www.tripadvisor.com/Attraction_Review-g312741-d23715647-Reviews-Sherpa_Food_Tours-Buenos_Aires_Capital_Federal_District.html",
+      "https://www.linkedin.com/company/sherpafoodtours"
     ],
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": 4.8,
-      "reviewCount": 4649,
+      "reviewCount": 17000,
       "bestRating": 5,
       "worstRating": 1
     },
@@ -280,23 +281,15 @@ export default async function Home() {
 
   return (
     <>
-      {/* Preload de imagen placeholder (crítica - aparece primero) */}
-      {/* <link
-        rel="preload"
-        as="image"
-        href="/sherpa-main-image.webp"
-        fetchPriority="high"
-      /> */}
-
-      {/* Preload de imagen real de WordPress */}
-      {/* {background_image?.img && (
+      {/* Preload hero image for LCP */}
+      {background_image?.img && (
         <link
           rel="preload"
           as="image"
           href={background_image.img}
           fetchPriority="high"
         />
-      )} */}
+      )}
 
       {/* Structured Data */}
       <script

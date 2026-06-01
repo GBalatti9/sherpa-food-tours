@@ -58,16 +58,42 @@ export const metadata: Metadata = {
 };
 
 export default async function ContactPage() {
+    const contactPageSchema = {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "@id": "https://www.sherpafoodtours.com/contact/#webpage",
+        "name": "Contact Sherpa Food Tours",
+        "description": "Have questions about our food tours? Contact Sherpa Food Tours today.",
+        "url": "https://www.sherpafoodtours.com/contact/",
+        "isPartOf": { "@id": "https://www.sherpafoodtours.com/#website" },
+        "publisher": { "@id": "https://www.sherpafoodtours.com/#organization" }
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sherpafoodtours.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.sherpafoodtours.com/contact/" }
+        ]
+    };
 
     return (
-        <main className="contact-page" style={{ minHeight: "80vh" }}>
-            <section className="contact-section !max-w-[700px] mx-auto">
-                <h2>Got any questions? <span>Contact Us!</span></h2>
-                {/* <FormContact /> */}
-                <div>
-                    <TallyForm />
-                </div>
-            </section>
-        </main>
+        <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            <main className="contact-page" style={{ minHeight: "80vh" }}>
+                <section className="contact-section !max-w-[700px] mx-auto">
+                    <h1>Got any questions? <span>Contact Us!</span></h1>
+                    <p style={{ textAlign: 'center', marginBottom: '1.5rem', opacity: 0.8 }}>
+                        Email us at <a href="mailto:info@sherpafoodtours.com">info@sherpafoodtours.com</a>
+                    </p>
+                    {/* <FormContact /> */}
+                    <div>
+                        <TallyForm />
+                    </div>
+                </section>
+            </main>
+        </>
     );
 };
