@@ -1,5 +1,7 @@
 "use client";
 
+import { generateEventId, sendServerEvent } from "@/lib/tiktok-client";
+
 const FAREHARBOR_BOOK_URL =
   "https://fareharbor.com/embeds/book/sherpafoodtours_argentina/?flow=1413860&ga4t=G-KJV962ZQ3V,1083513053.1749557566__1758810037;AW-16551382136,undefined__undefined;&language=en-us&full-items=yes&back=https://www.sherpafoodtours.com/&g4=yes";
 
@@ -13,12 +15,17 @@ export default function BookNowButton({ link, data_tour }: { link?: string; data
       data-fareharbor-lightframe={data_tour}
       onClick={(e) => {
         e.preventDefault();
+        const eventId = generateEventId();
         if (typeof window.rdt === "function") {
           window.rdt("track", "AddToCart");
         }
         if (typeof window.ttq?.track === "function") {
-          window.ttq.track("AddToCart");
+          window.ttq.track("AddToCart", { event_id: eventId });
         }
+        sendServerEvent("AddToCart", eventId, {
+          content_type: "product",
+          content_id: data_tour || "general",
+        });
         const tempAnchor = document.createElement("a");
         tempAnchor.href = href;
         if (data_tour) {

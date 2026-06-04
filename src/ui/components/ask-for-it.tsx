@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { MouseEvent } from "react";
+import { generateEventId, sendServerEvent } from "@/lib/tiktok-client";
 
 type AskForItProps = {
   isButton?: boolean;
@@ -13,12 +14,14 @@ const scrollToAskForIt = (event: MouseEvent<HTMLElement>) => {
 
   if (typeof document === "undefined") return;
 
+  const eventId = generateEventId();
   if (typeof window.rdt === "function") {
     window.rdt("track", "Lead");
   }
   if (typeof window.ttq?.track === "function") {
-    window.ttq.track("SubmitForm");
+    window.ttq.track("ClickButton", { event_id: eventId });
   }
+  sendServerEvent("ClickButton", eventId, { button: "ask_for_it" });
 
   const section = document.getElementById("askForIt");
   if (!section) return;

@@ -3,6 +3,7 @@
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
+import { generateEventId, sendServerEvent } from "@/lib/tiktok-client";
 
 declare global {
   interface Window {
@@ -16,7 +17,7 @@ declare global {
     rdt?: (...args: unknown[]) => void;
     ttq?: {
       page: (...args: unknown[]) => void;
-      track: (...args: unknown[]) => void;
+      track: (event: string, params?: Record<string, unknown>) => void;
       [key: string]: unknown;
     };
   }
@@ -61,11 +62,20 @@ export default function MarketingScripts() {
       }
     }
 
-    // TikTok Pixel – SPA navigation tracking
-    if (typeof window.ttq?.page === "function") {
-      window.ttq.page();
+    // TikTok Pixel – SPA navigation tracking (client + server-side)
+    {
+      const pageEventId = generateEventId();
+      if (typeof window.ttq?.page === "function") {
+        window.ttq.page();
+      }
+      sendServerEvent("PageView", pageEventId);
+
       if (isContentPage(pathname)) {
-        window.ttq.track("ViewContent");
+        const vcEventId = generateEventId();
+        if (typeof window.ttq?.track === "function") {
+          window.ttq.track("ViewContent", { event_id: vcEventId });
+        }
+        sendServerEvent("ViewContent", vcEventId);
       }
     }
   }, [pathname, searchParams]);
@@ -78,10 +88,16 @@ export default function MarketingScripts() {
         if (typeof window.rdt === "function") {
           window.rdt("track", "ViewContent");
         }
+        const vcEventId = generateEventId();
         if (typeof window.ttq?.track === "function") {
-          window.ttq.track("ViewContent");
+          window.ttq.track("ViewContent", { event_id: vcEventId });
         }
+        sendServerEvent("ViewContent", vcEventId);
       }
+
+      // Server-side PageView on initial load
+      const pvEventId = generateEventId();
+      sendServerEvent("PageView", pvEventId);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
