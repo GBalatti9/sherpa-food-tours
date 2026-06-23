@@ -1,3 +1,5 @@
+import { fetchWithRetry } from "./fetch-with-retry";
+
 const domain = process.env.NEXT_PUBLIC_WP_URL;
 const apiUrl = `${domain}/wp-json/wp/v2`
 
@@ -18,25 +20,22 @@ function normalizeWpImageUrl(url: string): string {
 
 export const wp = {
     getPageInfo: async (slug: string) => {
-        try {
-            // Optimizado: agregar cache para reducir llamadas a WordPress
-            const url = `${apiUrl}/pages?slug=${slug}`;
-            const response = await fetch(url, {
-                next: { revalidate: 3600 } // cachea por 1 hora
-            });
-            if (!response.ok) console.error("No se pudo hacer fecth a la url: " + url);
-            const [data] = await response.json();
+        const url = `${apiUrl}/pages?slug=${slug}`;
+        const response = await fetchWithRetry(url, {
+            next: { revalidate: 3600 }
+        });
 
-            if (!data) return { title: "", content: "", acf: "", featured_media: null };
-
-
-            const { title: { rendered: title }, content: { rendered: content }, acf, featured_media } = data;
-
-            return { title, content, acf, featured_media };
-        } catch (error) {
-
-            return { title: "", content: "", acf: "", featured_media: null };
+        if (!response.ok) {
+            throw new Error(`WordPress API error ${response.status} for ${url}`);
         }
+
+        const [data] = await response.json();
+
+        // Page genuinely doesn't exist
+        if (!data) return { title: "", content: "", acf: "", featured_media: null };
+
+        const { title: { rendered: title }, content: { rendered: content }, acf, featured_media } = data;
+        return { title, content, acf, featured_media };
     },
     getPostInfo: async (slug: string) => {
         // Optimizado: agregar cache para reducir llamadas a WordPress; _embed incluye autor
@@ -248,22 +247,24 @@ export const wp = {
         }
     },
     getCityBySlug: async (slug: string) => {
-        try {
-            // Optimizado: agregar cache para reducir llamadas a WordPress
-            const url = `${apiUrl}/cities?slug=${slug}`;
-            const response = await fetch(url, {
-                next: { revalidate: 3600 } // cachea por 1 hora
-            })
+        const url = `${apiUrl}/cities?slug=${slug}`;
+        const response = await fetchWithRetry(url, {
+            next: { revalidate: 3600 }
+        });
 
-            if (!response.ok) throw new Error(`No se obtuvieron datos ${url}}`);
-            const [data] = await response.json();
-            const { title: { rendered: title }, content: { rendered: content }, acf: { pais: country_id }, acf, featured_media } = data;
+        if (!response.ok) {
+            throw new Error(`WordPress API error ${response.status} for ${url}`);
+        }
 
-            return { city_name: title, content, country_id: country_id, acf, featured_media };
-        } catch (error) {
-            console.log({ error })
+        const [data] = await response.json();
+
+        // City genuinely doesn't exist
+        if (!data) {
             return { city_name: "", content: "", country_id: 0, acf: null, featured_media: null };
         }
+
+        const { title: { rendered: title }, content: { rendered: content }, acf: { pais: country_id }, acf, featured_media } = data;
+        return { city_name: title, content, country_id: country_id, acf, featured_media };
     },
 
     getFaqById: async (id: number) => {
@@ -274,28 +275,24 @@ export const wp = {
     },
 
     getTourBySlug: async (slug: string) => {
-        try {
-            // Optimizado: agregar cache para reducir llamadas a WordPress
-            const url = `${apiUrl}/tours?slug=${slug}`;
-            // console.log({ url });
+        const url = `${apiUrl}/tours?slug=${slug}`;
+        const response = await fetchWithRetry(url, {
+            next: { revalidate: 3600 }
+        });
 
-            const response = await fetch(url, {
-                next: { revalidate: 3600 } // cachea por 1 hora
-            })
-            if (!response.ok) throw new Error(`No se obtuvieron datos: ${url}`);
-            const [data] = await response.json();
+        if (!response.ok) {
+            throw new Error(`WordPress API error ${response.status} for ${url}`);
+        }
 
-            //console.log({data});
-            if (!data) {
-                return { title: "", acf: null };
-            }
+        const [data] = await response.json();
 
-            const { title: { rendered: title }, acf } = data;
-            return { title, acf };
-        } catch (error) {
-            console.error(error);
+        // Tour genuinely doesn't exist
+        if (!data) {
             return { title: "", acf: null };
         }
+
+        const { title: { rendered: title }, acf } = data;
+        return { title, acf };
     },
 
     getAllCities: async () => {

@@ -1,0 +1,96 @@
+.terms-page {
+    min-height: 80vh;
+    padding: 3rem 1.3rem 5rem;
+
+    .terms-content {
+        max-width: 768px;
+        margin: auto;
+
+        h1 {
+            font-family: var(--font-dk-otago);
+            font-size: 2rem;
+            color: var(--title-color);
+            text-align: center;
+            margin-bottom: 0.5rem;
+
+            @media (min-width: 768px) {
+                font-size: 2.5rem;
+            }
+        }
+
+        .terms-updated {
+            text-align: center;
+            font-family: var(--font-excelsior);
+            font-style: italic;
+            color: #666;
+            margin-bottom: 2.5rem;
+            font-size: 0.95rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-family: var(--font-dk-otago);
+            font-size: 1.35rem;
+            color: var(--second-green);
+            margin-bottom: 0.75rem;
+
+            @media (min-width: 768px) {
+                font-size: 1.5rem;
+            }
+        }
+
+        p {
+            font-family: var(--font-excelsior);
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #333;
+            margin-bottom: 0.75rem;
+
+            @media (min-width: 768px) {
+                font-size: 1.05rem;
+            }
+        }
+
+        ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.75rem;
+
+            li {
+                font-family: var(--font-excelsior);
+                font-size: 1rem;
+                line-height: 1.7;
+                color: #333;
+                margin-bottom: 0.5rem;
+
+                @media (min-width: 768px) {
+                    font-size: 1.05rem;
+                }
+            }
+        }
+
+        a {
+            color: var(--title-color);
+            text-decoration: underline;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: var(--subtitle-color);
+            }
+        }
+
+        strong {
+            color: #1a1a1a;
+        }
+
+        .terms-address {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #555;
+        }
+    }
+}

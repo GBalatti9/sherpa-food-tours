@@ -100,6 +100,7 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
 
             <div className="footer-second-section">
                 <p>Sherpa Food Tours LLC & Sherpa Food Tours International LTD - Sherpa Food Tours is a trading name and registered trademark of Sherpa Food Tours International ltd. Registered in Great Britain and Northern Ireland no UK00004135333.</p>
+                <Link href="/terms-and-conditions/" className="terms-link">Terms and Conditions</Link>
             </div>
         </footer>
     )
