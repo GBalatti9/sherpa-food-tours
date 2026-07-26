@@ -10,7 +10,7 @@ import { TourRelationship } from "@/types/tour";
 import { cleanExcerpt } from "@/app/helpers/cleanExcerpt";
 import { Metadata } from "next";
 import he from "he";
-import { redirect, notFound } from "next/navigation";
+import { permanentRedirect, notFound } from "next/navigation";
 import ContentWithGalleries from "@/app/travel-guide/[city]/[slug]/components/content-with-galleries";
 import TableOfContents from "@/app/travel-guide/[city]/[slug]/components/table-of-contents";
 import { extractHeadings } from "@/app/helpers/extractHeadings";
@@ -40,7 +40,11 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     const imageUrl = img || "https://www.sherpafoodtours.com/imagen-de-portada.webp";
     const title = he.decode(post.title);
     const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
-    const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}/`;
+    // Usar la ciudad real del post (no el param de la URL) para el canonical
+    const realCitySlug = post.relaciones?.ciudades?.[0]?.title
+        ? slugify(post.relaciones.ciudades[0].title)
+        : city;
+    const articleUrl = `${baseUrl}/travel-guide/${realCitySlug}/${slug}/`;
 
     // Get city name for keywords
     const cityName = post.relaciones?.ciudades?.[0]?.title || city;
@@ -157,12 +161,18 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
         notFound();
     }
 
-    // Redirigir si el city param es "undefined" (URLs viejas indexadas por buscadores)
+    // Ciudad real del post (primera asignada en WordPress)
+    const correctCity = postData.relaciones?.ciudades?.[0]?.title
+        ? slugify(postData.relaciones.ciudades[0].title)
+        : null;
+
+    // 301 si el city param no coincide con la ciudad real del post
+    // (incluye URLs viejas con "undefined" indexadas por buscadores)
+    if (correctCity && city !== correctCity) {
+        permanentRedirect(`/travel-guide/${correctCity}/${slug}/`);
+    }
     if (city === 'undefined') {
-        const correctCity = postData.relaciones?.ciudades?.[0]?.title
-            ? slugify(postData.relaciones.ciudades[0].title)
-            : null;
-        redirect(correctCity ? `/travel-guide/${correctCity}/${slug}/` : '/travel-guide/');
+        permanentRedirect('/travel-guide/');
     }
 
     const { title, featured_media, excerpt, date, modified, relaciones, author } = postData;
@@ -204,7 +214,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
     // Generate structured data for SEO
     const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
-    const articleUrl = `${baseUrl}/travel-guide/${city}/${slug}/`;
+    const articleUrl = `${baseUrl}/travel-guide/${correctCity || city}/${slug}/`;
     const cityDisplayName = relaciones?.ciudades?.[0]?.title || city.replace(/-/g, ' ');
 
     // Ensure dates have timezone offset (append Z if no timezone present)
@@ -271,7 +281,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 "@type": "ListItem",
                 "position": 3,
                 "name": cityDisplayName,
-                "item": `${baseUrl}/travel-guide/${city}/`
+                "item": `${baseUrl}/travel-guide/${correctCity || city}/`
             },
             {
                 "@type": "ListItem",
