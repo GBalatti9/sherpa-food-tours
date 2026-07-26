@@ -771,6 +771,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/author/sof%C3%ADagonzalez',
+        destination: '/author/sofia-gonzalez/',
+        permanent: true,
+      },
+      {
+        source: '/author/sof%C3%ADagonzalez/',
+        destination: '/author/sofia-gonzalez/',
+        permanent: true,
+      },
+      {
         source: '/travel-guide/buenos-aires/buenos-aires-best-cocktail-bars-a-neighbourhood-guide',
         destination: '/travel-guide/buenos-aires/best-bars-in-buenos-aires/',
         permanent: true,
