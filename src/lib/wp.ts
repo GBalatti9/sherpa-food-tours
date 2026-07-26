@@ -146,7 +146,7 @@ export const wp = {
     },
     getAllTours: async () => {
         // Optimizado: agregar cache para reducir llamadas a WordPress
-        const response = await fetch(`${apiUrl}/tours`, {
+        const response = await fetch(`${apiUrl}/tours?per_page=100`, {
             next: { revalidate: 3600 } // cachea por 1 hora
         });
 
@@ -298,7 +298,7 @@ export const wp = {
     getAllCities: async () => {
         try {
 
-            const response = await fetch(`${apiUrl}/cities`, {
+            const response = await fetch(`${apiUrl}/cities?per_page=100`, {
                 next: { revalidate: 3600 } // cachea por 1 hora
             });
             if (!response.ok) throw new Error("No se obtuvieron datos");
