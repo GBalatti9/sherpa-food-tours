@@ -44,22 +44,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   // Get all authors for dynamic routes
-  const authors = await safeFetch(() => wp.getAllUsers(), { ok: false, data: [] }, 'getAllUsers');
-  // Filter out authors with no description (likely empty/thin pages like Gaston Balatti)
-  // and verify they have posts before including in sitemap
-  const authorUrls = authors.ok && authors.data
-    ? authors.data
-        .filter((author: { name: string; slug?: string; description?: string }) =>
-          author.name?.toLowerCase() !== "admin" && author.description && author.description.trim().length > 0
-        )
-        .map((author: { slug?: string; name?: string }) => {
-          const userSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, "") || "user";
-          return {
-            url: `${baseUrl}/author/${userSlug}/`,
-            lastModified: new Date('2026-05-01'),
-          };
-        })
+  const authors = await safeFetch(() => wp.getAllUsers(), { ok: false as const, data: null }, 'getAllUsers');
+  // Filter out authors with no description (likely empty/thin pages) and verify they
+  // have posts: authors without posts return 404, so listing them would be a broken sitemap entry.
+  const authorCandidates = authors.ok && authors.data
+    ? authors.data.filter((author: { name: string; slug?: string; description?: string }) =>
+        author.name?.toLowerCase() !== "admin" && author.description && author.description.trim().length > 0
+      )
     : [];
+
+  const authorUrls = (
+    await Promise.all(
+      authorCandidates.map(async (author: { id: number; slug?: string; name?: string }) => {
+        const posts = await safeFetch(
+          () => wp.getPostsByAuthorId(author.id, 1, 0),
+          { ok: false, data: null },
+          `getPostsByAuthorId(${author.id})`
+        );
+        if (!posts.ok || !posts.data?.length) return null;
+
+        const userSlug = author.slug || author.name?.toLowerCase().replace(/\s+/g, "") || "user";
+        return {
+          url: `${baseUrl}/author/${userSlug}/`,
+          lastModified: new Date('2026-05-01'),
+        };
+      })
+    )
+  ).filter((entry): entry is { url: string; lastModified: Date } => entry !== null);
 
 
   return [

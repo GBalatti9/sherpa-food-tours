@@ -67,8 +67,8 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
 
                     const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, '');
                     const imageAlt = `${cleanTitle} - ${slug || 'Sherpa Food Tours'}`;
-                    const authorSlug = (post.author_name?.name || "").toLowerCase().replace(/\s+/g, "") || "author";
-                    const authorUrl = `/author/${authorSlug}`;
+                    // Sin slug de WP no hay página de autor a la que enlazar: se muestra el nombre suelto.
+                    const authorUrl = post.author_name?.slug ? `/author/${post.author_name.slug}/` : null;
 
                     // First element - full width with description
                     if (i === 0) {
@@ -89,7 +89,7 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                     <div className="preview-data">
                                         <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h3>
                                         <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
-                                        <p className="preview-author"><span>Por: </span><Link href={authorUrl} onClick={(e) => e.stopPropagation()} className="preview-author-link">{post.author_name.name}</Link></p>
+                                        <p className="preview-author"><span>Por: </span>{authorUrl ? <Link href={authorUrl} onClick={(e) => e.stopPropagation()} className="preview-author-link">{post.author_name.name}</Link> : post.author_name.name}</p>
                                     </div>
                                 </Link>
                             </div>
@@ -108,8 +108,7 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                         : "https://www.sherpafoodtours.com/travel-guide/";
                                     const cleanTitleGroup = p.title.rendered.replace(/<[^>]*>/g, '');
                                     const imageAltGroup = `${cleanTitleGroup} - ${s || 'Sherpa Food Tours'}`;
-                                    const pAuthorSlug = (p.author_name?.name || "").toLowerCase().replace(/\s+/g, "") || "author";
-                                    const pAuthorUrl = `/author/${pAuthorSlug}`;
+                                    const pAuthorUrl = p.author_name?.slug ? `/author/${p.author_name.slug}/` : null;
 
                                     return (
                                         <div className="preview-wrapper" key={p.id}>
@@ -127,7 +126,7 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                                 </div>
                                                 <div className="preview-data">
                                                     <h3 dangerouslySetInnerHTML={{ __html: p.title.rendered }}></h3>
-                                                    <p className="preview-author"><span>Por: </span><Link href={pAuthorUrl} onClick={(e) => e.stopPropagation()} className="preview-author-link">{p.author_name.name}</Link></p>
+                                                    <p className="preview-author"><span>Por: </span>{pAuthorUrl ? <Link href={pAuthorUrl} onClick={(e) => e.stopPropagation()} className="preview-author-link">{p.author_name.name}</Link> : p.author_name.name}</p>
                                                 </div>
                                             </Link>
                                         </div>
@@ -155,7 +154,7 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                     </div>
                                     <div className="preview-data">
                                         <h3>{cleanTitle}</h3>
-                                        <p className="preview-author"><span>Por: </span><Link href={authorUrl} onClick={(e) => e.stopPropagation()} className="preview-author-link">{post.author_name.name}</Link></p>
+                                        <p className="preview-author"><span>Por: </span>{authorUrl ? <Link href={authorUrl} onClick={(e) => e.stopPropagation()} className="preview-author-link">{post.author_name.name}</Link> : post.author_name.name}</p>
                                     </div>
                                 </Link>
                             </div>

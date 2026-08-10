@@ -58,6 +58,7 @@ export interface FormattedWpPost extends WPPost {
   };
   author_name: {
     name: string;
+    slug?: string | null;
   };
   city: string;
   city_slug: string;

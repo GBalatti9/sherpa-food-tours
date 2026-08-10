@@ -218,15 +218,17 @@ export const wp = {
 
             if (!response.ok) {
                 console.warn(`⚠️ No se pudo obtener autor ID ${id}`);
-                return { name: "Autor desconocido" }; // fallback
+                return { name: "Autor desconocido", slug: null }; // fallback
             }
 
-            const { name } = await response.json();
-            return { name };
+            // El slug real de WP: los bylines lo necesitan para enlazar a /author/<slug>/
+            // en vez de derivarlo del nombre (que generaba slugs con acentos).
+            const { name, slug } = await response.json();
+            return { name, slug: slug ?? null };
 
         } catch (e) {
             console.warn(`⚠️ Error getAuthor(${id}):`, e);
-            return { name: "Autor desconocido" };
+            return { name: "Autor desconocido", slug: null };
         }
     },
     getTourById: async (id: number) => {
@@ -327,15 +329,22 @@ export const wp = {
         }
     },
 
+    // ok:false significa "WP falló"; ok:true con data:[] significa "el autor no tiene posts".
+    // La distinción importa: author/[user] devuelve 404 en el segundo caso y 500 en el primero.
     getPostsByAuthorId: async (id: number, limit = 10, offset = 0) => {
         try {
             const url = `${apiUrl}/posts?author=${id}&per_page=${limit}&offset=${offset}`;
             const response = await fetch(url);
+            if (!response.ok) {
+                console.warn(`⚠️ No se pudieron obtener posts del autor ${id}: ${response.status}`);
+                return { ok: false as const, data: null };
+            }
             const data = await response.json();
-            return { ok: true, data };
+            if (!Array.isArray(data)) return { ok: false as const, data: null };
+            return { ok: true as const, data };
         } catch (error) {
             console.error(error)
-            return { ok: false, data: null }
+            return { ok: false as const, data: null }
         }
     },
 
@@ -346,10 +355,15 @@ export const wp = {
             const response = await fetch(url, {
                 next: { revalidate: 3600 } // cachea por 1 hora
             });
+            if (!response.ok) {
+                console.warn(`⚠️ No se pudieron obtener los usuarios: ${response.status}`);
+                return { ok: false as const, data: null };
+            }
             const data = await response.json();
-            return { ok: true, data };
+            if (!Array.isArray(data)) return { ok: false as const, data: null };
+            return { ok: true as const, data };
         } catch (error) {
-            return { ok: false, data: null }
+            return { ok: false as const, data: null }
         }
     },
 

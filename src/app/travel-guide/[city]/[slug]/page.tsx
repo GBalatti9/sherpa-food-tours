@@ -235,9 +235,9 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
         "dateModified": ensureTimezone(modified),
         "author": {
             "@type": "Person",
-            "@id": author?.name ? `${baseUrl}/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}/#person` : undefined,
+            "@id": author?.slug ? `${baseUrl}/author/${author.slug}/#person` : undefined,
             "name": author?.name ?? "Sherpa Food Tours",
-            "url": author?.name ? `${baseUrl}/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}/` : baseUrl
+            "url": author?.slug ? `${baseUrl}/author/${author.slug}/` : baseUrl
         },
         "publisher": {
             "@type": "Organization",
@@ -325,12 +325,16 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                     {author?.name && (
                         <p className="article-author">
                             By:{" "}
-                            <Link
-                                href={`/author/${author.slug || author.name.toLowerCase().replace(/\s+/g, "")}`}
-                                className="article-author-link"
-                            >
-                                {author.name}
-                            </Link>
+                            {author.slug ? (
+                                <Link
+                                    href={`/author/${author.slug}/`}
+                                    className="article-author-link"
+                                >
+                                    {author.name}
+                                </Link>
+                            ) : (
+                                author.name
+                            )}
                         </p>
                     )}
                 </div>

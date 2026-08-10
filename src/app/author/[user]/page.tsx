@@ -1,5 +1,5 @@
 import { wp } from "@/lib/wp";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import AuthorPosts from "./components/author-posts";
 import { WPPost } from "@/types/post";
 import { PostWithImage } from "./components/author-posts";
@@ -92,9 +92,20 @@ export async function generateStaticParams() {
             author.name?.toLowerCase() !== "admin"
         );
 
-        return nonAdminUsers.map((author: { slug?: string; name?: string }) => ({
-            user: author.slug || author.name?.toLowerCase().replace(/\s+/g, "") || "user"
-        }));
+        // Sólo prerenderizar autores que publicaron algo: los usuarios del CMS sin
+        // artículos caen en el notFound() de la página y devuelven 404.
+        const withPosts = await Promise.all(
+            nonAdminUsers.map(async (author: { id: number; slug?: string; name?: string }) => {
+                const posts = await wp.getPostsByAuthorId(author.id, 1, 0);
+                return posts.ok && posts.data.length > 0 ? author : null;
+            })
+        );
+
+        return withPosts
+            .filter((author): author is { id: number; slug?: string; name?: string } => author !== null)
+            .map((author) => ({
+                user: author.slug || author.name?.toLowerCase().replace(/\s+/g, "") || "user"
+            }));
     } catch (err) {
         console.warn("No se pudo obtener author para static params:", err);
         return [];
@@ -107,8 +118,10 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
 
     const allUsers = await wp.getAllUsers();
 
+    // WP caído no es un 404: propagar el error da 500, que Google reintenta
+    // en vez de desindexar las páginas de autores legítimos.
     if (!allUsers.ok || !allUsers.data.length) {
-        redirect('/');
+        throw new Error("WP users endpoint unavailable");
     }
 
     const currentUser = allUsers.data.find((author: { slug?: string; name: string }) => {
@@ -116,24 +129,21 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
         return authorSlug === user && author.name?.toLowerCase() !== "admin";
     });
 
+    // El autor no existe: 404 legítimo (antes hacía 307 al home, que Google marca como soft 404).
     if (!currentUser || currentUser.name?.toLowerCase() === "admin") {
-        redirect('/');
+        notFound();
     }
-
 
     const postsResult = await wp.getPostsByAuthorId(currentUser.id, 10, 0);
 
-    if (!postsResult.ok || !postsResult.data || postsResult.data.length === 0) {
-        return (
-            <>
-                {/* noindex empty author pages to prevent thin content indexing */}
-                <meta name="robots" content="noindex, follow" />
-                <div style={{ padding: '2rem', textAlign: 'center' }}>
-                    <h1>Posts by {currentUser.name}</h1>
-                    <p>No posts found.</p>
-                </div>
-            </>
-        );
+    if (!postsResult.ok) {
+        throw new Error(`WP posts endpoint unavailable for author ${currentUser.id}`);
+    }
+
+    // Usuario del CMS que nunca publicó: la página no tiene razón de existir.
+    // Devolver 200 con "No posts found" es lo que Google reporta como soft 404.
+    if (postsResult.data.length === 0) {
+        notFound();
     }
 
     const formattedPosts = await Promise.all(

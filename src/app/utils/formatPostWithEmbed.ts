@@ -2,7 +2,8 @@ import { WPPost } from "@/types/post";
 
 export interface PostWithImageData extends WPPost {
   image: { img: string; alt: string };
-  author_name: { name: string };
+  // slug es el de WP: los bylines enlazan a /author/<slug>/ y sin él no enlazan.
+  author_name: { name: string; slug?: string | null };
 }
 
 const DEFAULT_IMAGE = "https://www.sherpafoodtours.com/imagen-de-portada.webp";
@@ -28,7 +29,7 @@ function normalizeWpImageUrl(url: string): string {
  */
 export function formatPostFromEmbed(post: WPPost & { _embedded?: Record<string, unknown[]> }): PostWithImageData {
   let image = { img: DEFAULT_IMAGE, alt: "" };
-  let authorName = { name: "Unknown" };
+  let authorName: { name: string; slug?: string | null } = { name: "Unknown", slug: null };
 
   if (post._embedded) {
     const media = post._embedded["wp:featuredmedia"] as { source_url?: string; alt_text?: string }[] | undefined;
@@ -36,9 +37,9 @@ export function formatPostFromEmbed(post: WPPost & { _embedded?: Record<string, 
       image = { img: normalizeWpImageUrl(media[0].source_url), alt: media[0].alt_text || "" };
     }
 
-    const authors = post._embedded["author"] as { name?: string }[] | undefined;
+    const authors = post._embedded["author"] as { name?: string; slug?: string }[] | undefined;
     if (authors && authors[0]?.name) {
-      authorName = { name: authors[0].name };
+      authorName = { name: authors[0].name, slug: authors[0].slug ?? null };
     }
   }
 
