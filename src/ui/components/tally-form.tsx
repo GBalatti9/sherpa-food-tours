@@ -6,19 +6,11 @@ export default function TallyForm() {
     const [src, setSrc] = useState('')
 
     useEffect(() => {
-        // Obtener la URL completa de la página actual
-        const currentUrl = new URL(window.location.href)
+        // Pasar el pathname actual a Tally como hidden field 'from',
+        // sin modificar la URL del navegador
+        const from = encodeURIComponent(window.location.pathname)
 
-        // Agregar el pathname como query parameter 'from' a la URL actual
-        currentUrl.searchParams.set('from', window.location.pathname)
-
-        // Actualizar la URL del navegador SIN recargar la página
-        window.history.replaceState({}, '', currentUrl.toString())
-
-        console.log('URL actualizada:', currentUrl.toString())
-
-        // Construir la URL de Tally
-        const tallyUrl = `https://tally.so/embed/dWEerD?hideTitle=1&transparentBackground=1&dynamicHeight=1`
+        const tallyUrl = `https://tally.so/embed/dWEerD?hideTitle=1&transparentBackground=1&dynamicHeight=1&from=${from}`
         setSrc(tallyUrl)
 
         // Esperar un momento para que React actualice el DOM antes de cargar el script
