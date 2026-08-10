@@ -9,7 +9,7 @@ import { useState, useRef, useEffect } from "react";
 
 export default function MobileMenu({ items, currentPath, cities }: { items: NavBarLink[], currentPath: string, cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[] }) {
     const [isOpen, setIsOpen] = useState(false);
-    const menuRef = useRef<HTMLDivElement>(null);
+    const menuRef = useRef<HTMLDetailsElement>(null);
 
     // Close menu on outside click or Escape key
     useEffect(() => {
@@ -33,43 +33,41 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
 
 
     return (
-        <div className="md:hidden">
-            {/* Hamburger Button */}
-            <button
-                onClick={() => setIsOpen((v) => !v)}
-                className={`relative z-50 transition-transform duration-200 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${isOpen ? "close" : ""}`}
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isOpen}
-                aria-controls="mobile-menu"
+        <details
+            className="mobile-menu-dd md:hidden"
+            ref={menuRef}
+            open={isOpen}
+            onToggle={(e) => setIsOpen(e.currentTarget.open)}
+        >
+            {/* Hamburger / close trigger — ambos íconos viven siempre en el DOM
+                y CSS elige cuál se ve, así el menú se puede cerrar sin JS */}
+            <summary
+                className="transition-transform duration-200 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                aria-label="Toggle menu"
             >
-                <span className="sr-only">{isOpen ? "Close menu" : "Open menu"}</span>
-                <div className="transition-transform duration-300">
-                    {isOpen ? <X className="h-6 w-6 rotate-90" aria-hidden /> :
-                        <Menu
-                            className="h-8 w-8"
-                            aria-hidden
-                            style={{ color: currentPath.includes("travel-guide") ? "#333" : "var(--background)" }}
-                        />
-                    }
-                </div>
-            </button>
+                <span className="sr-only">Toggle menu</span>
+                <X className="icon-close h-6 w-6 rotate-90" aria-hidden />
+                <Menu
+                    className="icon-open h-8 w-8"
+                    aria-hidden
+                    style={{ color: currentPath.includes("travel-guide") ? "#333" : "var(--background)" }}
+                />
+            </summary>
 
             {/* Mobile Menu Overlay */}
             <div
                 id="mobile-menu"
-                ref={menuRef}
-                className={`fixed inset-0 z-40 bg-background/95 backdrop-blur-sm transition-all duration-300 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-                    }`}
+                className="bg-background/95 backdrop-blur-sm"
                 role="dialog"
                 aria-modal="true"
                 aria-label="Mobile navigation"
             >
                 <nav className="nav-menu-mobile" role="menu">
-                    {items.map((item, index) =>
+                    {items.map((item) =>
                         item.label.toLowerCase() === "cities" ? (
                             <div key={item.href} role="none">
                                 {/* Título del grupo, no es clickeable */}
-                                <span className={`menu-item text-2xl font-medium text-foreground transition-all duration-300 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                                <span className="menu-item text-2xl font-medium text-foreground">
                                     {item.label}
                                 </span>
 
@@ -77,11 +75,10 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
                                     {cities.map((city) => (
                                         <Link
                                             key={city.slug}
-                                            href={`https://www.sherpafoodtours.com/city/${city.slug}/`}
+                                            href={`/city/${city.slug}/`}
                                             onClick={() => setIsOpen(false)}
                                             className="menu-link"
                                             role="menuitem"
-                                            tabIndex={isOpen ? 0 : -1}
                                         >
                                             <img src={city.flag.img} alt={city.flag.alt} />
                                             {city.city}
@@ -94,13 +91,8 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
                                 key={item.href}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className={`menu-item text-2xl font-medium text-foreground hover:text-primary transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                                    }`}
-                                style={{
-                                    transitionDelay: isOpen ? `${index * 100}ms` : "0ms",
-                                }}
+                                className="menu-item text-2xl font-medium text-foreground hover:text-primary transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                                 role="menuitem"
-                                tabIndex={isOpen ? 0 : -1}
                             >
                                 {item.label}
                             </Link>
@@ -116,6 +108,6 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
 
                 </ul>
             </div>
-        </div>
+        </details>
     );
 }

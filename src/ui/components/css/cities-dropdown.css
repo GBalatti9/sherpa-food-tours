@@ -1,8 +1,31 @@
+/* Dropdown nativo: abre sin JS y mantiene los links en el HTML servido */
+.cities-dd {
+  position: relative;
+  display: inline-block;
+}
+
 /* Trigger */
 .main-searcher {
   display: flex;
   gap: 0.3rem;
   align-items: center;
+}
+
+/* Oculta el marker nativo del <summary>, conservando el chevron propio */
+.cities-dd > summary {
+  list-style: none;
+}
+
+.cities-dd > summary::-webkit-details-marker {
+  display: none;
+}
+
+.cities-chevron {
+  transition: transform 200ms;
+}
+
+.cities-dd[open] .cities-chevron {
+  transform: rotate(180deg);
 }
 
 .searcher {

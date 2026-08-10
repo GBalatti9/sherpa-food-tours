@@ -5,13 +5,11 @@ import MobileMenu from "./mobile-menu";
 import CitiesDropdown from "./cities-dropdown";
 
 export default function NavBar({ currentPath, cities, fareharborLink }: { currentPath: string; cities: { id: number; city: string; slug: string; flag: { img: string; alt: string }; tourCount?: number }[]; fareharborLink?: string | null }) {
-    console.log("NAVBAR");
-
     const items = [
-        { label: 'Cities', href: 'https://www.sherpafoodtours.com/', path: '/city/*', activeColor: 'white' },
-        { label: 'Travel Guide', href: 'https://www.sherpafoodtours.com/travel-guide/', path: '/travel-guide/*', activeColor: 'var(--title-color)' },
-        { label: 'About us', href: 'https://www.sherpafoodtours.com/about-us/', path: '/about-us/', activeColor: 'white' },
-        { label: 'Contact', href: 'https://www.sherpafoodtours.com/contact/', path: '/contact/', activeColor: 'white' }
+        { label: 'Cities', href: '/', path: '/city/*', activeColor: 'white' },
+        { label: 'Travel Guide', href: '/travel-guide/', path: '/travel-guide/*', activeColor: 'var(--title-color)' },
+        { label: 'About us', href: '/about-us/', path: '/about-us/', activeColor: 'white' },
+        { label: 'Contact', href: '/contact/', path: '/contact/', activeColor: 'white' }
     ];
 
     const normalizePath = (path: string) => {
@@ -45,7 +43,7 @@ export default function NavBar({ currentPath, cities, fareharborLink }: { curren
                     <div className="md:hidden h-8 mr-2">
                         <MobileMenu items={items} currentPath={currentPath} cities={cities} />
                     </div>
-                    <Link href="https://www.sherpafoodtours.com/" aria-label="Go to homepage" className="logo-container">
+                    <Link href="/" aria-label="Go to homepage" className="logo-container">
 
                         <svg xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 79 31"

@@ -10,8 +10,6 @@ export default function NavBarWrapper({ cities, tours }: { cities: { id: number;
   const pathname = usePathname();
   const { fareharborLink: contextLink } = useFareHarbor();
 
-  console.log({ pathname });
-
   // Derive fareharbor link from cities/tours data based on current page
   let fareharborLink: string | null = contextLink;
   const citySlugMatch = pathname.match(/^\/city\/([^/]+)/);
