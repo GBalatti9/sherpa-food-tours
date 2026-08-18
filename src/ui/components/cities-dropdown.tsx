@@ -3,15 +3,13 @@
 import Link from "next/link"
 import "./css/cities-dropdown.css"
 import { useState, useEffect, useRef, useCallback } from "react"
+import { optimizedUrl, type WpImage } from "@/lib/wp-media";
 
 interface CityDisplay {
   id: number
   slug: string
   city: string
-  flag?: {
-    alt?: string;
-    img?: string;
-  }
+  flag?: Partial<WpImage>
   tourCount?: number
 }
 
@@ -186,7 +184,7 @@ export default function CitiesDropdown({
                 >
                   {city.flag?.img && (
                     <img
-                      src={city.flag.img}
+                      src={optimizedUrl(city.flag.img, 64)} width={city.flag.width} height={city.flag.height}
                       alt={city.flag.alt || city.city}
                       className="cities-row-flag"
                     />

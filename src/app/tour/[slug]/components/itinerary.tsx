@@ -2,6 +2,7 @@
 
 import type { Itinerary } from "@/types/itinerary";
 import { useEffect, useRef } from "react";
+import { optimizedUrl } from "@/lib/wp-media";
 
 export default function ItineraryComponent({ itinerary, desktopImgs }: { itinerary: Itinerary; desktopImgs: { img: string; alt: string }[] }) {
 
@@ -56,7 +57,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                 {/* Solo para START y END */}
                                 {item.information &&
                                     <div className="itinerary-step-information">
-                                        <img src={item?.map?.img || "/icons/map-pin.png"} alt={item?.map?.alt || "Map pin icon"} width="24" height="24" className="object-contain"/>
+                                        <img src={optimizedUrl(item?.map?.img || "/icons/map-pin.png", 64)} alt={item?.map?.alt || "Map pin icon"} width="24" height="24" className="object-contain"/>
                                         <div className="itinerary-step-data" dangerouslySetInnerHTML={{ __html: item.information }}>
                                         </div>
                                     </div>
@@ -71,7 +72,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                                 <div className="stop-item-text" dangerouslySetInnerHTML={{ __html: internal_item.title }}></div>
                                                 {internal_item.mobile_img &&
                                                     <div className="stop-item-img">
-                                                        <img src={internal_item.mobile_img.img} alt={internal_item.mobile_img.alt} width="300" height="200" loading="lazy" />
+                                                        <img src={optimizedUrl(internal_item.mobile_img.img, 384)} alt={internal_item.mobile_img.alt} width="300" height="200" loading="lazy" />
                                                     </div>
                                                 }
                                             </div>
@@ -101,7 +102,7 @@ export default function ItineraryComponent({ itinerary, desktopImgs }: { itinera
                                         }}
                                     >
                                         <img
-                                            src={element.img}
+                                            src={optimizedUrl(element.img, 640)}
                                             alt={element.alt}
                                             width="600"
                                             height="400"

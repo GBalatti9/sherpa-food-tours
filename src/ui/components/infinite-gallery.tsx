@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/free-mode';
 import { Autoplay, FreeMode } from "swiper/modules";
+import { optimizedUrl } from "@/lib/wp-media";
 
 export default function InfiniteGallery({images} : { images: string[] }) {
     const swiperRef = useRef<HTMLDivElement>(null);
@@ -74,7 +75,7 @@ export default function InfiniteGallery({images} : { images: string[] }) {
                 {images.map((src, index) => (
                     <div key={index} className="swiper-slide">
                         <div className="gallery-item">
-                            <img src={src} alt={`Imagen ${index + 1}`} width={300} height={200} />
+                            <img src={optimizedUrl(src, 640)} alt={`Imagen ${index + 1}`} width={300} height={200} />
                         </div>
                     </div>
                 ))}

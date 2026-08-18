@@ -27,25 +27,25 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
                         <div className="img-container">
                             {instagram ? (
                                 <Link href={instagram} target="_blank">
-                                    <img src="/icons/instagram.png" alt="Instagram" />
+                                    <img src="/icons/instagram.png" alt="Instagram" width={105} height={105} />
                                 </Link>
-                            ) : <img src="/icons/instagram.png" alt="Instagram" />}
+                            ) : <img src="/icons/instagram.png" alt="Instagram" width={105} height={105} />}
                         </div>
                         
                         <div className="img-container">
                             {tripadvisor ? (
                                 <Link href={tripadvisor} target="_blank">
-                                    <img src="/icons/tripadvisor.png" alt="Tripadvisor" />
+                                    <img src="/icons/tripadvisor.png" alt="Tripadvisor" width={115} height={115} />
                                 </Link>
-                            ) : <img src="/icons/tripadvisor.png" alt="Tripadvisor" />}
+                            ) : <img src="/icons/tripadvisor.png" alt="Tripadvisor" width={115} height={115} />}
                         </div>
                         
                         <div className="img-container">
                             {tiktok ? (
                                 <Link href={tiktok} target="_blank">
-                                    <img src="/icons/tiktok.png" alt="Tiktok" />
+                                    <img src="/icons/tiktok.png" alt="Tiktok" width={106} height={105} />
                                 </Link>
-                            ) : <img src="/icons/tiktok.png" alt="Tiktok" />}
+                            ) : <img src="/icons/tiktok.png" alt="Tiktok" width={106} height={105} />}
                         </div>
                         
                     </div>
@@ -68,23 +68,23 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
                             <div className="img-container">
                                 {instagram ? (
                                     <Link href={instagram} target="_blank">
-                                        <img src="/icons/instagram.png" alt="Instagram" />
+                                        <img src="/icons/instagram.png" alt="Instagram" width={105} height={105} />
                                     </Link>
-                                ) : <img src="/icons/instagram.png" alt="Instagram" />}
+                                ) : <img src="/icons/instagram.png" alt="Instagram" width={105} height={105} />}
                             </div>
                             <div className="img-container">
                                 {tripadvisor ? (
                                     <Link href={tripadvisor} target="_blank">
-                                        <img src="/icons/tripadvisor.png" alt="Tripadvisor" />
+                                        <img src="/icons/tripadvisor.png" alt="Tripadvisor" width={115} height={115} />
                                     </Link>
-                                ) : <img src="/icons/tripadvisor.png" alt="Tripadvisor" />}
+                                ) : <img src="/icons/tripadvisor.png" alt="Tripadvisor" width={115} height={115} />}
                             </div>
                             <div className="img-container">
                                 {tiktok ? (
                                     <Link href={tiktok} target="_blank">
-                                        <img src="/icons/tiktok.png" alt="Tiktok" />
+                                        <img src="/icons/tiktok.png" alt="Tiktok" width={106} height={105} />
                                     </Link>
-                                ) : <img src="/icons/tiktok.png" alt="Tiktok" />}
+                                ) : <img src="/icons/tiktok.png" alt="Tiktok" width={106} height={105} />}
                             </div>
                         </div>
                     </div>

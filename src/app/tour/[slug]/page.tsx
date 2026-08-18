@@ -2,6 +2,7 @@
 
 import { fetchImages } from "@/app/utils/fetchImages";
 import { wp } from "@/lib/wp";
+import { absoluteOptimizedUrl, optimizedUrl } from "@/lib/wp-media";
 import BookNowButton from "@/ui/components/book-now";
 import { Star } from "lucide-react";
 import React from "react";
@@ -161,7 +162,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             type: "website",
             images: [
                 {
-                    url: featuredImage.img || `https://www.sherpafoodtours.com/sherpa-main-image.webp`,
+                    url: absoluteOptimizedUrl(featuredImage.img || `https://www.sherpafoodtours.com/sherpa-main-image.webp`, 1200),
                     width: 1200,
                     height: 630,
                     alt: featuredImage.alt?.trim().length > 0 ? featuredImage.alt : `${tour.title} - Food Tour | Sherpa Food Tours`,
@@ -172,7 +173,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             card: "summary_large_image",
             title,
             description,
-            images: [featuredImage.img || `https://www.sherpafoodtours.com/sherpa-main-image.webp`],
+            images: [absoluteOptimizedUrl(featuredImage.img || `https://www.sherpafoodtours.com/sherpa-main-image.webp`, 1200)],
         },
         alternates: {
             canonical: `https://www.sherpafoodtours.com/tour/${slug}/`,
@@ -401,7 +402,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                     {/* <div className="image-gallery">
                     {images && images.slice(0, 3).map((image, i) => (
                         <div key={image.img + i} className="image-item">
-                            <img src={image.img} alt={image.alt || 'Tour Image'} />
+                            <img src={optimizedUrl(image.img, 1920)} width={image.width} height={image.height} alt={image.alt || 'Tour Image'} />
                         </div>
                     ))}
                 </div> */}
@@ -419,14 +420,14 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                                 <div className="reviews-container">
                                     <div className="google-container">
                                         <div className="img-container">
-                                            <img src={reviewsFormatted.google.image.img} alt={reviewsFormatted.google.image.alt} />
+                                            <img src={optimizedUrl(reviewsFormatted.google.image.img, 256)} width={reviewsFormatted.google.image.width} height={reviewsFormatted.google.image.height} alt={reviewsFormatted.google.image.alt} />
                                         </div>
                                         <span>|</span>
                                         <p>{reviewsFormatted.google.amount}</p>
                                     </div>
                                     <div className="tripadvisor-container">
                                         <div className="img-container">
-                                            <img src={reviewsFormatted.tripadvisor.image.img} alt={reviewsFormatted.tripadvisor.image.alt} />
+                                            <img src={optimizedUrl(reviewsFormatted.tripadvisor.image.img, 256)} width={reviewsFormatted.tripadvisor.image.width} height={reviewsFormatted.tripadvisor.image.height} alt={reviewsFormatted.tripadvisor.image.alt} />
                                         </div>
                                         <span>|</span>
                                         <p>{reviewsFormatted.tripadvisor.amount}</p>
@@ -499,7 +500,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                         {tourConditions.length > 0 && tourConditions.map((condition, i) => (
                             <div key={condition.title + i} className="condition-item">
                                 <div className="icon-container">
-                                    <img src={condition.icon.img} alt={condition.icon.alt || 'Condition Icon'} />
+                                    <img src={optimizedUrl(condition.icon.img, 64)} width={condition.icon.width} height={condition.icon.height} alt={condition.icon.alt || 'Condition Icon'} />
                                 </div>
                                 <div className="text-container">
                                     <h3>{condition.title}</h3>

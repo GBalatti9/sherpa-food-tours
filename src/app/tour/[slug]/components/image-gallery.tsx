@@ -4,6 +4,7 @@
 import { Image, ChevronLeft, ChevronRight } from "lucide-react";
 import "../../../../ui/components/css/image-gallery.css";
 import { useState, useEffect } from "react";
+import { optimizedUrl } from "@/lib/wp-media";
 
 export default function ImageGallery({ images }: { images: { img: string; alt: string }[] }) {
 
@@ -59,7 +60,7 @@ export default function ImageGallery({ images }: { images: { img: string; alt: s
         <div className="image-gallery">
             {images && images.slice(0, 4).map((image, i) => (
                 <div key={image.img + i} className="image-item" onClick={() => openGallery(i)}>
-                    <img src={image.img} alt={image.alt || 'Tour Image'} width="300" height="200" loading="lazy" decoding="async" />
+                    <img src={optimizedUrl(image.img, 384)} alt={image.alt || 'Tour Image'} width="300" height="200" loading="lazy" decoding="async" />
                 </div>
             ))}
             <div className="total-images" onClick={() => openGallery(0)}>
@@ -93,7 +94,7 @@ export default function ImageGallery({ images }: { images: { img: string; alt: s
                         onClick={(e) => e.stopPropagation()}
                     >
                         <img
-                            src={images[currentIndex].img}
+                            src={optimizedUrl(images[currentIndex].img, 1920)}
                             alt={images[currentIndex].alt || "Tour Image"}
                             width="1200"
                             height="800"

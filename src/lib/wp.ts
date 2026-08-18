@@ -1,6 +1,16 @@
 import { fetchWithRetry } from "./fetch-with-retry";
+import { rewriteHtmlImages, type WpImage } from "./wp-media";
 
 const domain = process.env.NEXT_PUBLIC_WP_URL;
+
+// Dimensiones reales de public/imagen-de-portada.webp: sin ellas el fallback también
+// provocaría CLS.
+const FALLBACK_IMAGE: WpImage = {
+    img: "https://www.sherpafoodtours.com/imagen-de-portada.webp",
+    alt: "",
+    width: 1441,
+    height: 711,
+};
 const apiUrl = `${domain}/wp-json/wp/v2`
 
 function normalizeWpImageUrl(url: string): string {
@@ -35,7 +45,7 @@ export const wp = {
         if (!data) return { title: "", content: "", acf: "", featured_media: null };
 
         const { title: { rendered: title }, content: { rendered: content }, acf, featured_media } = data;
-        return { title, content, acf, featured_media };
+        return { title, content: rewriteHtmlImages(content), acf, featured_media };
     },
     getPostInfo: async (slug: string) => {
         // Optimizado: agregar cache para reducir llamadas a WordPress; _embed incluye autor
@@ -51,7 +61,7 @@ export const wp = {
         const authorData = _embedded?.author?.[0];
         const author = authorData ? { name: authorData.name, slug: authorData.slug ?? null } : null;
 
-        return { title, content, excerpt, featured_media, date, modified, relaciones, author };
+        return { title, content: rewriteHtmlImages(content), excerpt, featured_media, date, modified, relaciones, author };
     },
     getPostInfoById: async (id: number) => {
         const response = await fetch(`${apiUrl}/posts/${id}`)
@@ -63,7 +73,7 @@ export const wp = {
 
         const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified, relaciones, acf, author, slug } = await response.json();
 
-        return { title, content, excerpt, featured_media, date, modified, relaciones, acf, author, slug };
+        return { title, content: rewriteHtmlImages(content), excerpt, featured_media, date, modified, relaciones, acf, author, slug };
     },
     getAllPost: async (limit?: number, page?: number) => {
         try {
@@ -105,13 +115,10 @@ export const wp = {
             return []; // Retornar array vacío para no romper el build
         }
     },
-    getPostImage: async (id?: number) => {
+    getPostImage: async (id?: number): Promise<WpImage> => {
         if (!id || id === 0) {
             // Si no hay media, devolver imagen por defecto
-            return {
-                img: "https://www.sherpafoodtours.com/imagen-de-portada.webp",
-                alt: "",
-            };
+            return { ...FALLBACK_IMAGE };
         }
         const url = `${apiUrl}/media/${id}`;
         try {
@@ -123,16 +130,16 @@ export const wp = {
             if (!response.ok) throw new Error("No se obtuvieron datos");
 
             const data = await response.json();
+            if (!data.source_url) return { ...FALLBACK_IMAGE };
             return {
-                img: normalizeWpImageUrl(data.source_url) || "https://www.sherpafoodtours.com/imagen-de-portada.webp",
+                img: normalizeWpImageUrl(data.source_url),
                 alt: data.alt_text || "",
+                width: data.media_details?.width,
+                height: data.media_details?.height,
             };
         } catch (e) {
             console.warn("No se pudo obtener la imagen del post:", e, url);
-            return {
-                img: "https://www.sherpafoodtours.com/imagen-de-portada.webp",
-                alt: "",
-            };
+            return { ...FALLBACK_IMAGE };
         }
     },
 
@@ -192,7 +199,7 @@ export const wp = {
             if (!response.ok) throw new Error(`No se obtuvieron datos de ${apiUrl}/embedsections?slug=${slug}`);
             const [data] = await response.json();
             const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = data;
-            return { title, content, featured_media, acf };
+            return { title, content: rewriteHtmlImages(content), featured_media, acf };
         } catch (err) {
             console.warn(`No se pudo obtener la sección ${slug}:`, err);
             return { title: "", content: "", featured_media: null, acf: null };
@@ -205,7 +212,7 @@ export const wp = {
             const response = await fetch(url)
             if (!response.ok) throw new Error(`No se obtuvieron datos de ${apiUrl}/embedsections/${id}`);
             const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = await response.json();
-            return { title, content, featured_media, acf };
+            return { title, content: rewriteHtmlImages(content), featured_media, acf };
         } catch (err) {
             console.warn(`No se pudo obtener la sección ${id}:`, err);
             return { title: "", content: "", featured_media: null, acf: null };
@@ -241,7 +248,7 @@ export const wp = {
 
             const { title: { rendered: title }, content: { rendered: content }, featured_media, acf, slug } = await response.json();
 
-            return { title, content, featured_media, acf, slug }
+            return { title, content: rewriteHtmlImages(content), featured_media, acf, slug }
         } catch (error) {
             console.error(error);
             return { title: "", content: "", featured_media: null, acf: null, slug: "" };
@@ -266,7 +273,7 @@ export const wp = {
         }
 
         const { title: { rendered: title }, content: { rendered: content }, acf: { pais: country_id }, acf, featured_media } = data;
-        return { city_name: title, content, country_id: country_id, acf, featured_media };
+        return { city_name: title, content: rewriteHtmlImages(content), country_id: country_id, acf, featured_media };
     },
 
     getFaqById: async (id: number) => {

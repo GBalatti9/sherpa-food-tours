@@ -2,6 +2,7 @@
 
 import type { OurStory } from "@/types/our-story";
 import { useEffect, useRef } from "react";
+import { optimizedUrl } from "@/lib/wp-media";
 
 export default function OurStoryComponent({ our_story }: { our_story: OurStory }) {
 
@@ -52,7 +53,9 @@ export default function OurStoryComponent({ our_story }: { our_story: OurStory }
                                 </div>
                             }
                             <div className="img-container">
-                                <img src={element.image?.img} alt="" />
+                                {element.image?.img && (
+                                    <img src={optimizedUrl(element.image.img, 1200)} width={element.image.width} height={element.image.height} alt="" />
+                                )}
                             </div>
                         </div>
                     </div>

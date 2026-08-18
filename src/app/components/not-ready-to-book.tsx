@@ -1,5 +1,6 @@
 import { FormattedWpPost } from "@/types/post";
 import Link from "next/link"
+import { optimizedUrl } from "@/lib/wp-media";
 
 interface NotReadyToBookTitles {
     title: string;
@@ -28,7 +29,7 @@ export default function NotReadyToBook({ titles, posts }: { titles: NotReadyToBo
                     return (
                         <Link className="preview-item" key={post.image.img + i} href={href}>
                             <div className="preview-image-container">
-                                <img src={post.image.img} alt={post.image.alt} loading="lazy" />
+                                <img src={optimizedUrl(post.image.img, 640)} width={post.image.width} height={post.image.height} alt={post.image.alt} loading="lazy" />
                                 {post.city &&
                                     <p className="preview-city">{post.city}</p>
                                 }

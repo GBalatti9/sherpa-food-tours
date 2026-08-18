@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { LocalGuide } from "@/types/local-guide"
+import { optimizedUrl } from "@/lib/wp-media";
 // import "./css/meet-local-guides.css"
 
 
@@ -59,12 +60,12 @@ export default function MeetLocalGuides({ localGuides }: { localGuides: LocalGui
                             >
                                 <div className="flex w-full items-center gap-8 border-b border-[#B9B9B9] pb-6">
                                     <div className="h-[105px] w-[105px] shrink-0 overflow-hidden">
-                                        <img src={element.profile_picture.img} alt={element.profile_picture.alt} className="h-full w-full object-cover" />
+                                        <img src={optimizedUrl(element.profile_picture.img, 128)} width={element.profile_picture.width} height={element.profile_picture.height} alt={element.profile_picture.alt} className="h-full w-full object-cover" />
                                     </div>
                                     <div className="w-1/2">
                                         <p className="font-dk-otago text-[1.25rem] text-[var(--main-color)]">{element.name}</p>
                                         <div className="flex items-center gap-1 font-excelsior uppercase">
-                                            <img src={element.country_flag.img} alt={element.country_flag.alt} className="h-[10px] w-[10px] aspect-square" />
+                                            <img src={optimizedUrl(element.country_flag.img, 64)} width={element.country_flag.width} height={element.country_flag.height} alt={element.country_flag.alt} className="h-[10px] w-[10px] aspect-square" />
                                             <p className="text-[14px]">{element.city}</p>
                                         </div>
                                     </div>

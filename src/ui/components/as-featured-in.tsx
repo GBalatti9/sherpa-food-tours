@@ -1,4 +1,5 @@
 // import "./css/as-featured-in.css"
+import { optimizedUrl } from "@/lib/wp-media";
 
 interface FeaturedImage {
   img: string;
@@ -17,7 +18,7 @@ export default function AsFeaturedIn({ asFeatureInImages }: AsFeaturedInProps) {
         {asFeatureInImages.map((img, i) => (
           <div className="img-container" key={img.img + i}>
             <img 
-              src={img.img} 
+              src={optimizedUrl(img.img, 256)} 
               alt={img.alt} 
               loading="lazy"
               width="150"

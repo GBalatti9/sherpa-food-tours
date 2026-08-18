@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { optimizedUrl, type WpImage } from "@/lib/wp-media";
 
 interface SimpleImageGalleryProps {
-    images: { img: string; alt: string }[];
+    images: WpImage[];
 }
 
 export default function SimpleImageGallery({ images }: SimpleImageGalleryProps) {
@@ -42,7 +43,7 @@ export default function SimpleImageGallery({ images }: SimpleImageGalleryProps) 
             {/* Container de la imagen */}
             <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-gray-100">
                 <img
-                    src={images[currentIndex].img}
+                    src={optimizedUrl(images[currentIndex].img, 1920)} width={images[currentIndex].width} height={images[currentIndex].height}
                     alt={images[currentIndex].alt || `Image ${currentIndex + 1}`}
                     className="w-full h-full object-contain"
                     loading="lazy"

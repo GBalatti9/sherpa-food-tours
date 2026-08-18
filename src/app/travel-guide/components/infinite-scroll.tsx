@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { PostWithImage } from "../page";
 import { slugify } from "@/app/helpers/slugify";
 import Link from "next/link";
+import { optimizedUrl } from "@/lib/wp-media";
 
 interface InfiniteScrollProps {
     initialPosts: PostWithImage[];
@@ -78,7 +79,7 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                     <div className="preview-image-container">
                                         <img
                                             decoding="async"
-                                            src={post.image.img}
+                                            src={optimizedUrl(post.image.img, 640)}
                                             alt={imageAlt}
                                             width="400"
                                             height="300"
@@ -116,7 +117,7 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                                 <div className="preview-image-container">
                                                     <img
                                                         decoding="async"
-                                                        src={p.image.img}
+                                                        src={optimizedUrl(p.image.img, 640)}
                                                         alt={imageAltGroup}
                                                         width="400"
                                                         height="300"
@@ -144,7 +145,7 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                     <div className="preview-image-container">
                                         <img
                                             decoding="async"
-                                            src={post.image.img}
+                                            src={optimizedUrl(post.image.img, 640)}
                                             alt={imageAlt}
                                             width="400"
                                             height="300"
