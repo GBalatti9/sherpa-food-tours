@@ -63,7 +63,7 @@ export default async function ContactPage() {
     return (
         <main className="contact-page" style={{ minHeight: "80vh" }}>
             <section className="contact-section !max-w-[700px] mx-auto">
-                <h2>Got any questions? <span>Contact Us!</span></h2>
+                <h1>Got any questions? <span>Contact Us!</span></h1>
                 {/* <FormContact /> */}
                 <div>
                     <TallyForm />

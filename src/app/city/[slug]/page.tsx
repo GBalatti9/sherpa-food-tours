@@ -546,7 +546,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                 )
                             })}
                         </div>
-                        <Link href="https://www.sherpafoodtours.com/travel-guide/" className="preview-read-all">Read The Travel Guide</Link>
+                        <Link href="/travel-guide/" className="preview-read-all">Read The Travel Guide</Link>
                     </section>
                     // </section>
                 }

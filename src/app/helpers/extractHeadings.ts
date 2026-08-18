@@ -18,7 +18,17 @@ export function extractHeadings(html: string): { headings: Heading[]; htmlWithId
     const headings: Heading[] = [];
     const idCount: Record<string, number> = {};
 
-    const htmlWithIds = html.replace(/<(h[23])([^>]*)>([\s\S]*?)<\/h[23]>/gi, (match, tag, attrs, inner) => {
+    // El <h1> de la página lo pone la plantilla con el título del post, así que un <h1>
+    // dentro del cuerpo que venga del CMS siempre sobra. Se degrada a <h2> antes de
+    // recorrer los encabezados: así la página nunca tiene más de un <h1>, escriba lo que
+    // escriba el editor en WordPress, y el encabezado degradado entra en el índice en
+    // lugar de quedar afuera.
+    const demoted = html.replace(
+        /<h1([^>]*)>([\s\S]*?)<\/h1>/gi,
+        (_match, attrs, inner) => `<h2${attrs}>${inner}</h2>`
+    );
+
+    const htmlWithIds = demoted.replace(/<(h[23])([^>]*)>([\s\S]*?)<\/h[23]>/gi, (match, tag, attrs, inner) => {
         const level = parseInt(tag[1], 10) as 2 | 3;
         const text = he.decode(inner.replace(/<[^>]+>/g, '').trim());
         let baseId = slugifyHeading(text);
