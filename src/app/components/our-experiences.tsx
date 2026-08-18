@@ -2,6 +2,7 @@
 
 // import "../../ui/components/css/our-experiences.css"
 import React, { useState } from "react";
+import { optimizedUrl } from "@/lib/wp-media";
 
 interface Item {
     title: string;
@@ -51,7 +52,7 @@ export default function OurExperiencesSection({
                                 dangerouslySetInnerHTML={{ __html: item.description }}
                             ></div>
                             <div className="img-container">
-                                <img src={item.image.img} alt={item.image.alt} width="600" height="400" loading="lazy" decoding="async" />
+                                <img src={optimizedUrl(item.image.img, 640)} alt={item.image.alt} width="600" height="400" loading="lazy" decoding="async" />
                             </div>
                         </details>
                     </React.Fragment>
@@ -70,7 +71,7 @@ export default function OurExperiencesSection({
                             <article className="flex flex-col" key={item.title + i}>
                                 <div className="aspect-[4/4] overflow-hidden">
                                     <img
-                                        src={item.image.img}
+                                        src={optimizedUrl(item.image.img, 640)}
                                         alt={item.image.alt}
                                         width="800"
                                         height="600"

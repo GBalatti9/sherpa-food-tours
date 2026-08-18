@@ -6,8 +6,9 @@ import { NavBarLink } from "@/types/nav-bar";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import { optimizedUrl, type WpImage } from "@/lib/wp-media";
 
-export default function MobileMenu({ items, currentPath, cities }: { items: NavBarLink[], currentPath: string, cities: { id: number; city: string; slug: string; flag: { img: string; alt: string } }[] }) {
+export default function MobileMenu({ items, currentPath, cities }: { items: NavBarLink[], currentPath: string, cities: { id: number; city: string; slug: string; flag: WpImage }[] }) {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDetailsElement>(null);
 
@@ -80,7 +81,7 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
                                             className="menu-link"
                                             role="menuitem"
                                         >
-                                            <img src={city.flag.img} alt={city.flag.alt} />
+                                            <img src={optimizedUrl(city.flag.img, 64)} width={city.flag.width} height={city.flag.height} alt={city.flag.alt} />
                                             {city.city}
                                         </Link>
                                     ))}

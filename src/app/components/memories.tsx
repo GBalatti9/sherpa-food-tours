@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { optimizedUrl, type WpImage } from "@/lib/wp-media";
 
-export default function Memories({ memories }: { memories: { img: string; alt: string }[] }) {
+export default function Memories({ memories }: { memories: WpImage[] }) {
 
     const refs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -41,13 +42,13 @@ export default function Memories({ memories }: { memories: { img: string; alt: s
     return (
         <div className="items-container">
             <div className="titles">
-                <img src="/sherpa-green.webp" alt="Sherpa Food Tour Logo" loading="lazy"/>
+                <img src="/sherpa-green.webp" alt="Sherpa Food Tour Logo" loading="lazy" width={181} height={128} />
                 <p className="title">memories</p>
             </div>
             <div className="memories-container">
                 {memories.map((memory, index) => (
                     <div className="memory-container" key={memory.img + index} ref={(el) => { refs.current[index] = el }}>
-                        <img src={memory.img} alt={memory.alt} loading="lazy" />
+                        <img src={optimizedUrl(memory.img, 640)} width={memory.width} height={memory.height} alt={memory.alt} loading="lazy" />
                     </div>
                 ))}
             </div>

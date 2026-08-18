@@ -1,7 +1,8 @@
 import { WPPost } from "@/types/post";
+import type { WpImage } from "@/lib/wp-media";
 
 export interface PostWithImageData extends WPPost {
-  image: { img: string; alt: string };
+  image: WpImage;
   // slug es el de WP: los bylines enlazan a /author/<slug>/ y sin él no enlazan.
   author_name: { name: string; slug?: string | null };
 }
@@ -28,13 +29,19 @@ function normalizeWpImageUrl(url: string): string {
  * Falls back to default values if embedded data is missing.
  */
 export function formatPostFromEmbed(post: WPPost & { _embedded?: Record<string, unknown[]> }): PostWithImageData {
-  let image = { img: DEFAULT_IMAGE, alt: "" };
+  // Dimensiones reales de public/imagen-de-portada.webp, para que el fallback tampoco cause CLS.
+  let image: WpImage = { img: DEFAULT_IMAGE, alt: "", width: 1441, height: 711 };
   let authorName: { name: string; slug?: string | null } = { name: "Unknown", slug: null };
 
   if (post._embedded) {
-    const media = post._embedded["wp:featuredmedia"] as { source_url?: string; alt_text?: string }[] | undefined;
+    const media = post._embedded["wp:featuredmedia"] as { source_url?: string; alt_text?: string; media_details?: { width?: number; height?: number } }[] | undefined;
     if (media && media[0]?.source_url) {
-      image = { img: normalizeWpImageUrl(media[0].source_url), alt: media[0].alt_text || "" };
+      image = {
+        img: normalizeWpImageUrl(media[0].source_url),
+        alt: media[0].alt_text || "",
+        width: media[0].media_details?.width,
+        height: media[0].media_details?.height,
+      };
     }
 
     const authors = post._embedded["author"] as { name?: string; slug?: string }[] | undefined;

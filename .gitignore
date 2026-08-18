@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# bitacora de trabajo (local, no versionada)
+BITACORA.md

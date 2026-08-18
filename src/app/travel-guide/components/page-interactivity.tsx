@@ -8,6 +8,7 @@ import { PostWithImage } from "../page";
 import { useEffect, useState, useRef } from "react";
 import "./page-interactivity.css";
 import InfiniteScroll from "./infinite-scroll";
+import { optimizedUrl } from "@/lib/wp-media";
 
 interface Props {
     cities: {
@@ -292,7 +293,7 @@ export default function PageInteractivity({ cities, formattedPosts }: Props) {
                     <div className="preview-image-container">
                         <img
                             decoding="async"
-                            src={post.image.img}
+                            src={optimizedUrl(post.image.img, 640)}
                             alt={imageAlt}
                             width="400"
                             height="300"

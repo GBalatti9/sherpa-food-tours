@@ -1,6 +1,7 @@
 
 import { slugify } from "@/app/helpers/slugify";
 import { wp } from "@/lib/wp";
+import { absoluteOptimizedUrl, optimizedUrl } from "@/lib/wp-media";
 import { WPPost } from "@/types/post";
 // import "./travel-guide-slug.css";
 import { getNotReadyToBookSection } from "@/app/utils/getNotReadyToBookSection";
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     const rawDescription = post.excerpt?.replace(/<[^>]+>/g, "") || post.content.replace(/<[^>]+>/g, "").slice(0, 150);
     const description = cleanExcerpt(rawDescription);
     
-    const imageUrl = img || "https://www.sherpafoodtours.com/imagen-de-portada.webp";
+    const imageUrl = absoluteOptimizedUrl(img || "https://www.sherpafoodtours.com/imagen-de-portada.webp", 1200);
     const title = he.decode(post.title);
     const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
     // Usar la ciudad real del post (no el param de la URL) para el canonical
@@ -206,7 +207,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
 
 
-    const imageUrl = img || "https://www.sherpafoodtours.com/imagen-de-portada.webp";
+    const imageUrl = absoluteOptimizedUrl(img || "https://www.sherpafoodtours.com/imagen-de-portada.webp", 1200);
     const description = excerpt?.replace(/<[^>]+>/g, "") || postData.content.replace(/<[^>]+>/g, "").slice(0, 150);
     const cleanDescription = cleanExcerpt(description);
 
@@ -310,7 +311,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
                 <header className="main-img-container">
                     <img
-                        src={img}
+                        src={optimizedUrl(img, 1920)}
                         alt={alt || `${title} - ${cityDisplayName}`}
                         loading="eager"
                         width="1200"

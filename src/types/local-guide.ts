@@ -1,3 +1,4 @@
+import type { WpImage } from "@/lib/wp-media";
 export interface LocalGuideRaw {
     profile_picture: number;
     name: string,
@@ -8,16 +9,10 @@ export interface LocalGuideRaw {
 }
 
 export interface LocalGuide {
-    profile_picture: {
-        img: string;
-        alt: string
-    },
+    profile_picture: WpImage,
     name: string,
     city: string,
     description: string,
     favorite_dish: string;
-    country_flag: {
-        img: string;
-        alt: string
-    }
+    country_flag: WpImage
 }

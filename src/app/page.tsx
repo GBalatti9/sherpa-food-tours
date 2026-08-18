@@ -11,6 +11,7 @@ import AsFeaturedIn from "@/ui/components/as-featured-in";
 import { City } from "@/types/city";
 import Memories from "./components/memories";
 import { Metadata } from "next";
+import { optimizedUrl } from "@/lib/wp-media";
 // import DiscountBanner from "@/ui/components/discount-banner";
 // import MarqueeBanner from "@/ui/components/marquee-banner";
 
@@ -427,7 +428,7 @@ export default async function Home() {
                   >
                     <div className="aspect-[4/3] overflow-hidden bg-[#f3f3ef]">
                       <img
-                        src={city.image.img}
+                        src={optimizedUrl(city.image.img, 640)}
                         alt={`${city.city} food tour destination image`}
                         loading="lazy"
                         width="300"

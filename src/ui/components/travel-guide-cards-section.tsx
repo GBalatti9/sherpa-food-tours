@@ -2,6 +2,7 @@ import { TourFormatted } from "@/types/tour";
 // import "./css/travel-guide-cards-section.css";
 import Link from "next/link";
 import { ButtonsPropagations } from "./buttons-propagation";
+import { optimizedUrl } from "@/lib/wp-media";
 
 
 export default function TravelGuideCardsSection({ tours }: { tours: TourFormatted[] }) {
@@ -12,7 +13,7 @@ export default function TravelGuideCardsSection({ tours }: { tours: TourFormatte
                     const cardContent = (
                         <>
                             <div className="img-container">
-                                <img src={tour.image.img} alt={tour.image.alt} />
+                                <img src={optimizedUrl(tour.image.img, 640)} width={tour.image.width} height={tour.image.height} alt={tour.image.alt} />
                             </div>
                             <div className="data-container">
                                 <div className="title-container">

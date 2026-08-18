@@ -1,3 +1,4 @@
+import type { WpImage } from "@/lib/wp-media";
 
 
 export interface Itinerary {
@@ -8,10 +9,7 @@ export interface Itinerary {
 interface Item {
     title: string;
     information?: string;
-    map: {
-        img: string;
-        alt: string;
-    } | null;
+    map: WpImage | null;
     subtitle?: string;
     items: ChildItem[];
 }
@@ -19,5 +17,5 @@ interface Item {
 interface ChildItem {
     show_empty: boolean;
     title: string;
-    mobile_img?: {img: string; alt: string} | null;
+    mobile_img?: WpImage | null;
 }

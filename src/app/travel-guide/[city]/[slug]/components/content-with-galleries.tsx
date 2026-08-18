@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import SimpleImageGallery from "@/app/travel-guide/[city]/[slug]/components/simple-image-gallery";
+import { rewriteHtmlImages } from "@/lib/wp-media";
 
 interface ContentWithGalleriesProps {
     htmlContent: string;
@@ -15,11 +16,15 @@ interface ProcessedNode {
 
 export default function ContentWithGalleries({ htmlContent }: ContentWithGalleriesProps) {
     // Eliminar los <script> de Instagram y Twitter del HTML de WordPress (no se ejecutan via innerHTML)
-    const cleanedHtml = htmlContent
-        .replace(/<script[^>]*instagram\.com\/embed\.js[^>]*><\/script>/gi, '')
-        .replace(/<script[^>]*platform\.twitter\.com\/widgets\.js[^>]*><\/script>/gi, '')
-        .replace(/<script[^>]*platform\.x\.com\/widgets\.js[^>]*><\/script>/gi, '')
-        .replace(/http:\/\/staging\.sherpafoodtours\.com/gi, 'https://staging.sherpafoodtours.com');
+    // rewriteHtmlImages manda las imágenes al optimizador: WordPress las sirve con
+    // `x-robots-tag: noindex` y así Google no puede indexarlas.
+    const cleanedHtml = rewriteHtmlImages(
+        htmlContent
+            .replace(/<script[^>]*instagram\.com\/embed\.js[^>]*><\/script>/gi, '')
+            .replace(/<script[^>]*platform\.twitter\.com\/widgets\.js[^>]*><\/script>/gi, '')
+            .replace(/<script[^>]*platform\.x\.com\/widgets\.js[^>]*><\/script>/gi, '')
+            .replace(/http:\/\/staging\.sherpafoodtours\.com/gi, 'https://staging.sherpafoodtours.com')
+    );
 
     const [processedNodes, setProcessedNodes] = useState<ProcessedNode[]>([
         { type: 'html', content: cleanedHtml }

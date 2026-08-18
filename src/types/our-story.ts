@@ -1,3 +1,4 @@
+import type { WpImage } from "@/lib/wp-media";
 
 
 export interface OurStory {
@@ -7,10 +8,7 @@ export interface OurStory {
 
 interface Item {
     year: number;
-    image: {
-        img: string;
-        alt: string;
-    } | null;
+    image: WpImage | null;
     title: string;
     item: string;
 }

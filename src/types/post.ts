@@ -1,3 +1,4 @@
+import type { WpImage } from "@/lib/wp-media";
 export interface WPPost {
   id: number;
   date: string;
@@ -52,10 +53,7 @@ export interface WPRelation {
 }
 
 export interface FormattedWpPost extends WPPost {
-  image: {
-    img: string;
-    alt: string;
-  };
+  image: WpImage;
   author_name: {
     name: string;
     slug?: string | null;

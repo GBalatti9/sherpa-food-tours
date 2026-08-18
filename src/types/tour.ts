@@ -1,3 +1,4 @@
+import type { WpImage } from "@/lib/wp-media";
 export interface Tour {
   id: number;
   date: string; // ISO string
@@ -48,9 +49,6 @@ export interface TourFormatted extends TourRelationship {
       link: string;
     }
   },
-  image: {
-    img: string;
-    alt: string;
-  }
+  image: WpImage
   
 }

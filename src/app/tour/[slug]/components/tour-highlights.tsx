@@ -3,6 +3,7 @@
 
 import { HighlightItem } from "@/types/highlights-item";
 import { useState, useEffect } from "react";
+import { optimizedUrl } from "@/lib/wp-media";
 
 export default function TourHighlights({ title_highlight, highlightItems }: { title_highlight: string; highlightItems: HighlightItem[] }) {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -38,7 +39,7 @@ export default function TourHighlights({ title_highlight, highlightItems }: { ti
                                 }}
                             >
                                 <div className="highlight-image-container">
-                                    <img src={item.highlight_image.img} alt={item.highlight_image.alt || 'Highlight Image'} />
+                                    <img src={optimizedUrl(item.highlight_image.img, 640)} width={item.highlight_image.width} height={item.highlight_image.height} alt={item.highlight_image.alt || 'Highlight Image'} />
                                 </div>
                                 <div className="highlight-text-container" dangerouslySetInnerHTML={{ __html: item.highlight_description }}>
                                 </div>
@@ -52,7 +53,7 @@ export default function TourHighlights({ title_highlight, highlightItems }: { ti
                     {highlightItems.map((item, i) => (
                         <div key={item.highlight_description + i} className="highlight-item">
                             <div className="highlight-image-container">
-                                <img src={item.highlight_image.img} alt={item.highlight_image.alt || 'Highlight Image'} />
+                                <img src={optimizedUrl(item.highlight_image.img, 640)} width={item.highlight_image.width} height={item.highlight_image.height} alt={item.highlight_image.alt || 'Highlight Image'} />
                             </div>
                             <div className="highlight-text-container" dangerouslySetInnerHTML={{ __html: item.highlight_description }}>
                             </div>

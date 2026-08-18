@@ -7,6 +7,7 @@ import OurExperiencesSection from "@/app/components/our-experiences";
 // import "./city.css";
 import { fetchImages } from "@/app/utils/fetchImages";
 import { wp } from "@/lib/wp";
+import { absoluteOptimizedUrl, optimizedUrl } from "@/lib/wp-media";
 import AsFeaturedIn from "@/ui/components/as-featured-in";
 import BookNowButton from "@/ui/components/book-now";
 import MainImage from "@/ui/components/main-image";
@@ -80,7 +81,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             type: "article",
             images: [
                 {
-                    url: image.img,
+                    url: absoluteOptimizedUrl(image.img, 1200),
                     width: 1200,
                     height: 630,
                     alt: image.alt?.trim().length > 0 ? image.alt : title,
@@ -91,7 +92,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             card: "summary_large_image",
             title,
             description,
-            images: [image.img],
+            images: [absoluteOptimizedUrl(image.img, 1200)],
         },
         alternates: {
             canonical: `https://www.sherpafoodtours.com/city/${slug}/`,
@@ -530,7 +531,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                         href={href}
                                     >
                                         <div className="preview-image-container">
-                                            <img src={post.image.img} alt={post.image.alt} loading="lazy" />
+                                            <img src={optimizedUrl(post.image.img, 640)} width={post.image.width} height={post.image.height} alt={post.image.alt} loading="lazy" />
                                             {post.city &&
                                                 <p className="preview-city">{post.city}</p>
                                             }

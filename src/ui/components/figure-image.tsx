@@ -1,5 +1,6 @@
 
 import React from "react";
+import { optimizedUrl } from "@/lib/wp-media";
 
 type FigureImageProps = {
   src: string;
@@ -25,7 +26,7 @@ export default function FigureImage({
   return (
     <figure className={`max-w-2xl mx-auto ${className}`}>
       <img 
-        src={src} 
+        src={optimizedUrl(src, 1200)} 
         alt={alt} 
         className={imgClassName} 
         loading={loading}
