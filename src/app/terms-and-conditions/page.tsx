@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import "./terms.css";
+import { buildBreadcrumbSchema, getBaseUrl } from "@/lib/schema";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
 
 export const metadata: Metadata = {
     title: "Terms and Conditions | Sherpa Food Tours",
@@ -44,20 +46,21 @@ export const metadata: Metadata = {
 };
 
 export default function TermsAndConditionsPage() {
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sherpafoodtours.com/" },
-            { "@type": "ListItem", "position": 2, "name": "Terms and Conditions", "item": "https://www.sherpafoodtours.com/terms-and-conditions/" }
-        ]
-    };
+    const baseUrl = getBaseUrl();
+
+    const breadcrumbItems = [
+        { name: "Home", url: baseUrl + "/" },
+        { name: "Terms and Conditions", url: `${baseUrl}/terms-and-conditions/` }
+    ];
+
+    const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
     return (
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
             <main className="terms-page">
+                <Breadcrumbs items={breadcrumbItems} />
                 <article className="terms-content">
                     <h1>Terms and Conditions</h1>
                     <p className="terms-updated">Last Updated: June 2026</p>

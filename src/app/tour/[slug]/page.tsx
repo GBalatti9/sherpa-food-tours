@@ -16,6 +16,8 @@ import AskForIt from "@/ui/components/ask-for-it";
 import { FormContact } from "@/ui/components/form-contact";
 import TallyForm from "@/ui/components/tally-form";
 import FareHarborSetter from "@/context/fareharbor-setter";
+import { buildBreadcrumbSchema, getBaseUrl, ORGANIZATION_ID, parseReviewCount } from "@/lib/schema";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
 
 interface TourCondition {
     icon: number;
@@ -217,7 +219,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
     const ACF_PRICE = price || acf.price;
     // Generate structured data for SEO
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    const baseUrl = getBaseUrl();
     const tourUrl = `${baseUrl}/tour/${slug}/`;
 
     const imagesId = Object.entries(acf.heading_section)
@@ -321,28 +323,49 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     const priceValidUntil = new Date();
     priceValidUntil.setFullYear(priceValidUntil.getFullYear() + 1);
 
-    // Generate TouristTrip structured data
-    const googleReviewCount = Number(reviews.google.amount || 0);
-    const tripadvisorReviewCount = Number(reviews.tripadvisor.amount || 0);
-    const totalReviewCount = Math.floor(googleReviewCount + tripadvisorReviewCount);
+    // El tour es la entidad primaria: Product habilita el rich result de estrellas
+    // (TouristTrip no soporta aggregateRating y Google lo descarta con
+    // "Review: Invalid object type for field <parent_node>"). Se mantiene TouristTrip
+    // en el mismo nodo para no perder el marcado de viaje que ya validaba correctamente.
+    const googleReviewCount = parseReviewCount(reviews.google.amount);
+    const tripadvisorReviewCount = parseReviewCount(reviews.tripadvisor.amount);
+    const totalReviewCount = googleReviewCount + tripadvisorReviewCount;
+    const ratingValue = Number(stars);
 
     const productSchema: Record<string, unknown> = {
         "@context": "https://schema.org",
-        "@type": "TouristTrip",
+        "@type": ["Product", "TouristTrip"],
+        "@id": `${tourUrl}#tour`,
         "name": title,
         "description": acf.tour_description,
         "image": [featuredImage.img],
-        "url": tourUrl + "/",
+        "url": tourUrl,
+        "brand": {
+            "@type": "Brand",
+            "name": "Sherpa Food Tours"
+        },
+        "touristType": "Food and wine travelers",
         "provider": {
             "@type": "Organization",
-            "@id": "https://www.sherpafoodtours.com/#organization",
+            "@id": ORGANIZATION_ID,
             "name": "Sherpa Food Tours",
-            "url": baseUrl
+            "url": baseUrl + "/"
         },
-        ...(price && price !== "" && !isNaN(Number(price)) ? {
+        ...(itinerary.items.length > 0 ? {
+            "itinerary": {
+                "@type": "ItemList",
+                "name": itinerary.title || `${title} Itinerary`,
+                "itemListElement": itinerary.items.map((step, i) => ({
+                    "@type": "ListItem",
+                    "position": i + 1,
+                    "name": step.title
+                }))
+            }
+        } : {}),
+        ...(ACF_PRICE && ACF_PRICE !== "" && !isNaN(Number(ACF_PRICE)) ? {
             "offers": {
                 "@type": "Offer",
-                "price": Number(price),
+                "price": Number(ACF_PRICE),
                 "priceCurrency": "USD",
                 "availability": "https://schema.org/InStock",
                 "url": tourUrl,
@@ -353,35 +376,27 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         } : {})
     };
 
-    // Only add aggregateRating if we have real review data
-    if (totalReviewCount > 0) {
+    // El aggregateRating debe coincidir con lo visible en la página: las estrellas del
+    // hero y el total de reseñas que se renderiza junto a ellas. Si falta el dato en WP
+    // no se emite, en vez de inventar un valor.
+    const hasAggregateRating = totalReviewCount > 0 && ratingValue >= 1 && ratingValue <= 5;
+
+    if (hasAggregateRating) {
         productSchema["aggregateRating"] = {
             "@type": "AggregateRating",
-            "ratingValue": Math.min(5, Math.max(1, Number(stars) || 4.8)),
+            "ratingValue": ratingValue,
             "bestRating": 5,
             "worstRating": 1,
             "reviewCount": totalReviewCount
         };
     }
 
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": baseUrl + "/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": title,
-                "item": tourUrl + "/"
-            }
-        ]
-    };
+    const breadcrumbItems = [
+        { name: "Home", url: baseUrl + "/" },
+        { name: title, url: tourUrl }
+    ];
+
+    const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
     return (
         <>
@@ -397,6 +412,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
             />
 
             <main>
+                <Breadcrumbs items={breadcrumbItems} />
                 <section className="tour-hero-section">
                     <ImageGallery images={images} />
                     {/* <div className="image-gallery">
@@ -413,6 +429,11 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
                                     {Array.from({ length: stars }).map((_, i) => (
                                         <Star key={i} fill="[#E7B53F]" />
                                     ))}
+                                    {hasAggregateRating && (
+                                        <p className="rating-summary">
+                                            {ratingValue.toFixed(1)} &middot; {totalReviewCount} reviews
+                                        </p>
+                                    )}
                                 </div>
                                 <h1>{title}</h1>
                             </div>

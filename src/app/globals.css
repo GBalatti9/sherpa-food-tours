@@ -4351,12 +4351,21 @@ main {
       .title-container {
           .stars-container {
               display: flex;
+              align-items: center;
               gap: .2rem;
 
               svg {
                   width: 1rem;
                   fill: #E7B53F;
                   stroke: none;
+              }
+
+              /* Total de reseñas visible: debe coincidir con el aggregateRating del JSON-LD */
+              .rating-summary {
+                  font-family: var(--font-excelsior);
+                  font-size: .8125rem;
+                  color: #555555;
+                  margin-left: .35rem;
               }
           }
 

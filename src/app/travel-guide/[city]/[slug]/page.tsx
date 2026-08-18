@@ -16,6 +16,8 @@ import ContentWithGalleries from "@/app/travel-guide/[city]/[slug]/components/co
 import TableOfContents from "@/app/travel-guide/[city]/[slug]/components/table-of-contents";
 import { extractHeadings } from "@/app/helpers/extractHeadings";
 import Link from "next/link";
+import { buildBreadcrumbSchema } from "@/lib/schema";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
 
 
 // ----------------------
@@ -262,36 +264,14 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
     };
 
     // Breadcrumb Schema
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": baseUrl + "/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Travel Guide",
-                "item": `${baseUrl}/travel-guide/`
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": cityDisplayName,
-                "item": `${baseUrl}/travel-guide/${correctCity || city}/`
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": title,
-                "item": articleUrl
-            }
-        ]
-    };
+    // Sin nivel de ciudad: /travel-guide/{city}/ no existe como ruta y devolvía 404.
+    const breadcrumbItems = [
+        { name: "Home", url: baseUrl + "/" },
+        { name: "Travel Guide", url: `${baseUrl}/travel-guide/` },
+        { name: title, url: articleUrl }
+    ];
+
+    const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
 
     return (
@@ -305,6 +285,8 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
+
+            <Breadcrumbs items={breadcrumbItems} />
 
             {/* ARTICLE */}
             <article className="sherpa-article">

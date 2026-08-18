@@ -7,6 +7,8 @@ import React from "react";
 import { Metadata } from "next";
 import PageInteractivity from "./components/page-interactivity";
 import { formatPostFromEmbed, filterValidPosts, type PostWithImageData } from "../utils/formatPostWithEmbed";
+import { buildBreadcrumbSchema, getBaseUrl } from "@/lib/schema";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
 
 export type PostWithImage = PostWithImageData;
 
@@ -85,26 +87,14 @@ export default async function TravelGuidePage() {
     const formattedPosts = filterValidPosts(rawPosts.map(formatPostFromEmbed));
 
     // Generate JSON-LD structured data for SEO
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com';
+    const baseUrl = getBaseUrl();
 
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": baseUrl + "/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Travel Guide",
-                "item": `${baseUrl}/travel-guide/`
-            }
-        ]
-    };
+    const breadcrumbItems = [
+        { name: "Home", url: baseUrl + "/" },
+        { name: "Travel Guide", url: `${baseUrl}/travel-guide/` }
+    ];
+
+    const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
     const webPageSchema = {
         "@context": "https://schema.org",
@@ -153,6 +143,7 @@ export default async function TravelGuidePage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
             />
 
+            <Breadcrumbs items={breadcrumbItems} />
             <article>
                 <section className="travel-guide-first-section">
                     <div
