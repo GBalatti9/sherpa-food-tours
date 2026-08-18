@@ -23,6 +23,8 @@ import { extractDescription } from "@/app/helpers/extractDescription";
 import ShowMoreBtn from "./show-more";
 import { FormContact } from "@/ui/components/form-contact";
 import { slugify } from "@/app/helpers/slugify";
+import { buildBreadcrumbSchema } from "@/lib/schema";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
 import NotReadyToBook from "@/app/components/not-ready-to-book";
 import { FormattedWpPost } from "@/types/post";
 import TallyForm from "@/ui/components/tally-form";
@@ -343,24 +345,12 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     // Generate structured data for SEO
     const cityImageData = await wp.getPostImage(featured_media);
 
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": baseUrl + "/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": acf.title || cityData.city_name,
-                "item": cityUrl
-            }
-        ]
-    };
+    const breadcrumbItems = [
+        { name: "Home", url: baseUrl + "/" },
+        { name: acf.title || cityData.city_name, url: cityUrl }
+    ];
+
+    const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
     const cityPageSchema = {
         "@context": "https://schema.org",
@@ -445,6 +435,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             }
 
             <main>
+                <Breadcrumbs items={breadcrumbItems} />
                 <section>
                     <div className="main-section-container">
                         <div className="image-container">

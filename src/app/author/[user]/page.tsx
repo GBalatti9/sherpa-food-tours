@@ -4,6 +4,8 @@ import AuthorPosts from "./components/author-posts";
 import { WPPost } from "@/types/post";
 import { PostWithImage } from "./components/author-posts";
 import { Metadata } from "next";
+import { buildBreadcrumbSchema, getBaseUrl, ORGANIZATION_ID } from "@/lib/schema";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
 // import "@/app/travel-guide/travel-guide.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ user: string }> }): Promise<Metadata> {
@@ -161,7 +163,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
     const avatarUrl = currentUser.avatar_urls?.["96"] || currentUser.avatar_urls?.["48"] || currentUser.avatar_urls?.["24"];
 
     // ProfilePage + Person schema for E-E-A-T
-    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
+    const baseUrl = getBaseUrl();
     const authorUrl = `${baseUrl}/author/${user}/`;
 
     const profilePageSchema = {
@@ -176,30 +178,18 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
             ...(avatarUrl ? { "image": avatarUrl } : {}),
             "worksFor": {
                 "@type": "Organization",
-                "@id": "https://www.sherpafoodtours.com/#organization",
+                "@id": ORGANIZATION_ID,
                 "name": "Sherpa Food Tours"
             }
         }
     };
 
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": baseUrl + "/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": currentUser.name,
-                "item": authorUrl
-            }
-        ]
-    };
+    const breadcrumbItems = [
+        { name: "Home", url: baseUrl + "/" },
+        { name: currentUser.name, url: authorUrl }
+    ];
+
+    const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
     return (
         <article>
@@ -212,6 +202,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ user: s
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
+            <Breadcrumbs items={breadcrumbItems} />
             <section style={{ padding: '2rem', textAlign: 'center' }}>
                 <h1 style={{
                     fontFamily: 'var(--font-dk-otago)',

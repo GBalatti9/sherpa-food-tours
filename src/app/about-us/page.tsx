@@ -6,6 +6,8 @@ import OurValues from "./components/our-values";
 import type { OurStory } from "@/types/our-story";
 import OurStoryComponent from "./components/our-story";
 import { Metadata } from "next";
+import { buildBreadcrumbSchema, buildOrganizationSchema, getBaseUrl, getOrganizationData } from "@/lib/schema";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
 
 export const metadata: Metadata = {
     title: "About Us - Our Story & Values | Sherpa Food Tours",
@@ -135,43 +137,16 @@ export default async function AboutUsPage() {
 
 
     // Generate structured data for SEO
-    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
+    const baseUrl = getBaseUrl();
 
-    const organizationSchema = {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "@id": "https://www.sherpafoodtours.com/#organization",
-        "name": "Sherpa Food Tours",
-        "url": baseUrl + "/",
-        "logo": baseUrl + "/sherpa-complete-logo.webp",
-        "image": baseUrl + "/sherpa-main-image.webp",
-        "description": "Authentic food tours and culinary experiences around the world with local guides",
-        "sameAs": [
-            "https://www.facebook.com/sherpafoodtours",
-            "https://www.instagram.com/sherpafoodtours",
-            "https://www.tiktok.com/@sherpafoodtours",
-            "https://www.tripadvisor.com/Attraction_Review-g312741-d23715647-Reviews-Sherpa_Food_Tours-Buenos_Aires_Capital_Federal_District.html"
-        ]
-    };
+    const organizationSchema = buildOrganizationSchema(baseUrl, await getOrganizationData());
 
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": baseUrl + "/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "About Us",
-                "item": `${baseUrl}/about-us/`
-            }
-        ]
-    };
+    const breadcrumbItems = [
+        { name: "Home", url: baseUrl + "/" },
+        { name: "About Us", url: `${baseUrl}/about-us/` }
+    ];
+
+    const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
     return (
         <>
@@ -186,6 +161,7 @@ export default async function AboutUsPage() {
             />
 
             <main className="about-us-page">
+                <Breadcrumbs items={breadcrumbItems} />
                 <article>
                     <section className="about-us-page-first-section">
                         <h1>The

@@ -1,6 +1,8 @@
 import { FormContact } from "@/ui/components/form-contact";
 import TallyForm from "@/ui/components/tally-form";
 import { Metadata } from "next";
+import { buildBreadcrumbSchema, getBaseUrl, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/schema";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
 
 export const metadata: Metadata = {
     title: "Contact Us - Get in Touch | Sherpa Food Tours",
@@ -65,24 +67,25 @@ export default async function ContactPage() {
         "name": "Contact Sherpa Food Tours",
         "description": "Have questions about our food tours? Contact Sherpa Food Tours today.",
         "url": "https://www.sherpafoodtours.com/contact/",
-        "isPartOf": { "@id": "https://www.sherpafoodtours.com/#website" },
-        "publisher": { "@id": "https://www.sherpafoodtours.com/#organization" }
+        "isPartOf": { "@id": WEBSITE_ID },
+        "publisher": { "@id": ORGANIZATION_ID }
     };
 
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sherpafoodtours.com/" },
-            { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.sherpafoodtours.com/contact/" }
-        ]
-    };
+    const baseUrl = getBaseUrl();
+
+    const breadcrumbItems = [
+        { name: "Home", url: baseUrl + "/" },
+        { name: "Contact", url: `${baseUrl}/contact/` }
+    ];
+
+    const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
     return (
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
             <main className="contact-page" style={{ minHeight: "80vh" }}>
+                <Breadcrumbs items={breadcrumbItems} />
                 <section className="contact-section !max-w-[700px] mx-auto">
                     <h1>Got any questions? <span>Contact Us!</span></h1>
                     <p style={{ textAlign: 'center', marginBottom: '1.5rem', opacity: 0.8 }}>

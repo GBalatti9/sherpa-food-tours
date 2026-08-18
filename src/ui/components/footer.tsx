@@ -1,4 +1,5 @@
 import { wp } from "@/lib/wp";
+import { TRIPADVISOR_URL } from "@/lib/schema";
 import CitiesDropdown from "./cities-dropdown";
 import "./css/footer.css"
 
@@ -10,7 +11,7 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
 
     const socialMedia = await wp.getEmbedSectionInfo('footer');
     const instagram = socialMedia?.acf?.instagram ?? 'https://www.instagram.com/sherpafoodtour';
-    const tripadvisor = socialMedia?.acf?.tripadvisor ?? 'https://www.tripadvisor.com/Attraction_Review-g312741-d23715647-Reviews-Sherpa_Food_Tours-Buenos_Aires_Capital_Federal_District.html';
+    const tripadvisor = socialMedia?.acf?.tripadvisor ?? TRIPADVISOR_URL;
 
     const tiktok = socialMedia?.acf?.tiktok ?? 'https://www.tiktok.com/@sherpafoodtours';
 

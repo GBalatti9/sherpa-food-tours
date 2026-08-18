@@ -11,6 +11,7 @@ import AsFeaturedIn from "@/ui/components/as-featured-in";
 import { City } from "@/types/city";
 import Memories from "./components/memories";
 import { Metadata } from "next";
+import { buildOrganizationSchema, getBaseUrl, getOrganizationData, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/schema";
 // import DiscountBanner from "@/ui/components/discount-banner";
 // import MarqueeBanner from "@/ui/components/marquee-banner";
 
@@ -108,6 +109,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
 
+  const baseUrl = getBaseUrl();
+  const organizationData = await getOrganizationData();
+
   const pageInfo = await wp.getPageInfo("home");
   const acf: ACFHome = pageInfo.acf;
 
@@ -145,9 +149,18 @@ export default async function Home() {
   const memories = await fetchImages(memoriesImagesIds);
 
 
-  const [background_image] = images;
+  const [background_image, google_logo, tripadvisor_medal, tripadvisor_logo] = images;
 
-
+  // Logos y contadores del hero: salen de ACF; si el campo está vacío en WP se cae
+  // a los assets de /public y a los valores históricos, para no romper el bloque.
+  const socialProof = {
+    googleLogo: acf.google_logo ? google_logo : null,
+    tripadvisorMedal: acf.tripadvisor_medal ? tripadvisor_medal : null,
+    tripadvisorLogo: acf.tripadvisor_logo ? tripadvisor_logo : null,
+    googleReviews: Number(acf.google_reviews_amount) || 2000,
+    tripadvisorReviews: Number(acf.tripadvisor_reviews_amount) || 15000,
+    stars: Math.min(5, Math.max(1, Math.round(Number(acf.rating_stars)) || 5)),
+  };
 
   const citiesRaw = await wp.getAllCities();
 
@@ -217,35 +230,11 @@ export default async function Home() {
   }
 
 
-  // Generate structured data for SEO
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "TourOperator",
-    "@id": "https://www.sherpafoodtours.com/#organization",
-    "name": "Sherpa Food Tours",
-    "description": "Authentic food tours and culinary experiences around the world",
-    "url": "https://www.sherpafoodtours.com/",
-    "logo": "https://www.sherpafoodtours.com/sherpa-complete-logo.webp",
-    "image": "https://www.sherpafoodtours.com/sherpa-main-image.webp",
-    "email": "info@sherpafoodtours.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "GB"
-    },
-    "sameAs": [
-      "https://www.facebook.com/sherpafoodtours",
-      "https://www.instagram.com/sherpafoodtours",
-      "https://www.tiktok.com/@sherpafoodtours",
-      "https://www.tripadvisor.com/Attraction_Review-g312741-d23715647-Reviews-Sherpa_Food_Tours-Buenos_Aires_Capital_Federal_District.html",
-      "https://www.linkedin.com/company/sherpafoodtours"
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": 4.8,
-      "reviewCount": 17000,
-      "bestRating": 5,
-      "worstRating": 1
-    },
+  // Generate structured data for SEO.
+  // Sin aggregateRating: Google no soporta review markup a nivel negocio y lo descarta
+  // entero como "Review: Invalid object type for field <parent_node>". Las estrellas de
+  // rich results se emiten desde el Product de cada página de tour.
+  const structuredData = buildOrganizationSchema(baseUrl, organizationData, {
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Food Tours",
@@ -256,7 +245,7 @@ export default async function Home() {
           "name": `${city.city} Food Tour`,
           "description": `Authentic food tour experience in ${city.city}${city.country ? `, ${city.country}` : ''}`,
           "touristType": "Food Lovers",
-          "url": `https://www.sherpafoodtours.com/city/${city.slug}/`,
+          "url": `${baseUrl}/city/${city.slug}/`,
           "itinerary": {
             "@type": "ItemList",
             "name": `${city.city} Food Tour Itinerary`
@@ -264,18 +253,18 @@ export default async function Home() {
         }
       }))
     }
-  };
+  });
 
-  // WebSite schema with SearchAction
+  // WebSite schema
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://www.sherpafoodtours.com/#website",
-    "url": "https://www.sherpafoodtours.com/",
+    "@id": WEBSITE_ID,
+    "url": baseUrl + "/",
     "name": "Sherpa Food Tours",
-    "description": "Authentic food tours and culinary experiences around the world",
+    "description": organizationData.description,
     "publisher": {
-      "@id": "https://www.sherpafoodtours.com/#organization"
+      "@id": ORGANIZATION_ID
     }
   };
 
@@ -316,8 +305,8 @@ export default async function Home() {
                 <div className="logo-container">
                   <div className="img-container">
                     <img
-                      src="/google.webp"
-                      alt="Google's logo"
+                      src={socialProof.googleLogo?.img ?? "/google.webp"}
+                      alt={socialProof.googleLogo?.alt || "Google's logo"}
                       loading="eager"
                       fetchPriority="high"
                       width="80"
@@ -325,22 +314,22 @@ export default async function Home() {
                     />
                   </div>
                   <div className="review">
-                    <p>2000 reviews</p>
+                    <p>{socialProof.googleReviews} reviews</p>
                   </div>
                 </div>
                 <div className="logo-container">
                   <div className="img-container">
                     <img
-                      src="/trip.webp"
-                      alt="TripAdvisor logo"
+                      src={socialProof.tripadvisorMedal?.img ?? "/trip.webp"}
+                      alt={socialProof.tripadvisorMedal?.alt || "TripAdvisor logo"}
                       loading="eager"
                       fetchPriority="high"
                       width="80"
                       height="40"
                     />
                   </div>
-                  <div className="review star" role="img" aria-label="5 star rating">
-                    {Array.from({ length: 5 }).map((_, i) => (
+                  <div className="review star" role="img" aria-label={`${socialProof.stars} star rating`}>
+                    {Array.from({ length: socialProof.stars }).map((_, i) => (
                       <svg
                         key={"star-" + i}
                         width="14"
@@ -364,8 +353,8 @@ export default async function Home() {
                 <div className="logo-container">
                   <div className="img-container">
                     <img
-                      src="/tripadvisor-logo.webp"
-                      alt="TripAdvisor logo"
+                      src={socialProof.tripadvisorLogo?.img ?? "/tripadvisor-logo.webp"}
+                      alt={socialProof.tripadvisorLogo?.alt || "TripAdvisor logo"}
                       loading="eager"
                       fetchPriority="high"
                       width="80"
@@ -373,7 +362,7 @@ export default async function Home() {
                     />
                   </div>
                   <div className="review">
-                    <p>15000 reviews</p>
+                    <p>{socialProof.tripadvisorReviews} reviews</p>
                   </div>
                 </div>
               </div>
