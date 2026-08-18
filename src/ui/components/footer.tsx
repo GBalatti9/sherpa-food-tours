@@ -22,31 +22,31 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
             <div className="footer-first-section">
                 <div className="first-section">
                     <div className="logo">
-                        <img src="/sherpa-complete-logo.webp" alt="Sherpa Food Tours logo" width="200" height="60" />
+                        <img src="/sherpa-complete-logo.webp" alt="Sherpa Food Tours logo" width="200" height="60" loading="lazy" decoding="async" />
                     </div>
                     <div className="social-media">
                         <div className="img-container">
                             {instagram ? (
                                 <Link href={instagram} target="_blank">
-                                    <img src="/icons/instagram.png" alt="Instagram" />
+                                    <img src="/icons/instagram.png" alt="Instagram" loading="lazy" decoding="async" />
                                 </Link>
-                            ) : <img src="/icons/instagram.png" alt="Instagram" />}
+                            ) : <img src="/icons/instagram.png" alt="Instagram" loading="lazy" decoding="async" />}
                         </div>
                         
                         <div className="img-container">
                             {tripadvisor ? (
                                 <Link href={tripadvisor} target="_blank">
-                                    <img src="/icons/tripadvisor.png" alt="Tripadvisor" />
+                                    <img src="/icons/tripadvisor.png" alt="Tripadvisor" loading="lazy" decoding="async" />
                                 </Link>
-                            ) : <img src="/icons/tripadvisor.png" alt="Tripadvisor" />}
+                            ) : <img src="/icons/tripadvisor.png" alt="Tripadvisor" loading="lazy" decoding="async" />}
                         </div>
                         
                         <div className="img-container">
                             {tiktok ? (
                                 <Link href={tiktok} target="_blank">
-                                    <img src="/icons/tiktok.png" alt="Tiktok" />
+                                    <img src="/icons/tiktok.png" alt="Tiktok" loading="lazy" decoding="async" />
                                 </Link>
-                            ) : <img src="/icons/tiktok.png" alt="Tiktok" />}
+                            ) : <img src="/icons/tiktok.png" alt="Tiktok" loading="lazy" decoding="async" />}
                         </div>
                         
                     </div>
@@ -69,23 +69,23 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
                             <div className="img-container">
                                 {instagram ? (
                                     <Link href={instagram} target="_blank">
-                                        <img src="/icons/instagram.png" alt="Instagram" />
+                                        <img src="/icons/instagram.png" alt="Instagram" loading="lazy" decoding="async" />
                                     </Link>
-                                ) : <img src="/icons/instagram.png" alt="Instagram" />}
+                                ) : <img src="/icons/instagram.png" alt="Instagram" loading="lazy" decoding="async" />}
                             </div>
                             <div className="img-container">
                                 {tripadvisor ? (
                                     <Link href={tripadvisor} target="_blank">
-                                        <img src="/icons/tripadvisor.png" alt="Tripadvisor" />
+                                        <img src="/icons/tripadvisor.png" alt="Tripadvisor" loading="lazy" decoding="async" />
                                     </Link>
-                                ) : <img src="/icons/tripadvisor.png" alt="Tripadvisor" />}
+                                ) : <img src="/icons/tripadvisor.png" alt="Tripadvisor" loading="lazy" decoding="async" />}
                             </div>
                             <div className="img-container">
                                 {tiktok ? (
                                     <Link href={tiktok} target="_blank">
-                                        <img src="/icons/tiktok.png" alt="Tiktok" />
+                                        <img src="/icons/tiktok.png" alt="Tiktok" loading="lazy" decoding="async" />
                                     </Link>
-                                ) : <img src="/icons/tiktok.png" alt="Tiktok" />}
+                                ) : <img src="/icons/tiktok.png" alt="Tiktok" loading="lazy" decoding="async" />}
                             </div>
                         </div>
                     </div>
