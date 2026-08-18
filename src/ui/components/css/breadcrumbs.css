@@ -1,0 +1,82 @@
+/* En city el trail va entre dos secciones full-bleed, así que necesita su propio
+   ancho y gutter; en tour y artículo los hereda del contenedor que lo envuelve. */
+.city-breadcrumbs {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1.3rem 0;
+}
+
+/* Trail de navegación. Sin JS por construcción: son links planos. */
+.breadcrumbs {
+  font-family: var(--font-excelsior);
+  font-size: 0.875rem;
+  line-height: 1.4;
+
+  & ol {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    /* En mobile el trail scrollea en vez de romper el layout con títulos largos */
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  & li {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+
+  & a {
+    color: var(--second-green);
+    text-decoration: none;
+    transition: color 200ms;
+
+    &:hover {
+      color: var(--subtitle-color);
+      text-decoration: underline;
+    }
+  }
+
+  /* La página actual: sin link y atenuada, pero legible */
+  & [aria-current="page"] {
+    color: var(--second-green);
+    opacity: 0.65;
+
+    /* Sólo la hoja trunca: los ancestros quedan siempre clickeables */
+    max-width: 14rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  & .breadcrumbs-separator {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: var(--second-green);
+    opacity: 0.45;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 0.9375rem;
+
+    & ol {
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+
+    & [aria-current="page"] {
+      max-width: none;
+    }
+  }
+}

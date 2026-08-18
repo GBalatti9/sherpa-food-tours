@@ -159,7 +159,10 @@ export const wp = {
 
         try {
             const url = `${apiUrl}/cities/${id}`;
-            const response = await fetch(url);
+            // Cacheado: las páginas de tour lo llaman en cada render para su breadcrumb.
+            const response = await fetch(url, {
+                next: { revalidate: 3600 }
+            });
 
             if (!response.ok) throw new Error(`No se obtuvieron datos ${url}`);
             const { title: { rendered: title }, acf: { pais: country_id }, slug } = await response.json();

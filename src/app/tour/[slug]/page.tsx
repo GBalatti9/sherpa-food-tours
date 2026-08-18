@@ -2,6 +2,8 @@
 
 import { fetchImages } from "@/app/utils/fetchImages";
 import { wp } from "@/lib/wp";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
+import { breadcrumbListSchema, type Crumb } from "@/lib/breadcrumbs";
 import BookNowButton from "@/ui/components/book-now";
 import { Star } from "lucide-react";
 import React from "react";
@@ -363,24 +365,17 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         };
     }
 
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": baseUrl + "/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": title,
-                "item": tourUrl + "/"
-            }
-        ]
-    };
+    // La ciudad del tour (acf.ciudad) da el link interno de vuelta a su página padre, que
+    // es el punto del ticket. Si WordPress no la trae, el trail cae a Home > Tour.
+    const tourCity = acf.ciudad ? await wp.getCity(acf.ciudad) : null;
+
+    // Un solo trail alimenta el JSON-LD y el breadcrumb visible, así no pueden divergir.
+    const crumbs: Crumb[] = [
+        { name: "Home", href: "/" },
+        ...(tourCity?.slug ? [{ name: tourCity.city_name, href: `/city/${tourCity.slug}/` }] : []),
+        { name: title, href: `/tour/${slug}/` },
+    ];
+    const breadcrumbSchema = breadcrumbListSchema(crumbs);
 
     return (
         <>
@@ -397,6 +392,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
 
             <main>
                 <section className="tour-hero-section">
+                    <Breadcrumbs items={crumbs} />
                     <ImageGallery images={images} />
                     {/* <div className="image-gallery">
                     {images && images.slice(0, 3).map((image, i) => (

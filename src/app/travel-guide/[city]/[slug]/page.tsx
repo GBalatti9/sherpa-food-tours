@@ -15,6 +15,8 @@ import ContentWithGalleries from "@/app/travel-guide/[city]/[slug]/components/co
 import TableOfContents from "@/app/travel-guide/[city]/[slug]/components/table-of-contents";
 import { extractHeadings } from "@/app/helpers/extractHeadings";
 import Link from "next/link";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
+import { breadcrumbListSchema, type Crumb } from "@/lib/breadcrumbs";
 
 
 // ----------------------
@@ -260,37 +262,22 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
         }
     };
 
-    // Breadcrumb Schema
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": baseUrl + "/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Travel Guide",
-                "item": `${baseUrl}/travel-guide/`
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": cityDisplayName,
-                "item": `${baseUrl}/travel-guide/${correctCity || city}/`
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": title,
-                "item": articleUrl
-            }
-        ]
-    };
+    // Slug real de la ciudad en WordPress, tomado de su permalink. slugify() sobre el
+    // título no sirve acá: borra los acentos en vez de transliterarlos ("México" ->
+    // "mxico"), y /city/[slug] resuelve contra WordPress, así que un slug que no exista
+    // sería un 404. Si el permalink no viene, slugify es el mejor esfuerzo disponible.
+    const cityFromLink = relaciones?.ciudades?.[0]?.link?.match(/\/cities\/([^/]+)\/?$/)?.[1];
+    const citySlug = cityFromLink || correctCity || city;
+
+    // Un solo trail alimenta el JSON-LD y el breadcrumb visible, así no pueden divergir.
+    // La ciudad enlaza a /city/{slug}/ y no a /travel-guide/{ciudad}/, que no existe.
+    const crumbs: Crumb[] = [
+        { name: "Home", href: "/" },
+        { name: "Travel Guide", href: "/travel-guide/" },
+        { name: cityDisplayName, href: `/city/${citySlug}/` },
+        { name: he.decode(title), href: `/travel-guide/${correctCity || city}/${slug}/` },
+    ];
+    const breadcrumbSchema = breadcrumbListSchema(crumbs);
 
 
     return (
@@ -319,6 +306,7 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
                 </header>
 
                 <div className="article-content">
+                    <Breadcrumbs items={crumbs} />
                     <h1>{he.decode(title)}</h1>
                     <TableOfContents headings={headings} />
                     <ContentWithGalleries htmlContent={htmlWithIds} />

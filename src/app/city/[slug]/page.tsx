@@ -8,6 +8,8 @@ import OurExperiencesSection from "@/app/components/our-experiences";
 import { fetchImages } from "@/app/utils/fetchImages";
 import { wp } from "@/lib/wp";
 import AsFeaturedIn from "@/ui/components/as-featured-in";
+import Breadcrumbs from "@/ui/components/breadcrumbs";
+import { breadcrumbListSchema, type Crumb } from "@/lib/breadcrumbs";
 import BookNowButton from "@/ui/components/book-now";
 import MainImage from "@/ui/components/main-image";
 import JustRelax from "@/ui/components/just-relax";
@@ -343,24 +345,14 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     // Generate structured data for SEO
     const cityImageData = await wp.getPostImage(featured_media);
 
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": baseUrl + "/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": acf.title || cityData.city_name,
-                "item": cityUrl
-            }
-        ]
-    };
+    // Un solo trail alimenta el JSON-LD y el breadcrumb visible, así no pueden divergir.
+    // Se usa el nombre pelado de la ciudad y no acf.title, que es un titular de marketing
+    // ("Food Tours in Buenos Aires") y leería mal como escalón de navegación.
+    const crumbs: Crumb[] = [
+        { name: "Home", href: "/" },
+        { name: cityData.city_name, href: `/city/${slug}/` },
+    ];
+    const breadcrumbSchema = breadcrumbListSchema(crumbs);
 
     const cityPageSchema = {
         "@context": "https://schema.org",
@@ -465,6 +457,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                         </div>
                     </div>
                 </section>
+                <div className="city-breadcrumbs">
+                    <Breadcrumbs items={crumbs} />
+                </div>
                 <section>
                     <AsFeaturedIn asFeatureInImages={asFeatureInImages} />
                 </section>
