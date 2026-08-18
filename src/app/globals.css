@@ -2182,6 +2182,7 @@ main {
       max-width: 900px;
   }
 
+  h1,
   h2 {
       font-family: var(--font-dk-otago);
       font-size: 1.5rem;
@@ -5001,6 +5002,7 @@ main {
   margin: auto;
   padding-bottom: 2rem;
 
+  h1,
   h2 {
       font-family: var(--font-dk-otago);
       font-size: 1.5rem;
