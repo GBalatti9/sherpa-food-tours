@@ -1,6 +1,6 @@
 import Link from "next/link";
 import "./css/breadcrumbs.css";
-import type { BreadcrumbItem } from "@/lib/schema";
+import { toSitePath, type BreadcrumbItem } from "@/lib/schema";
 
 /**
  * Migas de pan visibles. Recibe el mismo array que buildBreadcrumbSchema para que
@@ -19,7 +19,7 @@ export default function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
                             {isLast ? (
                                 <span aria-current="page">{item.name}</span>
                             ) : (
-                                <Link href={item.url}>{item.name}</Link>
+                                <Link href={toSitePath(item.url)}>{item.name}</Link>
                             )}
                             {!isLast && <span className="separator" aria-hidden="true">/</span>}
                         </li>

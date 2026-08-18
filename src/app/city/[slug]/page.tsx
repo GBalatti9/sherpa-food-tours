@@ -359,7 +359,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         "name": acf?.title || cityData.city_name,
         "description": acf.subheadline || extractDescription(content),
         "url": cityUrl,
-        "image": cityImageData.img,
+        "image": absoluteOptimizedUrl(cityImageData.img, 1200),
         "touristType": "Food Lovers",
         "mainEntityOfPage": {
             "@type": "WebPage",
@@ -378,7 +378,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         "name": `Sherpa Food Tours - ${acf?.title || cityData.city_name}`,
         "description": acf.subheadline || `Authentic food tours in ${cityData.city_name}`,
         "url": cityUrl,
-        "image": cityImageData.img,
+        "image": absoluteOptimizedUrl(cityImageData.img, 1200),
         "parentOrganization": {
             "@type": "Organization",
             "@id": "https://www.sherpafoodtours.com/#organization"

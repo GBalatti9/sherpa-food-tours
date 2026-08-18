@@ -9,6 +9,7 @@ import PageInteractivity from "./components/page-interactivity";
 import { formatPostFromEmbed, filterValidPosts, type PostWithImageData } from "../utils/formatPostWithEmbed";
 import { buildBreadcrumbSchema, getBaseUrl } from "@/lib/schema";
 import Breadcrumbs from "@/ui/components/breadcrumbs";
+import { absoluteOptimizedUrl } from "@/lib/wp-media";
 
 export type PostWithImage = PostWithImageData;
 
@@ -122,7 +123,7 @@ export default async function TravelGuidePage() {
                     "position": index + 1,
                     "url": postUrl,
                     "name": post.title.rendered.replace(/<[^>]*>/g, ''),
-                    "image": post.image?.img
+                    "image": post.image?.img ? absoluteOptimizedUrl(post.image.img, 1200) : undefined
                 };
             })
         }

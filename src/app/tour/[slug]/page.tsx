@@ -338,7 +338,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         "@id": `${tourUrl}#tour`,
         "name": title,
         "description": acf.tour_description,
-        "image": [featuredImage.img],
+        "image": [absoluteOptimizedUrl(featuredImage.img, 1200)],
         "url": tourUrl,
         "brand": {
             "@type": "Brand",

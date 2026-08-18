@@ -112,6 +112,19 @@ export interface BreadcrumbItem {
 }
 
 /**
+ * Convierte la URL absoluta de un crumb en una ruta relativa con una sola barra final.
+ * El JSON-LD necesita la URL absoluta, pero el <Link> visible no: con href absoluto Next
+ * trata el link como externo y cada click es un full page reload en vez de navegación
+ * cliente. Normalizar la barra final de paso evita el `/tour/{slug}//` que ya apareció
+ * cuando cada página armaba su URL a mano.
+ */
+export function toSitePath(url: string): string {
+    const path = url.replace(/^https?:\/\/[^/]+/, "");
+    const clean = `/${path.replace(/^\/+/, "").replace(/\/+$/, "")}`;
+    return clean === "/" ? "/" : `${clean}/`;
+}
+
+/**
  * Construye el BreadcrumbList a partir del mismo array que consume el componente
  * <Breadcrumbs>, para que el marcado y lo que ve el usuario no puedan divergir.
  */
