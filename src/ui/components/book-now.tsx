@@ -17,8 +17,26 @@ const GA4_TRACKING = GA_ID
 const FAREHARBOR_BOOK_URL =
   `https://fareharbor.com/embeds/book/sherpafoodtours_argentina/?flow=1413860&${GA4_TRACKING}language=en-us&full-items=yes&back=https://www.sherpafoodtours.com/&g4=yes`;
 
+/**
+ * Fuerza el ga4t de cualquier URL de FareHarbor a la propiedad con la que mide el sitio.
+ *
+ * Arreglar el literal de este archivo no alcanzaba: la URL está copiada en al menos un
+ * lugar más — NEXT_PUBLIC_DEFAULT_FAREHARBOR_LINK, que el navbar pasa como `link` y que
+ * por lo tanto le gana a FAREHARBOR_BOOK_URL — y además cada tour y cada ciudad pueden
+ * traer la suya desde ACF. Cualquiera de esas copias puede quedar con una propiedad vieja
+ * y mandar las reservas a otro lado sin que se note, porque el botón arma la URL recién
+ * en el click y nunca aparece en el DOM.
+ *
+ * Se reemplaza solo el measurement id; el clientId y el sessionId que vienen detrás, y el
+ * resto de la URL, quedan byte a byte como estaban.
+ */
+function withSiteGa4Property(url: string): string {
+  if (!GA_ID) return url;
+  return url.replace(/([?&]ga4t=)G-[A-Z0-9]+/i, `$1${GA_ID}`);
+}
+
 export default function BookNowButton({ link, data_tour }: { link?: string; data_tour?: string }) {
-  const href = link || FAREHARBOR_BOOK_URL;
+  const href = withSiteGa4Property(link || FAREHARBOR_BOOK_URL);
 
   return (
     <button

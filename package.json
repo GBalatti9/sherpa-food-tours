@@ -10,7 +10,9 @@
     "export": "next build && next export",
     "verify:optimizations": "node scripts/verify-optimizations.js",
     "verify:optimizations:prod": "node scripts/verify-optimizations.js https://www.sherpafoodtours.com",
-    "test:410": "node scripts/test-410.js"
+    "test:410": "node scripts/test-410.js",
+    "test:merge": "node scripts/verify-merge.js",
+    "test:merge:prod": "BASE_URL=https://www.sherpafoodtours.com node scripts/verify-merge.js"
   },
   "optionalDependencies": {
     "@next/swc-darwin-arm64": "^16.2.4"

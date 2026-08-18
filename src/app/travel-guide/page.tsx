@@ -162,7 +162,7 @@ export default async function TravelGuidePage() {
                         <h1>
                             The
                             <span className="inline-flex px-3 w-[140px] shrink-0 items-center md:w-[180px] lg:w-[220px]">
-                                <img src="/sherpa-white.webp" alt="Sherpa Food Tours logo" className="block !w-full h-auto object-contain" />
+                                <img src="/sherpa-white.webp" alt="Sherpa Food Tours logo" width={236} height={96} className="block !w-full h-auto object-contain" />
                             </span>
                             travel guide
                         </h1>
