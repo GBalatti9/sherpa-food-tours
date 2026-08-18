@@ -33,6 +33,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: 'https://www.sherpafoodtours.com/sitemap.xml',
-    host: 'https://www.sherpafoodtours.com',
   }
 }
