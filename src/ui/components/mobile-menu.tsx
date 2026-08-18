@@ -81,7 +81,7 @@ export default function MobileMenu({ items, currentPath, cities }: { items: NavB
                                             className="menu-link"
                                             role="menuitem"
                                         >
-                                            <img src={optimizedUrl(city.flag.img, 64)} width={city.flag.width} height={city.flag.height} alt={city.flag.alt} />
+                                            <img src={optimizedUrl(city.flag.img, 64)} width={city.flag.width} height={city.flag.height} alt={city.flag.alt} loading="lazy" decoding="async" />
                                             {city.city}
                                         </Link>
                                     ))}

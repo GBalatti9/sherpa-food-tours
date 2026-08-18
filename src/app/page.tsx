@@ -271,15 +271,10 @@ export default async function Home() {
 
   return (
     <>
-      {/* Preload hero image for LCP */}
-      {background_image?.img && (
-        <link
-          rel="preload"
-          as="image"
-          href={background_image.img}
-          fetchPriority="high"
-        />
-      )}
+      {/* Sin preload manual del hero: apuntaba a la URL cruda de WordPress, que desde la
+          migración al optimizador ya no se renderiza en ningún <img>. El browser bajaba esa
+          imagen al pedo y en alta prioridad, compitiendo contra el LCP real. El <Image
+          priority> de MainImage ya emite el preload correcto, con imageSrcSet. */}
 
       {/* Structured Data */}
       <script
@@ -309,7 +304,6 @@ export default async function Home() {
                       src={socialProof.googleLogo?.img ?? "/google.webp"}
                       alt={socialProof.googleLogo?.alt || "Google's logo"}
                       loading="eager"
-                      fetchPriority="high"
                       width="80"
                       height="40"
                     />
@@ -324,7 +318,6 @@ export default async function Home() {
                       src={socialProof.tripadvisorMedal?.img ?? "/trip.webp"}
                       alt={socialProof.tripadvisorMedal?.alt || "TripAdvisor logo"}
                       loading="eager"
-                      fetchPriority="high"
                       width="80"
                       height="40"
                     />
@@ -357,7 +350,6 @@ export default async function Home() {
                       src={socialProof.tripadvisorLogo?.img ?? "/tripadvisor-logo.webp"}
                       alt={socialProof.tripadvisorLogo?.alt || "TripAdvisor logo"}
                       loading="eager"
-                      fetchPriority="high"
                       width="80"
                       height="40"
                     />

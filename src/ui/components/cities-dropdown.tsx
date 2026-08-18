@@ -187,6 +187,8 @@ export default function CitiesDropdown({
                       src={optimizedUrl(city.flag.img, 64)} width={city.flag.width} height={city.flag.height}
                       alt={city.flag.alt || city.city}
                       className="cities-row-flag"
+                      loading="lazy"
+                      decoding="async"
                     />
                   )}
                   <span className={`cities-row-name${isCurrent ? " is-current" : ""}`}>
