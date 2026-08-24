@@ -47,7 +47,7 @@ const dkOtago = localFont({
 
 
 export const metadata: Metadata = {
-  title: "Sherpa Food Tours - Best Food Tours & Culinary Experiences Worldwide",
+  title: "Sherpa Food Tours | Best Culinary Experiences Worldwide",
   description: "Experience authentic food tours around the world. Enjoy local flavors, cultural insights, and unique culinary adventures in top cities.",
   keywords: [
     "food tours",

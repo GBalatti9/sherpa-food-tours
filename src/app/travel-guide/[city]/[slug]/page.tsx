@@ -18,6 +18,7 @@ import { extractHeadings } from "@/app/helpers/extractHeadings";
 import Link from "next/link";
 import { buildBreadcrumbSchema } from "@/lib/schema";
 import Breadcrumbs from "@/ui/components/breadcrumbs";
+import { siteTitle, metaDescription } from "@/app/helpers/seo";
 
 
 // ----------------------
@@ -37,11 +38,12 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 
     const { img, alt } = await wp.getPostImage(post.featured_media);
 
-    const rawDescription = post.excerpt?.replace(/<[^>]+>/g, "") || post.content.replace(/<[^>]+>/g, "").slice(0, 150);
-    const description = cleanExcerpt(rawDescription);
+    const rawDescription = post.excerpt || post.content.slice(0, 300);
+    const description = metaDescription(rawDescription);
     
     const imageUrl = absoluteOptimizedUrl(img || "https://www.sherpafoodtours.com/imagen-de-portada.webp", 1200);
     const title = he.decode(post.title);
+    const pageTitle = siteTitle(title);
     const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
     // Usar la ciudad real del post (no el param de la URL) para el canonical
     const realCitySlug = post.relaciones?.ciudades?.[0]?.title
@@ -65,7 +67,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     if (contentText.includes('street food')) foodRelatedKeywords.push('street food');
 
     return {
-        title: `${title} | Sherpa Food Tours`,
+        title: pageTitle,
         description,
         keywords: [
             cityName, // "Buenos Aires"
@@ -89,7 +91,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
         ].filter(Boolean),
         authors: [{ name: "Sherpa Food Tours" }],
         openGraph: {
-            title: `${title} | Sherpa Food Tours`,
+            title: pageTitle,
             description,
             url: articleUrl,
             siteName: "Sherpa Food Tours",
@@ -111,7 +113,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
         },
         twitter: {
             card: "summary_large_image",
-            title: `${title} | Sherpa Food Tours`,
+            title: pageTitle,
             description,
             images: [imageUrl],
             creator: "@sherpafoodtours",

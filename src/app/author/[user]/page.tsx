@@ -1,4 +1,5 @@
 import { wp } from "@/lib/wp";
+import { metaDescription } from "@/app/helpers/seo";
 import { notFound } from "next/navigation";
 import AuthorPosts from "./components/author-posts";
 import { WPPost } from "@/types/post";
@@ -29,9 +30,10 @@ export async function generateMetadata({ params }: { params: Promise<{ user: str
     }
 
     const authorName = currentUser.name || 'Author';
-    const authorDescription = currentUser.description 
-        ? currentUser.description.replace(/<[^>]+>/g, '').substring(0, 160) + '...'
-        : `Read articles and travel guides by ${authorName} on Sherpa Food Tours.`;
+    const authorDescription = metaDescription(
+        currentUser.description
+            || `Read articles and travel guides by ${authorName} on Sherpa Food Tours.`
+    );
 
     return {
         title: `${authorName} - Author | Sherpa Food Tours`,

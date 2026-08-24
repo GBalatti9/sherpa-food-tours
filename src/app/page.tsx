@@ -1,5 +1,6 @@
 
 import { wp } from "@/lib/wp";
+import { siteTitle, metaDescription } from "@/app/helpers/seo";
 import { ACFHome } from "@/types/acf-home";
 import Link from "next/link";
 import { getNotReadyToBookSection } from "./utils/getNotReadyToBookSection";
@@ -22,18 +23,19 @@ export async function generateMetadata(): Promise<Metadata> {
   const { title, content } = pageInfo;
 
   // Extract description from content or use default
-  const description = content
-    ? content
-      .replace(/<[^>]*>/g, '')
-      .replace(/&#\d+;/g, '')
-      .replace(/&[a-zA-Z]+;/g, '')
-      .replace(/\s+/g, ' ')
-      .trim()
-      .substring(0, 155)
-    : "Experience authentic food tours around the world. Enjoy local flavors, cultural insights, and unique culinary adventures in top cities with Sherpa Food Tours.";
+  const description = metaDescription(
+    content
+      || "Experience authentic food tours around the world. Enjoy local flavors, cultural insights, and unique culinary adventures in top cities with Sherpa Food Tours."
+  );
+
+  // El titular de la home viene de ACF ("Taste, Share and Explore what locals
+  // love", 41 chars); el sufijo anterior de 53 chars lo llevaba a 94. Marca
+  // primero, y si algún día el titular crece, cae al sufijo condicional.
+  const brandFirst = `Sherpa Food Tours: ${title}`;
+  const pageTitle = brandFirst.length <= 60 ? brandFirst : siteTitle(title);
 
   return {
-    title: `${title} | Sherpa Food Tours - Authentic Culinary Experiences`,
+    title: pageTitle,
     description,
     keywords: [
       "food tours",
@@ -72,7 +74,7 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: '/',
     },
     openGraph: {
-      title: `${title} | Sherpa Food Tours`,
+      title: pageTitle,
       description,
       url: 'https://www.sherpafoodtours.com/',
       siteName: 'Sherpa Food Tours',
@@ -89,7 +91,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | Sherpa Food Tours`,
+      title: pageTitle,
       description,
       images: ['/sherpa-main-image.webp'],
       creator: '@sherpafoodtours',
