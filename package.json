@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "postbuild": "node scripts/check-wp-image-leaks.js",
     "start": "next start",
     "lint": "next lint",
     "export": "next build && next export",
+    "check:images": "node scripts/check-wp-image-leaks.js",
     "verify:optimizations": "node scripts/verify-optimizations.js",
     "verify:optimizations:prod": "node scripts/verify-optimizations.js https://www.sherpafoodtours.com",
     "test:410": "node scripts/test-410.js",

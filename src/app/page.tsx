@@ -156,6 +156,11 @@ export default async function Home() {
 
   // Logos y contadores del hero: salen de ACF; si el campo está vacío en WP se cae
   // a los assets de /public y a los valores históricos, para no romper el bloque.
+  //
+  // Los tres src pasan por optimizedUrl: son URLs de WordPress, y WP responde
+  // x-robots-tag: noindex en cada archivo. Servirlas crudas reintroduciría en el hero
+  // el mismo problema que resolvió el ticket de Multimedia Issues. Se renderizan a
+  // 80x40, así que el ancho por defecto del helper alcanza y sobra.
   const socialProof = {
     googleLogo: acf.google_logo ? google_logo : null,
     tripadvisorMedal: acf.tripadvisor_medal ? tripadvisor_medal : null,
@@ -303,7 +308,7 @@ export default async function Home() {
                 <div className="logo-container">
                   <div className="img-container">
                     <img
-                      src={socialProof.googleLogo?.img ?? "/google.webp"}
+                      src={optimizedUrl(socialProof.googleLogo?.img) || "/google.webp"}
                       alt={socialProof.googleLogo?.alt || "Google's logo"}
                       loading="eager"
                       width="80"
@@ -317,7 +322,7 @@ export default async function Home() {
                 <div className="logo-container">
                   <div className="img-container">
                     <img
-                      src={socialProof.tripadvisorMedal?.img ?? "/trip.webp"}
+                      src={optimizedUrl(socialProof.tripadvisorMedal?.img) || "/trip.webp"}
                       alt={socialProof.tripadvisorMedal?.alt || "TripAdvisor logo"}
                       loading="eager"
                       width="80"
@@ -349,7 +354,7 @@ export default async function Home() {
                 <div className="logo-container">
                   <div className="img-container">
                     <img
-                      src={socialProof.tripadvisorLogo?.img ?? "/tripadvisor-logo.webp"}
+                      src={optimizedUrl(socialProof.tripadvisorLogo?.img) || "/tripadvisor-logo.webp"}
                       alt={socialProof.tripadvisorLogo?.alt || "TripAdvisor logo"}
                       loading="eager"
                       width="80"
