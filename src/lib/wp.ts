@@ -1,5 +1,6 @@
 import { fetchWithRetry } from "./fetch-with-retry";
 import { rewriteHtmlImages, type WpImage } from "./wp-media";
+import { rewriteInternalLinks } from "./wp-links";
 
 const domain = process.env.NEXT_PUBLIC_WP_URL;
 
@@ -28,6 +29,13 @@ function normalizeWpImageUrl(url: string): string {
 }
 
 
+// Todo el HTML que WordPress devuelve pasa por acá antes de llegar a una página: las
+// imágenes al optimizador y los links internos normalizados. Un solo punto para que una
+// transformación futura no quede aplicada a la mitad de los getters.
+function limpiarContenido(content: string): string {
+    return rewriteInternalLinks(rewriteHtmlImages(content));
+}
+
 export const wp = {
     getPageInfo: async (slug: string) => {
         const url = `${apiUrl}/pages?slug=${slug}`;
@@ -45,7 +53,7 @@ export const wp = {
         if (!data) return { title: "", content: "", acf: "", featured_media: null };
 
         const { title: { rendered: title }, content: { rendered: content }, acf, featured_media } = data;
-        return { title, content: rewriteHtmlImages(content), acf, featured_media };
+        return { title, content: limpiarContenido(content), acf, featured_media };
     },
     getPostInfo: async (slug: string) => {
         // Optimizado: agregar cache para reducir llamadas a WordPress; _embed incluye autor
@@ -69,7 +77,7 @@ export const wp = {
         const authorData = _embedded?.author?.[0];
         const author = authorData ? { name: authorData.name, slug: authorData.slug ?? null } : null;
 
-        return { title, content: rewriteHtmlImages(content), excerpt, featured_media, date, modified, relaciones, author };
+        return { title, content: limpiarContenido(content), excerpt, featured_media, date, modified, relaciones, author };
     },
     getPostInfoById: async (id: number) => {
         const response = await fetch(`${apiUrl}/posts/${id}`)
@@ -81,7 +89,7 @@ export const wp = {
 
         const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified, relaciones, acf, author, slug } = await response.json();
 
-        return { title, content: rewriteHtmlImages(content), excerpt, featured_media, date, modified, relaciones, acf, author, slug };
+        return { title, content: limpiarContenido(content), excerpt, featured_media, date, modified, relaciones, acf, author, slug };
     },
     getAllPost: async (limit?: number, page?: number) => {
         try {
@@ -208,7 +216,7 @@ export const wp = {
             const [data] = await response.json();
             if (!data) throw new Error(`La sección ${slug} no existe`);
             const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = data;
-            return { title, content: rewriteHtmlImages(content), featured_media, acf };
+            return { title, content: limpiarContenido(content), featured_media, acf };
         } catch (err) {
             console.warn(`No se pudo obtener la sección ${slug}:`, err);
             return { title: "", content: "", featured_media: null, acf: null };
@@ -223,7 +231,7 @@ export const wp = {
             const response = await fetchWithRetry(url, { next: { revalidate: 3600 } })
             if (!response.ok) throw new Error(`No se obtuvieron datos de ${apiUrl}/embedsections/${id}`);
             const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = await response.json();
-            return { title, content: rewriteHtmlImages(content), featured_media, acf };
+            return { title, content: limpiarContenido(content), featured_media, acf };
         } catch (err) {
             console.warn(`No se pudo obtener la sección ${id}:`, err);
             return { title: "", content: "", featured_media: null, acf: null };
@@ -259,7 +267,7 @@ export const wp = {
 
             const { title: { rendered: title }, content: { rendered: content }, featured_media, acf, slug } = await response.json();
 
-            return { title, content: rewriteHtmlImages(content), featured_media, acf, slug }
+            return { title, content: limpiarContenido(content), featured_media, acf, slug }
         } catch (error) {
             console.error(error);
             return { title: "", content: "", featured_media: null, acf: null, slug: "" };
@@ -284,7 +292,7 @@ export const wp = {
         }
 
         const { title: { rendered: title }, content: { rendered: content }, acf: { pais: country_id }, acf, featured_media } = data;
-        return { city_name: title, content: rewriteHtmlImages(content), country_id: country_id, acf, featured_media };
+        return { city_name: title, content: limpiarContenido(content), country_id: country_id, acf, featured_media };
     },
 
     getFaqById: async (id: number) => {
