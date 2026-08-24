@@ -77,6 +77,22 @@
         line-height: 1.5;
         font-family: var(--font-excelsior);
 
+        /* Dato de contacto crawleable, presente en todos los breakpoints */
+        .footer-contact {
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+
+            a {
+                color: #8D8D8D;
+                text-decoration: underline;
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+
         .terms-link {
             display: inline-block;
             margin-top: 0.75rem;

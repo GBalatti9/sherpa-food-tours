@@ -12,6 +12,15 @@ const nextConfig = {
     serverActions: {
       timeout: 300, // 5 minutos
     },
+
+    // El prerender de ~55 páginas con 9 workers en paralelo dispara cientos de requests
+    // simultáneos a WordPress, y el hosting empieza a devolver 500 y a cortar conexiones.
+    // Cuando eso pasa el build entero se cae, así que el sitio deja de deployar por un
+    // límite del origen, no por el código. Se baja la concurrencia y se reintenta la
+    // página que falló, que es más lento pero termina.
+    staticGenerationMaxConcurrency: 2,
+    staticGenerationMinPagesPerWorker: 25,
+    staticGenerationRetryCount: 3,
   },
 
   compress: true, // Habilitar compresión GZIP

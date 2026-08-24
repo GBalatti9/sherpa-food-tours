@@ -50,9 +50,17 @@ export const wp = {
     getPostInfo: async (slug: string) => {
         // Optimizado: agregar cache para reducir llamadas a WordPress; _embed incluye autor
         const url = `${apiUrl}/posts?slug=${slug}&_embed`;
-        const response = await fetch(url, {
+        const response = await fetchWithRetry(url, {
             next: { revalidate: 3600 } // cachea por 1 hora
         });
+
+        // Acá NO se degrada a vacío: quien llama hace notFound() con el resultado vacío, así
+        // que tragarse un error de red convertiría un artículo publicado en un 404 horneado
+        // en el build estático. Mejor romper ruidosamente y que el deploy no salga.
+        if (!response.ok) {
+            throw new Error(`WordPress API error ${response.status} for ${url}`);
+        }
+
         const [data] = await response.json();
         if (!data) return { title: "", content: "", excerpt: "", featured_media: null, date: "", modified: "", relaciones: null, author: null };
 
@@ -195,9 +203,10 @@ export const wp = {
     },
     getEmbedSectionInfo: async (slug: string) => {
         try {
-            const response = await fetch(`${apiUrl}/embedsections?slug=${slug}`)
+            const response = await fetchWithRetry(`${apiUrl}/embedsections?slug=${slug}`, { next: { revalidate: 3600 } })
             if (!response.ok) throw new Error(`No se obtuvieron datos de ${apiUrl}/embedsections?slug=${slug}`);
             const [data] = await response.json();
+            if (!data) throw new Error(`La sección ${slug} no existe`);
             const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = data;
             return { title, content: rewriteHtmlImages(content), featured_media, acf };
         } catch (err) {
@@ -209,7 +218,9 @@ export const wp = {
     getEmbedSectionInfoById: async (id: number) => {
         try {
             const url = `${apiUrl}/embedsections/${id}`;
-            const response = await fetch(url)
+            // Con fetch pelado, un 500 puntual de WP durante el prerender devolvía acf: null
+            // y tumbaba el build. Reintentos + caché, igual que getCityBySlug y getTourBySlug.
+            const response = await fetchWithRetry(url, { next: { revalidate: 3600 } })
             if (!response.ok) throw new Error(`No se obtuvieron datos de ${apiUrl}/embedsections/${id}`);
             const { title: { rendered: title }, content: { rendered: content }, featured_media, acf } = await response.json();
             return { title, content: rewriteHtmlImages(content), featured_media, acf };

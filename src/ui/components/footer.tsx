@@ -1,5 +1,5 @@
 import { wp } from "@/lib/wp";
-import { TRIPADVISOR_URL } from "@/lib/schema";
+import { TRIPADVISOR_URL, getOrganizationData } from "@/lib/schema";
 import CitiesDropdown from "./cities-dropdown";
 import "./css/footer.css"
 
@@ -14,6 +14,10 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
     const tripadvisor = socialMedia?.acf?.tripadvisor ?? TRIPADVISOR_URL;
 
     const tiktok = socialMedia?.acf?.tiktok ?? 'https://www.tiktok.com/@sherpafoodtours';
+
+    // El mail sale de la misma fuente que alimenta el Organization schema, así el dato de
+    // contacto que crawlea Google en el footer y el que declara el JSON-LD no pueden divergir.
+    const { email } = await getOrganizationData();
 
 
 
@@ -62,6 +66,7 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
 
                     <div className="positions-desktop">
                         <div className="positions">
+                            <Link href="/contact/" >Contact</Link>
                             <Link href="/contact/" >Partner With Us</Link>
                             <Link href="/contact/" >Careers</Link>
                         </div>
@@ -94,6 +99,7 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
                 <div className="second-section">
                     {/* <Link href="/travel-guide"> Explore Our Cities</Link> */}
                     <CitiesDropdown text="Explore Our Cities" cities={cities} color="#fff" />
+                    <Link href="/contact/" >Contact</Link>
                     <Link href="/contact/" >Partner With Us</Link>
                     <Link href="/contact/" >Careers</Link>
                 </div>
@@ -101,6 +107,10 @@ export default async function Footer({ cities }: { cities: { id: number; city: s
 
             <div className="footer-second-section">
                 <p>Sherpa Food Tours LLC & Sherpa Food Tours International LTD - Sherpa Food Tours is a trading name and registered trademark of Sherpa Food Tours International ltd. Registered in Great Britain and Northern Ireland no UK00004135333.</p>
+                <p className="footer-contact">
+                    Questions? Email us at{" "}
+                    <a href={`mailto:${email}`}>{email}</a>
+                </p>
                 <Link href="/terms-and-conditions/" className="terms-link">Terms and Conditions</Link>
             </div>
         </footer>
