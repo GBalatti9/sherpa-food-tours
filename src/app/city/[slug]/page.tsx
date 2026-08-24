@@ -4,6 +4,7 @@ export const revalidate = 3600; // Revalidar cada hora (1 hora = 3600 segundos)
 
 
 import OurExperiencesSection from "@/app/components/our-experiences";
+import { siteTitle, metaDescription } from "@/app/helpers/seo";
 // import "./city.css";
 import { fetchImages } from "@/app/utils/fetchImages";
 import { wp } from "@/lib/wp";
@@ -46,9 +47,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         };
     }
 
-    const title = cityBySlug.acf.metadata?.title?.trim().length > 0 ? cityBySlug.acf.metadata.title : `${cityBySlug.city_name} Food Tours | Sherpa Food Tours`;
+    // Title de ACF gana si existe; el fallback sólo suma la marca si entra
+    // en 60. La description se normaliza a 157 venga de ACF o del content.
+    const title = cityBySlug.acf.metadata?.title?.trim().length > 0 ? cityBySlug.acf.metadata.title.trim() : siteTitle(`${cityBySlug.city_name} Food Tours`);
     const image = await wp.getPostImage(cityBySlug.featured_media);
-    const description = cityBySlug.acf.metadata?.description?.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content)
+    const description = metaDescription(cityBySlug.acf.metadata?.description?.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content))
 
     // Generate SEO keywords with focus on city name + food tours
     const cityName = cityBySlug.city_name;

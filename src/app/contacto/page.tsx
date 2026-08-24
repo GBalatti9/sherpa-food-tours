@@ -5,7 +5,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Contáctanos - Ponte en Contacto | Sherpa Food Tours",
-    description: "¿Tienes preguntas sobre nuestros tours gastronómicos? Contacta a Sherpa Food Tours hoy. Estamos aquí para ayudarte a planificar tu aventura culinaria perfecta.",
+    description: "¿Tienes preguntas sobre nuestros tours gastronómicos? Contacta a Sherpa Food Tours hoy: estamos aquí para ayudarte a planear tu experiencia culinaria.",
     keywords: [
         "contacto sherpa food tours",
         "consultas tours gastronómicos",

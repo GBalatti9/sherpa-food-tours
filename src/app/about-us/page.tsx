@@ -11,7 +11,7 @@ import Breadcrumbs from "@/ui/components/breadcrumbs";
 
 export const metadata: Metadata = {
     title: "About Us - Our Story & Values | Sherpa Food Tours",
-    description: "Learn about Sherpa Food Tours' mission to provide authentic culinary experiences. Meet our local guides and discover the values that drive us to create unforgettable food tours around the world.",
+    description: "Learn about Sherpa Food Tours' mission to provide authentic culinary experiences. Meet our local guides and the values behind our food tours worldwide.",
     keywords: [
         "about sherpa food tours",
         "our story",

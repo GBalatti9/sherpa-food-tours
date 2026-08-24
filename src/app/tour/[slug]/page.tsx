@@ -1,6 +1,7 @@
 // import "./tour.css";
 
 import { fetchImages } from "@/app/utils/fetchImages";
+import { siteTitle, metaDescription } from "@/app/helpers/seo";
 import { wp } from "@/lib/wp";
 import { absoluteOptimizedUrl, optimizedUrl } from "@/lib/wp-media";
 import BookNowButton from "@/ui/components/book-now";
@@ -119,15 +120,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         };
     }
 
+    // El title de ACF gana si existe (es dato editorial); el fallback lo arma
+    // el código y sólo suma la marca si entra en 60. La description se
+    // normaliza a 157 venga de donde venga.
     const title = acf.metadata?.title?.trim().length > 0
-        ? acf.metadata.title
-        : `${tour.title} | Sherpa Food Tours`;
+        ? acf.metadata.title.trim()
+        : siteTitle(tour.title);
 
-    const description = acf.metadata?.description?.trim().length > 0
-        ? acf.metadata.description
-        : acf.tour_description
-            ? acf.tour_description.substring(0, 160)
-            : `Book ${tour.title} with Sherpa Food Tours. Authentic culinary experience with local guides.`;
+    const description = metaDescription(
+        acf.metadata?.description?.trim().length > 0
+            ? acf.metadata.description
+            : acf.tour_description
+                ? acf.tour_description
+                : `Book ${tour.title} with Sherpa Food Tours. Authentic culinary experience with local guides.`
+    );
 
     const imagesId = Object.entries(acf.heading_section)
         .filter(([key]) => key.includes("image"))
