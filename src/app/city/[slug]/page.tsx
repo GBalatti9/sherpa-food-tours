@@ -149,30 +149,33 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
 
     let data_our_experiences_section = null;
 
-    if (embedSectionsData && embedSectionsData.length > 0) {
-        const data = embedSectionsData[0];
+    // getEmbedSectionInfoById devuelve acf: null cuando el fetch falla, así que hay que
+    // chequear acf y no sólo que el array traiga algo: sin esta guarda, un hipo de WP
+    // durante el prerender tumbaba el build entero (ver entrada "build de producción" en
+    // la bitácora). La home ya lo hacía bien; acá faltaba. Los items se filtran uno por uno
+    // porque una sección a medio cargar en WP tiene que degradar, no romper.
+    const embedSection = embedSectionsData?.[0];
 
-        const formattedData = {
-            title: data.acf.title,
-            items: [
-                {
-                    title: data.acf.first_item.title,
-                    description: data.acf.first_item.description,
-                    image: await wp.getPostImage(data.acf.first_item.image),
-                },
-                {
-                    title: data.acf.second_item.title,
-                    description: data.acf.second_item.description,
-                    image: await wp.getPostImage(data.acf.second_item.image),
-                },
-                {
-                    title: data.acf.third_item.title,
-                    description: data.acf.third_item.description,
-                    image: await wp.getPostImage(data.acf.third_item.image),
-                }],
+    if (embedSection?.acf) {
+        const sectionAcf = embedSection.acf;
+        const rawItems = [sectionAcf.first_item, sectionAcf.second_item, sectionAcf.third_item];
+
+        const items = await Promise.all(
+            rawItems
+                .filter((item) => item?.title)
+                .map(async (item) => ({
+                    title: item.title,
+                    description: item.description,
+                    image: await wp.getPostImage(item.image),
+                }))
+        );
+
+        if (items.length > 0) {
+            data_our_experiences_section = {
+                title: sectionAcf.title,
+                items,
+            };
         }
-
-        data_our_experiences_section = formattedData;
     }
 
 
