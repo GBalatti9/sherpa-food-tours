@@ -54,7 +54,17 @@ export default function OurStoryComponent({ our_story }: { our_story: OurStory }
                             }
                             <div className="img-container">
                                 {element.image?.img && (
-                                    <img src={optimizedUrl(element.image.img, 1200)} width={element.image.width} height={element.image.height} alt="" />
+                                    <img
+                                        src={optimizedUrl(element.image.img, 1200)}
+                                        width={element.image.width}
+                                        height={element.image.height}
+                                        /* El alt venía hardcodeado vacío aunque WpImage ya trae el alt_text
+                                           del CMS. Estas imágenes son informativas —fundadores, premio,
+                                           locales—, no decorativas, así que un alt vacío las escondía del
+                                           lector de pantalla. Si el campo está sin cargar en WP, el título
+                                           del hito describe la imagen mejor que cualquier texto genérico. */
+                                        alt={element.image.alt?.trim() || element.title?.trim() || `Sherpa Food Tours, ${element.year}`}
+                                    />
                                 )}
                             </div>
                         </div>
