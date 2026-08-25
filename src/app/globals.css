@@ -2,6 +2,12 @@
 /* @import "./ui/components/css/nav-bar.css"; */
 
 :root {
+  /* Alto real del header, que es position: fixed. main lo usa como padding-top para que
+     el primer elemento del flujo no quede tapado. Antes main tenía 3rem fijos, 24px menos
+     que el header en desktop: no se notaba porque el primer elemento siempre era un hero
+     a sangre, hasta que los breadcrumbs pasaron a ir primero y salieron cortados. */
+  --header-height: 3.1875rem;
+
   --background: #EFF0E9;
   --foreground: #171717;
   --font-excelsior: "Excelsior", serif;
@@ -93,7 +99,13 @@ body {
 /* } */
 
 main {
-    padding-top: 3rem;
+    padding-top: var(--header-height);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-height: 4.5rem;
+  }
 }
 
 .font-excelsior {

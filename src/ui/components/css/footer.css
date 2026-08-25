@@ -109,7 +109,8 @@
 
 }
 
-.separator {
+/* Acotado al footer: sin el prefijo, esta regla escondia cualquier .separator del sitio. */
+.footer .separator {
     @media (min-width: 768px) {
         display: none;
     }

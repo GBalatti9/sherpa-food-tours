@@ -21,7 +21,7 @@ export default function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
                             ) : (
                                 <Link href={toSitePath(item.url)}>{item.name}</Link>
                             )}
-                            {!isLast && <span className="separator" aria-hidden="true">/</span>}
+                            {!isLast && <span className="breadcrumbs-separator" aria-hidden="true">/</span>}
                         </li>
                     );
                 })}

@@ -49,7 +49,10 @@
         }
     }
 
-    .separator {
+    /* Clase propia y no `.separator` a secas: footer.css la usa para su <hr> y la esconde
+       con display:none arriba de 768px sin acotarla al footer, asi que se llevaba puesto
+       el separador de las migas en desktop. */
+    .breadcrumbs-separator {
         color: #A3A3A3;
         margin: 0 0.5rem;
     }

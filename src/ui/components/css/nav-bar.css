@@ -1,5 +1,7 @@
 .sherpa-header {
-    /* height: 60px; */
+    /* Mismo valor que el padding-top de main: si crecen distinto, el contenido vuelve a
+       quedar debajo del header. */
+    min-height: var(--header-height);
     font-family: var(--font-excelsior);
     font-size: 0.93rem;
     padding: .5rem 1rem;
