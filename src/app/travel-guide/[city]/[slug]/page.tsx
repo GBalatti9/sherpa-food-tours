@@ -19,6 +19,7 @@ import Link from "next/link";
 import { buildBreadcrumbSchema } from "@/lib/schema";
 import Breadcrumbs from "@/ui/components/breadcrumbs";
 import { siteTitle, metaDescription } from "@/app/helpers/seo";
+import { articleDateTime, formatArticleDate } from "@/app/helpers/article-date";
 
 
 // ----------------------
@@ -305,6 +306,14 @@ export default async function BlogPost({ params }: { params: Promise<{ city: str
 
                 <div className="article-content">
                     <h1>{he.decode(title)}</h1>
+                    {formatArticleDate(modified) && (
+                        <p className="article-updated">
+                            Updated{" "}
+                            <time dateTime={articleDateTime(modified)}>
+                                {formatArticleDate(modified)}
+                            </time>
+                        </p>
+                    )}
                     <TableOfContents headings={headings} />
                     <ContentWithGalleries htmlContent={htmlWithIds} />
                     {author?.name && (

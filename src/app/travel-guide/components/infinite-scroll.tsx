@@ -5,6 +5,7 @@ import { PostWithImage } from "../page";
 import { slugify } from "@/app/helpers/slugify";
 import Link from "next/link";
 import { optimizedUrl } from "@/lib/wp-media";
+import { articleDateTime, formatArticleDate } from "@/app/helpers/article-date";
 
 interface InfiniteScrollProps {
     initialPosts: PostWithImage[];
@@ -91,6 +92,11 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                         <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h3>
                                         <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} className="description"></div>
                                         <p className="preview-author"><span>Por: </span>{authorUrl ? <Link href={authorUrl} onClick={(e) => e.stopPropagation()} className="preview-author-link">{post.author_name.name}</Link> : post.author_name.name}</p>
+                                        {formatArticleDate(post.modified) && (
+                                            <p className="preview-updated">
+                                                Updated <time dateTime={articleDateTime(post.modified)}>{formatArticleDate(post.modified)}</time>
+                                            </p>
+                                        )}
                                     </div>
                                 </Link>
                             </div>
@@ -128,6 +134,11 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                                 <div className="preview-data">
                                                     <h3 dangerouslySetInnerHTML={{ __html: p.title.rendered }}></h3>
                                                     <p className="preview-author"><span>Por: </span>{pAuthorUrl ? <Link href={pAuthorUrl} onClick={(e) => e.stopPropagation()} className="preview-author-link">{p.author_name.name}</Link> : p.author_name.name}</p>
+                                                    {formatArticleDate(p.modified) && (
+                                                        <p className="preview-updated">
+                                                            Updated <time dateTime={articleDateTime(p.modified)}>{formatArticleDate(p.modified)}</time>
+                                                        </p>
+                                                    )}
                                                 </div>
                                             </Link>
                                         </div>
@@ -156,6 +167,11 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
                                     <div className="preview-data">
                                         <h3>{cleanTitle}</h3>
                                         <p className="preview-author"><span>Por: </span>{authorUrl ? <Link href={authorUrl} onClick={(e) => e.stopPropagation()} className="preview-author-link">{post.author_name.name}</Link> : post.author_name.name}</p>
+                                        {formatArticleDate(post.modified) && (
+                                            <p className="preview-updated">
+                                                Updated <time dateTime={articleDateTime(post.modified)}>{formatArticleDate(post.modified)}</time>
+                                            </p>
+                                        )}
                                     </div>
                                 </Link>
                             </div>

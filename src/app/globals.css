@@ -318,6 +318,14 @@ main {
         }
       }
 
+      /* Fecha de actualizacion en la tarjeta, debajo del autor. La auditoria la pide
+         visible para que la frescura del contenido se lea sin abrir el articulo. */
+      .preview-updated {
+        margin: 0.25rem 0 0;
+        font-size: 0.8125rem;
+        color: #5A5A5A;
+      }
+
       .description {
         font-family: var(--font-excelsior);
         font-size: 1rem;
@@ -3337,6 +3345,14 @@ main {
           font-size: 1rem;
           color: inherit;
           margin-top: 1.5rem;
+      }
+
+      /* Fecha de actualizacion, debajo del h1. Mas chica y atenuada que el cuerpo: es
+         un dato de contexto, no parte de la lectura. */
+      .article-updated {
+          font-size: 0.875rem;
+          color: #5A5A5A;
+          margin: 0.5rem 0 0;
       }
 
       .article-author-link {

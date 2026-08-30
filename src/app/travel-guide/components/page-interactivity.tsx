@@ -9,6 +9,7 @@ import { useEffect, useState, useRef } from "react";
 import "./page-interactivity.css";
 import InfiniteScroll from "./infinite-scroll";
 import { optimizedUrl } from "@/lib/wp-media";
+import { articleDateTime, formatArticleDate } from "@/app/helpers/article-date";
 
 interface Props {
     cities: {
@@ -304,6 +305,11 @@ export default function PageInteractivity({ cities, formattedPosts }: Props) {
                     <div className="preview-data">
                         <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }}></h3>
                         <p className="preview-author"><span>Por: </span>{post.author_name.name}</p>
+                        {formatArticleDate(post.modified) && (
+                            <p className="preview-updated">
+                                Updated <time dateTime={articleDateTime(post.modified)}>{formatArticleDate(post.modified)}</time>
+                            </p>
+                        )}
                     </div>
                 </Link>
             </div>

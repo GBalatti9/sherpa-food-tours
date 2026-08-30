@@ -217,6 +217,27 @@ async function main() {
         }
     }
 
+    // ------------------------------------------------------- fecha visible del blog
+    ticket("Fecha de actualizacion visible (Trello: General Blog Presence)");
+    {
+        const html = pages.article.body;
+        const t = /<time[^>]*datetime="([^"]+)"[^>]*>([^<]*)<\/time>/i.exec(html);
+        check(Boolean(t), "el articulo muestra un <time> con la fecha de actualizacion");
+        if (t) {
+            // El datetime tiene que ser parseable: es lo que lee Google, el texto es
+            // para la persona.
+            check(!isNaN(Date.parse(t[1])), "el datetime del <time> es una fecha valida", t[1]);
+            check(t[2].trim().length > 0, "el <time> tiene texto visible", t[2].trim());
+            // Y tiene que coincidir con el dateModified del schema: si divergen, se le
+            // muestra una fecha al lector y otra al buscador.
+            const art = ldNodes(html).find((n) => hasType(n, "Article"));
+            const mod = art?.dateModified;
+            check(!mod || Date.parse(mod) === Date.parse(t[1]),
+                "la fecha visible coincide con dateModified del schema",
+                `visible ${t[1]} vs schema ${mod}`);
+        }
+    }
+
     // ------------------------------------------------------------------ breadcrumbs
     ticket("Breadcrumbs visibles + BreadcrumbList (GBalatti9/features)");
     for (const key of BREADCRUMB_ROUTES) {
