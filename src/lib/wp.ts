@@ -99,12 +99,20 @@ export const wp = {
                 url += `&page=${page}`;
             }
 
-            // Optimizado: agregar cache para reducir llamadas a WordPress
-            const response = await fetch(url, {
+            // fetchWithRetry y no fetch pelado, como el resto de los getters: este es el
+            // unico camino por el que los ~72 articulos entran al sitemap, y devolvia [] a
+            // la primera. Un [] no se distingue de "no hay mas paginas", asi que el sitemap
+            // se publicaba sin un solo articulo y sin que nada lo reportara.
+            const response = await fetchWithRetry(url, {
                 next: { revalidate: 3600 } // cachea por 1 hora
             });
 
             if (!response.ok) {
+                // 400 es lo que responde WP cuando se pide una pagina que no existe
+                // (rest_post_invalid_page_number): ahi el [] es correcto y corta el loop.
+                if (response.status !== 400) {
+                    console.warn(`getAllPost: WordPress respondio ${response.status} para ${url}`);
+                }
                 return []; // Retornar array vacío en lugar de fallar
             }
 

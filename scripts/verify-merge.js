@@ -339,6 +339,15 @@ async function main() {
     const unescaped = sitemap.body.replace(/&(amp|lt|gt|quot|apos|#\d+);/g, "");
     check(!unescaped.includes("&"), "todos los & están escapados (XML bien formado)");
 
+    // El sitemap.ts genera articulos y autores, pero los dos salen de getters que ante
+    // cualquier fallo devuelven [], y un [] no se distingue de "no quedan paginas". El
+    // resultado es un sitemap que se publica completo-menos-el-blog sin avisar. Estos dos
+    // chequeos son lo unico que separa ese caso del sitemap sano.
+    const articulos = count(sitemap.body, /<loc>[^<]*\/travel-guide\/[^<\/]+\/[^<\/]+\/<\/loc>/g);
+    check(articulos > 0, "el sitemap incluye articulos del travel guide", `${articulos} encontrados`);
+    const autores = count(sitemap.body, /<loc>[^<]*\/author\/[^<]*<\/loc>/g);
+    check(autores > 0, "el sitemap incluye paginas de autor", `${autores} encontradas`);
+
     // ------------------------------------------------------------------------- LCP
     ticket("Page speed — preload del LCP (GBalatti9/fix-lcp-preload)");
     const preloads = [...pages.home.body.matchAll(/<link[^>]*rel="preload"[^>]*>/g)].map((m) => m[0]);
