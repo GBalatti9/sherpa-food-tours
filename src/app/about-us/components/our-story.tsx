@@ -74,8 +74,8 @@ export default function OurStoryComponent({ our_story }: { our_story: OurStory }
                 <p className="more-btn">
                     More to come
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                        <path d="M18.3242 6.75977L12.3242 12.7598L6.32422 6.75977" stroke="#017E80" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M18.3242 12.7598L12.3242 18.7598L6.32422 12.7598" stroke="#017E80" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M18.3242 6.75977L12.3242 12.7598L6.32422 6.75977" stroke="#01787A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M18.3242 12.7598L12.3242 18.7598L6.32422 12.7598" stroke="#01787A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </p>
             </div>

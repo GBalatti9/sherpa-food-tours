@@ -17,9 +17,9 @@ export default function Heading({
   const Tag = `h${level}` as keyof React.JSX.IntrinsicElements;
   const base =
     level === 1
-      ? "text-3xl leading-tight tracking-tight text-[#017E80] w-full mb-4"
+      ? "text-3xl leading-tight tracking-tight text-[#01787A] w-full mb-4"
       : level === 2
-      ? "text-2xl tracking-wide mb-2 text-[#017E80]"
+      ? "text-2xl tracking-wide mb-2 text-[#01787A]"
       : "text-xl mb-2";
   return (
     <Tag id={id} className={`${base} ${className}`}>

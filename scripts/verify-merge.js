@@ -217,6 +217,26 @@ async function main() {
         }
     }
 
+    // ------------------------------------------------------------------- contraste
+    ticket("Contraste WCAG AA (Trello: Page speed review)");
+    {
+        // El contraste se calcula sobre colores que viven en el CSS, no en el HTML, asi
+        // que lo que se puede verificar desde aca es que los cuatro valores que no
+        // llegaban a 4.5:1 no hayan vuelto. Medidos en produccion antes de cambiarlos:
+        //   #017E80 texto sobre #EFF0E9 .... 4.26
+        //   #FFFFFF sobre el naranja #E84F1A  3.77  (boton de reserva)
+        //   #8D8D8D sobre #EFF0E9 .......... 2.89  (legales del footer)
+        //   #A3A3A3 sobre #EFF0E9 .......... 2.20  (separador de migas)
+        const hojas = [...pages.home.body.matchAll(/href="([^"]+\.css)"/g)].map((m) => m[1]);
+        check(hojas.length > 0, "la home declara hojas de estilo", `${hojas.length}`);
+        let css = "";
+        for (const h of hojas) css += (await get(h.replace(BASE, ""))).body;
+        for (const viejo of ["#017E80", "#E84F1A", "#8D8D8D", "#A3A3A3"]) {
+            const presente = css.toUpperCase().includes(viejo);
+            check(!presente, `el CSS servido ya no usa ${viejo}`, presente ? "sigue presente" : "");
+        }
+    }
+
     // ------------------------------------------------------- fecha visible del blog
     ticket("Fecha de actualizacion visible (Trello: General Blog Presence)");
     {

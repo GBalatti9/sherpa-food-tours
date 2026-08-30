@@ -70,7 +70,7 @@
     }
 
     .footer-second-section {
-        color: #8D8D8D;
+        color: #6D6D6D;
         padding: 2rem 1.3rem;
         font-size: 0.85rem;
         text-align: center;
@@ -83,7 +83,7 @@
             font-size: 0.85rem;
 
             a {
-                color: #8D8D8D;
+                color: #6D6D6D;
                 text-decoration: underline;
                 transition: color 0.2s ease;
 
@@ -96,7 +96,7 @@
         .terms-link {
             display: inline-block;
             margin-top: 0.75rem;
-            color: #8D8D8D;
+            color: #6D6D6D;
             text-decoration: underline;
             font-size: 0.85rem;
             transition: color 0.2s ease;

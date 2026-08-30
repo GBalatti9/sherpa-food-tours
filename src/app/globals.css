@@ -12,9 +12,18 @@
   --foreground: #171717;
   --font-excelsior: "Excelsior", serif;
   --font-dk-otago: "DK Otago", serif;
-  --title-color: #017E80;
-  --subtitle-color: #E84F1A;
-  --main-color: #017E80;
+  /* Los dos colores de marca estan corridos apenas para pasar el contraste 4.5:1 de
+     WCAG AA sobre el fondo #EFF0E9. Medido en produccion antes de tocarlos, el teal
+     como texto daba 4.26 y el naranja del boton, con texto blanco encima, 3.77.
+
+     El teal pasa de #017E80 a #01787A: seis unidades, imperceptible.
+     El naranja, de #E84F1A a #D24718: mismo tono, un escalon mas oscuro. Ese si se nota
+     un poco, y es a proposito -- es el color del boton de reserva, el elemento que mas
+     tiene que leerse del sitio. Si la marca lo rechaza, se revierte cambiando esta linea
+     sola, a costa de volver a quedar debajo del minimo. */
+  --title-color: #01787A;
+  --subtitle-color: #D24718;
+  --main-color: #01787A;
   --second-green: #0A4747;
   --local-guides-bg: #CBDCD9;
 }

@@ -28,7 +28,7 @@ export default function CheckAvailabilityButton({ link, data_tour }: { link?: st
                 <button className="availability-btn" onClick={handleClick}>
                     Check availability
                     <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none" ref={svg} style={{ transition: "transform 0.4s ease-in-out" }} >
-                        <path d="M5.03125 13.1865L10.0313 8.18652L15.0313 13.1865" stroke="#017E80" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M5.03125 13.1865L10.0313 8.18652L15.0313 13.1865" stroke="#01787A" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </button>
                 <BookNowButton
