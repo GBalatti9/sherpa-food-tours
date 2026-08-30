@@ -84,7 +84,18 @@ export default async function TravelGuidePage() {
     const postsRes = await fetch(`${apiUrl}/posts?per_page=10&_embed`, {
         next: { revalidate: 3600 }
     });
-    const rawPosts = postsRes.ok ? await postsRes.json() : [];
+    // Si WordPress falla, se tira. Antes esto degradaba a [] y ahi esta el problema: la
+    // pagina renderizaba "bien", con cero articulos, y esa version vacia quedaba cacheada
+    // como buena por revalidate. Con un throw, la revalidacion falla y Next sigue sirviendo
+    // el ultimo render bueno -- el que si tiene los articulos.
+    //
+    // Contrapartida: si WordPress esta caido durante un build desde cero, esta pagina no
+    // se genera. Es a proposito. Un listado de blog vacio no se nota, se cachea, y se
+    // queda asi hasta el proximo deploy; una pagina que falta se ve enseguida.
+    if (!postsRes.ok) {
+        throw new Error(`WordPress respondio ${postsRes.status} al pedir los posts del travel guide`);
+    }
+    const rawPosts = await postsRes.json();
     const formattedPosts = filterValidPosts(rawPosts.map(formatPostFromEmbed));
 
     // Generate JSON-LD structured data for SEO

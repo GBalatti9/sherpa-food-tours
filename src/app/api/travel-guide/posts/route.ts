@@ -3,6 +3,21 @@ import { formatPostFromEmbed, filterValidPosts } from "@/app/utils/formatPostWit
 
 const apiUrl = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2`;
 
+/**
+ * WordPress fallo. Se responde 502 y no `{ ok: true, data: [] }`.
+ *
+ * Ese 200 con lista vacia era indistinguible de "no hay mas articulos", asi que el
+ * scroll infinito lo leia como el final del listado y dejaba de pedir. Un fallo del
+ * origen terminaba mostrandose como un blog sin contenido, sin un error en ningun lado.
+ *
+ * El unico `data: []` con ok:true que queda es el legitimo: la ciudad existe y no tiene
+ * posts asociados.
+ */
+function wpCaido(status: number) {
+  console.error(`travel-guide/posts: WordPress respondio ${status}`);
+  return NextResponse.json({ ok: false, data: [] }, { status: 502 });
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const cityId = searchParams.get("cityId");
@@ -17,7 +32,7 @@ export async function GET(request: NextRequest) {
     if (cityId) {
       // Fetch posts by city: get city's post IDs, then fetch those posts with _embed
       const cityRes = await fetch(`${apiUrl}/cities/${cityId}`, { next: { revalidate: 3600 } });
-      if (!cityRes.ok) return NextResponse.json({ ok: true, data: [] });
+      if (!cityRes.ok) return wpCaido(cityRes.status);
 
       const cityData = await cityRes.json();
       const postIds: number[] = (cityData.posts || []).map((p: { id: number }) => p.id);
@@ -28,7 +43,7 @@ export async function GET(request: NextRequest) {
         `${apiUrl}/posts?include=${postIds.join(",")}&_embed&per_page=100`,
         { next: { revalidate: 3600 } }
       );
-      if (!postsRes.ok) return NextResponse.json({ ok: true, data: [] });
+      if (!postsRes.ok) return wpCaido(postsRes.status);
 
       const rawPosts = await postsRes.json();
       // Re-order by original ID order
@@ -40,7 +55,7 @@ export async function GET(request: NextRequest) {
         `${apiUrl}/posts?search=${encodeURIComponent(search)}&_embed&per_page=100`,
         { next: { revalidate: 600 } }
       );
-      if (!searchRes.ok) return NextResponse.json({ ok: true, data: [] });
+      if (!searchRes.ok) return wpCaido(searchRes.status);
 
       const rawPosts = await searchRes.json();
       posts = rawPosts.map(formatPostFromEmbed);
@@ -50,7 +65,7 @@ export async function GET(request: NextRequest) {
         `${apiUrl}/posts?categories=${categoryId}&_embed&per_page=100`,
         { next: { revalidate: 3600 } }
       );
-      if (!catRes.ok) return NextResponse.json({ ok: true, data: [] });
+      if (!catRes.ok) return wpCaido(catRes.status);
 
       const rawPosts = await catRes.json();
       posts = rawPosts.map(formatPostFromEmbed);
@@ -60,7 +75,7 @@ export async function GET(request: NextRequest) {
         `${apiUrl}/posts?per_page=${limit}&page=${page}&_embed`,
         { next: { revalidate: 3600 } }
       );
-      if (!postsRes.ok) return NextResponse.json({ ok: true, data: [] });
+      if (!postsRes.ok) return wpCaido(postsRes.status);
 
       const rawPosts = await postsRes.json();
       posts = rawPosts.map(formatPostFromEmbed);

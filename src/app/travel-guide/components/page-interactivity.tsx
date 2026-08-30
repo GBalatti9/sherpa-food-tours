@@ -27,7 +27,12 @@ interface Props {
 async function fetchPosts(params: Record<string, string>): Promise<PostWithImage[]> {
     const query = new URLSearchParams(params).toString();
     const res = await fetch(`/api/travel-guide/posts?${query}`);
-    if (!res.ok) return [];
+    // Devolver [] ante un fallo del origen se ve igual que "no hay resultados": el filtro
+    // parece vacio en vez de roto. Al menos queda en consola por que.
+    if (!res.ok) {
+        console.error(`travel-guide: la API respondio ${res.status} para ${query}`);
+        return [];
+    }
     const json = await res.json();
     return json.data ?? [];
 }

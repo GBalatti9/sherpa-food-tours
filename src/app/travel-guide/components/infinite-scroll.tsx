@@ -25,6 +25,14 @@ export default function InfiniteScroll({ initialPosts }: InfiniteScrollProps) {
             const nextPage = page + 1;
             const res = await fetch(`/api/travel-guide/posts?page=${nextPage}&limit=10`);
             if (!res.ok) {
+                // Un 5xx es "el origen fallo", no "se acabaron los articulos". Cortando
+                // hasMore ahi, un hipo de WordPress dejaba el listado trunco hasta que la
+                // persona recargara. Se deja hasMore en true para reintentar en el proximo
+                // scroll; el 4xx si corta, porque no se va a arreglar reintentando.
+                if (res.status >= 500) {
+                    console.error(`travel-guide: la API respondio ${res.status}, se reintenta`);
+                    return;
+                }
                 setHasMore(false);
                 return;
             }
