@@ -34,7 +34,7 @@ const ROUTES = {
     city: "/city/buenos-aires/",
     tour: "/tour/buenos-aires-local-foodie-experience/",
     travelGuide: "/travel-guide/",
-    article: "/travel-guide/cartagena/food-in-cartagena-what-to-eat/",
+    article: "/travel-guide/cartagena-food-tours/food-in-cartagena-what-to-eat/",
     aboutUs: "/about-us/",
     contact: "/contact/",
     contacto: "/contacto/",
@@ -44,7 +44,13 @@ const ROUTES = {
 // Las que deben mostrar migas de pan. /contacto/ queda afuera a propósito: es la variante
 // española y no se incluyó en el ticket de breadcrumbs.
 const BREADCRUMB_ROUTES = ["home", "city", "tour", "travelGuide", "article", "aboutUs", "contact", "terms"]
-    .filter((k) => k !== "home"); // la home es la raíz del trail, no lleva breadcrumb propio
+    .filter((k) => k !== "home")   // la home es la raíz del trail, no lleva breadcrumb propio
+    .filter((k) => k !== "city");  // ver BREADCRUMB_SCHEMA_ONLY_ROUTES
+
+// La página de ciudad se sacó de las migas visibles a pedido: el hero vuelve a ser el
+// primer elemento del flujo. El BreadcrumbList del JSON-LD se mantiene porque no se ve y
+// lo consume el buscador. Acá se verifica al revés que en el resto: schema sí, <nav> no.
+const BREADCRUMB_SCHEMA_ONLY_ROUTES = ["city"];
 
 const colors = { reset: "\x1b[0m", green: "\x1b[32m", red: "\x1b[31m", yellow: "\x1b[33m", cyan: "\x1b[36m", dim: "\x1b[2m" };
 const c = (color, s) => `${colors[color]}${s}${colors.reset}`;
@@ -211,6 +217,18 @@ async function main() {
         check(bad.length === 0, `${ROUTES[key]} — sin barra doble en los item del schema`, bad.join(" "));
     }
 
+    for (const key of BREADCRUMB_SCHEMA_ONLY_ROUTES) {
+        const html = pages[key].body;
+        check(!/<nav[^>]*aria-label="Breadcrumb"/.test(html),
+            `${ROUTES[key]} — sin migas visibles (se sacaron a pedido)`);
+        const list = ldNodes(html).find((n) => hasType(n, "BreadcrumbList"));
+        check(Boolean(list), `${ROUTES[key]} — igual emite BreadcrumbList en JSON-LD`);
+        if (!list) continue;
+        const items = list.itemListElement || [];
+        check(items.length === 2, `${ROUTES[key]} — el BreadcrumbList va de Home a la ciudad`,
+            `${items.length} niveles`);
+    }
+
     // -------------------------------------------------------------- structured data
     ticket("Google search console: structured data (GBalatti9/features)");
     const homeNodes = ldNodes(pages.home.body);
@@ -222,6 +240,13 @@ async function main() {
         "la home no cuelga aggregateRating de la Organization (era el error de Search Console)");
     check(Boolean(org?.award), "Organization declara award", org?.award || "");
     check(Array.isArray(org?.sameAs) && org.sameAs.length > 0, "Organization declara sameAs", `${org?.sameAs?.length ?? 0} perfiles`);
+    // Search Console reporta las paginas de tour como Merchant listing porque el nodo del
+    // tour es ["Product", "TouristTrip"]. La politica global va en la Organization, que es
+    // donde la pide la doc de Google, y con merchantReturnLink en vez de merchantReturnDays:
+    // ese campo cuenta dias desde la entrega y la regla real es 24 h antes del tour.
+    check(Boolean(org?.hasMerchantReturnPolicy?.merchantReturnLink),
+        "Organization declara hasMerchantReturnPolicy con merchantReturnLink",
+        org?.hasMerchantReturnPolicy?.merchantReturnLink || "ausente");
     check(!JSON.stringify(homeNodes).includes("d23715647"),
         "el sameAs apunta al listing principal de TripAdvisor, no al viejo d23715647");
 

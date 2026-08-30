@@ -89,6 +89,27 @@ export function buildOrganizationSchema(
             "addressCountry": "GB",
         },
         "sameAs": org.sameAs,
+        // Google valida las paginas de tour como Merchant listing porque el nodo del tour
+        // es ["Product", "TouristTrip"], y ahi reclama hasMerchantReturnPolicy y
+        // shippingDetails dentro de offers. Son campos de e-commerce fisico y las dos
+        // alertas son no criticas: no bloquean el rich result ni las estrellas.
+        //
+        // La politica se declara aca y no en cada Offer porque es lo que pide la doc:
+        // "we recommend you provide a global return policy for your business under
+        // Organization markup instead". A nivel oferta se usa solo para pisar la global.
+        //
+        // Se declara con merchantReturnLink, que por si solo alcanza como propiedad
+        // requerida, en vez de returnPolicyCategory + merchantReturnDays: merchantReturnDays
+        // cuenta dias desde la entrega, y la regla real de Sherpa es 24 h antes de que
+        // empiece la experiencia. No hay forma de decir eso con ese campo sin mentir, y la
+        // pagina de terminos ya lo explica bien.
+        //
+        // shippingDetails queda sin declarar a proposito: no se envia nada. Poner un envio
+        // de USD 0 cerraria la segunda alerta afirmandole a Google un envio inexistente.
+        "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "merchantReturnLink": baseUrl + "/terms-and-conditions/",
+        },
         ...(org.award ? { "award": org.award } : {}),
         ...extra,
     };
