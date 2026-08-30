@@ -8,15 +8,33 @@ export const TITLE_MAX = 60;
 export const DESCRIPTION_MAX = 157;
 
 /**
- * Devuelve `${base} | Sherpa Food Tours` sólo si el total entra en los 60
- * caracteres; si no, devuelve el título pelado. El sufijo solo empujaba 33 de
- * los 69 títulos largos que reportó la auditoría: un título de WordPress de 41
- * caracteres ya se pasaba sin que nadie escribiera nada largo. Si el base ya
- * menciona la marca (títulos cargados a mano en ACF), no se duplica.
+ * Normaliza cualquier title a los 60 caracteres de la auditoría.
+ *
+ * El sufijo de marca se agrega sólo si entra. Al revés también: si el título ya viene
+ * con la marca y se pasa de 60, lo que se cae es el sufijo y no la redacción — los ocho
+ * títulos de ciudad cargados a mano en WP ("Cartagena Food Tours & Local Culinary
+ * Experiences | Sherpa Food Tours", 69) entran holgados apenas se les saca. Es la parte
+ * redundante: Google ya muestra el sitio aparte.
+ *
+ * Lo que NO se hace es truncar. Un título de artículo que se pasa de 60 sin tener marca
+ * que sacarle es texto que escribió un editor, y cortarlo en la palabra 58 lo deja colgado
+ * sin el sustantivo final. Google recorta la visualización igual, pero usa el texto entero
+ * para relevancia. Esos casos salen como aviso en verify-merge.js: se corrigen redactando
+ * en WordPress, no acá.
+ *
+ * Ojo con el orden de las guardas: `clean.includes(SITE_NAME)` tiene que evaluarse antes
+ * de agregar el sufijo, o los títulos de ACF que ya nombran la marca la llevarían dos veces.
  */
 export function siteTitle(base: string, max = TITLE_MAX): string {
     const clean = he.decode(base).replace(/\s+/g, " ").trim();
-    if (clean.includes(SITE_NAME)) return clean;
+
+    if (clean.includes(SITE_NAME)) {
+        if (clean.length <= max) return clean;
+        return clean.endsWith(TITLE_SUFFIX)
+            ? clean.slice(0, -TITLE_SUFFIX.length).trim()
+            : clean;
+    }
+
     if (clean.length + TITLE_SUFFIX.length <= max) return clean + TITLE_SUFFIX;
     return clean;
 }

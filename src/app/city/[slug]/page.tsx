@@ -48,7 +48,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     // Title de ACF gana si existe; el fallback sólo suma la marca si entra
     // en 60. La description se normaliza a 157 venga de ACF o del content.
-    const title = cityBySlug.acf.metadata?.title?.trim().length > 0 ? cityBySlug.acf.metadata.title.trim() : siteTitle(`${cityBySlug.city_name} Food Tours`);
+    // El title de ACF tambien pasa por siteTitle: cargado a mano en WP no lo valida nadie,
+    // y las ocho paginas de ciudad venian con 69-72 caracteres contra el limite de 60.
+    const title = cityBySlug.acf.metadata?.title?.trim().length > 0
+        ? siteTitle(cityBySlug.acf.metadata.title)
+        : siteTitle(`${cityBySlug.city_name} Food Tours`);
     const image = await wp.getPostImage(cityBySlug.featured_media);
     const description = metaDescription(cityBySlug.acf.metadata?.description?.trim().length > 0 ? cityBySlug.acf.metadata.description : extractDescription(cityBySlug.content))
 

@@ -71,6 +71,15 @@ function check(ok, description, detail = "") {
 }
 
 /** Deuda conocida y aceptada: se reporta pero no rompe el suite. */
+// Alcanza con las entidades que aparecen en un <title>; no hace falta traer una librería.
+function decodeEntities(s) {
+    return s
+        .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+        .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+        .replace(/&(amp|lt|gt|quot|apos|nbsp|#39);/g, (_, e) =>
+            ({ amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", "#39": "'" })[e]);
+}
+
 function warn(description, detail = "") {
     warnings.push({ ticket: currentTicket, description, detail });
     console.log(`${c("yellow", "  !")} ${description}${detail ? c("dim", `  ${detail}`) : ""}`);
@@ -184,6 +193,28 @@ async function main() {
     for (const [key, path] of Object.entries(ROUTES)) {
         const n = count(pages[key].body, /<h1\b/gi);
         check(n === 1, `${path} tiene exactamente un <h1>`, `${n} encontrados`);
+    }
+
+    // ----------------------------------------------------------------------- titles
+    ticket("Title tags entre 30 y 60 (Trello: Optimized Title tags per page)");
+    for (const [key, path] of Object.entries(ROUTES)) {
+        const m = /<title[^>]*>([\s\S]*?)<\/title>/.exec(pages[key].body);
+        // Sin decodificar, un `&` cuenta 5 y da 76 donde el título mide 72.
+        const t = decodeEntities(m ? m[1] : "").replace(/\s+/g, " ").trim();
+        const marca = (t.match(/Sherpa Food Tours/g) || []).length;
+
+        // Falla lo que el código tiene que resolver solo: quedarse corto pudiendo agregar
+        // el sufijo, o pasarse de 60 arrastrando una marca que sobraba.
+        check(t.length >= 30, `${path} — title de al menos 30 caracteres`, `${t.length}: ${t}`);
+        check(!(t.length > 60 && marca > 0),
+            `${path} — si se pasa de 60, no es por el sufijo de marca`, `${t.length}: ${t}`);
+        check(marca <= 1, `${path} — la marca no aparece duplicada en el title`, `${marca} veces`);
+
+        // Pasarse de 60 sin marca que sacar es redacción cargada en WordPress: se avisa,
+        // no se rompe el suite, porque truncarlo desde el código deja el título colgado.
+        if (t.length > 60 && marca === 0) {
+            warn(`${path} — title de ${t.length} caracteres, se acorta redactando en WP`, t);
+        }
     }
 
     // ------------------------------------------------------------------ breadcrumbs

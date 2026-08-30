@@ -123,8 +123,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     // El title de ACF gana si existe (es dato editorial); el fallback lo arma
     // el código y sólo suma la marca si entra en 60. La description se
     // normaliza a 157 venga de donde venga.
+    // Idem ciudad: el title de ACF pasa por el helper. Aca el sintoma era el otro extremo
+    // del rango — /tour/gourmet-taco-tour/ emitia "Taco Tour Mexico City CDMX", 26
+    // caracteres contra el minimo de 30, porque salteaba el sufijo de marca.
     const title = acf.metadata?.title?.trim().length > 0
-        ? acf.metadata.title.trim()
+        ? siteTitle(acf.metadata.title)
         : siteTitle(tour.title);
 
     const description = metaDescription(
