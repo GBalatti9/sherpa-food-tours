@@ -367,8 +367,16 @@ export const wp = {
     // La distinción importa: author/[user] devuelve 404 en el segundo caso y 500 en el primero.
     getPostsByAuthorId: async (id: number, limit = 10, offset = 0) => {
         try {
-            const url = `${apiUrl}/posts?author=${id}&per_page=${limit}&offset=${offset}`;
-            const response = await fetch(url);
+            // El orden de los parametros no es casual: cambia la URL, y con eso la clave
+            // de la Data Cache de Next, que en Vercel persiste entre deploys. Este fetch iba
+            // sin opciones, asi que un [] devuelto alguna vez (200 vacio, no un error) quedo
+            // cacheado para siempre y el sitemap salia sin autores aunque WordPress ya
+            // contestara bien. Replicada la misma logica con fetch pelado: 4 autores.
+            // No se usa _fields porque las paginas de autor renderizan estos posts enteros.
+            const url = `${apiUrl}/posts?per_page=${limit}&offset=${offset}&author=${id}`;
+            const response = await fetchWithRetry(url, {
+                next: { revalidate: 3600 }
+            });
             if (!response.ok) {
                 console.warn(`⚠️ No se pudieron obtener posts del autor ${id}: ${response.status}`);
                 return { ok: false as const, data: null };
