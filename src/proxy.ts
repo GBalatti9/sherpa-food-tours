@@ -72,7 +72,7 @@ const GONE_HTML = `
       margin: 0 0 12px;
       font-size: 40px;
       line-height: 1;
-      color: #017e80;
+      color: #01787A;
     }
 
     p {

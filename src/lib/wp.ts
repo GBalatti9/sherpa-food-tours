@@ -385,8 +385,11 @@ export const wp = {
     getAllUsers: async () => {
         try {
             // Optimizado: agregar cache para reducir llamadas a WordPress
+            // fetchWithRetry por lo mismo que getAllPost: este getter alimenta las paginas
+            // de autor del sitemap, y un 500 intermitente de WordPress en el momento de
+            // regenerarlo lo dejaba sin autores por una hora, sin avisar.
             const url = `${apiUrl}/users`;
-            const response = await fetch(url, {
+            const response = await fetchWithRetry(url, {
                 next: { revalidate: 3600 } // cachea por 1 hora
             });
             if (!response.ok) {

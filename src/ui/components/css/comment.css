@@ -1,6 +1,6 @@
 .comment-container {
     font-family: var(--font-excelsior);
-    border-bottom: 1px solid #A3A3A3;
+    border-bottom: 1px solid #6C6C6C;
     padding: 2rem 0;
     height: fit-content;
 
@@ -48,7 +48,7 @@
 
         .date-element {
             display: flex;
-            color: #A3A3A3;
+            color: #6C6C6C;
         }
     }
 }

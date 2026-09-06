@@ -239,9 +239,11 @@ async function main() {
         check(hojas.length > 0, "la home declara hojas de estilo", `${hojas.length}`);
         let css = "";
         for (const h of hojas) css += (await get(h.replace(BASE, ""))).body;
+        // Hex de 6 digitos exacto: #017E8033 (borde al 20%) o #017E804D (overlay de hover)
+        // son el mismo teal con alpha, y ahi no hay texto que leer.
         for (const viejo of ["#017E80", "#E84F1A", "#8D8D8D", "#A3A3A3"]) {
-            const presente = css.toUpperCase().includes(viejo);
-            check(!presente, `el CSS servido ya no usa ${viejo}`, presente ? "sigue presente" : "");
+            const presente = new RegExp(viejo + "(?![0-9A-F])", "i").test(css);
+            check(!presente, `el CSS servido ya no usa ${viejo} como color de 6 digitos`, presente ? "sigue presente" : "");
         }
     }
 
