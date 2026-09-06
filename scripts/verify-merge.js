@@ -32,7 +32,7 @@ const WP_ORIGIN = "https://staging.sherpafoodtours.com";
 const ROUTES = {
     home: "/",
     city: "/city/buenos-aires/",
-    tour: "/tour/buenos-aires-local-foodie-experience/",
+    tour: "/tour/palermo-buenos-aires-food-tour/",
     travelGuide: "/travel-guide/",
     article: "/travel-guide/cartagena-food-tours/food-in-cartagena-what-to-eat/",
     aboutUs: "/about-us/",
@@ -219,10 +219,27 @@ async function main() {
 
     // ------------------------------------------------- plural de WP -> singular del sitio
     ticket("Las URLs en plural de WordPress aterrizan en la pagina real");
-    for (const [src, dst] of [["/tours/gourmet-taco-tour/", "/tour/gourmet-taco-tour/"], ["/cities/cartagena/", "/city/cartagena/"]]) {
+    for (const [src, dst] of [["/tours/taco-tour-mexico-city/", "/tour/taco-tour-mexico-city/"], ["/cities/cartagena/", "/city/cartagena/"]]) {
         const r = await get(src);
         const loc = (r.headers.get("location") || "").replace(BASE, "");
         check([301, 308].includes(r.status) && loc === dst, `${src} redirige a ${dst}`, `${r.status} -> ${loc || "(sin location)"}`);
+    }
+
+    // -------------------------------------------------- renombre de slugs de tours
+    ticket("Redirects de los slugs viejos de tours (Sheet: Create OP Recs)");
+    for (const [src, dst] of [
+        ["/tour/amsterdam-local-foodie-adventure/", "/tour/amsterdam-walking-food-tour/"],
+        ["/tour/buenos-aires-local-foodie-experience/", "/tour/palermo-buenos-aires-food-tour/"],
+        ["/tour/buenos-aires-private-tour/", "/tour/buenos-aires-private-food-tour/"],
+        ["/tour/gourmet-taco-tour/", "/tour/taco-tour-mexico-city/"],
+        ["/tour/london-food-tour/", "/tour/soho-london-food-tour/"],
+        ["/tour/mexico-city-private-experience/", "/tour/mexico-city-private-food-tour/"],
+        ["/tour/mexico-local-foodie-adventure/", "/tour/roma-norte-mexico-food-tour/"],
+        ["/tour/paris-private-experience/", "/tour/paris-private-food-tour/"]
+    ]) {
+        const r = await get(src);
+        const loc = (r.headers.get("location") || "").replace(BASE, "");
+        check([301, 308].includes(r.status) && loc === dst, `${src} → ${dst}`, `${r.status} -> ${loc || "(sin location)"}`);
     }
 
     // ------------------------------------------------------------------- contraste

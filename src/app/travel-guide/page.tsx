@@ -14,8 +14,8 @@ import { absoluteOptimizedUrl } from "@/lib/wp-media";
 export type PostWithImage = PostWithImageData;
 
 export const metadata: Metadata = {
-    title: "Travel Guide: Food, Drinks & Experiences | Sherpa Food Tours",
-    description: "Discover the ultimate travel guide for food, drinks and unique experiences around the world. Explore authentic flavors, hidden gems and the best local spots.",
+    title: "Food Tour & Travel Guide | Sherpa Food Tours",
+    description: "Explore Sherpa Food Tours travel guides for local food, drinks and unique experiences, with tips on authentic flavors, hidden gems and places to explore.",
     keywords: [
         "travel guide",
         "food travel guide",
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
     ],
     authors: [{ name: "Sherpa Food Tours" }],
     openGraph: {
-        title: "Travel Guide: Food, Drinks & Experiences | Sherpa Food Tours",
-        description: "Discover the ultimate travel guide for food, drinks, and unique experiences around the world. Explore authentic flavors, hidden gems, and the best places to eat, drink, and explore.",
+        title: "Food Tour & Travel Guide | Sherpa Food Tours",
+        description: "Explore Sherpa Food Tours travel guides for local food, drinks and unique experiences, with tips on authentic flavors, hidden gems and places to explore.",
         url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com'}/travel-guide/`,
         siteName: "Sherpa Food Tours",
         images: [
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Travel Guide: Food, Drinks & Experiences | Sherpa Food Tours",
-        description: "Discover the ultimate travel guide for food, drinks, and unique experiences around the world.",
+        title: "Food Tour & Travel Guide | Sherpa Food Tours",
+        description: "Explore Sherpa Food Tours travel guides for local food, drinks and unique experiences, with tips on authentic flavors, hidden gems and places to explore.",
         images: ["/imagen-de-portada.webp"],
     },
     alternates: {

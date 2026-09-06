@@ -1,6 +1,6 @@
 
 import { wp } from "@/lib/wp";
-import { siteTitle, metaDescription } from "@/app/helpers/seo";
+import { metaDescription } from "@/app/helpers/seo";
 import { ACFHome } from "@/types/acf-home";
 import Link from "next/link";
 import { getNotReadyToBookSection } from "./utils/getNotReadyToBookSection";
@@ -19,20 +19,16 @@ import { buildOrganizationSchema, getBaseUrl, getOrganizationData, ORGANIZATION_
 
 // Generate metadata for SEO
 export async function generateMetadata(): Promise<Metadata> {
-  const pageInfo = await wp.getPageInfo("home");
-  const { title, content } = pageInfo;
 
   // Extract description from content or use default
   const description = metaDescription(
-    content
-      || "Experience authentic food tours around the world. Enjoy local flavors, cultural insights, and unique culinary adventures in top cities with Sherpa Food Tours."
+    "Discover authentic food tours led by locals in some of the world’s most vibrant cities. Taste regional favorites, hidden gems and local culture."
   );
 
-  // El titular de la home viene de ACF ("Taste, Share and Explore what locals
-  // love", 41 chars); el sufijo anterior de 53 chars lo llevaba a 94. Marca
-  // primero, y si algún día el titular crece, cae al sufijo condicional.
-  const brandFirst = `Sherpa Food Tours: ${title}`;
-  const pageTitle = brandFirst.length <= 60 ? brandFirst : siteTitle(title);
+  // Title y description recomendados por la auditoria (Sheet "Create OP Recs"). Van
+  // en codigo porque la pagina "home" de WordPress no tiene campos ACF (acf: []), asi
+  // que no hay donde cargarlos. El titular visible (h1) sigue saliendo de ACF.
+  const pageTitle = "Sherpa Food Tours | Authentic Local Culinary Experiences";
 
   return {
     title: pageTitle,

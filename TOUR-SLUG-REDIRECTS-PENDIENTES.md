@@ -6,7 +6,7 @@ alinear el slug con la keyword principal de cada página.
 
 [sheet]: https://docs.google.com/spreadsheets/d/1WbOo391GiH_jqZyEagzUTglpiZ_YUFCmIHgD2d7KUWI/edit?gid=1368446379
 
-**Nada de esto está implementado todavía, y el orden no se puede invertir.** Ver abajo.
+**HECHO el 6/9/2026:** los 8 slugs se renombraron en WordPress y los redirects están en `next.config.ts`. Queda como registro del orden y del bloque.
 
 ## El orden importa
 
@@ -29,14 +29,14 @@ existe todavía.
 
 | # | Slug actual | Slug propuesto | Estado |
 |---|-------------|----------------|--------|
-| 1 | `amsterdam-local-foodie-adventure` | `amsterdam-walking-food-tour` | pendiente en WP |
-| 2 | `buenos-aires-local-foodie-experience` | `palermo-buenos-aires-food-tour` | pendiente en WP |
-| 3 | `buenos-aires-private-tour` | `buenos-aires-private-food-tour` | pendiente en WP |
-| 4 | `gourmet-taco-tour` | `taco-tour-mexico-city` | pendiente en WP |
-| 5 | `london-food-tour` | `soho-london-food-tour` | pendiente en WP |
-| 6 | `mexico-city-private-experience` | `mexico-city-private-food-tour` | pendiente en WP |
-| 7 | `mexico-local-foodie-adventure` | `roma-norte-mexico-food-tour` | pendiente en WP |
-| 8 | `paris-private-experience` | `paris-private-food-tour` | pendiente en WP |
+| 1 | `amsterdam-local-foodie-adventure` | `amsterdam-walking-food-tour` | ✅ hecho |
+| 2 | `buenos-aires-local-foodie-experience` | `palermo-buenos-aires-food-tour` | ✅ hecho |
+| 3 | `buenos-aires-private-tour` | `buenos-aires-private-food-tour` | ✅ hecho |
+| 4 | `gourmet-taco-tour` | `taco-tour-mexico-city` | ✅ hecho |
+| 5 | `london-food-tour` | `soho-london-food-tour` | ✅ hecho |
+| 6 | `mexico-city-private-experience` | `mexico-city-private-food-tour` | ✅ hecho |
+| 7 | `mexico-local-foodie-adventure` | `roma-norte-mexico-food-tour` | ✅ hecho |
+| 8 | `paris-private-experience` | `paris-private-food-tour` | ✅ hecho |
 | 9 | `san-telmo-tour-2` | `san-telmo-food-tour` | **ya resuelto** |
 
 El 9 es ruido de la planilla: `san-telmo-tour-2` ya redirige a `/tour/san-telmo-tour/`, así

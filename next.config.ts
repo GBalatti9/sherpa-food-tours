@@ -1533,6 +1533,49 @@ const nextConfig = {
         destination: '/city/:slug/',
         permanent: true,
       },
+      // Renombre de slugs de tours para alinearlos con la keyword principal (Sheet
+      // "Create OP Recs"). Los slugs ya estan cambiados en WordPress: ver
+      // TOUR-SLUG-REDIRECTS-PENDIENTES.md.
+      {
+        source: '/tour/amsterdam-local-foodie-adventure/',
+        destination: '/tour/amsterdam-walking-food-tour/',
+        permanent: true,
+      },
+      {
+        source: '/tour/buenos-aires-local-foodie-experience/',
+        destination: '/tour/palermo-buenos-aires-food-tour/',
+        permanent: true,
+      },
+      {
+        source: '/tour/buenos-aires-private-tour/',
+        destination: '/tour/buenos-aires-private-food-tour/',
+        permanent: true,
+      },
+      {
+        source: '/tour/gourmet-taco-tour/',
+        destination: '/tour/taco-tour-mexico-city/',
+        permanent: true,
+      },
+      {
+        source: '/tour/london-food-tour/',
+        destination: '/tour/soho-london-food-tour/',
+        permanent: true,
+      },
+      {
+        source: '/tour/mexico-city-private-experience/',
+        destination: '/tour/mexico-city-private-food-tour/',
+        permanent: true,
+      },
+      {
+        source: '/tour/mexico-local-foodie-adventure/',
+        destination: '/tour/roma-norte-mexico-food-tour/',
+        permanent: true,
+      },
+      {
+        source: '/tour/paris-private-experience/',
+        destination: '/tour/paris-private-food-tour/',
+        permanent: true,
+      },
     ];
   },
 
