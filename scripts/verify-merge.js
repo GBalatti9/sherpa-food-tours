@@ -217,6 +217,15 @@ async function main() {
         }
     }
 
+    // --------------------------------------------------------- h1 del travel guide
+    ticket("H1 del travel guide (Sheet: Create OP Recs)");
+    {
+        const m = /<h1[^>]*>([\s\S]*?)<\/h1>/.exec(pages.travelGuide.body);
+        // El alt del logo forma parte del texto accesible del heading, igual que para Google.
+        const txt = decodeEntities((m ? m[1] : "").replace(/<img[^>]*alt="([^"]*)"[^>]*>/g, " $1 ").replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+        check(txt === "Sherpa Food Tours Travel Guide", "el h1 dice exactamente lo que pide la auditoria", txt);
+    }
+
     // ------------------------------------------------- plural de WP -> singular del sitio
     ticket("Las URLs en plural de WordPress aterrizan en la pagina real");
     for (const [src, dst] of [["/tours/taco-tour-mexico-city/", "/tour/taco-tour-mexico-city/"], ["/cities/cartagena/", "/city/cartagena/"]]) {

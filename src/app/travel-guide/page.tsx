@@ -170,12 +170,15 @@ export default async function TravelGuidePage() {
                     >
                     </div>
                     <div className="titles-container">
+                        {/* El texto del h1 es exactamente "Sherpa Food Tours Travel Guide", como pide
+                            la auditoria (Sheet "Create OP Recs"). El logo sigue siendo la palabra
+                            "Sherpa" del titular: su alt aporta "Sherpa Food Tours" al heading, sin
+                            "logo", y se cae el "The" que quedaba fuera del texto pedido. */}
                         <h1>
-                            The
                             <span className="inline-flex px-3 w-[140px] shrink-0 items-center md:w-[180px] lg:w-[220px]">
-                                <img src="/sherpa-white.webp" alt="Sherpa Food Tours logo" width={236} height={96} className="block !w-full h-auto object-contain" />
+                                <img src="/sherpa-white.webp" alt="Sherpa Food Tours" width={236} height={96} className="block !w-full h-auto object-contain" />
                             </span>
-                            travel guide
+                            Travel Guide
                         </h1>
                         <h2>Experiences made to be remembered</h2>
                         <Link
