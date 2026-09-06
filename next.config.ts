@@ -1519,6 +1519,20 @@ const nextConfig = {
         destination: 'https://www.sherpafoodtours.com/city/paris/',
         permanent: true,
       },
+      // WordPress publica los tours y las ciudades en plural (/tours/x/, /cities/x/) y el
+      // sitio en singular. Desde que el frontend de staging redirige a www, esas URLs --
+      // que son las que Google tiene indexadas de staging -- aterrizaban aca en 404.
+      // Con esto la cadena termina en la pagina real y Google consolida las senales.
+      {
+        source: '/tours/:slug/',
+        destination: '/tour/:slug/',
+        permanent: true,
+      },
+      {
+        source: '/cities/:slug/',
+        destination: '/city/:slug/',
+        permanent: true,
+      },
     ];
   },
 

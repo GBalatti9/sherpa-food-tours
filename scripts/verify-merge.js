@@ -217,6 +217,14 @@ async function main() {
         }
     }
 
+    // ------------------------------------------------- plural de WP -> singular del sitio
+    ticket("Las URLs en plural de WordPress aterrizan en la pagina real");
+    for (const [src, dst] of [["/tours/gourmet-taco-tour/", "/tour/gourmet-taco-tour/"], ["/cities/cartagena/", "/city/cartagena/"]]) {
+        const r = await get(src);
+        const loc = (r.headers.get("location") || "").replace(BASE, "");
+        check([301, 308].includes(r.status) && loc === dst, `${src} redirige a ${dst}`, `${r.status} -> ${loc || "(sin location)"}`);
+    }
+
     // ------------------------------------------------------------------- contraste
     ticket("Contraste WCAG AA (Trello: Page speed review)");
     {
