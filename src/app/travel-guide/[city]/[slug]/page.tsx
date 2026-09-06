@@ -39,12 +39,17 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 
     const { img, alt } = await wp.getPostImage(post.featured_media);
 
-    const rawDescription = post.excerpt || post.content.slice(0, 300);
+    // Igual que en ciudades y tours: si el grupo ACF "metadata" esta cargado, el <title>
+    // y la description salen de ahi y no del titulo/excerpt del post. Con eso el SEO
+    // title puede acortarse sin tocar el titular visible (h1), que sigue siendo post.title.
+    // Rank Math no se lee: el sitio nunca lo leyo, y lo que se cargue ahi no llega.
+    const meta = (post.acf?.metadata ?? {}) as { title?: string; description?: string };
+    const rawDescription = meta.description?.trim() || post.excerpt || post.content.slice(0, 300);
     const description = metaDescription(rawDescription);
     
     const imageUrl = absoluteOptimizedUrl(img || "https://www.sherpafoodtours.com/imagen-de-portada.webp", 1200);
     const title = he.decode(post.title);
-    const pageTitle = siteTitle(title);
+    const pageTitle = siteTitle(meta.title?.trim() || title);
     const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sherpafoodtours.com').replace(/\/$/, '');
     // Usar la ciudad real del post (no el param de la URL) para el canonical
     const realCitySlug = post.relaciones?.ciudades?.[0]?.title

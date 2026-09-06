@@ -70,14 +70,17 @@ export const wp = {
         }
 
         const [data] = await response.json();
-        if (!data) return { title: "", content: "", excerpt: "", featured_media: null, date: "", modified: "", relaciones: null, author: null };
+        if (!data) return { title: "", content: "", excerpt: "", featured_media: null, date: "", modified: "", relaciones: null, author: null, acf: null };
 
 
-        const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified, relaciones, _embedded } = data;
+        const { title: { rendered: title }, content: { rendered: content }, excerpt: { rendered: excerpt }, featured_media, date, modified, relaciones, _embedded, acf } = data;
         const authorData = _embedded?.author?.[0];
         const author = authorData ? { name: authorData.name, slug: authorData.slug ?? null } : null;
 
-        return { title, content: limpiarContenido(content), excerpt, featured_media, date, modified, relaciones, author };
+        // acf viaja para que el articulo pueda leer metadata.title/description, el mismo
+        // grupo que usan ciudades y tours. Mientras el grupo no este asignado al post type
+        // "post" en ACF, llega vacio y la pagina cae al titulo y al excerpt como siempre.
+        return { title, content: limpiarContenido(content), excerpt, featured_media, date, modified, relaciones, author, acf };
     },
     getPostInfoById: async (id: number) => {
         const response = await fetch(`${apiUrl}/posts/${id}`)
